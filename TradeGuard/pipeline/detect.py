@@ -67,34 +67,53 @@ def _llm_client():
         return None
 
 
-def judge_goods_desc(lc_desc, inv_desc):
-    """송장 명세가 L/C 45A와 '상응(correspond)'하는가. 반환: None(정상) 또는 (severity, 사유)"""
-    if norm(inv_desc) == norm(lc_desc):
-        return None
-    client = _llm_client()
-    if client:
-        try:
-            text = client.complete(
-                system=("당신은 UCP600 18(c) 기준으로 상업송장의 물품명세가 신용장 45A 명세와 상응하는지 판정하는 "
-                        "은행 서류심사역입니다. 송장은 신용장 명세의 일부를 생략할 수 있으나(허용), 모델번호·규격·수량 등이 "
-                        "신용장과 '다르게' 기재되면 하자입니다(불허). JSON만 출력: "
-                        '{"correspond": true|false, "reason_ko": "...", "conflicting_part": "..."}'),
-                user=f"<lc_45A>{lc_desc}</lc_45A>\n<invoice_desc>{inv_desc}</invoice_desc>",
-                max_tokens=300, json_only=True)
-            r = json.loads(re.search(r"\{.*\}", text, re.S).group())
-            if r.get("correspond"):
-                return None
-            return ("high", r.get("reason_ko", "상품명세 불일치"), r.get("conflicting_part", ""))
-        except Exception:
-            pass  # LLM 오류·파싱 실패 → 휴리스틱 폴백
-    # 폴백: 참조 토큰 충돌 검사 (생략은 허용, '다른 값'만 하자)
+def _token_conflict(lc_desc, inv_desc):
+    """참조 토큰(모델번호·PI번호 등) 충돌 탐지. 반환: (송장토큰, 신용장토큰) 또는 None
+
+    UCP600 18(c)의 '상응(correspond)'은 동일(identical)이 아니다. 송장이 신용장 명세의
+    일부를 **생략**하는 것은 허용되며, 값이 **다르게** 기재된 경우만 하자다.
+    따라서 '없음'이 아니라 '다름'만 잡는다."""
     lc_t, inv_t = ref_tokens(lc_desc), ref_tokens(inv_desc)
     for t in sorted(inv_t - lc_t):
         prefix = re.match(r"[A-Z]+", t).group()
         conflict = [u for u in lc_t if re.match(r"[A-Z]+", u).group() == prefix and u != t]
         if conflict:
-            return ("high", f"송장의 '{t}'가 신용장 45A의 '{conflict[0]}'와 불일치", t)
+            return t, conflict[0]
     return None
+
+
+def judge_goods_desc(lc_desc, inv_desc):
+    """송장 명세가 L/C 45A와 '상응'하는가. 반환: None(정상) 또는 (severity, 사유, 충돌부분)
+
+    판정 순서 (결정적 우선 — LLM 과탐 방지):
+      1) 완전 일치        → 정상
+      2) 참조 토큰 충돌 無 → 정상 (생략은 허용). **LLM 호출하지 않음 = 비용 절감 + 오탐 0**
+      3) 토큰 충돌 有      → 하자 확정. LLM은 '설명 생성'에만 사용 (판정은 코드가 함)
+    """
+    if norm(inv_desc) == norm(lc_desc):
+        return None
+    conflict = _token_conflict(lc_desc, inv_desc)
+    if conflict is None:
+        return None  # 생략·표현 차이일 뿐 — UCP600 18(c)상 정상
+    inv_tok, lc_tok = conflict
+    reason = f"송장의 '{inv_tok}'가 신용장 45A의 '{lc_tok}'와 불일치"
+
+    # LLM은 판정을 뒤집지 않고, 사람이 읽을 설명만 다듬는다 (선택적)
+    client = _llm_client()
+    if client:
+        try:
+            text = client.complete(
+                system=("UCP600 18(c) 하자를 한 문장으로 설명하는 은행 서류심사역. "
+                        "판정은 이미 '하자'로 확정됐으니 뒤집지 말고 설명만 작성하라. "
+                        'JSON만 출력: {"reason_ko": "..."}'),
+                user=(f"<lc_45A>{lc_desc}</lc_45A>\n<invoice_desc>{inv_desc}</invoice_desc>\n"
+                      f"불일치 부분: 송장 '{inv_tok}' vs 신용장 '{lc_tok}'"),
+                max_tokens=200, json_only=True)
+            r = json.loads(re.search(r"\{.*\}", text, re.S).group())
+            reason = r.get("reason_ko") or reason
+        except Exception:
+            pass  # 설명 생성 실패 → 코드가 만든 기본 문구 사용
+    return ("high", reason, inv_tok)
 
 
 def judge_name(lc_name, doc_name):
@@ -225,9 +244,12 @@ def run_checks(docs, presentation_date=None):
             out.append(disc("BL_SIGNATURE_DEFECT", "high", "B/L에 서명이 없습니다.",
                             [ev("bill_of_lading", "signature.signed", sig.get("signed"))],
                             "UCP600_20a1", "운송인/선장/대리인의 서명이 포함된 B/L 재발행을 요청하세요."))
-        elif sig.get("signer_capacity") in (None, "unclear") or not sig.get("carrier_name"):
+        elif sig.get("signer_capacity") in (None, "unclear"):
+            # 판정 기준은 '서명자 자격' 하나로 한정한다.
+            # carrier_name은 로고·헤더에 인쇄돼 판독 실패가 잦아, 이를 하자 근거로 쓰면
+            # 추출 오류가 곧바로 오탐이 된다. 자격 표시 유무가 UCP600 20(a)(i)의 핵심 요건이다.
             out.append(disc("BL_SIGNATURE_DEFECT", "medium",
-                            "B/L 서명자의 자격(운송인/선장/대리인) 또는 운송인 명칭 표시가 불명확합니다.",
+                            "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
                             [ev("bill_of_lading", "signature.signer_capacity", sig.get("signer_capacity")),
                              ev("bill_of_lading", "signature.carrier_name", sig.get("carrier_name"))],
                             "UCP600_20a1",

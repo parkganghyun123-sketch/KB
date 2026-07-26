@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>B/L {{ bl.bl_number }}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { width: 794px; min-height: 1123px; margin: 0 auto; background: #fff;
+         font-family: Arial, Helvetica, sans-serif; font-size: 11.5px;
+         color: #111; padding: 36px 44px; box-sizing: border-box; }
+  .carrier-head { display: flex; justify-content: space-between; align-items: center;
+                  border-bottom: 4px solid #0b3d66; padding-bottom: 10px; margin-bottom: 0; }
+  .carrier-head .logo { font-size: 20px; font-weight: 800; color: #0b3d66; letter-spacing: 1px; }
+  .carrier-head .doc { text-align: right; font-size: 13px; font-weight: bold; }
+  table.grid { width: 100%; border-collapse: collapse; }
+  table.grid td { border: 1px solid #555; padding: 6px 8px; vertical-align: top; }
+  .cell-label { display: block; font-size: 8.5px; color: #666; letter-spacing: 0.5px; margin-bottom: 3px; text-transform: uppercase; }
+  .goods-area { min-height: 200px; }
+  .onboard { margin-top: 8px; font-weight: bold; border: 1.5px solid #111; display: inline-block; padding: 4px 10px; transform: rotate(-2deg); font-size: 12px; }
+  .stamp-blue { color: #14418c; border-color: #14418c; }
+  .sig-area { display: flex; justify-content: space-between; margin-top: 14px; }
+  .sig-box { width: 46%; border: 1px solid #555; padding: 8px 10px; min-height: 86px; }
+  .signature { font-family: "Brush Script MT", cursive; font-size: 22px; color: #14418c; margin-top: 10px; }
+  .terms-fine { font-size: 7px; color: #888; margin-top: 10px; line-height: 1.4; }
+</style>
+</head>
+<body>
+  <div class="carrier-head">
+    <div class="logo">{{ bl.signature.carrier_name | default('OCEAN CARRIER LINE', true) }}</div>
+    <div class="doc">BILL OF LADING<br><span style="font-weight:normal">B/L NO. {{ bl.bl_number }}</span></div>
+  </div>
+
+  <table class="grid">
+    <tr>
+      <td style="width:50%" rowspan="2"><span class="cell-label">Shipper</span>{{ bl.shipper.name }}{% if bl.shipper.address %}<br>{{ bl.shipper.address }}{% endif %}</td>
+      <td style="width:25%"><span class="cell-label">B/L Number</span>{{ bl.bl_number }}</td>
+      <td style="width:25%"><span class="cell-label">No. of Original B(s)/L</span>{{ bl.originals_count | default('', true) }}</td>
+    </tr>
+    <tr>
+      <td colspan="2"><span class="cell-label">Date of Issue</span>{{ bl.issue_date | docdate if bl.issue_date else '' }}</td>
+    </tr>
+    <tr>
+      <td rowspan="2"><span class="cell-label">Consignee</span>{{ bl.consignee.raw_text }}</td>
+      <td colspan="2"><span class="cell-label">Vessel / Voyage No.</span>{{ bl.vessel_name | default('', true) }} {{ bl.voyage_number | default('', true) }}</td>
+    </tr>
+    <tr>
+      <td><span class="cell-label">Place of Receipt</span>{{ bl.place_of_receipt | default('', true) }}</td>
+      <td><span class="cell-label">Port of Loading</span>{{ bl.port_of_loading }}</td>
+    </tr>
+    <tr>
+      <td><span class="cell-label">Notify Party</span>{{ bl.notify_party | default('', true) }}</td>
+      <td><span class="cell-label">Port of Discharge</span>{{ bl.port_of_discharge }}</td>
+      <td><span class="cell-label">Place of Delivery</span>{{ bl.place_of_delivery | default('', true) }}</td>
+    </tr>
+    <tr>
+      <td colspan="3" class="goods-area">
+        <span class="cell-label">Particulars Furnished by Shipper — Description of Goods</span>
+        {{ bl.goods_description }}
+        {% if bl.container_numbers %}<br><br>CONTAINER NO(S).: {{ bl.container_numbers | join(', ') }}{% endif %}
+        {% if bl.clean %}<br><br>CLEAN ON BOARD{% endif %}
+        {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'on_board_notation' %}
+        <br><div class="onboard stamp-blue">SHIPPED ON BOARD<br>DATE: {{ bl.shipped_on_board.date | docdate if bl.shipped_on_board.date else '' }}</div>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td><span class="cell-label">Freight &amp; Charges</span>FREIGHT {{ bl.freight_terms | default('', true) }}</td>
+      <td colspan="2">
+        {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'pre_printed' %}
+        <span class="cell-label">Shipped on Board — the goods in apparent good order and condition</span>
+        LADEN ON BOARD THE VESSEL<br>DATE: {{ bl.shipped_on_board.date | docdate if bl.shipped_on_board.date else '' }}
+        {% else %}
+        <span class="cell-label">Received for shipment</span>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <div class="sig-area">
+    <div class="sig-box">
+      <span class="cell-label">Place and Date of Issue</span>
+      {{ bl.port_of_loading }}{% if bl.issue_date %}, {{ bl.issue_date | docdate }}{% endif %}
+    </div>
+    <div class="sig-box">
+      <span class="cell-label">Signed by</span>
+      {% if bl.signature.signed %}
+        <div class="signature">J. Park</div>
+        {% if bl.signature.signer_capacity == 'carrier' %}AS CARRIER: {{ bl.signature.carrier_name }}
+        {% elif bl.signature.signer_capacity == 'master' %}AS MASTER OF THE VESSEL
+        {% elif bl.signature.signer_capacity == 'agent_for_carrier' %}AS AGENT FOR THE CARRIER: {{ bl.signature.carrier_name }}
+        {% elif bl.signature.signer_capacity == 'agent_for_master' %}AS AGENT ON BEHALF OF THE MASTER
+        {% else %}{# capacity unclear — 서명은 있으나 자격 미표시 (하자 재료) #}{% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="terms-fine">IN WITNESS WHEREOF the number of original Bills of Lading stated above have been signed, one of which being accomplished the others to stand void. Carriage subject to the terms and conditions printed on the reverse side hereof.</div>
+</body>
+</html>

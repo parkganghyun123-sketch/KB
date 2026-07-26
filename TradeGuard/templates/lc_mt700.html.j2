@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MT700 {{ lc.lc_number }}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { width: 794px; min-height: 1123px; margin: 0 auto; background: #fdfdf8;
+         font-family: "Courier New", Courier, monospace; font-size: 12.5px;
+         color: #1a1a1a; padding: 48px 56px; box-sizing: border-box; }
+  .swift-header { border: 1.5px solid #333; padding: 10px 14px; margin-bottom: 18px;
+                  font-size: 11.5px; line-height: 1.5; }
+  .swift-header b { letter-spacing: 1px; }
+  .row { display: flex; margin: 7px 0; line-height: 1.45; }
+  .tag { width: 60px; flex-shrink: 0; font-weight: bold; }
+  .fname { width: 250px; flex-shrink: 0; color: #444; }
+  .val { flex: 1; white-space: pre-wrap; word-break: break-word; }
+  .sep { border-top: 1px dashed #999; margin: 14px 0; }
+  .footer { margin-top: 30px; font-size: 11px; color: #555; }
+</style>
+</head>
+<body>
+  <div class="swift-header">
+    <b>SWIFT MESSAGE — MT700 ISSUE OF A DOCUMENTARY CREDIT</b><br>
+    SENDER&nbsp;&nbsp;: {{ lc.issuing_bank | default('ISSUING BANK', true) }}<br>
+    RECEIVER : {{ lc.advising_bank | default('ADVISING BANK', true) }}<br>
+    MUR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ lc.lc_number }}
+  </div>
+
+  <div class="row"><span class="tag">:27:</span><span class="fname">Sequence of Total</span><span class="val">1/1</span></div>
+  <div class="row"><span class="tag">:40A:</span><span class="fname">Form of Documentary Credit</span><span class="val">IRREVOCABLE</span></div>
+  <div class="row"><span class="tag">:20:</span><span class="fname">Documentary Credit Number</span><span class="val">{{ lc.lc_number }}</span></div>
+  {% if lc.issue_date %}<div class="row"><span class="tag">:31C:</span><span class="fname">Date of Issue</span><span class="val">{{ lc.issue_date | swiftdate }}</span></div>{% endif %}
+  <div class="row"><span class="tag">:31D:</span><span class="fname">Date and Place of Expiry</span><span class="val">{{ lc.expiry.date | swiftdate }} {{ lc.expiry.place | default('', true) }}</span></div>
+  <div class="row"><span class="tag">:50:</span><span class="fname">Applicant</span><span class="val">{{ lc.applicant.name }}{% if lc.applicant.address %}
+{{ lc.applicant.address }}{% endif %}</span></div>
+  <div class="row"><span class="tag">:59:</span><span class="fname">Beneficiary</span><span class="val">{{ lc.beneficiary.name }}{% if lc.beneficiary.address %}
+{{ lc.beneficiary.address }}{% endif %}</span></div>
+  <div class="row"><span class="tag">:32B:</span><span class="fname">Currency Code, Amount</span><span class="val">{{ lc.currency }} {{ lc.amount | money }}</span></div>
+  {% if lc.tolerance %}<div class="row"><span class="tag">:39A:</span><span class="fname">Percentage Credit Amount Tolerance</span><span class="val">{{ lc.tolerance.plus_pct | int }}/{{ lc.tolerance.minus_pct | int }}</span></div>{% endif %}
+  <div class="row"><span class="tag">:41A:</span><span class="fname">Available With ... By ...</span><span class="val">{{ lc.available_with_by | default('ANY BANK BY NEGOTIATION', true) }}</span></div>
+  {% if lc.partial_shipments %}<div class="row"><span class="tag">:43P:</span><span class="fname">Partial Shipments</span><span class="val">{{ lc.partial_shipments }}</span></div>{% endif %}
+  {% if lc.transhipment %}<div class="row"><span class="tag">:43T:</span><span class="fname">Transhipment</span><span class="val">{{ lc.transhipment }}</span></div>{% endif %}
+  {% if lc.port_of_loading %}<div class="row"><span class="tag">:44E:</span><span class="fname">Port of Loading</span><span class="val">{{ lc.port_of_loading }}</span></div>{% endif %}
+  {% if lc.port_of_discharge %}<div class="row"><span class="tag">:44F:</span><span class="fname">Port of Discharge</span><span class="val">{{ lc.port_of_discharge }}</span></div>{% endif %}
+  {% if lc.latest_shipment_date %}<div class="row"><span class="tag">:44C:</span><span class="fname">Latest Date of Shipment</span><span class="val">{{ lc.latest_shipment_date | swiftdate }}</span></div>{% endif %}
+  <div class="sep"></div>
+  <div class="row"><span class="tag">:45A:</span><span class="fname">Description of Goods</span><span class="val">{{ lc.goods_description }}</span></div>
+  <div class="row"><span class="tag">:46A:</span><span class="fname">Documents Required</span><span class="val">{% for d in lc.documents_required %}+ {{ d.doc_name }}{% if d.copies %} {{ d.copies }}{% endif %}{% if d.requirements %}
+  {{ d.requirements }}{% endif %}
+{% endfor %}</span></div>
+  {% if lc.additional_conditions %}<div class="row"><span class="tag">:47A:</span><span class="fname">Additional Conditions</span><span class="val">{% for c in lc.additional_conditions %}+ {{ c }}
+{% endfor %}</span></div>{% endif %}
+  {% if lc.presentation_period_days %}<div class="row"><span class="tag">:48:</span><span class="fname">Period for Presentation</span><span class="val">DOCUMENTS TO BE PRESENTED WITHIN {{ lc.presentation_period_days }} DAYS AFTER THE DATE OF SHIPMENT BUT WITHIN THE VALIDITY OF THE CREDIT</span></div>{% endif %}
+  {% if lc.confirmation_instructions %}<div class="row"><span class="tag">:49:</span><span class="fname">Confirmation Instructions</span><span class="val">{{ lc.confirmation_instructions }}</span></div>{% endif %}
+
+  <div class="footer">— END OF MESSAGE — AUTHENTICATION RESULT: CORRECT WITH CURRENT KEY —</div>
+</body>
+</html>

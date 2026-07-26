@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TradeGuard — 하자 검사 리포트</title>
+<style>
+  :root {
+    --kb-yellow: #FFBC00; --ink: #26282c; --sub: #696e76;
+    --danger: #d92d20; --danger-bg: #fef0ef; --warn: #b54708; --warn-bg: #fffaeb;
+    --blue: #175cd3; --blue-bg: #eff6ff; --line: #e4e6ea; --card: #ffffff; --bg: #f6f7f8;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1280px; margin: 0 auto; background: var(--bg); color: var(--ink);
+         font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  .topbar { background: #fff; border-bottom: 1px solid var(--line); padding: 14px 40px;
+            display: flex; align-items: center; gap: 12px; }
+  .logo-dot { width: 26px; height: 26px; border-radius: 7px; background: var(--kb-yellow);
+              display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .topbar b { font-size: 17px; letter-spacing: -0.3px; }
+  .topbar .step { margin-left: auto; color: var(--sub); font-size: 13px; }
+  .topbar .step b { font-size: 13px; color: var(--ink); }
+  main { padding: 28px 40px 60px; }
+
+  .risk-hero { display: flex; gap: 24px; background: var(--card); border: 1px solid var(--line);
+               border-radius: 16px; padding: 28px 32px; align-items: center;
+               box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  .grade-badge { width: 110px; height: 110px; border-radius: 20px; background: var(--danger-bg);
+                 border: 2px solid var(--danger); display: grid; place-items: center; flex-shrink: 0; }
+  .grade-badge .g { font-size: 52px; font-weight: 800; color: var(--danger); line-height: 1; }
+  .grade-badge .s { font-size: 12px; color: var(--danger); font-weight: 600; }
+  .risk-info h1 { font-size: 22px; letter-spacing: -0.4px; margin-bottom: 6px; }
+  .risk-info .score { color: var(--danger); font-weight: 700; }
+  .risk-info p { color: var(--sub); font-size: 14.5px; line-height: 1.65; max-width: 760px; margin-top: 8px; }
+  .chips { display: flex; gap: 8px; margin-top: 14px; }
+  .chip { font-size: 12.5px; padding: 5px 12px; border-radius: 999px; background: var(--bg);
+          border: 1px solid var(--line); color: var(--sub); }
+  .chip.red { background: var(--danger-bg); border-color: #f5c6c2; color: var(--danger); font-weight: 600; }
+
+  h2.sec { font-size: 16px; margin: 30px 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2.sec .count { background: var(--danger); color: #fff; font-size: 12px; border-radius: 999px;
+                  padding: 2px 9px; }
+
+  .disc-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--danger);
+               border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;
+               box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .disc-card.medium { border-left-color: var(--warn); }
+  .disc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .sev { font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
+  .sev.high { background: var(--danger-bg); color: var(--danger); }
+  .sev.medium { background: var(--warn-bg); color: var(--warn); }
+  .disc-head h3 { font-size: 15.5px; letter-spacing: -0.3px; }
+  .disc-id { margin-left: auto; color: #aab0b8; font-size: 12px; font-family: monospace; }
+
+  .evi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .evi-box { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; }
+  .evi-box .doc { font-size: 11px; color: var(--sub); letter-spacing: .3px; margin-bottom: 4px;
+                  text-transform: uppercase; font-weight: 600; }
+  .evi-box .field { font-size: 11.5px; color: #8a9098; font-family: monospace; margin-bottom: 5px; }
+  .evi-box .val { font-size: 13.5px; font-family: "SF Mono", Consolas, monospace; line-height: 1.5; }
+  mark { background: #ffd8d5; color: var(--danger); font-weight: 700; padding: 0 2px; border-radius: 3px; }
+  .evi-box.single { grid-column: 1 / -1; }
+
+  .ucp { display: flex; gap: 10px; align-items: flex-start; background: var(--bg);
+         border-radius: 8px; padding: 11px 14px; margin-bottom: 12px; }
+  .ucp-badge { flex-shrink: 0; background: var(--ink); color: var(--kb-yellow); font-size: 11.5px;
+               font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+  .ucp q { color: var(--sub); font-size: 13px; line-height: 1.6; quotes: "“" "”"; }
+  .fix { background: var(--blue-bg); border: 1px solid #d3e2fb; border-radius: 8px;
+         padding: 11px 14px; font-size: 13.5px; color: var(--blue); line-height: 1.6; }
+  .fix b { font-size: 12px; letter-spacing: .5px; display: block; margin-bottom: 3px; }
+
+  .cta-bar { margin-top: 28px; display: flex; gap: 12px; }
+  .btn { border: 0; border-radius: 10px; padding: 14px 26px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .btn.primary { background: var(--kb-yellow); color: var(--ink); }
+  .btn.ghost { background: #fff; border: 1px solid var(--line); color: var(--sub); }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo-dot">T</div><b>TradeGuard</b>
+    <span class="step">① 업로드 → ② 판독 → <b>③ 하자 검사</b> → ④ 환노출·처방</span>
+  </div>
+
+  <main>
+    <!-- overall_risk -->
+    <section class="risk-hero">
+      <div class="grade-badge"><span class="g">D</span><span class="s">고위험</span></div>
+      <div class="risk-info">
+        <h1>지급거절 가능성이 높습니다 <span class="score">· 34 / 100</span></h1>
+        <p>지급거절 사유에 해당하는 고위험 하자 2건이 발견되었습니다. 특히 선적기일 경과는 서류 수정으로
+           치유가 불가능하므로, 네고 전 개설의뢰인의 하자 수락 여부를 반드시 확인해야 합니다.</p>
+        <div class="chips">
+          <span class="chip">케이스 DEFECT-001</span>
+          <span class="chip">L/C · 송장 · B/L 3종 검사</span>
+          <span class="chip red">HIGH 2건</span>
+          <span class="chip">MEDIUM 1건</span>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="sec">발견된 하자 <span class="count">3</span></h2>
+
+    <!-- DISC-001 -->
+    <article class="disc-card">
+      <div class="disc-head">
+        <span class="sev high">HIGH</span>
+        <h3>선적일(2026-07-18)이 신용장 최종선적기일(2026-07-15)을 3일 초과했습니다</h3>
+        <span class="disc-id">DISC-001</span>
+      </div>
+      <div class="evi">
+        <div class="evi-box">
+          <div class="doc">Letter of Credit</div>
+          <div class="field">latest_shipment_date (44C)</div>
+          <div class="val">2026-07-15</div>
+        </div>
+        <div class="evi-box">
+          <div class="doc">Bill of Lading</div>
+          <div class="field">shipped_on_board.date</div>
+          <div class="val"><mark>2026-07-18</mark></div>
+        </div>
+      </div>
+      <div class="ucp"><span class="ucp-badge">UCP600 14조 · 44C</span>
+        <q>선하증권의 본선적재일은 신용장에 명시된 최종선적기일 이내여야 한다.</q></div>
+      <div class="fix"><b>수정 제안</b>선적기일 경과는 서류 수정으로 치유할 수 없습니다. 개설의뢰인의
+        하자 수락(waiver) 또는 L/C 조건변경(amendment)을 즉시 요청하세요.</div>
+    </article>
+
+    <!-- DISC-002 -->
+    <article class="disc-card">
+      <div class="disc-head">
+        <span class="sev high">HIGH</span>
+        <h3>송장 상품명세의 모델번호(AH-702)가 신용장 45A(AH-720)와 불일치합니다</h3>
+        <span class="disc-id">DISC-002</span>
+      </div>
+      <div class="evi">
+        <div class="evi-box">
+          <div class="doc">Letter of Credit</div>
+          <div class="field">goods_description (45A)</div>
+          <div class="val">CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-720, 4,000 PCS …</div>
+        </div>
+        <div class="evi-box">
+          <div class="doc">Commercial Invoice</div>
+          <div class="field">goods[0].description</div>
+          <div class="val">CNC MACHINED ALUMINUM HOUSING PARTS, MODEL <mark>AH-702</mark>, AS PER …</div>
+        </div>
+      </div>
+      <div class="ucp"><span class="ucp-badge">UCP600 18(c)</span>
+        <q>상업송장의 물품 명세는 신용장상의 명세와 상응하여야 한다.</q></div>
+      <div class="fix"><b>수정 제안</b>송장을 재발행하여 상품명세를 L/C 45A 원문과 동일하게
+        ‘MODEL AH-720’으로 수정하세요.</div>
+    </article>
+
+    <!-- DISC-003 -->
+    <article class="disc-card medium">
+      <div class="disc-head">
+        <span class="sev medium">MEDIUM</span>
+        <h3>B/L 서명자의 자격(운송인/선장/대리인)이 표시되지 않았습니다</h3>
+        <span class="disc-id">DISC-003</span>
+      </div>
+      <div class="evi">
+        <div class="evi-box single">
+          <div class="doc">Bill of Lading</div>
+          <div class="field">signature.signer_capacity</div>
+          <div class="val">서명 있음 · 자격 표시 <mark>없음</mark> (KOREA MARINE TRANSPORT CO., LTD.)</div>
+        </div>
+      </div>
+      <div class="ucp"><span class="ucp-badge">UCP600 20(a)(i)</span>
+        <q>선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며,
+           대리인의 서명은 그 자격을 표시하여야 한다.</q></div>
+      <div class="fix"><b>수정 제안</b>운송사에 ‘AS AGENT FOR THE CARRIER, KOREA MARINE TRANSPORT
+        CO., LTD.’ 자격 문구가 명기된 B/L 재발행을 요청하세요.</div>
+    </article>
+
+    <div class="cta-bar">
+      <button class="btn primary">환노출 분석으로 이동 →</button>
+      <button class="btn ghost">하자 리포트 PDF 저장</button>
+    </div>
+  </main>
+</body>
+</html>

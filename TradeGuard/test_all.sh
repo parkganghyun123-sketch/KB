@@ -42,6 +42,14 @@ c=json.load(open('samples/DEFECT-001.json'))
 jsonschema.validate(build_report(c['case_id'],c['documents']), json.load(open('schemas/discrepancy_report.schema.json')))\""
 
 echo "══ 3. A — 벤치마크 회귀 (규칙 정합성) ══"
+run "판정이 LLM 키 유무와 무관하게 동일 (결정성)" "python3 -c \"
+import sys,json,os; sys.path.insert(0,'pipeline')
+from detect import build_report
+c=json.load(open('samples/DEFECT-001.json'))
+a=[d['type'] for d in build_report(c['case_id'],c['documents'])['discrepancies']]
+os.environ['TG_EXPLAIN_LLM']='0'
+b=[d['type'] for d in build_report(c['case_id'],c['documents'])['discrepancies']]
+assert a==b, f'{a} != {b}'\""
 run "40건 평가 F1 1.000 · 오탐 0" "python3 -c \"
 import sys,json,glob; sys.path.insert(0,'pipeline')
 from detect import build_report, d as pd

@@ -38,8 +38,9 @@ def main():
     if not files:
         sys.exit(f"케이스 없음: {cases_dir}")
 
-    _c = _llm_client()
-    mode = f"LLM 의미비교 활성({_c.name})" if _c else "오프라인 휴리스틱 폴백"
+    import os
+    _c = _llm_client() if os.environ.get("TG_EXPLAIN_LLM") == "1" else None
+    mode = f"결정적 판정 + LLM 설명({_c.name})" if _c else "결정적 판정 (LLM 미사용 · 비용 0)"
     print(f"[evaluate] {len(files)}건 · 판정 모드: {mode}\n")
 
     tp = fp = fn = 0

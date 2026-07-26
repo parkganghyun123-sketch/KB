@@ -98,8 +98,10 @@ def judge_goods_desc(lc_desc, inv_desc):
     inv_tok, lc_tok = conflict
     reason = f"송장의 '{inv_tok}'가 신용장 45A의 '{lc_tok}'와 불일치"
 
-    # LLM은 판정을 뒤집지 않고, 사람이 읽을 설명만 다듬는다 (선택적)
-    client = _llm_client()
+    # LLM은 판정을 뒤집지 않고, 사람이 읽을 설명만 다듬는다.
+    # 기본은 OFF — 평가·테스트 결과를 결정적으로 유지하고 비용을 0으로 만든다.
+    # 데모/실서비스에서 자연스러운 문장이 필요하면 TG_EXPLAIN_LLM=1
+    client = _llm_client() if os.environ.get("TG_EXPLAIN_LLM") == "1" else None
     if client:
         try:
             text = client.complete(
@@ -117,25 +119,18 @@ def judge_goods_desc(lc_desc, inv_desc):
 
 
 def judge_name(lc_name, doc_name):
-    """회사명 동일성. 반환: None(동일) / ('medium'|'high', 사유)"""
+    """회사명 동일성. 반환: None(동일) / ('medium'|'high', 사유)
+
+    **결정적 판정만 사용한다 (LLM 미사용).**
+    이유: LLM은 'HANSOL PRECISION CO., LTD.'와 'HANSOL PRECISION COMPANY LTD'를
+    "같은 법인"으로 보아 정상 판정하지만, 은행 서류심사 실무(UCP600 18(a)(i)·ISBP)는
+    신용장에 기재된 명의 그대로를 요구하므로 이는 통상 하자로 지적된다.
+    실무 기준이 LLM의 상식적 판단보다 우선해야 하는 지점이다."""
     if norm(lc_name) == norm(doc_name):
         return None
     if norm_nopunct(lc_name) == norm_nopunct(doc_name):
-        return ("medium", "구두점·축약 차이 (예: CO., LTD ↔ CO LTD) — 은행 재량이나 지적 위험 있음")
-    client = _llm_client()
-    if client:
-        try:
-            text = client.complete(
-                system=('두 회사명이 동일 법인을 지칭하는지 판정. 오탈자·다른 회사면 불일치. '
-                        'JSON만 출력: {"same": true|false, "reason_ko": "..."}'),
-                user=f"A: {lc_name}\nB: {doc_name}", max_tokens=200, json_only=True)
-            r = json.loads(re.search(r"\{.*\}", text, re.S).group())
-            if r.get("same"):
-                return None
-            return ("high", r.get("reason_ko", "명칭 불일치"))
-        except Exception:
-            pass
-    return ("high", "명칭 불일치")
+        return ("medium", "구두점·공백 차이 (예: CO., LTD ↔ CO LTD) — 은행 재량이나 지적 위험 있음")
+    return ("high", f"명의 불일치 ('{doc_name}' ≠ '{lc_name}')")
 
 
 # ---------- 검사 규칙 ----------
@@ -307,8 +302,8 @@ def main():
     data = json.loads(Path(args[0]).read_text(encoding="utf-8"))
     docs = data.get("documents", data)
     case_id = data.get("case_id", Path(args[0]).stem)
-    c = _llm_client()
-    mode = f"LLM 의미비교 활성({c.name})" if c else "오프라인 휴리스틱 폴백"
+    c = _llm_client() if os.environ.get("TG_EXPLAIN_LLM") == "1" else None
+    mode = f"결정적 판정 + LLM 설명 생성({c.name})" if c else "결정적 판정 (LLM 미사용)"
     pres = d(data.get("presentation_date"))
     print(f"[detect] case={case_id} · 판정 모드: {mode} · 제시일: {pres or '오늘(' + str(date.today()) + ')'}")
     report = build_report(case_id, docs, pres)

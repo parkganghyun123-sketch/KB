@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>TradeGuard — 판독 결과 (DEFECT-001)</title><style>
+:root{--kb-yellow:#FFBC00;--ink:#26282c;--sub:#696e76;--line:#e4e6ea;--card:#fff;--bg:#f6f7f8;
+--warn:#b54708;--warn-bg:#fffaeb;--ok:#067647;--ok-bg:#ecfdf3;--danger:#d92d20;--danger-bg:#fef0ef}
+*{box-sizing:border-box;margin:0}
+body{width:1280px;margin:0 auto;background:var(--bg);color:var(--ink);
+font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px}
+.logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
+.topbar b{font-size:17px}.topbar .step{margin-left:auto;color:var(--sub);font-size:13px}
+.live{background:var(--ok-bg);color:var(--ok);border:1px solid #a6f4c5;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700}
+main{padding:22px 40px 60px}
+.summary{display:flex;gap:14px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;flex:1}
+.stat .k{font-size:12px;color:var(--sub);margin-bottom:4px}
+.stat .v{font-size:22px;font-weight:800}
+.stat .v.ok{color:var(--ok)}.stat .v.warn{color:var(--warn)}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 20px;font-size:14px;
+font-weight:600;color:var(--sub);cursor:pointer}
+.tab.active{background:var(--ink);color:var(--kb-yellow);border-color:var(--ink)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pane-hd{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700;
+color:var(--sub);display:flex;justify-content:space-between}
+iframe{width:100%;height:720px;border:0;background:#fff}
+.fieldwrap{max-height:720px;overflow-y:auto}
+table.fields{width:100%;border-collapse:collapse}
+table.fields td{padding:9px 16px;border-bottom:1px solid #f0f1f3;font-size:13.5px;vertical-align:top}
+table.fields td.k{width:210px;color:var(--sub);font-family:monospace;font-size:12px}
+tr.low td{background:var(--warn-bg)}
+tr.wrong td{background:var(--danger-bg)}
+.conf{float:right;font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px}
+.conf.hi{color:var(--ok);background:var(--ok-bg)}
+.conf.low{color:var(--warn);background:#fef0c7}
+.truth{display:block;margin-top:4px;font-size:11.5px;color:var(--danger)}
+.empty{padding:40px;text-align:center;color:var(--sub)}
+footer{margin-top:26px;font-size:12px;color:#98a2b3;line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+.cta{margin-top:22px;display:flex;gap:12px}
+.btn{border:0;border-radius:10px;padding:14px 26px;font-size:15px;font-weight:700;text-decoration:none;display:inline-block}
+.btn.primary{background:var(--kb-yellow);color:var(--ink)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--sub)}
+</style></head><body>
+<div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
+  <span class="live">● LIVE — extract.py 실제 출력</span>
+  <span class="step">① 업로드 → <b>② 판독</b> → ③ 하자 검사 → ④ 환노출·처방</span></div>
+<main>
+  <div class="summary">
+    <div class="stat"><div class="k">케이스</div><div class="v">DEFECT-001</div></div>
+    <div class="stat"><div class="k">추출 필드 수</div><div class="v">76</div></div>
+    
+    <div class="stat"><div class="k">확인 필요 (신뢰도 &lt;0.8)</div>
+      <div class="v ok">0</div></div>
+    <div class="stat"><div class="k">판독 불가</div><div class="v">0</div></div>
+  </div>
+  <div class="tabs"><button class="tab active" onclick="show(0)">📜 신용장</button><button class="tab" onclick="show(1)">🧾 상업송장</button><button class="tab" onclick="show(2)">🚢 선하증권</button></div>
+  <div id="p0" style="display:grid" class="split">
+  <div class="pane"><div class="pane-hd"><span>원본 서류</span><span>DEFECT-001_lc.html</span></div>
+    <iframe src="../render/sample_output/DEFECT-001_lc.html"></iframe></div>
+  <div class="pane"><div class="pane-hd"><span>추출 필드</span>
+    <span>신뢰도 0.8 미만 노랑 · 정답 불일치 빨강</span></div>
+    <div class="fieldwrap"><table class="fields"><tr class=""><td class="k">lc_number</td><td>LC-2026-04581 </td></tr><tr class=""><td class="k">issuing_bank</td><td>VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY </td></tr><tr class=""><td class="k">advising_bank</td><td>KB KOOKMIN BANK, SEOUL </td></tr><tr class=""><td class="k">issue_date</td><td>2026-05-12 </td></tr><tr class=""><td class="k">expiry.date</td><td>2026-08-10 </td></tr><tr class=""><td class="k">expiry.place</td><td>SEOUL, KOREA </td></tr><tr class=""><td class="k">applicant.name</td><td>MEKONG INDUSTRIAL TRADING CO., LTD </td></tr><tr class=""><td class="k">applicant.address</td><td>88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM </td></tr><tr class=""><td class="k">applicant.country</td><td>VN </td></tr><tr class=""><td class="k">beneficiary.name</td><td>HANSOL PRECISION CO., LTD. </td></tr><tr class=""><td class="k">beneficiary.address</td><td>217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA </td></tr><tr class=""><td class="k">beneficiary.country</td><td>KR </td></tr><tr class=""><td class="k">currency</td><td>USD </td></tr><tr class=""><td class="k">amount</td><td>84000 </td></tr><tr class=""><td class="k">available_with_by</td><td>ANY BANK BY NEGOTIATION </td></tr><tr class=""><td class="k">partial_shipments</td><td>NOT ALLOWED </td></tr><tr class=""><td class="k">transhipment</td><td>NOT ALLOWED </td></tr><tr class=""><td class="k">port_of_loading</td><td>BUSAN, KOREA </td></tr><tr class=""><td class="k">port_of_discharge</td><td>HO CHI MINH CITY, VIETNAM </td></tr><tr class=""><td class="k">latest_shipment_date</td><td>2026-07-15 </td></tr><tr class=""><td class="k">goods_description</td><td>CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-720, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2605, FOB BUSAN INCOTERMS 2020 </td></tr><tr class=""><td class="k">documents_required[0].doc_name</td><td>SIGNED COMMERCIAL INVOICE </td></tr><tr class=""><td class="k">documents_required[0].copies</td><td>IN 3 ORIGINALS </td></tr><tr class=""><td class="k">documents_required[0].requirements</td><td>INDICATING THIS L/C NUMBER </td></tr><tr class=""><td class="k">documents_required[1].doc_name</td><td>FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING </td></tr><tr class=""><td class="k">documents_required[1].copies</td><td>3/3 ORIGINALS </td></tr><tr class=""><td class="k">documents_required[1].requirements</td><td>MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT </td></tr><tr class=""><td class="k">documents_required[2].doc_name</td><td>PACKING LIST </td></tr><tr class=""><td class="k">documents_required[2].copies</td><td>IN 3 COPIES </td></tr><tr class=""><td class="k">additional_conditions[0]</td><td>ALL DOCUMENTS MUST BE ISSUED IN ENGLISH </td></tr><tr class=""><td class="k">presentation_period_days</td><td>21 </td></tr><tr class=""><td class="k">confirmation_instructions</td><td>WITHOUT </td></tr></table></div></div>
+</div><div id="p1" style="display:none" class="split">
+  <div class="pane"><div class="pane-hd"><span>원본 서류</span><span>DEFECT-001_invoice.html</span></div>
+    <iframe src="../render/sample_output/DEFECT-001_invoice.html"></iframe></div>
+  <div class="pane"><div class="pane-hd"><span>추출 필드</span>
+    <span>신뢰도 0.8 미만 노랑 · 정답 불일치 빨강</span></div>
+    <div class="fieldwrap"><table class="fields"><tr class=""><td class="k">invoice_number</td><td>INV-2026-0713 </td></tr><tr class=""><td class="k">invoice_date</td><td>2026-07-16 </td></tr><tr class=""><td class="k">lc_number_ref</td><td>LC-2026-04581 </td></tr><tr class=""><td class="k">seller.name</td><td>HANSOL PRECISION CO., LTD. </td></tr><tr class=""><td class="k">seller.address</td><td>217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA </td></tr><tr class=""><td class="k">buyer.name</td><td>MEKONG INDUSTRIAL TRADING CO., LTD </td></tr><tr class=""><td class="k">buyer.address</td><td>88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM </td></tr><tr class=""><td class="k">currency</td><td>USD </td></tr><tr class=""><td class="k">total_amount</td><td>84000 </td></tr><tr class=""><td class="k">goods[0].description</td><td>CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-702, AS PER PROFORMA INVOICE NO. PI-2605 </td></tr><tr class=""><td class="k">goods[0].quantity</td><td>4000 </td></tr><tr class=""><td class="k">goods[0].unit</td><td>PCS </td></tr><tr class=""><td class="k">goods[0].unit_price</td><td>21.0 </td></tr><tr class=""><td class="k">goods[0].amount</td><td>84000 </td></tr><tr class=""><td class="k">goods[0].hs_code</td><td>7616.99 </td></tr><tr class=""><td class="k">incoterms.term</td><td>FOB </td></tr><tr class=""><td class="k">incoterms.place</td><td>BUSAN </td></tr><tr class=""><td class="k">payment_terms</td><td>L/C AT SIGHT </td></tr><tr class=""><td class="k">shipping_marks</td><td>MEKONG / HCMC / C/NO. 1-160 </td></tr><tr class=""><td class="k">signed</td><td>True </td></tr></table></div></div>
+</div><div id="p2" style="display:none" class="split">
+  <div class="pane"><div class="pane-hd"><span>원본 서류</span><span>DEFECT-001_bl.html</span></div>
+    <iframe src="../render/sample_output/DEFECT-001_bl.html"></iframe></div>
+  <div class="pane"><div class="pane-hd"><span>추출 필드</span>
+    <span>신뢰도 0.8 미만 노랑 · 정답 불일치 빨강</span></div>
+    <div class="fieldwrap"><table class="fields"><tr class=""><td class="k">bl_number</td><td>KMT-BSN-2607180 </td></tr><tr class=""><td class="k">issue_date</td><td>2026-07-18 </td></tr><tr class=""><td class="k">shipped_on_board.indicated</td><td>True </td></tr><tr class=""><td class="k">shipped_on_board.date</td><td>2026-07-18 </td></tr><tr class=""><td class="k">shipped_on_board.method</td><td>on_board_notation </td></tr><tr class=""><td class="k">vessel_name</td><td>SUNRISE GLORY </td></tr><tr class=""><td class="k">voyage_number</td><td>V.088E </td></tr><tr class=""><td class="k">place_of_receipt</td><td>BUSAN CY </td></tr><tr class=""><td class="k">port_of_loading</td><td>BUSAN, KOREA </td></tr><tr class=""><td class="k">port_of_discharge</td><td>HO CHI MINH CITY, VIETNAM </td></tr><tr class=""><td class="k">place_of_delivery</td><td>HO CHI MINH CITY CY </td></tr><tr class=""><td class="k">shipper.name</td><td>HANSOL PRECISION CO., LTD. </td></tr><tr class=""><td class="k">shipper.address</td><td>217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA </td></tr><tr class=""><td class="k">consignee.raw_text</td><td>TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK </td></tr><tr class=""><td class="k">consignee.is_to_order</td><td>True </td></tr><tr class=""><td class="k">notify_party</td><td>MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM </td></tr><tr class=""><td class="k">goods_description</td><td>160 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS </td></tr><tr class=""><td class="k">container_numbers[0]</td><td>KMTU2204581 </td></tr><tr class=""><td class="k">freight_terms</td><td>COLLECT </td></tr><tr class=""><td class="k">clean</td><td>True </td></tr><tr class=""><td class="k">originals_count</td><td>3 </td></tr><tr class=""><td class="k">signature.signed</td><td>True </td></tr><tr class=""><td class="k">signature.carrier_name</td><td>KOREA MARINE TRANSPORT CO., LTD. </td></tr><tr class=""><td class="k">signature.signer_capacity</td><td>unclear </td></tr></table></div></div>
+</div>
+  <div class="cta">
+    <a class="btn primary" href="screen3_live.html">하자 검사 실행 →</a>
+    <a class="btn ghost" href="index.html">← 데모 홈</a>
+  </div>
+  <footer>생성 2026-07-27 00:29 · 추출 pipeline/extract.py ·
+    이 화면의 필드값은 하드코딩이 아니라 실제 추출 결과입니다.</footer>
+</main>
+<script>
+function show(i){for(let k=0;k<3;k++){
+  const p=document.getElementById('p'+k); if(p) p.style.display = (k===i?'grid':'none');
+  document.querySelectorAll('.tab')[k].classList.toggle('active', k===i);}}
+</script></body></html>

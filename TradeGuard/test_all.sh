@@ -73,6 +73,20 @@ run "케이스 JSON → 서류 HTML 3종" "python3 render/render.py samples/DEFE
 run "미치환 템플릿 변수 없음" "! grep -l '{{' /tmp/tg_render/*.html"
 run "하자 값이 서류에 반영됨 (AH-702 vs AH-720)" "grep -q 'AH-702' /tmp/tg_render/DEFECT-001_invoice.html && grep -q 'AH-720' /tmp/tg_render/DEFECT-001_lc.html"
 run "UI 4화면 + 런처 존재" "test -f mockups/index.html -a -f mockups/screen1_upload.html -a -f mockups/screen2_extraction.html -a -f mockups/screen3_discrepancy_report.html -a -f mockups/screen4_fx_simulator.html"
+run "LIVE 화면 재생성 (demo.sh 파이프라인)" "bash demo.sh --no-serve"
+run "LIVE 화면이 실제 판정을 반영 (CLEAN-017=A등급 / DEFECT-001=D등급)" "grep -q '>A<' mockups/live_CLEAN-017.html && grep -q '>D<' mockups/screen3_live.html"
+run "생성 HTML에 중첩 <a> 없음" "python3 -c \"
+import re,glob
+for f in glob.glob('mockups/*.html'):
+    d=0
+    for t in re.findall(r'</?a\\b', open(f).read()):
+        d += 1 if t=='<a' else -1
+        assert d<=1, f
+    assert d==0, f\""
+run "환율 스냅샷에 API 키 노출 없음" "python3 -c \"
+import json,re
+d=open('mockups/fx_snapshot.json').read()
+assert not re.search(r'[A-Z0-9]{16,}', d), '키 노출'\""
 run "화면 간 링크 유효" "python3 -c \"
 import re,os,glob
 for f in glob.glob('mockups/*.html'):

@@ -43,6 +43,7 @@ def load_env(path=None):
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             k, v = line.split("=", 1)
+            v = re.split(r"\s+#", v, maxsplit=1)[0]  # 인라인 주석(" # ...") 제거
             os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 

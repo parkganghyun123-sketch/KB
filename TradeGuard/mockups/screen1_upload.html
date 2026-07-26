@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TradeGuard — 서류 업로드</title>
+<style>
+  :root { --kb-yellow: #FFBC00; --ink: #26282c; --sub: #696e76; --line: #e4e6ea;
+          --card: #fff; --bg: #f6f7f8; --ok: #067647; --ok-bg: #ecfdf3; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1280px; margin: 0 auto; background: var(--bg); color: var(--ink);
+         font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  .topbar { background: #fff; border-bottom: 1px solid var(--line); padding: 14px 40px;
+            display: flex; align-items: center; gap: 12px; }
+  .logo-dot { width: 26px; height: 26px; border-radius: 7px; background: var(--kb-yellow);
+              display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .topbar b { font-size: 17px; }
+  .topbar .step { margin-left: auto; color: var(--sub); font-size: 13px; }
+  .topbar .step b { font-size: 13px; }
+  main { padding: 40px; }
+  h1 { font-size: 24px; letter-spacing: -0.5px; }
+  .lead { color: var(--sub); margin: 10px 0 30px; font-size: 15px; line-height: 1.6; }
+  .zones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .zone { background: var(--card); border: 2px dashed #c9cdd3; border-radius: 16px;
+          padding: 34px 24px; text-align: center; cursor: pointer; transition: border-color .15s; }
+  .zone:hover { border-color: var(--kb-yellow); }
+  .zone .icon { font-size: 34px; margin-bottom: 12px; }
+  .zone h3 { font-size: 16px; margin-bottom: 6px; }
+  .zone p { font-size: 12.5px; color: var(--sub); line-height: 1.5; }
+  .zone.filled { border: 2px solid var(--ok); background: var(--ok-bg); }
+  .badge { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 700;
+           background: var(--ok); color: #fff; border-radius: 999px; padding: 4px 12px; }
+  .cta-bar { margin-top: 36px; display: flex; gap: 12px; align-items: center; }
+  .btn { border: 0; border-radius: 10px; padding: 15px 28px; font-size: 15px; font-weight: 700;
+         cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn.primary { background: var(--kb-yellow); color: var(--ink); }
+  .btn.primary[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+  .btn.ghost { background: #fff; border: 1px solid var(--line); color: var(--sub); }
+  .hint { font-size: 13px; color: var(--sub); }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo-dot">T</div><b>TradeGuard</b>
+    <span class="step"><b>① 업로드</b> → ② 판독 → ③ 하자 검사 → ④ 환노출·처방</span>
+  </div>
+  <main>
+    <h1>수출 서류 3종을 올려주세요</h1>
+    <p class="lead">이미지(JPG/PNG) 또는 PDF. 업로드 즉시 AI가 문서 종류를 자동 판별합니다.<br>
+       심사 시연은 아래 <b>샘플 케이스 불러오기</b> 버튼 하나로 진행할 수 있습니다.</p>
+
+    <div class="zones" id="zones">
+      <div class="zone" data-doc="lc">
+        <div class="icon">📜</div>
+        <h3>신용장 (L/C)</h3>
+        <p>MT700 사본 · 최대 3페이지</p>
+      </div>
+      <div class="zone" data-doc="invoice">
+        <div class="icon">🧾</div>
+        <h3>상업송장 (Invoice)</h3>
+        <p>Commercial Invoice 원본 스캔</p>
+      </div>
+      <div class="zone" data-doc="bl">
+        <div class="icon">🚢</div>
+        <h3>선하증권 (B/L)</h3>
+        <p>Bill of Lading 원본 스캔</p>
+      </div>
+    </div>
+
+    <div class="cta-bar">
+      <button class="btn ghost" onclick="loadSample()">⚡ 샘플 케이스 불러오기 (DEFECT-001)</button>
+      <a class="btn primary" id="goNext" href="screen2_extraction.html" aria-disabled="true">판독 시작 →</a>
+      <span class="hint" id="hint">서류 3종을 모두 올리면 판독을 시작할 수 있습니다</span>
+    </div>
+  </main>
+
+<script>
+const NAMES = { lc: "LC-2026-04581.png", invoice: "INV-2026-0713.png", bl: "KMT-BSN-2607180.png" };
+const CLASSIFIED = { lc: "letter_of_credit", invoice: "commercial_invoice", bl: "bill_of_lading" };
+let filled = 0;
+
+function fillZone(z) {
+  if (z.classList.contains("filled")) return;
+  const doc = z.dataset.doc;
+  z.classList.add("filled");
+  z.innerHTML = `<div class="icon">✅</div><h3>${NAMES[doc]}</h3>
+    <p>문서 판별 완료</p><span class="badge">${CLASSIFIED[doc]}</span>`;
+  filled++;
+  if (filled === 3) {
+    document.getElementById("goNext").removeAttribute("aria-disabled");
+    document.getElementById("hint").textContent = "3종 업로드 완료 — 판독을 시작하세요";
+  }
+}
+document.querySelectorAll(".zone").forEach(z => z.addEventListener("click", () => fillZone(z)));
+function loadSample() { document.querySelectorAll(".zone").forEach(fillZone); }
+</script>
+</body>
+</html>

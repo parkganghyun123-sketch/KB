@@ -96,7 +96,39 @@ for f in glob.glob('mockups/*.html'):
     for h in re.findall(r'href=\\\"([^\\\"]+\.html)\\\"', open(f).read()):
         assert os.path.exists(os.path.join('mockups',h)), f'{f} -> {h}'\""
 
-echo "══ 5. 통합 — 파이프라인 임포트 & 시크릿 ══"
+echo "══ 5. 백엔드 API (서버 기동 → 샘플 분석 → 종료) ══"
+if python3 -c "import fastapi, uvicorn" 2>/dev/null; then
+  run "서버 기동 · /api/health · 샘플 분석 3종 (무료)" "python3 - <<'PYEOF'
+import json, subprocess, sys, time, urllib.request
+p = subprocess.Popen([sys.executable, 'server/app.py', '--port', '8899'],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+try:
+    for _ in range(40):
+        try:
+            urllib.request.urlopen('http://127.0.0.1:8899/api/health', timeout=1); break
+        except Exception: time.sleep(0.3)
+    else: raise SystemExit('서버 기동 실패')
+    h = json.load(urllib.request.urlopen('http://127.0.0.1:8899/api/health'))
+    assert h['modes']['sample'], '샘플 모드 비활성'
+    expect = {'CLEAN-017':'A', 'DEFECT-019':'C', 'DEFECT-001':'D'}
+    for cid, want in expect.items():
+        req = urllib.request.Request('http://127.0.0.1:8899/api/analyze/sample',
+              data=json.dumps({'case_id':cid}).encode(),
+              headers={'Content-Type':'application/json'})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        got = d['report']['overall_risk']['grade']
+        assert got == want, f'{cid}: {got} != {want}'
+        assert d['meta']['cost_usd'] == 0.0, '샘플 모드인데 비용 발생'
+        assert len(d['fx']['scenarios']) == 3, '환노출 시나리오 누락'
+    assert urllib.request.urlopen('http://127.0.0.1:8899/').status == 200, '프론트 서빙 실패'
+finally:
+    p.terminate(); p.wait(timeout=10)
+PYEOF"
+else
+  echo "  ⏭  건너뜀 (pip install fastapi \"uvicorn[standard]\" python-multipart)"
+fi
+
+echo "══ 6. 통합 — 파이프라인 임포트 & 시크릿 ══"
 run "unittest 스위트 (tests/)" "python3 -m unittest discover -s tests"
 run "모든 모듈 임포트 가능" "python3 -c \"
 import sys; sys.path.insert(0,'pipeline')

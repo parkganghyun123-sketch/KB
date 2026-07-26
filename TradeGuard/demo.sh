@@ -43,10 +43,19 @@ echo "════════════════════════�
 echo "  데모 준비 완료"
 echo "  시나리오: DEMO_시나리오.md"
 if [ "$SERVE" -eq 1 ]; then
-  echo "  → http://localhost:$PORT/mockups/   (Ctrl+C로 종료)"
-  echo "════════════════════════════════════════"
-  python3 -m http.server "$PORT" >/dev/null 2>&1
+  if python3 -c "import fastapi, uvicorn" 2>/dev/null; then
+    echo "  → http://localhost:$PORT/            ★ 실동작 앱 (업로드·분석)"
+    echo "  → http://localhost:$PORT/mockups/    정적 화면 모음"
+    echo "════════════════════════════════════════"
+    python3 server/app.py --port "$PORT"
+  else
+    echo "  ⚠️  FastAPI 미설치 — 정적 화면만 제공합니다."
+    echo "     실동작 앱을 쓰려면: pip install fastapi \"uvicorn[standard]\" python-multipart"
+    echo "  → http://localhost:$PORT/mockups/   (Ctrl+C로 종료)"
+    echo "════════════════════════════════════════"
+    python3 -m http.server "$PORT" >/dev/null 2>&1
+  fi
 else
-  echo "  서버는 띄우지 않았습니다: python3 -m http.server $PORT"
+  echo "  서버는 띄우지 않았습니다: python3 server/app.py --port $PORT"
   echo "════════════════════════════════════════"
 fi

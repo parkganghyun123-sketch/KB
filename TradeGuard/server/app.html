@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TradeGuard — 수출 대금회수 리스크 진단</title>
+<style>
+:root{--kb-yellow:#FFBC00;--ink:#26282c;--sub:#696e76;--line:#e4e6ea;--card:#fff;--bg:#f6f7f8;
+--danger:#d92d20;--danger-bg:#fef0ef;--warn:#b54708;--warn-bg:#fffaeb;--ok:#067647;--ok-bg:#ecfdf3;
+--blue:#175cd3;--blue-bg:#eff6ff}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
+.topbar b{font-size:17px}
+.steps{margin-left:auto;display:flex;gap:6px;font-size:13px;color:var(--sub)}
+.steps .s{padding:4px 10px;border-radius:999px}
+.steps .s.on{background:var(--ink);color:var(--kb-yellow);font-weight:700}
+.steps .s.done{color:var(--ok)}
+.provider{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--sub)}
+main{max-width:1280px;margin:0 auto;padding:26px 40px 80px}
+h2.sec{font-size:16px;margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+h2.sec .count{background:var(--danger);color:#fff;font-size:12px;border-radius:999px;padding:2px 9px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.hide{display:none!important}
+
+/* 모드 선택 */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.mode{border:2px solid var(--line);border-radius:14px;padding:20px 22px;cursor:pointer;background:#fff;text-align:left;font-family:inherit}
+.mode:hover{border-color:var(--kb-yellow)}
+.mode.on{border-color:var(--ink);background:#fffdf5}
+.mode h3{font-size:16px;margin-bottom:6px}
+.mode p{font-size:13px;color:var(--sub);line-height:1.6}
+.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:6px}
+.tag.free{background:var(--ok-bg);color:var(--ok)}
+.tag.paid{background:var(--warn-bg);color:var(--warn)}
+
+/* 샘플 목록 */
+.samples{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sample{border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;background:#fff;text-align:left;font-family:inherit}
+.sample:hover{border-color:var(--kb-yellow)}
+.sample .id{font-family:monospace;font-size:12px;color:var(--sub)}
+.sample .g{float:right;font-weight:800;font-size:16px}
+.sample .g.A{color:var(--ok)}.sample .g.B{color:var(--warn)}.sample .g.C,.sample .g.D{color:var(--danger)}
+.sample .n{font-size:12.5px;color:var(--sub);margin-top:6px;line-height:1.5}
+
+/* 업로드 */
+.drop{border:2px dashed #c9cdd3;border-radius:14px;padding:36px;text-align:center;background:#fff}
+.drop.over{border-color:var(--kb-yellow);background:#fffdf5}
+.filelist{margin-top:12px;font-size:13px;color:var(--sub)}
+
+/* 진행 */
+.progress{display:flex;gap:10px;align-items:center;font-size:14px}
+.spinner{width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--kb-yellow);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.plog{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.9;font-family:monospace}
+
+/* 결과 */
+.grade-badge{width:100px;height:100px;border-radius:20px;display:grid;place-items:center;flex-shrink:0;border:2px solid}
+.grade-badge.A{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.grade-badge.B{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.grade-badge.C,.grade-badge.D{background:var(--danger-bg);border-color:var(--danger);color:var(--danger)}
+.grade-badge .g{font-size:46px;font-weight:800;line-height:1}
+.hero{display:flex;gap:22px;align-items:center}
+.hero h1{font-size:21px;margin-bottom:6px}
+.hero p{color:var(--sub);font-size:14px;line-height:1.6;max-width:740px}
+.chips{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.chip{font-size:12.5px;padding:5px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--sub)}
+.chip.red{background:var(--danger-bg);border-color:#f5c6c2;color:var(--danger);font-weight:600}
+.chip.ok{background:var(--ok-bg);border-color:#a6f4c5;color:var(--ok);font-weight:600}
+
+.disc{background:#fff;border:1px solid var(--line);border-left:4px solid var(--danger);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.disc.medium{border-left-color:var(--warn)}.disc.low{border-left-color:var(--sub)}
+.disc-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sev{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:6px}
+.sev.high{background:var(--danger-bg);color:var(--danger)}
+.sev.medium{background:var(--warn-bg);color:var(--warn)}
+.sev.low{background:var(--bg);color:var(--sub)}
+.disc-head h3{font-size:15px}
+.evi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.evi-box{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.evi-box.single{grid-column:1/-1}
+.evi-box .d{font-size:11px;color:var(--sub);text-transform:uppercase;font-weight:600;margin-bottom:4px}
+.evi-box .f{font-size:11.5px;color:#8a9098;font-family:monospace;margin-bottom:5px}
+.evi-box .v{font-size:13.5px;font-family:"SF Mono",Consolas,monospace;line-height:1.5;word-break:break-word}
+.ucp{display:flex;gap:10px;background:var(--bg);border-radius:8px;padding:11px 14px;margin-bottom:10px}
+.ucp-badge{flex-shrink:0;background:var(--ink);color:var(--kb-yellow);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:6px;height:fit-content}
+.ucp q{color:var(--sub);font-size:13px;line-height:1.6}
+.fix{background:var(--blue-bg);border:1px solid #d3e2fb;border-radius:8px;padding:11px 14px;font-size:13.5px;color:var(--blue);line-height:1.6}
+.fix b{font-size:12px;display:block;margin-bottom:3px}
+
+table.fields{width:100%;border-collapse:collapse}
+table.fields td{padding:8px 14px;border-bottom:1px solid #f0f1f3;font-size:13px;vertical-align:top}
+table.fields td.k{width:230px;color:var(--sub);font-family:monospace;font-size:11.5px}
+tr.low td{background:var(--warn-bg)}
+.doctabs{display:flex;gap:8px;margin-bottom:12px}
+.dtab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;font-family:inherit}
+.dtab.on{background:var(--ink);color:var(--kb-yellow);border-color:var(--ink)}
+
+.fxgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.fxcell{text-align:center;border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
+.fxcell .nm{font-size:13px;font-weight:700}
+.fxcell .rt{font-size:12px;color:var(--sub);margin:4px 0}
+.fxcell .pl{font-size:17px;font-weight:800}
+.fxcell .pl.pos{color:var(--ok)}.fxcell .pl.neg{color:var(--danger)}.fxcell .pl.zero{color:var(--sub)}
+.rx{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.rxcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.rxcard .t{font-size:11px;font-weight:800;color:var(--blue);background:var(--blue-bg);padding:3px 10px;border-radius:999px}
+.rxcard h4{font-size:15px;margin:8px 0 5px}.rxcard p{font-size:12.5px;color:var(--sub);line-height:1.6}
+
+.cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:13px 24px;font-size:14.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;font-family:inherit}
+.btn.primary{background:var(--kb-yellow);color:var(--ink)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--sub)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.err{background:var(--danger-bg);border:1px solid #f5c6c2;color:var(--danger);border-radius:10px;padding:14px 18px;font-size:13.5px;line-height:1.6}
+.meta{font-size:12px;color:#98a2b3;margin-top:16px;line-height:1.7;border-top:1px solid var(--line);padding-top:12px}
+
+@media print{
+  @page{size:A4;margin:12mm}
+  .topbar,.cta,.modes,.samples,.drop,.doctabs,#step1{display:none!important}
+  body{background:#fff}main{padding:0;max-width:none}
+  .card,.disc,.fxcell,.rxcard{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo-dot">T</div><b>TradeGuard</b>
+  <span class="provider" id="prov">연결 확인 중…</span>
+  <div class="steps">
+    <span class="s on" id="st1">① 업로드</span><span class="s" id="st2">② 판독</span>
+    <span class="s" id="st3">③ 하자 검사</span><span class="s" id="st4">④ 환노출</span>
+  </div>
+</div>
+
+<main>
+  <!-- STEP 1 -->
+  <section id="step1">
+    <div class="modes">
+      <button class="mode on" id="mSample" onclick="setMode('sample')">
+        <h3>샘플 케이스로 시연<span class="tag free">비용 0원</span></h3>
+        <p>미리 만들어둔 무역서류 케이스를 분석합니다. LLM을 호출하지 않아 즉시 끝나고,
+           네트워크가 끊겨도 동작합니다. <b>발표 시연에 권장.</b></p>
+      </button>
+      <button class="mode" id="mUpload" onclick="setMode('upload')">
+        <h3>서류 이미지 업로드<span class="tag paid">서류 3장 ≈ $0.06</span></h3>
+        <p>실제 이미지를 올리면 AI가 판독합니다. 신용장·상업송장·선하증권 PNG/JPG.
+           10~30초 소요.</p>
+      </button>
+    </div>
+
+    <div id="paneSample">
+      <h2 class="sec">케이스 선택</h2>
+      <div class="samples" id="sampleList">불러오는 중…</div>
+    </div>
+
+    <div id="paneUpload" class="hide">
+      <h2 class="sec">서류 업로드</h2>
+      <div class="drop" id="drop">
+        <div style="font-size:34px">📄</div>
+        <p style="margin:10px 0 4px;font-weight:700">여기로 파일을 끌어다 놓거나 클릭해서 선택</p>
+        <p style="font-size:13px;color:var(--sub)">신용장 · 상업송장 · 선하증권 이미지 (PNG/JPG, 여러 장 가능)</p>
+        <input type="file" id="fileInput" multiple accept=".png,.jpg,.jpeg,.webp" style="display:none">
+        <div class="filelist" id="fileList"></div>
+      </div>
+      <div class="cta">
+        <button class="btn primary" id="btnUpload" onclick="runUpload()" disabled>분석 시작 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 진행 -->
+  <section id="loading" class="card hide">
+    <div class="progress"><div class="spinner"></div><b id="loadTitle">분석 중…</b></div>
+    <div class="plog" id="plog"></div>
+  </section>
+
+  <section id="errBox" class="hide"><div class="err" id="errMsg"></div>
+    <div class="cta"><button class="btn ghost" onclick="reset()">← 처음으로</button></div></section>
+
+  <!-- 결과 -->
+  <section id="result" class="hide">
+    <div class="card hero">
+      <div class="grade-badge" id="gb"><span class="g">-</span></div>
+      <div>
+        <h1 id="headline"></h1>
+        <p id="summary"></p>
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+
+    <h2 class="sec">발견된 하자 <span class="count" id="discCount">0</span></h2>
+    <div id="discList"></div>
+
+    <h2 class="sec">판독 결과 (추출 필드)</h2>
+    <div class="doctabs" id="docTabs"></div>
+    <div class="card" style="padding:0"><table class="fields" id="fieldTable"></table></div>
+
+    <h2 class="sec">환노출 &amp; 헤지 처방</h2>
+    <div class="card">
+      <div id="fxHead" style="font-size:14px;line-height:1.7"></div>
+      <div class="fxgrid" id="fxGrid"></div>
+      <div class="rx" id="rxList"></div>
+    </div>
+
+    <div class="meta" id="meta"></div>
+    <div class="cta">
+      <button class="btn primary" onclick="window.print()">🖨 리포트 PDF 저장</button>
+      <button class="btn ghost" onclick="reset()">← 다른 서류 분석</button>
+    </div>
+  </section>
+</main>
+
+<script>
+let MODE = "sample", FILES = [], DOCS = {}, CUR = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GRADE = {A:["하자가 발견되지 않았습니다","안전"],B:["경미한 하자가 있습니다","주의"],
+               C:["지급거절 가능성이 있습니다","위험"],D:["지급거절 가능성이 높습니다","고위험"]};
+
+fetch("/api/health").then(r => r.json()).then(h => {
+  $("prov").textContent = h.llm.available
+    ? `● ${h.llm.provider} 연결됨` : "● LLM 미연결 — 샘플 모드만 가능";
+  $("prov").style.color = h.llm.available ? "#067647" : "#b54708";
+  if (!h.llm.available) $("mUpload").disabled = true;
+}).catch(() => $("prov").textContent = "● 서버 응답 없음");
+
+fetch("/api/samples").then(r => r.json()).then(d => {
+  $("sampleList").innerHTML = d.samples.slice(0, 9).map(s => `
+    <button class="sample" onclick="runSample('${s.case_id}')">
+      <span class="g ${s.expected_grade||''}">${s.expected_grade||"?"}</span>
+      <span class="id">${esc(s.case_id)}</span>
+      <div class="n">${esc(s.note)}</div>
+    </button>`).join("");
+}).catch(() => $("sampleList").textContent = "샘플을 불러오지 못했습니다.");
+
+function setMode(m){
+  MODE = m;
+  $("mSample").classList.toggle("on", m === "sample");
+  $("mUpload").classList.toggle("on", m === "upload");
+  $("paneSample").classList.toggle("hide", m !== "sample");
+  $("paneUpload").classList.toggle("hide", m !== "upload");
+}
+
+// 업로드 UI
+const drop = $("drop"), fi = $("fileInput");
+drop.onclick = () => fi.click();
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); };
+fi.onchange = () => addFiles(fi.files);
+function addFiles(list){
+  FILES = [...list];
+  $("fileList").innerHTML = FILES.length
+    ? "선택됨: " + FILES.map(f => esc(f.name)).join(", ") : "";
+  $("btnUpload").disabled = !FILES.length;
+}
+
+function steps(n){
+  [1,2,3,4].forEach(i => {
+    const el = $("st"+i);
+    el.className = "s" + (i === n ? " on" : (i < n ? " done" : ""));
+  });
+}
+function log(msg){ $("plog").innerHTML += msg + "<br>"; }
+function showLoading(title){
+  $("step1").classList.add("hide"); $("errBox").classList.add("hide");
+  $("result").classList.add("hide"); $("loading").classList.remove("hide");
+  $("loadTitle").textContent = title; $("plog").innerHTML = "";
+}
+function fail(msg){
+  $("loading").classList.add("hide");
+  $("errBox").classList.remove("hide");
+  $("errMsg").innerHTML = "<b>분석 실패</b><br>" + esc(msg);
+}
+function reset(){
+  $("result").classList.add("hide"); $("errBox").classList.add("hide");
+  $("loading").classList.add("hide"); $("step1").classList.remove("hide");
+  steps(1); FILES = []; $("fileList").innerHTML = ""; $("btnUpload").disabled = true;
+}
+
+async function runSample(id){
+  showLoading(`${id} 분석 중…`); steps(2);
+  log("→ 저장된 서류 3종 로드");
+  try{
+    const r = await fetch("/api/analyze/sample", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({case_id:id})});
+    if(!r.ok) throw new Error((await r.json()).detail || r.statusText);
+    log("→ UCP600 규칙 교차 대조"); steps(3);
+    render(await r.json());
+  }catch(e){ fail(e.message); }
+}
+
+async function runUpload(){
+  showLoading("서류 판독 중… (10~30초)"); steps(2);
+  log(`→ 이미지 ${FILES.length}장 업로드`);
+  log("→ 문서 종류 분류 후 필드 추출 (AI)");
+  const fd = new FormData();
+  FILES.forEach(f => fd.append("files", f));
+  try{
+    const r = await fetch("/api/analyze/upload", {method:"POST", body: fd});
+    const j = await r.json();
+    if(!r.ok) throw new Error(typeof j.detail === "object" ?
+        (j.detail.message + " — " + (j.detail.errors||[]).join(" / ")) : (j.detail || r.statusText));
+    log("→ UCP600 규칙 교차 대조"); steps(3);
+    render(j);
+  }catch(e){ fail(e.message); }
+}
+
+function render(d){
+  CUR = d; DOCS = d.documents;
+  $("loading").classList.add("hide"); $("result").classList.remove("hide"); steps(4);
+  const r = d.report, g = r.overall_risk.grade;
+  $("gb").className = "grade-badge " + g;
+  $("gb").innerHTML = `<span class="g">${g}</span><span style="font-size:12px;font-weight:600">${GRADE[g][1]}</span>`;
+  $("headline").innerHTML = `${GRADE[g][0]} <span style="font-weight:700">· ${r.overall_risk.score} / 100</span>`;
+  $("summary").textContent = r.overall_risk.summary_ko;
+
+  const hi = r.discrepancies.filter(x=>x.severity==="high").length;
+  const me = r.discrepancies.filter(x=>x.severity==="medium").length;
+  const chips = [`<span class="chip">${esc(d.case_id)}</span>`,
+                 `<span class="chip">${r.documents_checked.length}종 서류 검사</span>`];
+  if(hi) chips.push(`<span class="chip red">HIGH ${hi}건</span>`);
+  if(me) chips.push(`<span class="chip">MEDIUM ${me}건</span>`);
+  if(!r.discrepancies.length) chips.push(`<span class="chip ok">하자 없음</span>`);
+  if(d.meta.mode==="sample") chips.push(`<span class="chip ok">비용 0원</span>`);
+  $("chips").innerHTML = chips.join("");
+
+  const order = {high:0, medium:1, low:2};
+  const ds = [...r.discrepancies].sort((a,b)=>order[a.severity]-order[b.severity]);
+  $("discCount").textContent = ds.length;
+  $("discList").innerHTML = ds.length ? ds.map(x => `
+    <article class="disc ${x.severity}">
+      <div class="disc-head"><span class="sev ${x.severity}">${x.severity.toUpperCase()}</span>
+        <h3>${esc(x.description_ko)}</h3>
+        <span style="margin-left:auto;color:#aab0b8;font-size:12px;font-family:monospace">${esc(x.id)}</span></div>
+      <div class="evi">${x.evidence.map(v => `
+        <div class="evi-box${x.evidence.length===1?" single":""}">
+          <div class="d">${esc(v.doc)}</div><div class="f">${esc(v.field)}</div>
+          <div class="v">${esc(v.value)}</div></div>`).join("")}</div>
+      <div class="ucp"><span class="ucp-badge">${esc(x.ucp_basis.article)}</span>
+        <q>${esc(x.ucp_basis.quote_ko||"")}</q></div>
+      ${x.suggested_fix_ko ? `<div class="fix"><b>수정 제안</b>${esc(x.suggested_fix_ko)}</div>` : ""}
+    </article>`).join("")
+    : `<div class="card" style="text-align:center;color:var(--sub);padding:36px">
+         교차 대조 결과 하자가 발견되지 않았습니다.</div>`;
+
+  const keys = Object.keys(DOCS);
+  $("docTabs").innerHTML = keys.map((k,i) =>
+    `<button class="dtab${i?"":" on"}" onclick="showDoc('${k}',this)">${esc(k)}</button>`).join("");
+  if(keys.length) showDoc(keys[0], $("docTabs").firstChild);
+
+  const fx = d.fx;
+  $("fxHead").innerHTML = fx.scenarios.length
+    ? `기준 환율 <b>${fx.spot_rate["KRW/USD"].toLocaleString()}</b> KRW/USD
+       <span class="chip ${fx.rate_source==="ecos"?"ok":""}" style="margin-left:8px">
+       ${fx.rate_source==="ecos" ? "● 한국은행 ECOS 실시간 "+esc(fx.rate_date) : "시연용 기본값"}</span>`
+    : "금액을 판독하지 못해 환노출을 계산할 수 없습니다.";
+  const NM = {krw_strong:"원화 강세 (−5%)", base:"기준", krw_weak:"원화 약세 (+5%)"};
+  $("fxGrid").innerHTML = fx.scenarios.map(s => {
+    const cls = s.pnl_krw > 0 ? "pos" : (s.pnl_krw < 0 ? "neg" : "zero");
+    const sign = s.pnl_krw > 0 ? "+" : "";
+    return `<div class="fxcell"><div class="nm">${NM[s.name]}</div>
+      <div class="rt">${s.assumed_rate.toLocaleString()} KRW/USD</div>
+      <div class="pl ${cls}">${sign}${Math.round(s.pnl_krw).toLocaleString()} 원</div></div>`;
+  }).join("");
+  $("rxList").innerHTML = (fx.hedge_recommendation.instruments||[]).map(i => `
+    <div class="rxcard"><span class="t">${esc(i.product_type).toUpperCase()}</span>
+      <h4>${esc(i.product_name_ko)}</h4><p>${esc(i.fit_reason_ko)}</p></div>`).join("")
+    + `<div class="rxcard" style="grid-column:1/-1;background:#26282c;color:#fff;border:0">
+         <p style="color:#fff">${esc(fx.hedge_recommendation.rationale_ko)}</p></div>`;
+
+  const m = d.meta;
+  $("meta").innerHTML = `${esc(m.source||"")} · 소요 ${m.elapsed_sec}초 ·
+    예상 비용 $${(m.cost_usd??0).toFixed(3)} · 판정 엔진 detect.py (결정적 규칙, LLM 미사용)
+    ${m.errors&&m.errors.length ? "<br>⚠️ "+m.errors.map(esc).join(" / ") : ""}`;
+}
+
+function showDoc(key, btn){
+  document.querySelectorAll(".dtab").forEach(b => b.classList.remove("on"));
+  if(btn) btn.classList.add("on");
+  const doc = DOCS[key] || {}, conf = doc.field_confidence || {};
+  const flat = [];
+  (function walk(o, p){
+    if(o && typeof o === "object" && !Array.isArray(o)){
+      for(const [k,v] of Object.entries(o)){
+        if(["field_confidence","unreadable_fields"].includes(k)) continue;
+        walk(v, p ? p+"."+k : k);
+      }
+    } else if(Array.isArray(o)){ o.forEach((v,i) => walk(v, p+"["+i+"]")); }
+    else if(o !== null && o !== undefined && o !== "") flat.push([p, o]);
+  })(doc, "");
+  $("fieldTable").innerHTML = flat.map(([k,v]) => {
+    const c = conf[k.split(".")[0]] ?? conf[k];
+    const low = c !== undefined && c < 0.8;
+    const badge = c !== undefined
+      ? `<span style="float:right;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;
+         background:${low?"#fef0c7":"#ecfdf3"};color:${low?"#b54708":"#067647"}">${c.toFixed(2)}${low?" 확인 필요":""}</span>` : "";
+    return `<tr class="${low?"low":""}"><td class="k">${esc(k)}</td><td>${esc(v)} ${badge}</td></tr>`;
+  }).join("");
+}
+</script>
+</body>
+</html>

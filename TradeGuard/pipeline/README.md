@@ -8,10 +8,17 @@
 ## 설치
 
 ```bash
-pip install anthropic jsonschema
-export ANTHROPIC_API_KEY=sk-ant-...   # git에 커밋 금지
-export ECOS_API_KEY=...               # 환노출 모듈(D5)용 — 역시 커밋 금지
+pip install jsonschema requests
+pip install anthropic        # Claude를 쓸 경우
+pip install openai           # GPT를 쓸 경우 (둘 중 하나만 있으면 됨)
+cp .env.example .env         # 키는 .env에만 — git 커밋 금지
+python3 llm.py --check       # 프로바이더 진단 (--live 추가 시 실호출 테스트)
+python3 fx_rates.py --check  # 환율 API 키 진단
 ```
+
+**LLM 프로바이더는 교체 가능합니다.** `llm.py`가 Anthropic/OpenAI를 추상화하므로
+`extract.py`·`detect.py`는 어느 키든 그대로 동작합니다. `.env`의 `LLM_PROVIDER`로
+고정하거나 `auto`(기본)로 두면 있는 키를 자동 선택합니다.
 
 ## 사용
 

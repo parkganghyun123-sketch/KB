@@ -58,11 +58,11 @@ def ev(doc, field, value):
 
 # ---------- LLM 의미 비교 (폴백 포함) ----------
 def _llm_client():
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        return None
+    """Claude/GPT 무관. 키·SDK가 없으면 None → 호출부는 휴리스틱 폴백으로 동작"""
     try:
-        import anthropic
-        return anthropic.Anthropic()
+        from llm import get_client, load_env
+        load_env()
+        return get_client()
     except ImportError:
         return None
 
@@ -73,25 +73,20 @@ def judge_goods_desc(lc_desc, inv_desc):
         return None
     client = _llm_client()
     if client:
-        msg = client.messages.create(
-            model=os.environ.get("TG_MODEL", "claude-sonnet-4-5"),
-            max_tokens=300,
-            system=(
-                "당신은 UCP600 18(c) 기준으로 상업송장의 물품명세가 신용장 45A 명세와 상응하는지 판정하는 "
-                "은행 서류심사역입니다. 송장은 신용장 명세의 일부를 생략할 수 있으나(허용), 모델번호·규격·수량 등이 "
-                "신용장과 '다르게' 기재되면 하자입니다(불허). JSON만 출력: "
-                '{"correspond": true|false, "reason_ko": "...", "conflicting_part": "..."}'
-            ),
-            messages=[{"role": "user", "content":
-                       f"<lc_45A>{lc_desc}</lc_45A>\n<invoice_desc>{inv_desc}</invoice_desc>"}],
-        )
         try:
-            r = json.loads(re.search(r"\{.*\}", msg.content[0].text, re.S).group())
+            text = client.complete(
+                system=("당신은 UCP600 18(c) 기준으로 상업송장의 물품명세가 신용장 45A 명세와 상응하는지 판정하는 "
+                        "은행 서류심사역입니다. 송장은 신용장 명세의 일부를 생략할 수 있으나(허용), 모델번호·규격·수량 등이 "
+                        "신용장과 '다르게' 기재되면 하자입니다(불허). JSON만 출력: "
+                        '{"correspond": true|false, "reason_ko": "...", "conflicting_part": "..."}'),
+                user=f"<lc_45A>{lc_desc}</lc_45A>\n<invoice_desc>{inv_desc}</invoice_desc>",
+                max_tokens=300, json_only=True)
+            r = json.loads(re.search(r"\{.*\}", text, re.S).group())
             if r.get("correspond"):
                 return None
             return ("high", r.get("reason_ko", "상품명세 불일치"), r.get("conflicting_part", ""))
-        except (json.JSONDecodeError, AttributeError):
-            pass  # LLM 출력 파싱 실패 → 휴리스틱 폴백
+        except Exception:
+            pass  # LLM 오류·파싱 실패 → 휴리스틱 폴백
     # 폴백: 참조 토큰 충돌 검사 (생략은 허용, '다른 값'만 하자)
     lc_t, inv_t = ref_tokens(lc_desc), ref_tokens(inv_desc)
     for t in sorted(inv_t - lc_t):
@@ -110,19 +105,16 @@ def judge_name(lc_name, doc_name):
         return ("medium", "구두점·축약 차이 (예: CO., LTD ↔ CO LTD) — 은행 재량이나 지적 위험 있음")
     client = _llm_client()
     if client:
-        msg = client.messages.create(
-            model=os.environ.get("TG_MODEL", "claude-sonnet-4-5"),
-            max_tokens=200,
-            system=('두 회사명이 동일 법인을 지칭하는지 판정. 오탈자·다른 회사면 불일치. '
-                    'JSON만 출력: {"same": true|false, "reason_ko": "..."}'),
-            messages=[{"role": "user", "content": f"A: {lc_name}\nB: {doc_name}"}],
-        )
         try:
-            r = json.loads(re.search(r"\{.*\}", msg.content[0].text, re.S).group())
+            text = client.complete(
+                system=('두 회사명이 동일 법인을 지칭하는지 판정. 오탈자·다른 회사면 불일치. '
+                        'JSON만 출력: {"same": true|false, "reason_ko": "..."}'),
+                user=f"A: {lc_name}\nB: {doc_name}", max_tokens=200, json_only=True)
+            r = json.loads(re.search(r"\{.*\}", text, re.S).group())
             if r.get("same"):
                 return None
             return ("high", r.get("reason_ko", "명칭 불일치"))
-        except (json.JSONDecodeError, AttributeError):
+        except Exception:
             pass
     return ("high", "명칭 불일치")
 
@@ -293,7 +285,8 @@ def main():
     data = json.loads(Path(args[0]).read_text(encoding="utf-8"))
     docs = data.get("documents", data)
     case_id = data.get("case_id", Path(args[0]).stem)
-    mode = "LLM(의미 비교 활성)" if _llm_client() else "오프라인 휴리스틱 폴백"
+    c = _llm_client()
+    mode = f"LLM 의미비교 활성({c.name})" if c else "오프라인 휴리스틱 폴백"
     pres = d(data.get("presentation_date"))
     print(f"[detect] case={case_id} · 판정 모드: {mode} · 제시일: {pres or '오늘(' + str(date.today()) + ')'}")
     report = build_report(case_id, docs, pres)

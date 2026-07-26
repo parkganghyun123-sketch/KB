@@ -38,7 +38,8 @@ def main():
     if not files:
         sys.exit(f"케이스 없음: {cases_dir}")
 
-    mode = "LLM 의미비교 활성" if _llm_client() else "오프라인 휴리스틱 폴백"
+    _c = _llm_client()
+    mode = f"LLM 의미비교 활성({_c.name})" if _c else "오프라인 휴리스틱 폴백"
     print(f"[evaluate] {len(files)}건 · 판정 모드: {mode}\n")
 
     tp = fp = fn = 0

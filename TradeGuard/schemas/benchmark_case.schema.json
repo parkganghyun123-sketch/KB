@@ -15,6 +15,7 @@
     },
     "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"], "description": "hard=오탈자 1~2자 수준의 미세 불일치" },
     "scenario_note_ko": { "type": "string", "description": "케이스 설정 요약 (예: 한국 화학제품 수출사 → 베트남 바이어, USD 84,000)" },
+    "presentation_date": { "type": ["string", "null"], "format": "date", "description": "서류 제시(예정)일. UCP600 14(c) 제시기한 판정 기준. 미지정 시 검출 엔진이 오늘 날짜를 사용" },
     "documents": {
       "type": "object",
       "required": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],

@@ -1,0 +1,384 @@
+#!/usr/bin/env python3
+"""TradeGuard 합성 벤치마크 생성기 — 40건(하자 20 · 정상 20)
+
+prompts/02_synthetic_benchmark.md의 배분표를 코드로 구현한다.
+결정적 생성(시드 고정)이므로 API 키 없이 즉시 40건을 만들 수 있고, 재현 가능하다.
+
+  · 정상 20건 = 완전정상 16 + "함정 정상" 4 (하자처럼 보이나 UCP600상 정상 → 오탐 측정용)
+  · 하자 20건 = 10개 유형 배분 + 복합 하자 2건
+  · 각 케이스에 ground_truth(discrepancy_report 형식) 자동 부착
+
+사용법:
+  python3 generate_cases.py --out cases            # 40건 JSON 생성
+  python3 generate_cases.py --out cases --render   # 생성 후 render.py로 HTML까지
+"""
+import json
+import random
+import subprocess
+import sys
+from datetime import date, timedelta
+from pathlib import Path
+
+SEED = 20260803
+ROOT = Path(__file__).resolve().parent.parent
+
+# ---------- 시나리오 풀 (가상 기업명) ----------
+INDUSTRIES = [
+    ("CNC MACHINED ALUMINUM HOUSING PARTS", "AH", "PCS", 21.0, "7616.99"),
+    ("POLYPROPYLENE RESIN COMPOUND", "PP", "MT", 1450.0, "3902.10"),
+    ("COTTON KNITTED T-SHIRTS", "TS", "PCS", 6.4, "6109.10"),
+    ("INSTANT RAMEN NOODLE (BOX OF 40)", "RN", "CTN", 18.5, "1902.30"),
+    ("LITHIUM-ION BATTERY CELLS 3.7V", "BC", "PCS", 3.2, "8507.60"),
+    ("AUTOMOTIVE RUBBER SEAL KIT", "RS", "SET", 9.8, "4016.93"),
+    ("STAINLESS STEEL PIPE FITTINGS", "SF", "PCS", 12.6, "7307.29"),
+    ("LED PANEL LIGHT 40W", "LP", "PCS", 15.3, "9405.11"),
+]
+EXPORTERS = [
+    ("HANSOL PRECISION CO., LTD.", "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"),
+    ("DAEYANG POLYMER CO., LTD.", "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"),
+    ("SEJIN TEXTILE CORPORATION", "45 SANDAN 3-RO, DAEGU, KOREA"),
+    ("NARAE FOODS CO., LTD.", "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"),
+    ("KOWON ENERGY CELL CO., LTD.", "300 TECHNO 2-RO, DAEJEON, KOREA"),
+]
+BUYERS = [
+    ("MEKONG INDUSTRIAL TRADING CO., LTD", "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+     "VN", "HO CHI MINH CITY, VIETNAM", "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY"),
+    ("PACIFIC RIM IMPORTS INC.", "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+     "US", "LOS ANGELES, USA", "FIRST PACIFIC NATIONAL BANK, LOS ANGELES"),
+    ("SHANGHAI HONGDA TRADE CO., LTD", "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+     "CN", "SHANGHAI, CHINA", "BANK OF EASTERN CHINA, SHANGHAI"),
+    ("BHARAT GLOBAL SOURCING PVT LTD", "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+     "IN", "NHAVA SHEVA, INDIA", "INDUS MERCANTILE BANK, MUMBAI"),
+    ("GULF STAR GENERAL TRADING LLC", "PO BOX 4471, DEIRA, DUBAI, UAE",
+     "AE", "JEBEL ALI, UAE", "EMIRATES COMMERCE BANK, DUBAI"),
+]
+VESSELS = ["SUNRISE GLORY", "PACIFIC VOYAGER", "HANJIN AURORA", "EVER PROSPER", "OCEAN SENTINEL"]
+CARRIERS = ["KOREA MARINE TRANSPORT CO., LTD.", "DONGBANG SHIPPING LINE", "SEOHAE CONTAINER LINES"]
+
+# 하자 배분표: (유형, 건수, 난이도)
+DEFECT_PLAN = [
+    ("AMOUNT_EXCEEDS_LC", 2, "easy"),
+    ("CURRENCY_MISMATCH", 1, "easy"),
+    ("GOODS_DESC_MISMATCH", 3, "hard"),
+    ("BENEFICIARY_NAME_MISMATCH", 2, "hard"),
+    ("LATE_SHIPMENT", 2, "easy"),
+    ("LC_EXPIRED_OR_LATE_PRESENTATION", 2, "medium"),
+    ("PORT_MISMATCH", 2, "medium"),
+    ("BL_SIGNATURE_DEFECT", 2, "medium"),
+    ("BL_NO_ONBOARD_NOTATION", 2, "medium"),
+    ("COMPOSITE", 2, "hard"),  # 2개 하자 동시
+]
+# 함정 정상 4종: 하자처럼 보이나 UCP600상 정상
+TRAP_KINDS = ["tolerance_ok", "bl_generic_desc", "partial_ok", "presentation_edge"]
+
+UCP = json.loads((ROOT / "pipeline" / "ucp600_kb.json").read_text(encoding="utf-8"))
+
+
+def ev(doc, field, value):
+    return {"doc": doc, "field": field, "value": str(value)}
+
+
+def gt_item(idx, dtype, sev, desc, evidence, kb_key, fix):
+    kb = UCP[kb_key]
+    return {"id": f"DISC-{idx:03d}", "type": dtype, "severity": sev, "description_ko": desc,
+            "evidence": evidence, "ucp_basis": {"article": kb["article"], "quote_ko": kb["quote_ko"]},
+            "suggested_fix_ko": fix}
+
+
+def base_case(rng, seq):
+    """정합성이 완전한 서류 3종을 만든다. 하자는 이후 mutate에서 주입."""
+    goods, code, unit, price, hs = rng.choice(INDUSTRIES)
+    exp_name, exp_addr = rng.choice(EXPORTERS)
+    buy_name, buy_addr, cc, discharge, bank = rng.choice(BUYERS)
+    model = f"{code}-{rng.randint(100, 999)}"
+    qty = rng.choice([500, 1000, 2000, 3000, 4000, 6000])
+    amount = round(qty * price, 2)
+    pi_no = f"PI-{rng.randint(2000, 2699)}"
+
+    issue = date(2026, 5, 1) + timedelta(days=rng.randint(0, 25))
+    latest_ship = issue + timedelta(days=rng.randint(45, 70))
+    ship = latest_ship - timedelta(days=rng.randint(1, 10))
+    expiry = latest_ship + timedelta(days=rng.randint(18, 30))
+    inv_date = ship - timedelta(days=rng.randint(0, 3))
+    loading = "BUSAN, KOREA" if rng.random() < 0.7 else "INCHEON, KOREA"
+    lc_no = f"LC-2026-{rng.randint(10000, 99999)}"
+    desc_full = (f"{goods}, MODEL {model}, {qty:,} {unit} AS PER PROFORMA INVOICE NO. {pi_no}, "
+                 f"FOB {loading.split(',')[0]} INCOTERMS 2020")
+
+    lc = {
+        "doc_type": "letter_of_credit", "lc_number": lc_no,
+        "issuing_bank": bank, "advising_bank": "KB KOOKMIN BANK, SEOUL",
+        "issue_date": issue.isoformat(),
+        "expiry": {"date": expiry.isoformat(), "place": "SEOUL, KOREA"},
+        "applicant": {"name": buy_name, "address": buy_addr, "country": cc},
+        "beneficiary": {"name": exp_name, "address": exp_addr, "country": "KR"},
+        "currency": "USD", "amount": amount, "tolerance": None,
+        "available_with_by": "ANY BANK BY NEGOTIATION",
+        "partial_shipments": "NOT ALLOWED", "transhipment": "NOT ALLOWED",
+        "port_of_loading": loading, "port_of_discharge": discharge,
+        "latest_shipment_date": latest_ship.isoformat(),
+        "goods_description": desc_full,
+        "documents_required": [
+            {"doc_name": "SIGNED COMMERCIAL INVOICE", "copies": "IN 3 ORIGINALS",
+             "requirements": "INDICATING THIS L/C NUMBER"},
+            {"doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING", "copies": "3/3 ORIGINALS",
+             "requirements": f"MADE OUT TO ORDER OF {bank.split(',')[0]} MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"},
+            {"doc_name": "PACKING LIST", "copies": "IN 3 COPIES", "requirements": None},
+        ],
+        "additional_conditions": ["ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"],
+        "presentation_period_days": 21, "confirmation_instructions": "WITHOUT",
+        "field_confidence": {}, "unreadable_fields": [],
+    }
+    inv = {
+        "doc_type": "commercial_invoice", "invoice_number": f"INV-2026-{rng.randint(1000, 9999)}",
+        "invoice_date": inv_date.isoformat(), "lc_number_ref": lc_no,
+        "seller": {"name": exp_name, "address": exp_addr},
+        "buyer": {"name": buy_name, "address": buy_addr},
+        "currency": "USD", "total_amount": amount,
+        "goods": [{"description": f"{goods}, MODEL {model}, AS PER PROFORMA INVOICE NO. {pi_no}",
+                   "quantity": qty, "unit": unit, "unit_price": price, "amount": amount, "hs_code": hs}],
+        "incoterms": {"term": "FOB", "place": loading.split(",")[0]},
+        "payment_terms": "L/C AT SIGHT",
+        "shipping_marks": f"{buy_name.split()[0]} / {discharge.split(',')[0]} / C/NO. 1-{max(1, qty // 25)}",
+        "signed": True, "field_confidence": {}, "unreadable_fields": [],
+    }
+    bl = {
+        "doc_type": "bill_of_lading", "bl_number": f"{rng.choice(['KMT', 'DBS', 'SHC'])}-{rng.randint(1000000, 9999999)}",
+        "issue_date": ship.isoformat(),
+        "shipped_on_board": {"indicated": True, "date": ship.isoformat(),
+                             "method": rng.choice(["on_board_notation", "pre_printed"])},
+        "vessel_name": rng.choice(VESSELS), "voyage_number": f"V.{rng.randint(10, 199)}E",
+        "place_of_receipt": loading.split(",")[0] + " CY",
+        "port_of_loading": loading, "port_of_discharge": discharge,
+        "place_of_delivery": discharge.split(",")[0] + " CY",
+        "shipper": {"name": exp_name, "address": exp_addr},
+        "consignee": {"raw_text": f"TO ORDER OF {bank.split(',')[0]}", "is_to_order": True},
+        "notify_party": f"{buy_name}, {buy_addr}",
+        "goods_description": f"{max(1, qty // 25)} CARTONS OF {goods}",
+        "container_numbers": [f"{rng.choice(['KMTU', 'DBSU', 'SHCU'])}{rng.randint(1000000, 9999999)}"],
+        "freight_terms": "COLLECT", "clean": True, "originals_count": 3,
+        "signature": {"signed": True, "carrier_name": rng.choice(CARRIERS),
+                      "signer_capacity": rng.choice(["carrier", "agent_for_carrier", "master"])},
+        "field_confidence": {}, "unreadable_fields": [],
+    }
+    meta = {"goods": goods, "model": model, "qty": qty, "unit": unit, "price": price,
+            "loading": loading, "discharge": discharge, "exp_name": exp_name, "pi_no": pi_no,
+            # 기본 제시일: 선적 후 5~14일 (제시기한 21일 이내 = 정상)
+            "presentation_date": (ship + timedelta(days=rng.randint(5, 14))).isoformat()}
+    return {"letter_of_credit": lc, "commercial_invoice": inv, "bill_of_lading": bl}, meta
+
+
+# ---------- 하자 주입 ----------
+def inject(dtype, docs, meta, rng, idx):
+    lc, inv, bl = docs["letter_of_credit"], docs["commercial_invoice"], docs["bill_of_lading"]
+
+    if dtype == "AMOUNT_EXCEEDS_LC":
+        over = round(lc["amount"] * rng.uniform(1.03, 1.12), 2)
+        inv["total_amount"] = over
+        inv["goods"][0]["amount"] = over
+        inv["goods"][0]["unit_price"] = round(over / inv["goods"][0]["quantity"], 2)
+        return gt_item(idx, dtype, "high",
+                       f"송장 금액(USD {over:,.2f})이 신용장 금액(USD {lc['amount']:,.2f})을 초과합니다.",
+                       [ev("letter_of_credit", "amount", lc["amount"]),
+                        ev("commercial_invoice", "total_amount", over)],
+                       "UCP600_18b", "송장 금액을 신용장 한도 이내로 수정하세요.")
+
+    if dtype == "CURRENCY_MISMATCH":
+        inv["currency"] = "EUR"
+        return gt_item(idx, dtype, "high", "송장 통화(EUR)가 신용장 통화(USD)와 다릅니다.",
+                       [ev("letter_of_credit", "currency", "USD"),
+                        ev("commercial_invoice", "currency", "EUR")],
+                       "UCP600_18a3", "송장을 신용장과 동일한 통화(USD)로 재발행하세요.")
+
+    if dtype == "GOODS_DESC_MISMATCH":
+        m = meta["model"]
+        prefix, num = m.split("-")
+        digits = list(num)
+        digits[0], digits[1] = digits[1], digits[0]  # 720 → 270 식 자리바꿈 (hard)
+        wrong = f"{prefix}-{''.join(digits)}"
+        if wrong == m:  # 990처럼 자리바꿈이 무의미한 경우 → 마지막 자리 변조
+            last = (int(digits[-1]) + rng.randint(1, 8)) % 10
+            wrong = f"{prefix}-{''.join(digits[:-1])}{last}"
+        assert wrong != m, f"하자 주입 실패: {m}"
+        inv["goods"][0]["description"] = inv["goods"][0]["description"].replace(m, wrong)
+        return gt_item(idx, dtype, "high",
+                       f"송장 상품명세의 모델번호({wrong})가 신용장 45A({m})와 불일치합니다.",
+                       [ev("letter_of_credit", "goods_description", lc["goods_description"]),
+                        ev("commercial_invoice", "goods[0].description", inv["goods"][0]["description"])],
+                       "UCP600_18c", f"송장 모델번호를 '{m}'으로 수정하세요.")
+
+    if dtype == "BENEFICIARY_NAME_MISMATCH":
+        orig = inv["seller"]["name"]
+        wrong = orig.replace("CO., LTD.", "COMPANY LTD").replace("CORPORATION", "CORP.")
+        if wrong == orig:
+            wrong = orig[:-1] + "S"
+        inv["seller"]["name"] = wrong
+        return gt_item(idx, dtype, "high",
+                       f"송장 발행인({wrong})이 신용장 수익자({orig})와 불일치합니다.",
+                       [ev("letter_of_credit", "beneficiary.name", orig),
+                        ev("commercial_invoice", "seller.name", wrong)],
+                       "UCP600_18a1", f"송장 발행인 명의를 '{orig}'로 수정하세요.")
+
+    if dtype == "LATE_SHIPMENT":
+        latest = date.fromisoformat(lc["latest_shipment_date"])
+        over = latest + timedelta(days=rng.randint(2, 8))
+        bl["shipped_on_board"]["date"] = over.isoformat()
+        bl["issue_date"] = over.isoformat()
+        return gt_item(idx, dtype, "high",
+                       f"선적일({over})이 최종선적기일({latest})을 {(over - latest).days}일 초과했습니다.",
+                       [ev("letter_of_credit", "latest_shipment_date", latest),
+                        ev("bill_of_lading", "shipped_on_board.date", over)],
+                       "UCP600_14_44C", "개설의뢰인의 하자 수락(waiver) 또는 조건변경을 요청하세요.")
+
+    if dtype == "LC_EXPIRED_OR_LATE_PRESENTATION":
+        # 선적일을 과거로 크게 당겨 제시기한(선적+21일)이 이미 경과하도록
+        old_ship = date(2026, 5, 10) + timedelta(days=rng.randint(0, 10))
+        lc["latest_shipment_date"] = (old_ship + timedelta(days=5)).isoformat()
+        lc["expiry"]["date"] = (old_ship + timedelta(days=25)).isoformat()
+        bl["shipped_on_board"]["date"] = old_ship.isoformat()
+        bl["issue_date"] = old_ship.isoformat()
+        inv["invoice_date"] = old_ship.isoformat()
+        deadline = old_ship + timedelta(days=21)
+        meta["presentation_date"] = (deadline + timedelta(days=rng.randint(3, 12))).isoformat()  # 기한 경과 후 제시
+        return gt_item(idx, dtype, "high",
+                       f"서류 제시기한({deadline})이 이미 경과했습니다.",
+                       [ev("letter_of_credit", "expiry.date", lc["expiry"]["date"]),
+                        ev("bill_of_lading", "shipped_on_board.date", old_ship)],
+                       "UCP600_14c", "즉시 은행과 협의하고 개설의뢰인 waiver를 요청하세요.")
+
+    if dtype == "PORT_MISMATCH":
+        wrong = "GWANGYANG, KOREA" if "BUSAN" in bl["port_of_loading"] else "BUSAN, KOREA"
+        bl["port_of_loading"] = wrong
+        return gt_item(idx, dtype, "medium",
+                       f"B/L 선적항({wrong})이 신용장 44E({lc['port_of_loading']})와 다릅니다.",
+                       [ev("letter_of_credit", "port_of_loading", lc["port_of_loading"]),
+                        ev("bill_of_lading", "port_of_loading", wrong)],
+                       "UCP600_20a3", "B/L 선적항 표기 정정을 운송사에 요청하세요.")
+
+    if dtype == "BL_SIGNATURE_DEFECT":
+        bl["signature"]["signer_capacity"] = "unclear"
+        return gt_item(idx, dtype, "medium",
+                       "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
+                       [ev("bill_of_lading", "signature.signer_capacity", "unclear")],
+                       "UCP600_20a1",
+                       f"'AS AGENT FOR THE CARRIER, {bl['signature']['carrier_name']}' 자격 문구 명기를 요청하세요.")
+
+    if dtype == "BL_NO_ONBOARD_NOTATION":
+        bl["shipped_on_board"] = {"indicated": False, "date": None, "method": None}
+        return gt_item(idx, dtype, "high",
+                       "B/L에 본선적재 표기(사전인쇄 문언 또는 on board 부기)가 없습니다.",
+                       [ev("bill_of_lading", "shipped_on_board.indicated", False)],
+                       "UCP600_20a2", "운송사에 선적일이 명기된 ON BOARD 부기를 요청하세요.")
+    raise ValueError(dtype)
+
+
+# ---------- 함정 정상 ----------
+def apply_trap(kind, docs, meta, rng):
+    lc, inv, bl = docs["letter_of_credit"], docs["commercial_invoice"], docs["bill_of_lading"]
+    if kind == "tolerance_ok":
+        lc["tolerance"] = {"plus_pct": 10.0, "minus_pct": 10.0}
+        new = round(lc["amount"] * 1.07, 2)  # 한도 내 초과
+        inv["total_amount"] = new
+        inv["goods"][0]["amount"] = new
+        inv["goods"][0]["unit_price"] = round(new / inv["goods"][0]["quantity"], 2)
+        return "송장 금액이 신용장 금액보다 7% 크지만 39A 과부족 허용 10% 이내 → 정상"
+    if kind == "bl_generic_desc":
+        bl["goods_description"] = "GENERAL MERCHANDISE AS PER INVOICE"
+        return "B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상"
+    if kind == "partial_ok":
+        lc["partial_shipments"] = "ALLOWED"
+        return "분할선적 허용 조건이며 실제 단일 선적 → 정상"
+    if kind == "presentation_edge":
+        latest = date.fromisoformat(lc["latest_shipment_date"])
+        bl["shipped_on_board"]["date"] = latest.isoformat()  # 기일 당일 선적 (경계값)
+        bl["issue_date"] = latest.isoformat()
+        return "선적일이 최종선적기일과 같은 날(경계값) → 정상"
+    raise ValueError(kind)
+
+
+def grade_of(discs):
+    penalty = {"high": 25, "medium": 10, "low": 3}
+    score = max(0, 100 - sum(penalty[x["severity"]] for x in discs))
+    high = sum(1 for x in discs if x["severity"] == "high")
+    if not discs:
+        return "A", 100
+    if high == 0 and score >= 80:
+        return "B", score
+    if high <= 1 and score >= 50:
+        return "C", score
+    return "D", score
+
+
+def main():
+    args = sys.argv[1:]
+    out = Path(args[args.index("--out") + 1]) if "--out" in args else Path("cases")
+    out.mkdir(parents=True, exist_ok=True)
+    rng = random.Random(SEED)
+
+    plan = []
+    for dtype, n, diff in DEFECT_PLAN:
+        plan += [(dtype, diff)] * n
+    cases = []
+
+    # 하자 20건
+    for i, (dtype, diff) in enumerate(plan, 1):
+        docs, meta = base_case(rng, i)
+        gts = []
+        if dtype == "COMPOSITE":
+            pair = rng.sample(["LATE_SHIPMENT", "GOODS_DESC_MISMATCH", "BL_SIGNATURE_DEFECT",
+                               "AMOUNT_EXCEEDS_LC", "PORT_MISMATCH"], 2)
+            types = pair
+            for k, t in enumerate(pair, 1):
+                gts.append(inject(t, docs, meta, rng, k))
+        else:
+            types = [dtype]
+            gts.append(inject(dtype, docs, meta, rng, 1))
+        g, sc = grade_of(gts)
+        cases.append({
+            "case_id": f"DEFECT-{i:03d}", "label": "defect", "defect_types": types, "difficulty": diff,
+            "scenario_note_ko": f"{meta['exp_name']} → {docs['letter_of_credit']['applicant']['name']}, "
+                                f"{meta['goods']} USD {docs['letter_of_credit']['amount']:,.0f} · 주입 하자: {', '.join(types)}",
+            "presentation_date": meta["presentation_date"],
+            "documents": docs, "rendered_files": None,
+            "ground_truth": {
+                "case_id": f"DEFECT-{i:03d}",
+                "documents_checked": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],
+                "discrepancies": gts,
+                "overall_risk": {"grade": g, "score": sc,
+                                 "summary_ko": f"{len(gts)}건의 하자가 주입된 케이스입니다."},
+            },
+        })
+
+    # 정상 20건 (마지막 4건은 함정 정상)
+    for i in range(1, 21):
+        docs, meta = base_case(rng, 100 + i)
+        note = "완전 정합 케이스"
+        if i > 16:
+            note = apply_trap(TRAP_KINDS[i - 17], docs, meta, rng)
+        cases.append({
+            "case_id": f"CLEAN-{i:03d}", "label": "clean", "defect_types": [],
+            "difficulty": "hard" if i > 16 else "easy",
+            "scenario_note_ko": f"{meta['exp_name']} → {docs['letter_of_credit']['applicant']['name']}, "
+                                f"{meta['goods']} · {note}",
+            "presentation_date": meta["presentation_date"],
+            "documents": docs, "rendered_files": None,
+            "ground_truth": {
+                "case_id": f"CLEAN-{i:03d}",
+                "documents_checked": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],
+                "discrepancies": [],
+                "overall_risk": {"grade": "A", "score": 100, "summary_ko": "하자 없음 — " + note},
+            },
+        })
+
+    for c in cases:
+        (out / f"{c['case_id']}.json").write_text(json.dumps(c, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"[generate] {len(cases)}건 생성 → {out}/  (하자 20 · 정상 20, 함정 정상 4 포함)")
+
+    if "--render" in args:
+        files = sorted(str(p) for p in out.glob("*.json"))
+        subprocess.run([sys.executable, str(ROOT / "render" / "render.py"), *files,
+                        "--out", str(out / "rendered")], check=True)
+
+
+if __name__ == "__main__":
+    main()

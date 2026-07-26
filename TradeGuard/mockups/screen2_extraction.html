@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TradeGuard — 판독 결과</title>
+<style>
+  :root { --kb-yellow: #FFBC00; --ink: #26282c; --sub: #696e76; --line: #e4e6ea;
+          --card: #fff; --bg: #f6f7f8; --warn-bg: #fffaeb; --warn: #b54708; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1280px; margin: 0 auto; background: var(--bg); color: var(--ink);
+         font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  .topbar { background: #fff; border-bottom: 1px solid var(--line); padding: 14px 40px;
+            display: flex; align-items: center; gap: 12px; }
+  .logo-dot { width: 26px; height: 26px; border-radius: 7px; background: var(--kb-yellow);
+              display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .topbar b { font-size: 17px; } .topbar .step { margin-left: auto; color: var(--sub); font-size: 13px; }
+  .topbar .step b { font-size: 13px; }
+  main { padding: 26px 40px 60px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tab { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 9px 20px;
+         font-size: 14px; font-weight: 600; color: var(--sub); cursor: pointer; }
+  .tab.active { background: var(--ink); color: var(--kb-yellow); border-color: var(--ink); }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .pane { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .pane-hd { padding: 12px 18px; border-bottom: 1px solid var(--line); font-size: 13px;
+             font-weight: 700; color: var(--sub); display: flex; justify-content: space-between; }
+  iframe { width: 100%; height: 720px; border: 0; transform-origin: top left; }
+  table.fields { width: 100%; border-collapse: collapse; }
+  table.fields td { padding: 9px 18px; border-bottom: 1px solid #f0f1f3; font-size: 13.5px; vertical-align: top; }
+  table.fields td.k { width: 220px; color: var(--sub); font-family: monospace; font-size: 12.5px; }
+  .conf { float: right; font-size: 11px; font-weight: 700; border-radius: 5px; padding: 2px 8px; }
+  .conf.hi { color: #067647; background: #ecfdf3; }
+  tr.low td { background: var(--warn-bg); }
+  .conf.low { color: var(--warn); background: #fef0c7; }
+  .fieldwrap { max-height: 720px; overflow-y: auto; }
+  .cta-bar { margin-top: 24px; display: flex; gap: 12px; }
+  .btn { border: 0; border-radius: 10px; padding: 14px 26px; font-size: 15px; font-weight: 700;
+         cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn.primary { background: var(--kb-yellow); color: var(--ink); }
+  .btn.ghost { background: #fff; border: 1px solid var(--line); color: var(--sub); }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo-dot">T</div><b>TradeGuard</b>
+    <span class="step">① 업로드 → <b>② 판독</b> → ③ 하자 검사 → ④ 환노출·처방</span>
+  </div>
+  <main>
+    <div class="tabs">
+      <button class="tab active" data-doc="lc">📜 신용장</button>
+      <button class="tab" data-doc="invoice">🧾 상업송장</button>
+      <button class="tab" data-doc="bl">🚢 선하증권</button>
+    </div>
+    <div class="split">
+      <div class="pane">
+        <div class="pane-hd"><span>원본 서류</span><span id="srcName">DEFECT-001_lc.html</span></div>
+        <iframe id="docFrame" src="../render/sample_output/DEFECT-001_lc.html"></iframe>
+      </div>
+      <div class="pane">
+        <div class="pane-hd"><span>추출 필드</span><span>신뢰도 0.8 미만은 노란색 = 확인 필요</span></div>
+        <div class="fieldwrap"><table class="fields" id="fieldTable"></table></div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <a class="btn primary" href="screen3_discrepancy_report.html">하자 검사 실행 →</a>
+      <a class="btn ghost" href="screen1_upload.html">← 업로드로 돌아가기</a>
+    </div>
+  </main>
+
+<script>
+// 샘플 데이터: samples/DEFECT-001.json 추출 결과 가정 (신뢰도는 시연용)
+const DATA = {
+  lc: { file: "DEFECT-001_lc.html", rows: [
+    ["lc_number", "LC-2026-04581", .99], ["issue_date", "2026-05-12", .98],
+    ["expiry.date / place", "2026-08-10 · SEOUL, KOREA", .98],
+    ["applicant.name", "MEKONG INDUSTRIAL TRADING CO., LTD", .97],
+    ["beneficiary.name", "HANSOL PRECISION CO., LTD.", .97],
+    ["currency / amount", "USD 84,000.00", .99], ["tolerance", "null (39A 없음 — 30(b) 기본규칙 검토)", .95],
+    ["partial_shipments", "NOT ALLOWED", .96], ["port_of_loading", "BUSAN, KOREA", .97],
+    ["port_of_discharge", "HO CHI MINH CITY, VIETNAM", .97],
+    ["latest_shipment_date", "2026-07-15", .98],
+    ["goods_description", "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-720, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2605, FOB BUSAN INCOTERMS 2020", .72],
+    ["documents_required", "SIGNED COMMERCIAL INVOICE IN 3 ORIGINALS 외 2건", .93],
+    ["presentation_period_days", "21", .96]
+  ]},
+  invoice: { file: "DEFECT-001_invoice.html", rows: [
+    ["invoice_number", "INV-2026-0713", .99], ["invoice_date", "2026-07-16", .98],
+    ["lc_number_ref", "LC-2026-04581", .98],
+    ["seller.name", "HANSOL PRECISION CO., LTD.", .97],
+    ["buyer.name", "MEKONG INDUSTRIAL TRADING CO., LTD", .97],
+    ["currency / total_amount", "USD 84,000.00", .99],
+    ["goods[0].description", "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-702, AS PER PROFORMA INVOICE NO. PI-2605", .96],
+    ["goods[0].qty / unit_price", "4,000 PCS × 21.00", .97],
+    ["incoterms", "FOB BUSAN", .96], ["payment_terms", "L/C AT SIGHT", .95],
+    ["shipping_marks", "MEKONG / HCMC / C/NO. 1-160", .68], ["signed", "true (서명 확인)", .91]
+  ]},
+  bl: { file: "DEFECT-001_bl.html", rows: [
+    ["bl_number", "KMT-BSN-2607180", .98], ["issue_date", "2026-07-18", .97],
+    ["shipped_on_board", "부기(on_board_notation) · 2026-07-18", .94],
+    ["vessel / voyage", "SUNRISE GLORY · V.088E", .65],
+    ["port_of_loading", "BUSAN, KOREA", .97],
+    ["port_of_discharge", "HO CHI MINH CITY, VIETNAM", .97],
+    ["consignee.raw_text", "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK", .95],
+    ["notify_party", "MEKONG INDUSTRIAL TRADING CO., LTD …", .93],
+    ["goods_description", "160 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS", .94],
+    ["clean / originals_count", "CLEAN ON BOARD · 3/3", .96],
+    ["signature", "서명 있음 · carrier: KOREA MARINE TRANSPORT CO., LTD. · 자격: unclear", .77]
+  ]}
+};
+function show(doc) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.doc === doc));
+  const d = DATA[doc];
+  document.getElementById("docFrame").src = "../render/sample_output/" + d.file;
+  document.getElementById("srcName").textContent = d.file;
+  document.getElementById("fieldTable").innerHTML = d.rows.map(([k, v, c]) => {
+    const low = c < 0.8;
+    return `<tr class="${low ? "low" : ""}"><td class="k">${k}</td>
+      <td>${v} <span class="conf ${low ? "low" : "hi"}">${c.toFixed(2)}${low ? " 확인 필요" : ""}</span></td></tr>`;
+  }).join("");
+}
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => show(t.dataset.doc)));
+show("lc");
+</script>
+</body>
+</html>

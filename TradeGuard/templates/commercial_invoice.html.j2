@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invoice {{ inv.invoice_number }}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { width: 794px; min-height: 1123px; margin: 0 auto; background: #fff;
+         font-family: Georgia, "Times New Roman", serif; font-size: 13px;
+         color: #222; padding: 46px 54px; box-sizing: border-box; }
+  .letterhead { text-align: center; border-bottom: 3px double #333; padding-bottom: 14px; }
+  .letterhead h1 { margin: 0; font-size: 21px; letter-spacing: 2px; }
+  .letterhead p { margin: 4px 0 0; font-size: 11px; color: #555; }
+  h2.doctitle { text-align: center; font-size: 17px; letter-spacing: 6px; margin: 26px 0 20px; }
+  .meta, .parties { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  .meta td { padding: 3px 6px; font-size: 12.5px; }
+  .meta .lbl { color: #555; width: 150px; }
+  .parties td { border: 1px solid #999; padding: 8px 10px; vertical-align: top; width: 50%; font-size: 12.5px; }
+  .parties .hd { font-size: 10.5px; color: #666; letter-spacing: 1px; margin-bottom: 4px; }
+  table.goods { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  table.goods th { border: 1px solid #333; background: #f0ede4; padding: 6px; font-size: 11.5px; letter-spacing: 1px; }
+  table.goods td { border: 1px solid #666; padding: 7px 8px; font-size: 12.5px; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .total-row td { font-weight: bold; background: #faf8f0; }
+  .terms { margin-top: 18px; font-size: 12px; line-height: 1.7; }
+  .sigblock { margin-top: 54px; width: 300px; margin-left: auto; text-align: center; }
+  .sigline { border-top: 1px solid #333; padding-top: 6px; font-size: 11.5px; }
+  .signature { font-family: "Brush Script MT", cursive; font-size: 24px; color: #1a3a6b; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+  <div class="letterhead">
+    <h1>{{ inv.seller.name }}</h1>
+    {% if inv.seller.address %}<p>{{ inv.seller.address }}</p>{% endif %}
+  </div>
+
+  <h2 class="doctitle">COMMERCIAL INVOICE</h2>
+
+  <table class="meta">
+    <tr><td class="lbl">INVOICE NO.</td><td>{{ inv.invoice_number }}</td>
+        <td class="lbl">DATE</td><td>{{ inv.invoice_date | docdate if inv.invoice_date else '' }}</td></tr>
+    {% if inv.lc_number_ref %}<tr><td class="lbl">L/C NO.</td><td>{{ inv.lc_number_ref }}</td>
+        <td class="lbl">PAYMENT TERMS</td><td>{{ inv.payment_terms | default('', true) }}</td></tr>{% endif %}
+    {% if inv.incoterms %}<tr><td class="lbl">DELIVERY TERMS</td><td colspan="3">{{ inv.incoterms.term }} {{ inv.incoterms.place | default('', true) }}</td></tr>{% endif %}
+  </table>
+
+  <table class="parties">
+    <tr>
+      <td><div class="hd">SELLER / BENEFICIARY</div>{{ inv.seller.name }}{% if inv.seller.address %}<br>{{ inv.seller.address }}{% endif %}</td>
+      <td><div class="hd">BUYER / APPLICANT</div>{{ inv.buyer.name }}{% if inv.buyer.address %}<br>{{ inv.buyer.address }}{% endif %}</td>
+    </tr>
+  </table>
+
+  <table class="goods">
+    <tr><th style="width:46%">DESCRIPTION OF GOODS</th><th>QUANTITY</th><th>UNIT PRICE ({{ inv.currency }})</th><th>AMOUNT ({{ inv.currency }})</th></tr>
+    {% for g in inv.goods %}
+    <tr>
+      <td>{{ g.description }}{% if g.hs_code %}<br><small>HS CODE: {{ g.hs_code }}</small>{% endif %}</td>
+      <td class="num">{% if g.quantity is not none %}{{ g.quantity | money0 }} {{ g.unit | default('', true) }}{% endif %}</td>
+      <td class="num">{% if g.unit_price is not none %}{{ g.unit_price | money }}{% endif %}</td>
+      <td class="num">{{ g.amount | money }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="total-row"><td colspan="3">TOTAL</td><td class="num">{{ inv.currency }} {{ inv.total_amount | money }}</td></tr>
+  </table>
+
+  <div class="terms">
+    {% if inv.shipping_marks %}SHIPPING MARKS: {{ inv.shipping_marks }}<br>{% endif %}
+    WE HEREBY CERTIFY THAT THIS INVOICE IS TRUE AND CORRECT.
+  </div>
+
+  <div class="sigblock">
+    {% if inv.signed %}<div class="signature">{{ inv.seller.name.split(' ')[0] | title }} Kim</div>{% else %}<div style="height:30px"></div>{% endif %}
+    <div class="sigline">AUTHORIZED SIGNATURE<br>{{ inv.seller.name }}</div>
+  </div>
+</body>
+</html>

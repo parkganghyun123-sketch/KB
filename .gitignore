@@ -1,2 +1,13 @@
 .DS_Store
 node_modules/
+
+# 시크릿 — API 키는 절대 커밋 금지
+.env
+.env.*
+*.key
+secrets.json
+
+# 산출물
+__pycache__/
+TradeGuard/render/out/
+TradeGuard/benchmark/cases/rendered/

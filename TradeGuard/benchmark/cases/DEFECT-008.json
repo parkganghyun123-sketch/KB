@@ -1,0 +1,180 @@
+{
+  "case_id": "DEFECT-008",
+  "label": "defect",
+  "defect_types": [
+    "BENEFICIARY_NAME_MISMATCH"
+  ],
+  "difficulty": "hard",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT USD 39,200 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
+  "presentation_date": "2026-06-26",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-14456",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-08",
+      "expiry": {
+        "date": "2026-07-22",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+        "country": "VN"
+      },
+      "beneficiary": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 39200.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-06-24",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, 4,000 SET AS PER PROFORMA INVOICE NO. PI-2693, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-7794",
+      "invoice_date": "2026-06-18",
+      "lc_number_ref": "LC-2026-14456",
+      "seller": {
+        "name": "KOWON ENERGY CELL COMPANY LTD",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "buyer": {
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+      },
+      "currency": "USD",
+      "total_amount": 39200.0,
+      "goods": [
+        {
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, AS PER PROFORMA INVOICE NO. PI-2693",
+          "quantity": 4000,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 39200.0,
+          "hs_code": "4016.93"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-160",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-2768961",
+      "issue_date": "2026-06-18",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-06-18",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "OCEAN SENTINEL",
+      "voyage_number": "V.158E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
+      "shipper": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "is_to_order": true
+      },
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+      "goods_description": "160 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "container_numbers": [
+        "KMTU6233769"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "agent_for_carrier"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "DEFECT-008",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [
+      {
+        "id": "DISC-001",
+        "type": "BENEFICIARY_NAME_MISMATCH",
+        "severity": "high",
+        "description_ko": "송장 발행인(KOWON ENERGY CELL COMPANY LTD)이 신용장 수익자(KOWON ENERGY CELL CO., LTD.)와 불일치합니다.",
+        "evidence": [
+          {
+            "doc": "letter_of_credit",
+            "field": "beneficiary.name",
+            "value": "KOWON ENERGY CELL CO., LTD."
+          },
+          {
+            "doc": "commercial_invoice",
+            "field": "seller.name",
+            "value": "KOWON ENERGY CELL COMPANY LTD"
+          }
+        ],
+        "ucp_basis": {
+          "article": "UCP600 18(a)(i)",
+          "quote_ko": "상업송장은 수익자가 발행한 것으로 보여야 한다."
+        },
+        "suggested_fix_ko": "송장 발행인 명의를 'KOWON ENERGY CELL CO., LTD.'로 수정하세요."
+      }
+    ],
+    "overall_risk": {
+      "grade": "C",
+      "score": 75,
+      "summary_ko": "1건의 하자가 주입된 케이스입니다."
+    }
+  }
+}

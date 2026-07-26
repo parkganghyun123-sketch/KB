@@ -1,0 +1,157 @@
+{
+  "case_id": "CLEAN-017",
+  "label": "clean",
+  "defect_types": [],
+  "difficulty": "hard",
+  "scenario_note_ko": "NARAE FOODS CO., LTD. → PACIFIC RIM IMPORTS INC., LITHIUM-ION BATTERY CELLS 3.7V · 송장 금액이 신용장 금액보다 7% 크지만 39A 과부족 허용 10% 이내 → 정상",
+  "presentation_date": "2026-08-02",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-38945",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-25",
+      "expiry": {
+        "date": "2026-08-18",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
+      },
+      "beneficiary": {
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 12800.0,
+      "tolerance": {
+        "plus_pct": 10.0,
+        "minus_pct": 10.0
+      },
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-07-31",
+      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-617, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2531, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-4197",
+      "invoice_date": "2026-07-23",
+      "lc_number_ref": "LC-2026-38945",
+      "seller": {
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+      },
+      "buyer": {
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+      },
+      "currency": "USD",
+      "total_amount": 13696.0,
+      "goods": [
+        {
+          "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-617, AS PER PROFORMA INVOICE NO. PI-2531",
+          "quantity": 4000,
+          "unit": "PCS",
+          "unit_price": 3.42,
+          "amount": 13696.0,
+          "hs_code": "8507.60"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-160",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "DBS-6341680",
+      "issue_date": "2026-07-25",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-25",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.78E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
+      "shipper": {
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "is_to_order": true
+      },
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "160 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+      "container_numbers": [
+        "SHCU2667764"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "DONGBANG SHIPPING LINE",
+        "signer_capacity": "carrier"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "CLEAN-017",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [],
+    "overall_risk": {
+      "grade": "A",
+      "score": 100,
+      "summary_ko": "하자 없음 — 송장 금액이 신용장 금액보다 7% 크지만 39A 과부족 허용 10% 이내 → 정상"
+    }
+  }
+}

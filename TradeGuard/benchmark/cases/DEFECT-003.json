@@ -1,0 +1,180 @@
+{
+  "case_id": "DEFECT-003",
+  "label": "defect",
+  "defect_types": [
+    "CURRENCY_MISMATCH"
+  ],
+  "difficulty": "easy",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, LED PANEL LIGHT 40W USD 61,200 · 주입 하자: CURRENCY_MISMATCH",
+  "presentation_date": "2026-07-15",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-72658",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-14",
+      "expiry": {
+        "date": "2026-08-14",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
+      },
+      "beneficiary": {
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 61200.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-15",
+      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-895, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2395, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-7820",
+      "invoice_date": "2026-07-06",
+      "lc_number_ref": "LC-2026-72658",
+      "seller": {
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+      },
+      "buyer": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+      },
+      "currency": "EUR",
+      "total_amount": 61200.0,
+      "goods": [
+        {
+          "description": "LED PANEL LIGHT 40W, MODEL LP-895, AS PER PROFORMA INVOICE NO. PI-2395",
+          "quantity": 4000,
+          "unit": "PCS",
+          "unit_price": 15.3,
+          "amount": 61200.0,
+          "hs_code": "9405.11"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-160",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-4978929",
+      "issue_date": "2026-07-06",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-06",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.62E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
+      "shipper": {
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "is_to_order": true
+      },
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "160 CARTONS OF LED PANEL LIGHT 40W",
+      "container_numbers": [
+        "SHCU3218417"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "carrier"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "DEFECT-003",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [
+      {
+        "id": "DISC-001",
+        "type": "CURRENCY_MISMATCH",
+        "severity": "high",
+        "description_ko": "송장 통화(EUR)가 신용장 통화(USD)와 다릅니다.",
+        "evidence": [
+          {
+            "doc": "letter_of_credit",
+            "field": "currency",
+            "value": "USD"
+          },
+          {
+            "doc": "commercial_invoice",
+            "field": "currency",
+            "value": "EUR"
+          }
+        ],
+        "ucp_basis": {
+          "article": "UCP600 18(a)(iii)",
+          "quote_ko": "상업송장은 신용장과 동일한 통화로 발행되어야 한다."
+        },
+        "suggested_fix_ko": "송장을 신용장과 동일한 통화(USD)로 재발행하세요."
+      }
+    ],
+    "overall_risk": {
+      "grade": "C",
+      "score": 75,
+      "summary_ko": "1건의 하자가 주입된 케이스입니다."
+    }
+  }
+}

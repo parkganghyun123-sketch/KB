@@ -1,0 +1,135 @@
+{
+  "case_id": "DEFECT-001",
+  "label": "defect",
+  "defect_types": ["GOODS_DESC_MISMATCH", "LATE_SHIPMENT", "BL_SIGNATURE_DEFECT"],
+  "difficulty": "hard",
+  "scenario_note_ko": "한국 CNC 부품 수출사 → 베트남 바이어, USD 84,000. 송장 모델번호 오기(AH-720→AH-702), 최종선적기일 3일 경과, B/L 서명자 자격 미표시의 복합 하자 케이스 (템플릿·화면3 검증용 샘플)",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-04581",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-12",
+      "expiry": { "date": "2026-08-10", "place": "SEOUL, KOREA" },
+      "applicant": { "name": "MEKONG INDUSTRIAL TRADING CO., LTD", "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM", "country": "VN" },
+      "beneficiary": { "name": "HANSOL PRECISION CO., LTD.", "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA", "country": "KR" },
+      "currency": "USD",
+      "amount": 84000,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-07-15",
+      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-720, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2605, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        { "doc_name": "SIGNED COMMERCIAL INVOICE", "copies": "IN 3 ORIGINALS", "requirements": "INDICATING THIS L/C NUMBER" },
+        { "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING", "copies": "3/3 ORIGINALS", "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT" },
+        { "doc_name": "PACKING LIST", "copies": "IN 3 COPIES", "requirements": null }
+      ],
+      "additional_conditions": ["ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-0713",
+      "invoice_date": "2026-07-16",
+      "lc_number_ref": "LC-2026-04581",
+      "seller": { "name": "HANSOL PRECISION CO., LTD.", "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA" },
+      "buyer": { "name": "MEKONG INDUSTRIAL TRADING CO., LTD", "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM" },
+      "currency": "USD",
+      "total_amount": 84000,
+      "goods": [
+        {
+          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-702, AS PER PROFORMA INVOICE NO. PI-2605",
+          "quantity": 4000,
+          "unit": "PCS",
+          "unit_price": 21.0,
+          "amount": 84000,
+          "hs_code": "7616.99"
+        }
+      ],
+      "incoterms": { "term": "FOB", "place": "BUSAN" },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "MEKONG / HCMC / C/NO. 1-160",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-BSN-2607180",
+      "issue_date": "2026-07-18",
+      "shipped_on_board": { "indicated": true, "date": "2026-07-18", "method": "on_board_notation" },
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.088E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
+      "shipper": { "name": "HANSOL PRECISION CO., LTD.", "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA" },
+      "consignee": { "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK", "is_to_order": true },
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+      "goods_description": "160 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+      "container_numbers": ["KMTU2204581"],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": { "signed": true, "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.", "signer_capacity": "unclear" },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "DEFECT-001",
+    "documents_checked": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],
+    "discrepancies": [
+      {
+        "id": "DISC-001",
+        "type": "LATE_SHIPMENT",
+        "severity": "high",
+        "description_ko": "선적일(2026-07-18)이 신용장 최종선적기일(2026-07-15)을 3일 초과했습니다.",
+        "evidence": [
+          { "doc": "letter_of_credit", "field": "latest_shipment_date", "value": "2026-07-15" },
+          { "doc": "bill_of_lading", "field": "shipped_on_board.date", "value": "2026-07-18" }
+        ],
+        "ucp_basis": { "article": "UCP600 14조 · L/C 44C", "quote_ko": "선하증권의 본선적재일은 신용장에 명시된 최종선적기일 이내여야 한다." },
+        "suggested_fix_ko": "선적기일 경과는 서류 수정으로 치유할 수 없습니다. 개설의뢰인의 하자 수락(waiver) 또는 L/C 조건변경(amendment)을 즉시 요청하세요."
+      },
+      {
+        "id": "DISC-002",
+        "type": "GOODS_DESC_MISMATCH",
+        "severity": "high",
+        "description_ko": "송장 상품명세의 모델번호(AH-702)가 신용장 45A의 모델번호(AH-720)와 불일치합니다.",
+        "evidence": [
+          { "doc": "letter_of_credit", "field": "goods_description", "value": "... MODEL AH-720, 4,000 PCS ..." },
+          { "doc": "commercial_invoice", "field": "goods[0].description", "value": "... MODEL AH-702, AS PER ..." }
+        ],
+        "ucp_basis": { "article": "UCP600 18(c)", "quote_ko": "상업송장의 물품 명세는 신용장상의 명세와 상응하여야 한다." },
+        "suggested_fix_ko": "송장을 재발행하여 상품명세를 L/C 45A 원문과 동일하게 'MODEL AH-720'으로 수정하세요."
+      },
+      {
+        "id": "DISC-003",
+        "type": "BL_SIGNATURE_DEFECT",
+        "severity": "medium",
+        "description_ko": "B/L 서명란에 서명은 있으나 서명자의 자격(운송인/선장/대리인 여부)이 표시되지 않았습니다.",
+        "evidence": [
+          { "doc": "bill_of_lading", "field": "signature.signer_capacity", "value": "unclear" }
+        ],
+        "ucp_basis": { "article": "UCP600 20(a)(i)", "quote_ko": "선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며, 대리인의 서명은 그 자격을 표시하여야 한다." },
+        "suggested_fix_ko": "운송사에 'AS AGENT FOR THE CARRIER, KOREA MARINE TRANSPORT CO., LTD.' 자격 문구가 명기된 B/L 재발행을 요청하세요."
+      }
+    ],
+    "overall_risk": {
+      "grade": "D",
+      "score": 34,
+      "summary_ko": "지급거절 사유에 해당하는 고위험 하자 2건이 발견되었습니다. 특히 선적기일 경과는 서류 수정으로 치유가 불가능하므로, 네고 전 개설의뢰인의 하자 수락 여부를 반드시 확인해야 합니다."
+    }
+  }
+}

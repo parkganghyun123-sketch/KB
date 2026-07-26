@@ -1,0 +1,154 @@
+{
+  "case_id": "CLEAN-013",
+  "label": "clean",
+  "defect_types": [],
+  "difficulty": "easy",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
+  "presentation_date": "2026-07-03",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-87716",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-10",
+      "expiry": {
+        "date": "2026-07-25",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
+      },
+      "beneficiary": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 18500.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-02",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, 1,000 CTN AS PER PROFORMA INVOICE NO. PI-2409, FOB INCHEON INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-8218",
+      "invoice_date": "2026-06-25",
+      "lc_number_ref": "LC-2026-87716",
+      "seller": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "buyer": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+      },
+      "currency": "USD",
+      "total_amount": 18500.0,
+      "goods": [
+        {
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, AS PER PROFORMA INVOICE NO. PI-2409",
+          "quantity": 1000,
+          "unit": "CTN",
+          "unit_price": 18.5,
+          "amount": 18500.0,
+          "hs_code": "1902.30"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "INCHEON"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-40",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "DBS-6056758",
+      "issue_date": "2026-06-28",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-06-28",
+        "method": "pre_printed"
+      },
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.63E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
+      "shipper": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "is_to_order": true
+      },
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "40 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "container_numbers": [
+        "DBSU6237094"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "master"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "CLEAN-013",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [],
+    "overall_risk": {
+      "grade": "A",
+      "score": 100,
+      "summary_ko": "하자 없음 — 완전 정합 케이스"
+    }
+  }
+}

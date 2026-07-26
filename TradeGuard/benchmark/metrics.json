@@ -1,0 +1,114 @@
+{
+  "mode": "오프라인 휴리스틱 폴백",
+  "n_cases": 40,
+  "discrepancy_level": {
+    "tp": 22,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "case_level": {
+    "accuracy": 1.0,
+    "grade_accuracy": 1.0,
+    "clean_false_positive_rate": 0.0
+  },
+  "per_type": {
+    "AMOUNT_EXCEEDS_LC": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "BENEFICIARY_NAME_MISMATCH": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "BL_NO_ONBOARD_NOTATION": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "BL_SIGNATURE_DEFECT": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "CURRENCY_MISMATCH": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "GOODS_DESC_MISMATCH": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "LATE_SHIPMENT": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "LC_EXPIRED_OR_LATE_PRESENTATION": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "PORT_MISMATCH": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "trap_cases": [
+    {
+      "case_id": "CLEAN-017",
+      "result": "PASS",
+      "note": "송장 금액이 신용장 금액보다 7% 크지만 39A 과부족 허용 10% 이내 → 정상"
+    },
+    {
+      "case_id": "CLEAN-018",
+      "result": "PASS",
+      "note": "B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상"
+    },
+    {
+      "case_id": "CLEAN-019",
+      "result": "PASS",
+      "note": "분할선적 허용 조건이며 실제 단일 선적 → 정상"
+    },
+    {
+      "case_id": "CLEAN-020",
+      "result": "PASS",
+      "note": "선적일이 최종선적기일과 같은 날(경계값) → 정상"
+    }
+  ],
+  "failures": []
+}

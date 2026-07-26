@@ -23,6 +23,7 @@ import requests
 
 ECOS_BASE = "https://ecos.bok.or.kr/api/StatisticSearch"
 CUSTOMS_FX = "https://apis.data.go.kr/1220000/RetrieveTrifFxrtInfo/getRetrieveTrifFxrtInfo"
+CUSTOMS_TRADE = "https://apis.data.go.kr/1220000/nitemtrade/getNitemtradeList"  # 품목별 국가별 수출입실적
 ECOS_STAT, ECOS_ITEM_USD = "731Y001", "0000001"  # 주요국 통화의 대원화환율 / 원-미국달러(매매기준율)
 
 
@@ -89,36 +90,79 @@ def customs_fx(apply_date: str, imex="2", week_tp="2", key=None, timeout=15):
     return items
 
 
+def customs_trade(hs_sgn: str, start_ym: str, end_ym: str, cntry_cd=None, key=None, timeout=15):
+    """관세청 품목별·국가별 수출입실적. hs_sgn: HS코드(2/4/6/10자리), start_ym/end_ym: YYYYMM
+    거래 규모 맥락 제공용(보조). 키는 DATA_GO_KR_KEY_TRADE > DATA_GO_KR_KEY 순으로 사용"""
+    key = key or os.environ.get("DATA_GO_KR_KEY_TRADE") or os.environ.get("DATA_GO_KR_KEY")
+    if not key:
+        raise RuntimeError("DATA_GO_KR_KEY(_TRADE) 없음 — .env를 확인하세요")
+    params = {"serviceKey": key, "strtYymm": start_ym, "endYymm": end_ym, "hsSgn": hs_sgn}
+    if cntry_cd:
+        params["cntyCd"] = cntry_cd
+    r = requests.get(CUSTOMS_TRADE, params=params, timeout=timeout)
+    r.raise_for_status()
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(r.text)
+    items = [{c.tag: (c.text or "").strip() for c in it} for it in root.iter("item")]
+    if not items:
+        raise RuntimeError(f"응답에 item 없음 (파라미터·승인상태 확인): {r.text[:300]}")
+    return items
+
+
 # ---------- 검증 CLI ----------
+def _diagnose(e):
+    """네트워크 차단과 키 오류를 구분해 안내"""
+    s = str(e)
+    if "ProxyError" in s or "Tunnel connection failed" in s or "Max retries" in s:
+        return "네트워크 차단(외부 접속 불가 환경) — 키 문제가 아닙니다. 개인 PC에서 다시 실행하세요."
+    return s[:300]
+
+
+
 def check():
     load_env()
+    keys = {"ECOS_API_KEY": os.environ.get("ECOS_API_KEY"),
+            "DATA_GO_KR_KEY": os.environ.get("DATA_GO_KR_KEY"),
+            "DATA_GO_KR_KEY_TRADE": os.environ.get("DATA_GO_KR_KEY_TRADE"),
+            "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY")}
+    print("=== 0) .env 로딩 상태 ===")
+    for k, v in keys.items():
+        print(f"  {'✅' if v else '⬜'} {k:22s} {(v[:6] + '…' + v[-4:]) if v else '(비어 있음)'}")
+
     ok = True
-    print("=== 1) 한국은행 ECOS (주 데이터원) ===")
+    print("\n=== 1) 한국은행 ECOS (주 데이터원) ===")
     try:
         t, v = ecos_spot()
         print(f"  ✅ 정상 — 최근 매매기준율 {t}: {v:,.2f} KRW/USD")
     except Exception as e:
         ok = False
-        print(f"  ❌ 실패: {e}")
+        print(f"  ❌ 실패: {_diagnose(e)}")
 
     print("\n=== 2) 관세청 관세환율 (보조) ===")
     try:
-        # 최근 월요일(주간환율 적용 개시일) 기준으로 시도
         today = date.today()
-        monday = today - timedelta(days=today.weekday())
+        monday = today - timedelta(days=today.weekday())  # 주간환율 적용 개시일
         items = customs_fx(monday.strftime("%Y%m%d"))
-        usd = [x for x in items if "US" in str(x.values()) or "달러" in str(x.values())][:1]
         print(f"  ✅ 정상 — {len(items)}개 통화 수신 (적용개시 {monday})")
-        if usd:
-            print(f"     샘플: {usd[0]}")
+        print(f"     샘플: {items[0]}")
     except Exception as e:
         ok = False
-        print(f"  ⚠️  실패: {e}")
-        print("     확인 순서: ① 마이페이지에서 '승인' 상태인지 ② 디코딩(원본) 키를 썼는지"
-              " ③ 상세페이지의 파라미터명이 aplyBgnDt/imexTp/weekFxrtTpcd가 맞는지")
+        print(f"  ⚠️  실패: {_diagnose(e)}")
+        print("     확인 순서: ① 마이페이지에서 '승인' 상태인지 ② 디코딩(원본) 키인지"
+              " ③ 상세페이지 요청변수가 aplyBgnDt/imexTp/weekFxrtTpcd가 맞는지")
 
-    print("\n" + ("모든 키 정상 — D5 환노출 모듈 진행 가능" if ok else
-                  "일부 실패 — ECOS만 정상이면 D5는 진행 가능합니다(관세청은 보조)"))
+    print("\n=== 3) 관세청 품목별·국가별 수출입실적 (보조) ===")
+    try:
+        items = customs_trade("7616", "202601", "202606")  # 알루미늄 제품 예시
+        print(f"  ✅ 정상 — {len(items)}건 수신")
+        print(f"     샘플: {items[0]}")
+    except Exception as e:
+        ok = False
+        print(f"  ⚠️  실패: {_diagnose(e)}")
+        print("     확인 순서: ① 별도 승인 필요 ② 요청변수(strtYymm/endYymm/hsSgn) 상세페이지와 대조")
+
+    print("\n" + ("모든 데이터원 정상 — D5 환노출 모듈 진행 가능" if ok else
+                  "⚠️ 일부 실패 — ECOS만 정상이면 D5는 진행 가능합니다(관세청은 보조 데이터원)"))
     return 0 if ok else 1
 
 

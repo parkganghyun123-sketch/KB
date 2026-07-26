@@ -77,6 +77,13 @@ def field_accuracy(truth: dict, got: dict):
     return hit, len(t), wrong
 
 
+def field_counts(expected: dict, actual: dict):
+    """(정확 필드 수, 정답 필드 수) — 호환용 래퍼.
+    B 브랜치의 tests/test_pipeline.py가 이 이름으로 임포트한다."""
+    hit, total, _ = field_accuracy(expected, actual)
+    return hit, total
+
+
 def prf(tp, fp, fn):
     p = tp / (tp + fp) if tp + fp else 0.0
     r = tp / (tp + fn) if tp + fn else 0.0
@@ -100,7 +107,8 @@ def main():
         return args[args.index(name) + 1] if name in args else default
 
     cases_dir = Path(opt("--cases", "cases"))
-    images_dir = Path(opt("--images", str(cases_dir / "rendered")))
+    # --rendered-dir 은 --images 의 별칭 (B 브랜치 문서·스크립트 호환)
+    images_dir = Path(opt("--images", opt("--rendered-dir", str(cases_dir / "rendered"))))
     limit = int(opt("--limit", "0") or 0)
     out_path = opt("--out")
     md_path = opt("--md")

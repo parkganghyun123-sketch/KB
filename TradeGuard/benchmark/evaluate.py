@@ -105,7 +105,7 @@ def main():
     if trap_results:
         print("\n=== 함정 정상 (오탐 저항) ===")
         for c, s, nt in trap_results:
-            print(f"  {c} {s:6s} — {nt}")
+            print(f"  {c} {s:6s} - {nt}")
     if failures:
         print("\n=== 오류 케이스 ===")
         for x in failures:

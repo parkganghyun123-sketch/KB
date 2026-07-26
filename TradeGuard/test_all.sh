@@ -79,6 +79,7 @@ for f in glob.glob('mockups/*.html'):
         assert os.path.exists(os.path.join('mockups',h)), f'{f} -> {h}'\""
 
 echo "══ 5. 통합 — 파이프라인 임포트 & 시크릿 ══"
+run "unittest 스위트 (tests/)" "python3 -m unittest discover -s tests"
 run "모든 모듈 임포트 가능" "python3 -c \"
 import sys; sys.path.insert(0,'pipeline')
 import llm, detect, extract, fx_rates\""

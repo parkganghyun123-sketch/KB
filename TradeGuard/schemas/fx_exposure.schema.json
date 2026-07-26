@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tradeguard/fx_exposure",
   "title": "FX Exposure & Hedge Prescription (외화 익스포저·헤지 처방)",
   "description": "D5 모듈의 입출력 형식. 입력 cash_flows는 추출된 서류에서 자동 생성.",
   "type": "object",

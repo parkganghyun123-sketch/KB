@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tradeguard/letter_of_credit",
   "title": "Letter of Credit (SWIFT MT700 기반)",
   "description": "L/C 이미지에서 추출되는 구조화 필드. 필드명 뒤 주석의 Fxx는 MT700 필드 태그.",
   "type": "object",
@@ -8,6 +7,9 @@
   "properties": {
     "doc_type": { "const": "letter_of_credit" },
     "lc_number": { "type": "string", "description": "F20 Documentary Credit Number" },
+    "issuing_bank": { "type": ["string", "null"], "description": "개설은행 (MT700 헤더 SENDER). 원문 그대로" },
+    "advising_bank": { "type": ["string", "null"], "description": "통지은행 (MT700 헤더 RECEIVER). 원문 그대로" },
+    "available_with_by": { "type": ["string", "null"], "description": "F41A/F41D 사용가능 은행·방법 (예: ANY BANK BY NEGOTIATION)" },
     "issue_date": { "type": ["string", "null"], "format": "date", "description": "F31C, ISO 8601 (YYYY-MM-DD)" },
     "expiry": {
       "type": "object",

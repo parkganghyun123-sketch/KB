@@ -36,13 +36,20 @@ COST = {"gpt-4o": (2.5, 10.0), "gpt-4o-mini": (0.15, 0.6),
 EST_TOKENS_PER_DOC = (4200, 900)  # (입력, 출력) 대략치
 
 
+# 채점 제외 필드 — 서류에 인쇄되지 않아 추출이 원천 불가능한 것들.
+# 정답 JSON에는 있지만 이미지에 없으므로, 감점하면 모델을 부당하게 벌하는 셈이 된다.
+#   country : 주소 문자열에 국가명은 있으나 ISO 코드(KR/VN)는 어디에도 인쇄되지 않음
+#   doc_type: 파이프라인이 분류 단계에서 결정 (별도 지표로 측정)
+EXCLUDE_KEYS = {"field_confidence", "unreadable_fields", "country", "doc_type"}
+
+
 def flatten(obj, prefix=""):
     """중첩 JSON → {경로: 값} 평탄화. 비교 단위를 필드로 통일한다."""
     out = {}
     if isinstance(obj, dict):
         for k, v in obj.items():
-            if k in ("field_confidence", "unreadable_fields"):
-                continue  # 메타 필드는 정확도 계산에서 제외
+            if k in EXCLUDE_KEYS:
+                continue
             out.update(flatten(v, f"{prefix}.{k}" if prefix else k))
     elif isinstance(obj, list):
         for i, v in enumerate(obj):
@@ -161,7 +168,12 @@ def main():
 
         acc = c_hit / c_tot if c_tot else 0
         mark = "✅" if not c_fp and not c_fn else "⚠️"
-        print(f"{mark} 필드 {acc:.0%} · 검출 TP{len(c_tp)} FP{len(c_fp)} FN{len(c_fn)}")
+        detail = ""
+        if c_fp:
+            detail += f"  FP={sorted(c_fp)}"
+        if c_fn:
+            detail += f"  FN={sorted(c_fn)}"
+        print(f"{mark} 필드 {acc:.0%} · TP{len(c_tp)} FP{len(c_fp)} FN{len(c_fn)}{detail}")
         per_case.append({"case_id": cid, "field_accuracy": round(acc, 4),
                          "tp": sorted(c_tp), "fp": sorted(c_fp), "fn": sorted(c_fn),
                          "grade": rep["overall_risk"]["grade"],
@@ -183,6 +195,15 @@ def main():
         print("\n=== 추출 오류가 잦은 필드 TOP 8 (프롬프트 개선 대상) ===")
         for k, v in sorted(worst_fields.items(), key=lambda x: -x[1])[:8]:
             print(f"  {v:3d}회  {k}")
+
+    fp_types = defaultdict(int)
+    for c in ok_cases:
+        for t in c.get("fp", []):
+            fp_types[t] += 1
+    if fp_types:
+        print("\n=== 오탐(FP) 유형별 — 정밀도를 깎는 주범 ===")
+        for k, v in sorted(fp_types.items(), key=lambda x: -x[1]):
+            print(f"  {v:3d}건  {k}")
 
     metrics = {"provider": client.name, "model": main_model, "n_cases": len(files),
                "field_accuracy": round(fa, 4), "classify_accuracy": round(cls_ok / cls_tot, 4) if cls_tot else 0,

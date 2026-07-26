@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tradeguard/discrepancy_report",
   "title": "Discrepancy Report (하자 검출 결과)",
   "description": "D4 하자 검출 에이전트의 출력이자 벤치마크 정답 라벨의 형식. D1에 확정하여 A(정답 라벨)·B(에이전트 출력)·C(UI 렌더링)가 공유.",
   "type": "object",

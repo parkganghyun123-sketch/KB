@@ -33,7 +33,15 @@ SYSTEM_EXTRACT = """당신은 은행 외환사업부의 수출입 서류 심사 
 1. 원문 보존: 모든 텍스트 값은 서류에 적힌 그대로 추출한다. 오탈자·대소문자·축약형을 절대 교정하지 않는다. 오탈자 자체가 하자 검출의 입력값이다.
 2. 추측 금지: 읽을 수 없거나 없는 필드는 null로 두고 unreadable_fields에 필드명을 추가한다.
 3. 날짜만 예외적으로 ISO 8601(YYYY-MM-DD)로 변환한다. 불확실하면 null + unreadable_fields.
+   ★ SWIFT 전문(MT700)의 날짜는 **YYMMDD 6자리**다. 반드시 아래 규칙으로 해석하라:
+     - `:31C:260512` → 2026-05-12   (26=2026년, 05=월, 12=일)
+     - `:31D:260810 SEOUL, KOREA` → 날짜 2026-08-10, 장소 SEOUL, KOREA
+     - `:44C:260715` → 2026-07-15
+     앞 2자리는 연도(20YY), 가운데 2자리는 월(01~12), 뒤 2자리는 일(01~31)이다.
+     월과 일을 바꾸지 마라. 6자리를 YYYYMM이나 DDMMYY로 읽으면 안 된다.
+   ★ 일반 서식의 날짜는 `15 JUL 2026` 형태다 → 2026-07-15.
 4. 숫자·문자 금액 불일치 시 숫자를 취하고 field_confidence를 0.5 이하로 낮춘다.
+   금액은 숫자만 기록한다. 콤마·통화기호를 포함하지 않는다 (84,000.00 → 84000.00).
 5. 각 필드에 field_confidence(0.0~1.0)를 기록한다.
 6. 출력은 JSON 하나만. 설명·코드펜스 금지."""
 
@@ -48,7 +56,12 @@ def classify(client, images):
 
 def extract(client, images, doc_type):
     schema = json.loads((SCHEMA_DIR / SCHEMAS[doc_type]).read_text(encoding="utf-8"))
-    base = (f"첨부 이미지는 {doc_type} 서류입니다. 아래 JSON 스키마에 따라 모든 필드를 추출하시오.\n"
+    hint = ""
+    if doc_type == "letter_of_credit":
+        hint = ("\n주의: 이 서류는 SWIFT MT700 전문 형식이다. `:31C:` `:31D:` `:44C:` 뒤의 6자리 숫자는 "
+                "YYMMDD이므로 260512는 2026-05-12로 변환한다. 헤더의 SENDER는 issuing_bank, "
+                "RECEIVER는 advising_bank에 넣는다.\n")
+    base = (f"첨부 이미지는 {doc_type} 서류입니다. 아래 JSON 스키마에 따라 모든 필드를 추출하시오.{hint}\n"
             f"<schema>\n{json.dumps(schema, ensure_ascii=False)}\n</schema>\nJSON:")
     feedback = ""
     data = None

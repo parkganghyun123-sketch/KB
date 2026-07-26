@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tradeguard/benchmark_case",
   "title": "Synthetic Benchmark Case (합성 벤치마크 케이스)",
   "description": "D2에서 A가 생성하는 40건(하자 20·정상 20)의 단위 형식. ground_truth가 정확도 측정의 정답.",
   "type": "object",

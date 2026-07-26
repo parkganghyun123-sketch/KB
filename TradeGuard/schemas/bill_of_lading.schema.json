@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "tradeguard/bill_of_lading",
   "title": "Bill of Lading (선하증권)",
   "description": "UCP600 20조 심사 대상 필드 중심.",
   "type": "object",

@@ -18,9 +18,19 @@
   a.card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px;
            text-decoration: none; color: inherit; transition: box-shadow .15s, transform .15s; }
   a.card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.08); transform: translateY(-2px); }
-  a.card.live { border-color: #067647; background: #f6fef9; grid-column: 1 / -1; }
-  a.card.live .num { color: #067647; }
-  a.card.live a { color: #067647; font-weight: 600; }
+  .card.live { background: #f6fef9; border: 1px solid #a6f4c5; border-radius: 14px;
+               grid-column: 1 / -1; overflow: hidden; }
+  .card.live .live-main { display: block; padding: 22px 24px 18px; text-decoration: none; color: inherit;
+                          transition: background .15s; }
+  .card.live .live-main:hover { background: #edfcf3; }
+  .card.live .num { color: #067647; }
+  .card.live .live-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+                           padding: 12px 24px; border-top: 1px solid #d1fadf; background: #fff; }
+  .card.live .live-links span { font-size: 12px; color: var(--sub); margin-right: 4px; }
+  .card.live .live-links a { font-size: 12.5px; font-weight: 600; color: #067647; text-decoration: none;
+                             background: #ecfdf3; border: 1px solid #a6f4c5; border-radius: 999px;
+                             padding: 5px 12px; }
+  .card.live .live-links a:hover { background: #d1fadf; }
   .num { font-size: 12px; font-weight: 800; color: var(--sub); letter-spacing: 1px; }
   a.card h3 { font-size: 17px; margin: 8px 0 6px; }
   a.card p { font-size: 13px; color: var(--sub); line-height: 1.6; }
@@ -40,11 +50,19 @@
         <h3>🔍 판독 결과</h3><p>원본 서류 ↔ 추출 필드 나란히 · 신뢰도 0.8 미만은 노란색 "확인 필요"</p></a>
       <a class="card" href="screen3_discrepancy_report.html"><span class="num">SCREEN 3 ★</span>
         <h3>🚨 하자 검사 리포트</h3><p>위험 등급 D + 하자 3건 · UCP600 조항 인용 · 수정 제안 (데모 클라이맥스)</p></a>
-      <a class="card live" href="screen3_live.html"><span class="num">SCREEN 3 · LIVE</span>
-        <h3>⚡ 하자 리포트 (실제 엔진 출력)</h3><p>detect.py가 방금 판정한 결과 · 하드코딩 아님<br>
-        다른 케이스: <a href="live_CLEAN-017.html">CLEAN-017 (A등급·함정정상)</a> ·
-        <a href="live_DEFECT-019.html">DEFECT-019 (C등급)</a> ·
-        <a href="live_DEFECT-011.html">DEFECT-011 (C등급)</a></p></a>
+      <div class="card live">
+        <a class="live-main" href="screen3_live.html">
+          <span class="num">SCREEN 3 · LIVE</span>
+          <h3>⚡ 하자 리포트 (실제 엔진 출력)</h3>
+          <p>detect.py가 방금 판정한 결과 · 하드코딩 아님 — DEFECT-001 · D등급 · 하자 3건</p>
+        </a>
+        <div class="live-links">
+          <span>다른 케이스</span>
+          <a href="live_CLEAN-017.html">CLEAN-017 · A등급 (함정 정상)</a>
+          <a href="live_DEFECT-019.html">DEFECT-019 · C등급</a>
+          <a href="live_DEFECT-011.html">DEFECT-011 · C등급</a>
+        </div>
+      </div>
       <a class="card" href="screen4_fx_simulator.html"><span class="num">SCREEN 4</span>
         <h3>💱 환노출 시뮬레이터</h3><p>현금흐름 캘린더 · 환율/변동폭 조절형 3시나리오 손익 · KB 상품 처방</p></a>
     </div>

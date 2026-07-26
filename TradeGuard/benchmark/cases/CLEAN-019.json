@@ -1,0 +1,154 @@
+{
+  "case_id": "CLEAN-019",
+  "label": "clean",
+  "defect_types": [],
+  "difficulty": "hard",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS · 분할선적 허용 조건이며 실제 단일 선적 → 정상",
+  "presentation_date": "2026-06-25",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-36696",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-07",
+      "expiry": {
+        "date": "2026-07-13",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
+      },
+      "beneficiary": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 19200.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-06-23",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-928, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2310, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-5671",
+      "invoice_date": "2026-06-15",
+      "lc_number_ref": "LC-2026-36696",
+      "seller": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "buyer": {
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+      },
+      "currency": "USD",
+      "total_amount": 19200.0,
+      "goods": [
+        {
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-928, AS PER PROFORMA INVOICE NO. PI-2310",
+          "quantity": 3000,
+          "unit": "PCS",
+          "unit_price": 6.4,
+          "amount": 19200.0,
+          "hs_code": "6109.10"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-120",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "SHC-1717417",
+      "issue_date": "2026-06-15",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-06-15",
+        "method": "pre_printed"
+      },
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.33E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
+      "shipper": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "is_to_order": true
+      },
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "120 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "container_numbers": [
+        "DBSU7101141"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "agent_for_carrier"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "CLEAN-019",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [],
+    "overall_risk": {
+      "grade": "A",
+      "score": 100,
+      "summary_ko": "하자 없음 — 분할선적 허용 조건이며 실제 단일 선적 → 정상"
+    }
+  }
+}

@@ -128,7 +128,9 @@ def judge_name(lc_name, doc_name):
 
 
 # ---------- 검사 규칙 ----------
-def run_checks(docs):
+def run_checks(docs, presentation_date=None):
+    """presentation_date: 서류 제시(예정)일. 미지정 시 오늘 날짜를 사용한다."""
+    presentation_date = presentation_date or date.today()
     lc = docs.get("letter_of_credit") or {}
     inv = docs.get("commercial_invoice") or {}
     bl = docs.get("bill_of_lading") or {}
@@ -199,11 +201,13 @@ def run_checks(docs):
     pp = lc.get("presentation_period_days") or 21
     if ship_date and expiry:
         deadline = min(expiry, date.fromordinal(ship_date.toordinal() + pp))
-        if deadline < date.today():
+        if deadline < presentation_date:
             out.append(disc("LC_EXPIRED_OR_LATE_PRESENTATION", "high",
-                            f"서류 제시기한({deadline})이 이미 경과했습니다 (선적일+{pp}일과 유효기일 중 이른 날).",
+                            f"서류 제시일({presentation_date})이 제시기한({deadline})을 경과했습니다 "
+                            f"(선적일+{pp}일과 유효기일 중 이른 날).",
                             [ev("letter_of_credit", "expiry.date", expiry),
-                             ev("bill_of_lading", "shipped_on_board.date", ship_date)],
+                             ev("bill_of_lading", "shipped_on_board.date", ship_date),
+                             ev("_input", "presentation_date", presentation_date)],
                             "UCP600_14c", "즉시 은행과 하자 네고 여부를 협의하고 개설의뢰인 waiver를 요청하세요."))
 
     # 7) 항구 (20a3) — 결정적
@@ -254,8 +258,8 @@ def grade(discs):
     return g, score
 
 
-def build_report(case_id, docs):
-    discs = run_checks(docs)
+def build_report(case_id, docs, presentation_date=None):
+    discs = run_checks(docs, presentation_date)
     for i, x in enumerate(discs, 1):
         x["id"] = f"DISC-{i:03d}"
     g, score = grade(discs)
@@ -290,8 +294,9 @@ def main():
     docs = data.get("documents", data)
     case_id = data.get("case_id", Path(args[0]).stem)
     mode = "LLM(의미 비교 활성)" if _llm_client() else "오프라인 휴리스틱 폴백"
-    print(f"[detect] case={case_id} · 판정 모드: {mode}")
-    report = build_report(case_id, docs)
+    pres = d(data.get("presentation_date"))
+    print(f"[detect] case={case_id} · 판정 모드: {mode} · 제시일: {pres or '오늘(' + str(date.today()) + ')'}")
+    report = build_report(case_id, docs, pres)
     out_path = None
     if "--out" in sys.argv:
         out_path = Path(sys.argv[sys.argv.index("--out") + 1])

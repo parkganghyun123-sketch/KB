@@ -1,0 +1,175 @@
+{
+  "case_id": "DEFECT-016",
+  "label": "defect",
+  "defect_types": [
+    "BL_SIGNATURE_DEFECT"
+  ],
+  "difficulty": "medium",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, LED PANEL LIGHT 40W USD 91,800 · 주입 하자: BL_SIGNATURE_DEFECT",
+  "presentation_date": "2026-07-11",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-53043",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-04",
+      "expiry": {
+        "date": "2026-07-26",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
+      },
+      "beneficiary": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 91800.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-02",
+      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-675, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2616, FOB INCHEON INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-4687",
+      "invoice_date": "2026-06-26",
+      "lc_number_ref": "LC-2026-53043",
+      "seller": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "buyer": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+      },
+      "currency": "USD",
+      "total_amount": 91800.0,
+      "goods": [
+        {
+          "description": "LED PANEL LIGHT 40W, MODEL LP-675, AS PER PROFORMA INVOICE NO. PI-2616",
+          "quantity": 6000,
+          "unit": "PCS",
+          "unit_price": 15.3,
+          "amount": 91800.0,
+          "hs_code": "9405.11"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "INCHEON"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-240",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "DBS-4346669",
+      "issue_date": "2026-06-27",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-06-27",
+        "method": "pre_printed"
+      },
+      "vessel_name": "PACIFIC VOYAGER",
+      "voyage_number": "V.107E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
+      "shipper": {
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "is_to_order": true
+      },
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "240 CARTONS OF LED PANEL LIGHT 40W",
+      "container_numbers": [
+        "KMTU4615964"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "unclear"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "DEFECT-016",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [
+      {
+        "id": "DISC-001",
+        "type": "BL_SIGNATURE_DEFECT",
+        "severity": "medium",
+        "description_ko": "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
+        "evidence": [
+          {
+            "doc": "bill_of_lading",
+            "field": "signature.signer_capacity",
+            "value": "unclear"
+          }
+        ],
+        "ucp_basis": {
+          "article": "UCP600 20(a)(i)",
+          "quote_ko": "선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며, 대리인의 서명은 운송인 또는 선장을 위한 것임과 그 자격을 표시하여야 한다."
+        },
+        "suggested_fix_ko": "'AS AGENT FOR THE CARRIER, KOREA MARINE TRANSPORT CO., LTD.' 자격 문구 명기를 요청하세요."
+      }
+    ],
+    "overall_risk": {
+      "grade": "B",
+      "score": 90,
+      "summary_ko": "1건의 하자가 주입된 케이스입니다."
+    }
+  }
+}

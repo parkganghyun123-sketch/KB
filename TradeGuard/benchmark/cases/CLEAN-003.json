@@ -1,0 +1,154 @@
+{
+  "case_id": "CLEAN-003",
+  "label": "clean",
+  "defect_types": [],
+  "difficulty": "easy",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
+  "presentation_date": "2026-08-04",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-56752",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "issue_date": "2026-05-25",
+      "expiry": {
+        "date": "2026-08-30",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
+      },
+      "beneficiary": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "country": "KR"
+      },
+      "currency": "USD",
+      "amount": 9250.0,
+      "tolerance": null,
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-08-01",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-399, 500 CTN AS PER PROFORMA INVOICE NO. PI-2267, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": "INDICATING THIS L/C NUMBER"
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-9727",
+      "invoice_date": "2026-07-24",
+      "lc_number_ref": "LC-2026-56752",
+      "seller": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "buyer": {
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+      },
+      "currency": "USD",
+      "total_amount": 9250.0,
+      "goods": [
+        {
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-399, AS PER PROFORMA INVOICE NO. PI-2267",
+          "quantity": 500,
+          "unit": "CTN",
+          "unit_price": 18.5,
+          "amount": 9250.0,
+          "hs_code": "1902.30"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-20",
+      "signed": true,
+      "field_confidence": {},
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "SHC-7086324",
+      "issue_date": "2026-07-26",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-26",
+        "method": "pre_printed"
+      },
+      "vessel_name": "PACIFIC VOYAGER",
+      "voyage_number": "V.169E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
+      "shipper": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "is_to_order": true
+      },
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "container_numbers": [
+        "SHCU3298988"
+      ],
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "agent_for_carrier"
+      },
+      "field_confidence": {},
+      "unreadable_fields": []
+    }
+  },
+  "rendered_files": null,
+  "ground_truth": {
+    "case_id": "CLEAN-003",
+    "documents_checked": [
+      "letter_of_credit",
+      "commercial_invoice",
+      "bill_of_lading"
+    ],
+    "discrepancies": [],
+    "overall_risk": {
+      "grade": "A",
+      "score": 100,
+      "summary_ko": "하자 없음 — 완전 정합 케이스"
+    }
+  }
+}

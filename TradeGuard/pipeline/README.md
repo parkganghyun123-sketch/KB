@@ -8,12 +8,11 @@
 ## 설치
 
 ```bash
-pip install jsonschema requests
-pip install anthropic        # Claude를 쓸 경우
-pip install openai           # GPT를 쓸 경우 (둘 중 하나만 있으면 됨)
+cd TradeGuard
+pip install -r requirements.txt
 cp .env.example .env         # 키는 .env에만 — git 커밋 금지
-python3 llm.py --check       # 프로바이더 진단 (--live 추가 시 실호출 테스트)
-python3 fx_rates.py --check  # 환율 API 키 진단
+python3 pipeline/llm.py --check       # 프로바이더 진단 (--live 추가 시 실호출 테스트)
+python3 pipeline/fx_rates.py --check  # 환율 API 키 진단
 ```
 
 **LLM 프로바이더는 교체 가능합니다.** `llm.py`가 Anthropic/OpenAI를 추상화하므로
@@ -43,6 +42,23 @@ python3 detect.py ../samples/DEFECT-001.json --out report.json
 ## 남은 작업 (D3~D4)
 
 - [ ] 실제 API 키로 extract.py 스모크 테스트 (렌더링 PNG 5건)
-- [ ] 벤치마크 40건 일괄 평가 스크립트 (A의 evaluate.py와 연결)
+- [x] 벤치마크 40건 일괄 평가 스크립트 (A의 evaluate.py와 연결)
+- [x] PNG 엔드투엔드 평가 및 필드 단위 추출 정확도 측정기
 - [ ] ucp600_kb.json 인용문 공식 원문 대조
 - [ ] detect.py에 presentation_date 인자 추가 여부 결정 (현재는 오늘 날짜 기준 경고)
+
+## PNG 엔드투엔드 평가
+
+`benchmark/evaluate.py`의 JSON 평가는 검출기 상한선이다. 발표용 실제 수치는
+PNG에서 다시 추출하는 아래 명령의 `field_accuracy`와 `defect_f1`을 사용한다.
+
+```bash
+python3 benchmark/evaluate_e2e.py \
+  --cases benchmark/cases \
+  --rendered-dir benchmark/cases/rendered \
+  --limit 5 \
+  --out benchmark/metrics-e2e-smoke.json
+```
+
+`--limit`을 제거하면 전체 케이스를 평가한다. 실패한 API 호출이나 누락된 PNG는
+`failures`에 기록하며 성공 케이스의 지표와 섞지 않는다.

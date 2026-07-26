@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/benchmark_case",
+  "title": "Synthetic Benchmark Case (합성 벤치마크 케이스)",
+  "description": "D2에서 A가 생성하는 40건(하자 20·정상 20)의 단위 형식. ground_truth가 정확도 측정의 정답.",
+  "type": "object",
+  "required": ["case_id", "label", "defect_types", "documents", "ground_truth"],
+  "properties": {
+    "case_id": { "type": "string", "pattern": "^(CLEAN|DEFECT)-[0-9]{3}$", "description": "예: DEFECT-007" },
+    "label": { "type": "string", "enum": ["clean", "defect"] },
+    "defect_types": {
+      "type": "array",
+      "description": "주입한 하자 유형 (discrepancy_report.schema의 type enum과 동일 어휘). clean이면 빈 배열",
+      "items": { "type": "string" }
+    },
+    "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"], "description": "hard=오탈자 1~2자 수준의 미세 불일치" },
+    "scenario_note_ko": { "type": "string", "description": "케이스 설정 요약 (예: 한국 화학제품 수출사 → 베트남 바이어, USD 84,000)" },
+    "documents": {
+      "type": "object",
+      "required": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],
+      "description": "각각 해당 스키마를 따르는 구조화 JSON. 렌더링 파이프라인이 이 JSON으로 HTML→이미지 생성",
+      "properties": {
+        "letter_of_credit": { "type": "object" },
+        "commercial_invoice": { "type": "object" },
+        "bill_of_lading": { "type": "object" }
+      }
+    },
+    "rendered_files": {
+      "type": ["object", "null"],
+      "description": "렌더링 후 채워짐 (D2 오후)",
+      "properties": {
+        "lc_image": { "type": "string" },
+        "invoice_image": { "type": "string" },
+        "bl_image": { "type": "string" }
+      }
+    },
+    "ground_truth": {
+      "type": "object",
+      "description": "discrepancy_report.schema 형식의 정답. clean 케이스는 discrepancies=[] , grade=A",
+      "required": ["discrepancies", "overall_risk"],
+      "properties": {
+        "discrepancies": { "type": "array" },
+        "overall_risk": { "type": "object" }
+      }
+    }
+  }
+}

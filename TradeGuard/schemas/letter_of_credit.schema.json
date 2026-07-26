@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/letter_of_credit",
+  "title": "Letter of Credit (SWIFT MT700 기반)",
+  "description": "L/C 이미지에서 추출되는 구조화 필드. 필드명 뒤 주석의 Fxx는 MT700 필드 태그.",
+  "type": "object",
+  "required": ["doc_type", "lc_number", "currency", "amount", "expiry", "beneficiary", "applicant"],
+  "properties": {
+    "doc_type": { "const": "letter_of_credit" },
+    "lc_number": { "type": "string", "description": "F20 Documentary Credit Number" },
+    "issue_date": { "type": ["string", "null"], "format": "date", "description": "F31C, ISO 8601 (YYYY-MM-DD)" },
+    "expiry": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": { "type": "string", "format": "date", "description": "F31D 유효기일" },
+        "place": { "type": ["string", "null"], "description": "F31D 유효장소" }
+      }
+    },
+    "applicant": { "$ref": "#/definitions/party", "description": "F50 개설의뢰인(수입자)" },
+    "beneficiary": { "$ref": "#/definitions/party", "description": "F59 수익자(수출자)" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$", "description": "F32B ISO 4217 (예: USD)" },
+    "amount": { "type": "number", "description": "F32B 신용장 금액" },
+    "tolerance": {
+      "type": ["object", "null"],
+      "description": "F39A 금액 과부족 허용치 (예: 10/10). null이면 UCP600 30(b) 기본 규칙 적용 검토",
+      "properties": {
+        "plus_pct": { "type": "number" },
+        "minus_pct": { "type": "number" }
+      }
+    },
+    "partial_shipments": { "type": ["string", "null"], "enum": ["ALLOWED", "NOT ALLOWED", null], "description": "F43P" },
+    "transhipment": { "type": ["string", "null"], "enum": ["ALLOWED", "NOT ALLOWED", null], "description": "F43T" },
+    "port_of_loading": { "type": ["string", "null"], "description": "F44E 선적항" },
+    "port_of_discharge": { "type": ["string", "null"], "description": "F44F 도착항" },
+    "latest_shipment_date": { "type": ["string", "null"], "format": "date", "description": "F44C 최종선적기일" },
+    "goods_description": { "type": "string", "description": "F45A 상품명세 원문 그대로 (오탈자 포함, 수정 금지)" },
+    "documents_required": {
+      "type": "array",
+      "description": "F46A 요구서류 목록",
+      "items": {
+        "type": "object",
+        "required": ["doc_name"],
+        "properties": {
+          "doc_name": { "type": "string", "description": "예: SIGNED COMMERCIAL INVOICE" },
+          "copies": { "type": ["string", "null"], "description": "예: IN 3 ORIGINALS AND 2 COPIES" },
+          "requirements": { "type": ["string", "null"], "description": "부가 요건 원문" }
+        }
+      }
+    },
+    "additional_conditions": { "type": ["array", "null"], "items": { "type": "string" }, "description": "F47A" },
+    "presentation_period_days": { "type": ["integer", "null"], "description": "F48 제시기간(일). null이면 UCP600 14(c) 기본 21일 적용" },
+    "confirmation_instructions": { "type": ["string", "null"], "description": "F49" },
+    "field_confidence": { "$ref": "#/definitions/field_confidence" },
+    "unreadable_fields": { "type": "array", "items": { "type": "string" } }
+  },
+  "definitions": {
+    "party": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "원문 그대로. 정규화·오탈자 수정 금지 (하자 검출의 입력값)" },
+        "address": { "type": ["string", "null"] },
+        "country": { "type": ["string", "null"] }
+      }
+    },
+    "field_confidence": {
+      "type": "object",
+      "description": "필드명 → 0.0~1.0 신뢰도. 0.8 미만 필드는 UI에서 노란색 표시",
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+    }
+  }
+}

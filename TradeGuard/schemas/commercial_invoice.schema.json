@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/commercial_invoice",
+  "title": "Commercial Invoice (상업송장)",
+  "description": "UCP600 18조 심사 대상 필드 중심. 모든 텍스트는 원문 그대로 추출 (하자 검출 입력값).",
+  "type": "object",
+  "required": ["doc_type", "invoice_number", "seller", "buyer", "currency", "total_amount", "goods"],
+  "properties": {
+    "doc_type": { "const": "commercial_invoice" },
+    "invoice_number": { "type": "string" },
+    "invoice_date": { "type": ["string", "null"], "format": "date" },
+    "lc_number_ref": { "type": ["string", "null"], "description": "송장에 기재된 L/C 번호 참조" },
+    "seller": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "UCP600 18(a)(i): 수익자 명의와 대조됨. 원문 그대로" },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "buyer": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "UCP600 18(a)(ii): 개설의뢰인 명의와 대조됨" },
+        "address": { "type": ["string", "null"] }
+      }
+    },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$", "description": "UCP600 18(a)(iii): L/C와 동일 통화여야 함" },
+    "total_amount": { "type": "number" },
+    "goods": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["description", "amount"],
+        "properties": {
+          "description": { "type": "string", "description": "UCP600 18(c): L/C 45A 명세와 상응(correspond)해야 함. 원문 그대로" },
+          "quantity": { "type": ["number", "null"] },
+          "unit": { "type": ["string", "null"], "description": "예: PCS, MT, CTN" },
+          "unit_price": { "type": ["number", "null"] },
+          "amount": { "type": "number" },
+          "hs_code": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "incoterms": {
+      "type": ["object", "null"],
+      "properties": {
+        "term": { "type": "string", "description": "예: FOB, CIF" },
+        "place": { "type": ["string", "null"] }
+      }
+    },
+    "payment_terms": { "type": ["string", "null"] },
+    "shipping_marks": { "type": ["string", "null"] },
+    "signed": { "type": ["boolean", "null"], "description": "서명 존재 여부 (L/C가 SIGNED INVOICE 요구 시 대조)" },
+    "field_confidence": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 } },
+    "unreadable_fields": { "type": "array", "items": { "type": "string" } }
+  }
+}

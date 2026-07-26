@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/fx_exposure",
+  "title": "FX Exposure & Hedge Prescription (외화 익스포저·헤지 처방)",
+  "description": "D5 모듈의 입출력 형식. 입력 cash_flows는 추출된 서류에서 자동 생성.",
+  "type": "object",
+  "required": ["case_id", "base_currency", "cash_flows", "scenarios", "hedge_recommendation"],
+  "properties": {
+    "case_id": { "type": "string" },
+    "base_currency": { "const": "KRW" },
+    "as_of_date": { "type": "string", "format": "date" },
+    "spot_rate": { "type": "object", "description": "통화쌍 → 기준 환율 (ECOS API 731Y001)", "additionalProperties": { "type": "number" } },
+    "cash_flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["expected_date", "direction", "currency", "amount", "source"],
+        "properties": {
+          "expected_date": { "type": "string", "format": "date", "description": "결제 예정일 (예: B/L 선적일 + 결제조건 기간)" },
+          "direction": { "type": "string", "enum": ["inflow", "outflow"] },
+          "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+          "amount": { "type": "number" },
+          "source": {
+            "type": "object",
+            "required": ["doc", "field"],
+            "properties": {
+              "doc": { "type": "string" },
+              "field": { "type": "string" }
+            }
+          },
+          "certainty": { "type": "string", "enum": ["confirmed", "estimated"], "description": "결제일이 서류에 명시=confirmed, 관행 추정=estimated" }
+        }
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["name", "rate_change_pct", "pnl_krw"],
+        "properties": {
+          "name": { "type": "string", "enum": ["base", "krw_strong", "krw_weak"] },
+          "rate_change_pct": { "type": "number", "description": "예: base=0, krw_strong=-5, krw_weak=+5" },
+          "assumed_rate": { "type": "number" },
+          "pnl_krw": { "type": "number", "description": "기준 시나리오 대비 원화 손익" }
+        }
+      }
+    },
+    "hedge_recommendation": {
+      "type": "object",
+      "required": ["needed", "rationale_ko"],
+      "properties": {
+        "needed": { "type": "boolean" },
+        "notional": { "type": ["number", "null"], "description": "헤지 권고 금액 (외화)" },
+        "currency": { "type": ["string", "null"] },
+        "tenor_end_date": { "type": ["string", "null"], "format": "date" },
+        "instruments": {
+          "type": "array",
+          "description": "KB 상품 매칭 카드",
+          "items": {
+            "type": "object",
+            "required": ["product_type", "product_name_ko", "fit_reason_ko"],
+            "properties": {
+              "product_type": { "type": "string", "enum": ["forward", "fx_deposit", "fx_insurance", "other"] },
+              "product_name_ko": { "type": "string", "description": "예: KB 선물환" },
+              "fit_reason_ko": { "type": "string" }
+            }
+          }
+        },
+        "rationale_ko": { "type": "string" }
+      }
+    }
+  }
+}

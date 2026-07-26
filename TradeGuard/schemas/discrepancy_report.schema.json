@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/discrepancy_report",
+  "title": "Discrepancy Report (하자 검출 결과)",
+  "description": "D4 하자 검출 에이전트의 출력이자 벤치마크 정답 라벨의 형식. D1에 확정하여 A(정답 라벨)·B(에이전트 출력)·C(UI 렌더링)가 공유.",
+  "type": "object",
+  "required": ["case_id", "documents_checked", "discrepancies", "overall_risk"],
+  "properties": {
+    "case_id": { "type": "string" },
+    "documents_checked": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["letter_of_credit", "commercial_invoice", "bill_of_lading"] }
+    },
+    "discrepancies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "severity", "description_ko", "evidence", "ucp_basis"],
+        "properties": {
+          "id": { "type": "string", "description": "예: DISC-001" },
+          "type": {
+            "type": "string",
+            "description": "하자 유형 코드 (합성 벤치마크의 defect_types와 동일 어휘)",
+            "enum": [
+              "AMOUNT_EXCEEDS_LC",
+              "CURRENCY_MISMATCH",
+              "GOODS_DESC_MISMATCH",
+              "BENEFICIARY_NAME_MISMATCH",
+              "APPLICANT_NAME_MISMATCH",
+              "LATE_SHIPMENT",
+              "LC_EXPIRED_OR_LATE_PRESENTATION",
+              "PORT_MISMATCH",
+              "BL_SIGNATURE_DEFECT",
+              "BL_NO_ONBOARD_NOTATION",
+              "PARTIAL_SHIPMENT_VIOLATION",
+              "MISSING_REQUIRED_DOCUMENT",
+              "OTHER"
+            ]
+          },
+          "severity": { "type": "string", "enum": ["high", "medium", "low"], "description": "high=지급거절 사유 확실 / medium=은행 재량·관행상 위험 / low=경미" },
+          "description_ko": { "type": "string", "description": "한 문장 설명 (데모 화면에 그대로 노출)" },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "description": "서류별 근거 필드와 값 (UI에서 빨간 하이라이트 대상)",
+            "items": {
+              "type": "object",
+              "required": ["doc", "field", "value"],
+              "properties": {
+                "doc": { "type": "string", "enum": ["letter_of_credit", "commercial_invoice", "bill_of_lading"] },
+                "field": { "type": "string", "description": "스키마의 JSON 경로 (예: goods[0].description)" },
+                "value": { "type": "string" }
+              }
+            }
+          },
+          "ucp_basis": {
+            "type": "object",
+            "required": ["article"],
+            "properties": {
+              "article": { "type": "string", "description": "예: UCP600 18(c)" },
+              "quote_ko": { "type": ["string", "null"], "description": "조항 요지 1~2문장 (RAG 검색 결과 인용)" }
+            }
+          },
+          "suggested_fix_ko": { "type": ["string", "null"], "description": "수정 문구 제안 (예: 송장 상품명세를 L/C 45A 원문과 일치시키세요)" }
+        }
+      }
+    },
+    "overall_risk": {
+      "type": "object",
+      "required": ["grade", "summary_ko"],
+      "properties": {
+        "grade": { "type": "string", "enum": ["A", "B", "C", "D"], "description": "A=하자 없음 / B=경미 / C=지급거절 가능 / D=지급거절 확실" },
+        "score": { "type": ["number", "null"], "minimum": 0, "maximum": 100, "description": "100=안전. severity 가중 감점으로 산출" },
+        "summary_ko": { "type": "string", "description": "3문장 이내 총평" }
+      }
+    }
+  }
+}

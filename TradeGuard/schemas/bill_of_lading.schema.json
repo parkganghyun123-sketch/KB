@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tradeguard/bill_of_lading",
+  "title": "Bill of Lading (선하증권)",
+  "description": "UCP600 20조 심사 대상 필드 중심.",
+  "type": "object",
+  "required": ["doc_type", "bl_number", "port_of_loading", "port_of_discharge", "shipper", "consignee", "signature"],
+  "properties": {
+    "doc_type": { "const": "bill_of_lading" },
+    "bl_number": { "type": "string" },
+    "issue_date": { "type": ["string", "null"], "format": "date" },
+    "shipped_on_board": {
+      "type": "object",
+      "description": "UCP600 20(a)(ii): 본선적재 표기. 사전인쇄 문언 또는 별도 부기",
+      "required": ["indicated"],
+      "properties": {
+        "indicated": { "type": "boolean", "description": "본선적재 표기 존재 여부" },
+        "date": { "type": ["string", "null"], "format": "date", "description": "선적일 = 최종선적기일(44C) 대조 기준" },
+        "method": { "type": ["string", "null"], "enum": ["pre_printed", "on_board_notation", null] }
+      }
+    },
+    "vessel_name": { "type": ["string", "null"] },
+    "voyage_number": { "type": ["string", "null"] },
+    "place_of_receipt": { "type": ["string", "null"] },
+    "port_of_loading": { "type": "string", "description": "L/C 44E와 대조. 원문 그대로" },
+    "port_of_discharge": { "type": "string", "description": "L/C 44F와 대조" },
+    "place_of_delivery": { "type": ["string", "null"] },
+    "shipper": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "address": { "type": ["string", "null"] } } },
+    "consignee": {
+      "type": "object",
+      "required": ["raw_text"],
+      "properties": {
+        "raw_text": { "type": "string", "description": "원문 그대로 (예: TO ORDER OF XYZ BANK)" },
+        "is_to_order": { "type": ["boolean", "null"] }
+      }
+    },
+    "notify_party": { "type": ["string", "null"] },
+    "goods_description": { "type": "string", "description": "UCP600 14(e): L/C 명세와 저촉되지 않는 일반적 표현 허용" },
+    "container_numbers": { "type": ["array", "null"], "items": { "type": "string" } },
+    "freight_terms": { "type": ["string", "null"], "enum": ["PREPAID", "COLLECT", null] },
+    "clean": { "type": ["boolean", "null"], "description": "사고문언(물품·포장 하자 명시 조항) 없음 = true (UCP600 27조 참고)" },
+    "originals_count": { "type": ["integer", "null"], "description": "UCP600 20(a)(iv): 발행 통수" },
+    "signature": {
+      "type": "object",
+      "description": "UCP600 20(a)(i): 운송인 명칭 + 서명자 자격 표시 필수",
+      "required": ["signed"],
+      "properties": {
+        "signed": { "type": "boolean" },
+        "carrier_name": { "type": ["string", "null"] },
+        "signer_capacity": { "type": ["string", "null"], "enum": ["carrier", "master", "agent_for_carrier", "agent_for_master", "unclear", null] }
+      }
+    },
+    "field_confidence": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 } },
+    "unreadable_fields": { "type": "array", "items": { "type": "string" } }
+  }
+}

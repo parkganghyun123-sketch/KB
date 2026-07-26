@@ -14,6 +14,9 @@
   .carrier-head .doc { text-align: right; font-size: 13px; font-weight: bold; }
   table.grid { width: 100%; border-collapse: collapse; }
   table.grid td { border: 1px solid #555; padding: 6px 8px; vertical-align: top; }
+  table.grid th { border: 1px solid #555; padding: 5px 6px; font-size: 8.5px; color: #555;
+                  text-transform: uppercase; letter-spacing: .3px; background: #f4f6f8; font-weight: 600; }
+  table.grid td td { border: 1px solid #555; }
   .cell-label { display: block; font-size: 8.5px; color: #666; letter-spacing: 0.5px; margin-bottom: 3px; text-transform: uppercase; }
   .goods-area { min-height: 200px; }
   .onboard { margin-top: 8px; font-weight: bold; border: 1.5px solid #111; display: inline-block; padding: 4px 10px; transform: rotate(-2deg); font-size: 12px; }
@@ -40,8 +43,16 @@
       <td colspan="2"><span class="cell-label">Date of Issue</span>{{ bl.issue_date | docdate if bl.issue_date else '' }}</td>
     </tr>
     <tr>
-      <td rowspan="2"><span class="cell-label">Consignee</span>{{ bl.consignee.raw_text }}</td>
+      <td rowspan="2"><span class="cell-label">Consignee (not negotiable unless consigned to order)</span>{{ bl.consignee.raw_text }}</td>
+      <td><span class="cell-label">Booking No.</span>{{ bl.get('booking_number') or bl.bl_number }}</td>
+      <td><span class="cell-label">Export References</span>{{ bl.get('export_reference') or '-' }}</td>
+    </tr>
+    <tr>
       <td colspan="2"><span class="cell-label">Vessel / Voyage No.</span>{{ bl.vessel_name | default('', true) }} {{ bl.voyage_number | default('', true) }}</td>
+    </tr>
+    <tr>
+      <td><span class="cell-label">Pre-carriage by</span>{{ bl.get('pre_carriage') or '-' }}</td>
+      <td colspan="2"><span class="cell-label">Point and Country of Origin</span>{{ bl.get('origin_country') or 'REPUBLIC OF KOREA' }}</td>
     </tr>
     <tr>
       <td><span class="cell-label">Place of Receipt</span>{{ bl.place_of_receipt | default('', true) }}</td>
@@ -53,18 +64,35 @@
       <td><span class="cell-label">Place of Delivery</span>{{ bl.place_of_delivery | default('', true) }}</td>
     </tr>
     <tr>
-      <td colspan="3" class="goods-area">
-        <span class="cell-label">Particulars Furnished by Shipper — Description of Goods</span>
-        {{ bl.goods_description }}
-        {% if bl.container_numbers %}<br><br>CONTAINER NO(S).: {{ bl.container_numbers | join(', ') }}{% endif %}
-        {% if bl.clean %}<br><br>CLEAN ON BOARD{% endif %}
-        {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'on_board_notation' %}
-        <br><div class="onboard stamp-blue">SHIPPED ON BOARD<br>DATE: {{ bl.shipped_on_board.date | docdate if bl.shipped_on_board.date else '' }}</div>
-        {% endif %}
+      <td colspan="3" style="padding:0">
+        <div style="padding:6px 8px;border-bottom:1px solid #555">
+          <span class="cell-label">Particulars Furnished by Shipper</span></div>
+        <table style="width:100%;border-collapse:collapse">
+          <tr>
+            <th style="width:16%">Marks &amp; Nos.<br>Container Nos.</th>
+            <th style="width:13%">No. &amp; Kind<br>of Packages</th>
+            <th style="width:41%">Description of Goods</th>
+            <th style="width:15%">Gross Weight</th>
+            <th style="width:15%">Measurement</th>
+          </tr>
+          <tr>
+            <td>{{ bl.get('shipping_marks') or 'N/M' }}{% if bl.container_numbers %}<br>{{ bl.container_numbers | join('<br>') }}{% endif %}</td>
+            <td>{{ bl.get('package_count') or 'AS PER<br>ATTACHED LIST' }}</td>
+            <td class="goods-area">{{ bl.goods_description }}
+              {% if bl.clean %}<br><br>CLEAN ON BOARD{% endif %}
+              {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'on_board_notation' %}
+              <br><div class="onboard stamp-blue">SHIPPED ON BOARD<br>DATE: {{ bl.shipped_on_board.date | docdate if bl.shipped_on_board.date else '' }}</div>
+              {% endif %}
+            </td>
+            <td>{{ bl.get('gross_weight') or '-' }}</td>
+            <td>{{ bl.get('measurement') or '-' }}</td>
+          </tr>
+        </table>
       </td>
     </tr>
     <tr>
-      <td><span class="cell-label">Freight &amp; Charges</span>FREIGHT {{ bl.freight_terms | default('', true) }}</td>
+      <td><span class="cell-label">Freight &amp; Charges</span>FREIGHT {{ bl.freight_terms | default('', true) }}<br>
+        <small style="font-size:8px;color:#666">CHARGES · BASIS · RATE · PREPAID / COLLECT</small></td>
       <td colspan="2">
         {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'pre_printed' %}
         <span class="cell-label">Shipped on Board — the goods in apparent good order and condition</span>

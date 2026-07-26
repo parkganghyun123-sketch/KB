@@ -41,7 +41,11 @@
         <td class="lbl">DATE</td><td>{{ inv.invoice_date | docdate if inv.invoice_date else '' }}</td></tr>
     {% if inv.lc_number_ref %}<tr><td class="lbl">L/C NO.</td><td>{{ inv.lc_number_ref }}</td>
         <td class="lbl">PAYMENT TERMS</td><td>{{ inv.payment_terms | default('', true) }}</td></tr>{% endif %}
-    {% if inv.incoterms %}<tr><td class="lbl">DELIVERY TERMS</td><td colspan="3">{{ inv.incoterms.term }} {{ inv.incoterms.place | default('', true) }}</td></tr>{% endif %}
+    {% if inv.incoterms %}<tr><td class="lbl">DELIVERY TERMS</td><td>{{ inv.incoterms.term }} {{ inv.incoterms.place | default('', true) }}</td>
+        <td class="lbl">COUNTRY OF ORIGIN</td><td>{{ inv.get('country_of_origin') or 'REPUBLIC OF KOREA' }}</td></tr>{% endif %}
+    {% if inv.get('port_of_loading') or inv.get('port_of_discharge') %}
+    <tr><td class="lbl">PORT OF LOADING</td><td>{{ inv.get('port_of_loading', '') }}</td>
+        <td class="lbl">PORT OF DISCHARGE</td><td>{{ inv.get('port_of_discharge', '') }}</td></tr>{% endif %}
   </table>
 
   <table class="parties">
@@ -65,7 +69,12 @@
   </table>
 
   <div class="terms">
-    {% if inv.shipping_marks %}SHIPPING MARKS: {{ inv.shipping_marks }}<br>{% endif %}
+    <b>SAY TOTAL:</b> {{ inv.get('amount_in_words') or (inv.currency ~ ' ' ~ (inv.total_amount | money) ~ ' ONLY') }}<br>
+    {% if inv.shipping_marks %}SHIPPING MARKS &amp; NOS.: {{ inv.shipping_marks }}<br>{% endif %}
+    {% if inv.get('packages') %}NO. OF PACKAGES: {{ inv.get('packages') }}<br>{% endif %}
+    {% if inv.get('net_weight') or inv.get('gross_weight') %}NET WEIGHT: {{ inv.get('net_weight', '-') }} &nbsp;/&nbsp;
+      GROSS WEIGHT: {{ inv.get('gross_weight', '-') }}<br>{% endif %}
+    COUNTRY OF ORIGIN: {{ inv.get('country_of_origin') or 'REPUBLIC OF KOREA' }}<br><br>
     WE HEREBY CERTIFY THAT THIS INVOICE IS TRUE AND CORRECT.
   </div>
 

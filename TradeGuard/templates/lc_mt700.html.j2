@@ -31,6 +31,7 @@
   <div class="row"><span class="tag">:40A:</span><span class="fname">Form of Documentary Credit</span><span class="val">IRREVOCABLE</span></div>
   <div class="row"><span class="tag">:20:</span><span class="fname">Documentary Credit Number</span><span class="val">{{ lc.lc_number }}</span></div>
   {% if lc.issue_date %}<div class="row"><span class="tag">:31C:</span><span class="fname">Date of Issue</span><span class="val">{{ lc.issue_date | swiftdate }}</span></div>{% endif %}
+  <div class="row"><span class="tag">:40E:</span><span class="fname">Applicable Rules</span><span class="val">{{ lc.get('applicable_rules') or 'UCP LATEST VERSION' }}</span></div>
   <div class="row"><span class="tag">:31D:</span><span class="fname">Date and Place of Expiry</span><span class="val">{{ lc.expiry.date | swiftdate }} {{ lc.expiry.place | default('', true) }}</span></div>
   <div class="row"><span class="tag">:50:</span><span class="fname">Applicant</span><span class="val">{{ lc.applicant.name }}{% if lc.applicant.address %}
 {{ lc.applicant.address }}{% endif %}</span></div>
@@ -39,6 +40,8 @@
   <div class="row"><span class="tag">:32B:</span><span class="fname">Currency Code, Amount</span><span class="val">{{ lc.currency }} {{ lc.amount | money }}</span></div>
   {% if lc.tolerance %}<div class="row"><span class="tag">:39A:</span><span class="fname">Percentage Credit Amount Tolerance</span><span class="val">{{ lc.tolerance.plus_pct | int }}/{{ lc.tolerance.minus_pct | int }}</span></div>{% endif %}
   <div class="row"><span class="tag">:41A:</span><span class="fname">Available With ... By ...</span><span class="val">{{ lc.available_with_by | default('ANY BANK BY NEGOTIATION', true) }}</span></div>
+  <div class="row"><span class="tag">:42C:</span><span class="fname">Drafts at ...</span><span class="val">{{ lc.get('drafts_at') or 'SIGHT' }}</span></div>
+  <div class="row"><span class="tag">:42A:</span><span class="fname">Drawee</span><span class="val">{{ lc.get('drawee') or lc.get('issuing_bank') or 'ISSUING BANK' }}</span></div>
   {% if lc.partial_shipments %}<div class="row"><span class="tag">:43P:</span><span class="fname">Partial Shipments</span><span class="val">{{ lc.partial_shipments }}</span></div>{% endif %}
   {% if lc.transhipment %}<div class="row"><span class="tag">:43T:</span><span class="fname">Transhipment</span><span class="val">{{ lc.transhipment }}</span></div>{% endif %}
   {% if lc.port_of_loading %}<div class="row"><span class="tag">:44E:</span><span class="fname">Port of Loading</span><span class="val">{{ lc.port_of_loading }}</span></div>{% endif %}
@@ -51,8 +54,11 @@
 {% endfor %}</span></div>
   {% if lc.additional_conditions %}<div class="row"><span class="tag">:47A:</span><span class="fname">Additional Conditions</span><span class="val">{% for c in lc.additional_conditions %}+ {{ c }}
 {% endfor %}</span></div>{% endif %}
+  <div class="row"><span class="tag">:71B:</span><span class="fname">Charges</span><span class="val">{{ lc.charges | default('ALL BANKING CHARGES OUTSIDE THE COUNTRY OF THE ISSUING BANK ARE FOR ACCOUNT OF THE BENEFICIARY', true) }}</span></div>
   {% if lc.presentation_period_days %}<div class="row"><span class="tag">:48:</span><span class="fname">Period for Presentation</span><span class="val">DOCUMENTS TO BE PRESENTED WITHIN {{ lc.presentation_period_days }} DAYS AFTER THE DATE OF SHIPMENT BUT WITHIN THE VALIDITY OF THE CREDIT</span></div>{% endif %}
   {% if lc.confirmation_instructions %}<div class="row"><span class="tag">:49:</span><span class="fname">Confirmation Instructions</span><span class="val">{{ lc.confirmation_instructions }}</span></div>{% endif %}
+  <div class="row"><span class="tag">:78:</span><span class="fname">Instructions to the Paying/Accepting/Negotiating Bank</span><span class="val">{{ lc.instructions_to_bank | default('+ ALL DOCUMENTS MUST BE FORWARDED TO US IN ONE LOT BY COURIER SERVICE
++ UPON RECEIPT OF DOCUMENTS IN COMPLIANCE WITH CREDIT TERMS WE SHALL REMIT PROCEEDS AS INSTRUCTED', true) }}</span></div>
 
   <div class="footer">— END OF MESSAGE — AUTHENTICATION RESULT: CORRECT WITH CURRENT KEY —</div>
 </body>

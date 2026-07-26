@@ -31,6 +31,8 @@
                              background: #ecfdf3; border: 1px solid #a6f4c5; border-radius: 999px;
                              padding: 5px 12px; }
   .card.live .live-links a:hover { background: #d1fadf; }
+  a.card.real { border-color: #a6f4c5; }
+  a.card small { font-size: 11.5px; }
   .num { font-size: 12px; font-weight: 800; color: var(--sub); letter-spacing: 1px; }
   a.card h3 { font-size: 17px; margin: 8px 0 6px; }
   a.card p { font-size: 13px; color: var(--sub); line-height: 1.6; }
@@ -42,36 +44,35 @@
 <body>
   <div class="wrap">
     <div class="brand"><div class="logo-dot">T</div><h1>TradeGuard 데모</h1></div>
-    <p class="lead">권장 순서: ① → ② → ③ → ④. 화면마다 하단 버튼으로 이어집니다. (샘플 케이스 DEFECT-001)</p>
+    <p class="lead">권장 순서: ① → ② → ③ → ④ (샘플 케이스 DEFECT-001)<br>
+      <b style="color:#067647">●</b> 표시는 실제 파이프라인 출력, <b style="color:#b54708">●</b> 표시는 UI 목업입니다.</p>
     <div class="grid">
-      <a class="card" href="screen1_upload.html"><span class="num">SCREEN 1</span>
-        <h3>📤 서류 업로드</h3><p>드롭존 3칸 · "샘플 케이스 불러오기" 클릭 한 번으로 시연 시작</p></a>
-      <a class="card" href="screen2_extraction.html"><span class="num">SCREEN 2</span>
-        <h3>🔍 판독 결과</h3><p>원본 서류 ↔ 추출 필드 나란히 · 신뢰도 0.8 미만은 노란색 "확인 필요"</p></a>
-      <a class="card" href="screen3_discrepancy_report.html"><span class="num">SCREEN 3 ★</span>
-        <h3>🚨 하자 검사 리포트</h3><p>위험 등급 D + 하자 3건 · UCP600 조항 인용 · 수정 제안 (데모 클라이맥스)</p></a>
+      <a class="card" href="screen1_upload.html"><span class="num">SCREEN 1 <b style="color:#b54708">●</b> 목업</span>
+        <h3>📤 서류 업로드</h3><p>드롭존 3칸 · "샘플 케이스 불러오기" 클릭 한 번으로 시연 시작<br>
+        <small style="color:#b54708">아직 실제 업로드는 동작하지 않습니다</small></p></a>
+      <a class="card real" href="screen2_live.html"><span class="num">SCREEN 2 <b style="color:#067647">●</b> 실데이터</span>
+        <h3>🔍 판독 결과</h3><p>원본 서류 ↔ 추출 필드 나란히 · 신뢰도 0.8 미만 노란색 · 정답 대조 시 오류 필드 빨강</p></a>
       <div class="card live">
         <a class="live-main" href="screen3_live.html">
-          <span class="num">SCREEN 3 · LIVE</span>
-          <h3>⚡ 하자 리포트 (실제 엔진 출력)</h3>
-          <p>detect.py가 방금 판정한 결과 · 하드코딩 아님 — DEFECT-001 · D등급 · 하자 3건</p>
+          <span class="num">SCREEN 3 ★ <b>●</b> 실데이터 — 데모 클라이맥스</span>
+          <h3>🚨 하자 검사 리포트 (detect.py 실제 판정)</h3>
+          <p>DEFECT-001 · <b>D등급 · 하자 3건</b> · UCP600 조항 인용 · 수정 제안 · PDF 저장</p>
         </a>
         <div class="live-links">
-          <span>다른 케이스</span>
-          <a href="live_CLEAN-017.html">CLEAN-017 · A등급 (함정 정상)</a>
+          <span>등급별 다른 케이스</span>
+          <a href="live_CLEAN-017.html">CLEAN-017 · A등급 (함정 정상 ★)</a>
           <a href="live_DEFECT-019.html">DEFECT-019 · C등급</a>
           <a href="live_DEFECT-011.html">DEFECT-011 · C등급</a>
-          <span style="margin-left:12px">판독 화면</span>
-          <a href="screen2_live.html">SCREEN 2 · LIVE</a>
         </div>
       </div>
-      <a class="card" href="screen4_fx_simulator.html"><span class="num">SCREEN 4</span>
-        <h3>💱 환노출 시뮬레이터</h3><p>현금흐름 캘린더 · 환율/변동폭 조절형 3시나리오 손익 · KB 상품 처방</p></a>
+      <a class="card real" href="screen4_fx_simulator.html"><span class="num">SCREEN 4 <b style="color:#067647">●</b> 실환율</span>
+        <h3>💱 환노출 시뮬레이터</h3><p>한국은행 ECOS 실환율 자동 주입 · 변동폭 조절형 3시나리오 손익 · KB 상품 처방 · PDF 저장</p></a>
     </div>
     <div class="note">
-      ⚠️ 화면 2의 원본 미리보기는 <code>render/sample_output/</code>의 렌더링 결과를 iframe으로 불러옵니다.
-      브라우저가 file:// iframe을 차단하면 TradeGuard 폴더에서 <code>python3 -m http.server 8000</code> 실행 후
-      <code>http://localhost:8000/mockups/</code>로 여세요.
+      🔄 화면을 최신 판정 결과로 갱신하려면 <code>bash demo.sh</code> (비용 0원).<br>
+      ⚠️ 원본 서류 미리보기는 iframe을 쓰므로 <b>반드시 http://localhost 로 접속</b>하세요.
+      file:// 로 열면 브라우저가 차단합니다.<br>
+      📁 값이 하드코딩된 초기 목업은 <code>_archive/</code>로 옮겼습니다 — 데모에 사용하지 마세요.
     </div>
   </div>
 </body>

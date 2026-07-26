@@ -40,7 +40,18 @@ footer{margin-top:26px;font-size:12px;color:#98a2b3;line-height:1.7;border-top:1
 .cta{margin-top:22px;display:flex;gap:12px}
 .btn{border:0;border-radius:10px;padding:14px 26px;font-size:15px;font-weight:700;text-decoration:none;display:inline-block}
 .btn.primary{background:var(--kb-yellow);color:var(--ink)}
-.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--sub)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--sub);cursor:pointer;font-family:inherit}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{width:auto;background:#fff}
+  .topbar,.cta,.tabs{display:none!important}
+  main{padding:0}
+  .split{grid-template-columns:1fr}
+  iframe{display:none}
+  .pane,.stat{box-shadow:none;border:1px solid #ccc;break-inside:avoid}
+  .fieldwrap{max-height:none;overflow:visible}
+  [id^=p]{display:block!important}
+}
 </style></head><body>
 <div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
   <span class="live">● LIVE — extract.py 실제 출력</span>
@@ -76,9 +87,10 @@ footer{margin-top:26px;font-size:12px;color:#98a2b3;line-height:1.7;border-top:1
 </div>
   <div class="cta">
     <a class="btn primary" href="screen3_live.html">하자 검사 실행 →</a>
+    <button class="btn ghost" onclick="window.print()">🖨 판독 결과 PDF 저장</button>
     <a class="btn ghost" href="index.html">← 데모 홈</a>
   </div>
-  <footer>생성 2026-07-27 00:29 · 추출 pipeline/extract.py ·
+  <footer>생성 2026-07-27 00:52 · 추출 pipeline/extract.py ·
     이 화면의 필드값은 하드코딩이 아니라 실제 추출 결과입니다.</footer>
 </main>
 <script>

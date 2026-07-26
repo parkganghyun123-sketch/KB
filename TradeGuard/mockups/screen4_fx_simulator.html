@@ -70,6 +70,20 @@
          cursor: pointer; text-decoration: none; display: inline-block; }
   .btn.primary { background: var(--kb-yellow); color: var(--ink); }
   .btn.ghost { background: #fff; border: 1px solid var(--line); color: var(--sub); }
+
+  /* 인쇄(PDF 저장) 최적화 — 화면 전용 요소를 숨기고 A4에 맞춘다 */
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    body { width: auto; background: #fff; }
+    .topbar, .cta-bar { display: none !important; }
+    main { padding: 0; }
+    .card, .rx-card, .rx-head { box-shadow: none; break-inside: avoid; page-break-inside: avoid; }
+    .card, .rx-card { border: 1px solid #ccc; }
+    input[type=range] { display: none; }
+    .print-head { display: block !important; }
+  }
+  .print-head { display: none; border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 18px; }
+  .print-head b { font-size: 18px; } .print-head span { float: right; font-size: 12px; color: var(--sub); }
 </style>
 </head>
 <body>
@@ -78,6 +92,8 @@
     <span class="step">① 업로드 → ② 판독 → ③ 하자 검사 → <b>④ 환노출·처방</b></span>
   </div>
   <main>
+    <div class="print-head"><b>TradeGuard 환노출 분석 리포트</b>
+      <span id="printDate">케이스 DEFECT-001</span></div>
     <h2 class="sec">수취 현금흐름 캘린더 <span style="color:var(--sub);font-weight:400;font-size:13px">— 서류에서 자동 생성 (케이스 DEFECT-001)</span></h2>
     <div class="card">
       <div class="timeline">
@@ -140,8 +156,9 @@
     </div>
 
     <div class="cta-bar">
-      <button class="btn primary">리포트 전체 PDF 저장</button>
-      <a class="btn ghost" href="screen3_discrepancy_report.html">← 하자 리포트로</a>
+      <button class="btn primary" onclick="window.print()">🖨 환노출 리포트 PDF 저장</button>
+      <a class="btn ghost" href="screen3_live.html">← 하자 리포트로</a>
+      <a class="btn ghost" href="index.html">데모 홈</a>
     </div>
   </main>
 

@@ -76,6 +76,27 @@ border-radius:12px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgb
 .fix b{font-size:12px;letter-spacing:.5px;display:block;margin-bottom:3px}
 .empty{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:40px;text-align:center;color:var(--sub)}
 footer{margin-top:30px;font-size:12px;color:#98a2b3;line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+.cta{margin-top:26px;display:flex;gap:12px}
+.btn{border:0;border-radius:10px;padding:14px 26px;font-size:15px;font-weight:700;cursor:pointer;
+text-decoration:none;display:inline-block;font-family:inherit}
+.btn.primary{background:var(--kb-yellow);color:var(--ink)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--sub)}
+
+/* ── 인쇄(PDF 저장) 최적화 ────────────────────────────
+   버튼·상단바 등 화면 전용 요소를 숨기고 A4 폭에 맞춘다.
+   브라우저 인쇄 대화상자에서 "PDF로 저장"을 고르면 그대로 리포트가 된다. */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{width:auto;background:#fff}
+  .topbar,.cta{display:none!important}
+  main{padding:0}
+  .risk-hero,.disc-card,.evi-box,.ucp,.fix{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .disc-card{border:1px solid #ccc;border-left-width:4px}
+  .print-head{display:block!important}
+  a{text-decoration:none;color:inherit}
+}
+.print-head{display:none;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:18px}
+.print-head b{font-size:18px}.print-head span{float:right;font-size:12px;color:var(--sub)}
 """
 
 
@@ -133,6 +154,8 @@ def build_html(report, source_name, presentation_date=None):
   <span class="live">● LIVE — detect.py 실제 출력</span>
   <span class="step">① 업로드 → ② 판독 → <b>③ 하자 검사</b> → ④ 환노출·처방</span></div>
 <main>
+  <div class="print-head"><b>TradeGuard 하자 검사 리포트</b>
+    <span>케이스 {e(report["case_id"])} · {datetime.now():%Y-%m-%d}</span></div>
   <section class="risk-hero">
     <div class="grade-badge {tone}"><span class="g">{g}</span><span class="s">{badge}</span></div>
     <div class="risk-info">
@@ -143,6 +166,11 @@ def build_html(report, source_name, presentation_date=None):
   </section>
   {section}
   {body}
+  <div class="cta">
+    <a class="btn primary" href="screen4_fx_simulator.html">환노출 분석으로 이동 →</a>
+    <button class="btn ghost" onclick="window.print()">🖨 하자 리포트 PDF 저장</button>
+    <a class="btn ghost" href="index.html">← 데모 홈</a>
+  </div>
   <footer>
     입력: {e(source_name)} · 생성 {datetime.now():%Y-%m-%d %H:%M} ·
     판정 엔진 pipeline/detect.py (결정적 규칙, LLM 미사용) ·

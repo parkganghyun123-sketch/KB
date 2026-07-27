@@ -10,8 +10,11 @@
          font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
   .wrap { width: 860px; padding: 40px 0; }
   .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-  .logo-dot { width: 34px; height: 34px; border-radius: 9px; background: var(--kb-yellow);
-              display: grid; place-items: center; font-weight: 800; font-size: 17px; }
+/* 자체 워드마크 — KB 브랜드 자산 미사용 */
+  .wordmark { font-size: 19px; font-weight: 800; letter-spacing: -.5px; }
+  .wordmark span { border-bottom: 3px solid var(--kb-yellow); padding-bottom: 1px; }
+  .entry { font-size: 11px; font-weight: 700; color: var(--sub); background: var(--bg);
+           border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
   h1 { font-size: 26px; letter-spacing: -0.5px; }
   .lead { color: var(--sub); margin: 6px 0 28px; font-size: 14.5px; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -43,7 +46,8 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="brand"><div class="logo-dot">T</div><h1>TradeGuard 데모</h1></div>
+    <div class="brand"><b class="wordmark">Trade<span>Guard</span></b>
+      <span class="entry">2026 KB AI Challenge 출품작</span></div>
     <p class="lead"><b>수출 서류 하자로 대금을 못 받는 일을 막는 AI</b> — 서류를 은행에 내기 전에 스스로 검사합니다.<br>
       권장 순서: ① → ② → <b>③ (핵심)</b> → ④ · 샘플 케이스 DEFECT-001<br>
       <b style="color:#067647">●</b> 표시는 실제 파이프라인 출력, <b style="color:#b54708">●</b> 표시는 UI 목업입니다.</p>

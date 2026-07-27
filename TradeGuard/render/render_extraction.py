@@ -40,7 +40,11 @@ CSS = """
 body{width:1280px;margin:0 auto;background:var(--bg);color:var(--ink);
 font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px}
-.logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
+/* 자체 워드마크 — KB 브랜드 자산 미사용 */
+  .wordmark { font-size: 19px; font-weight: 800; letter-spacing: -.5px; }
+  .wordmark span { border-bottom: 3px solid var(--kb-yellow); padding-bottom: 1px; }
+  .entry { font-size: 11px; font-weight: 700; color: var(--sub); background: var(--bg);
+           border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
 .topbar b{font-size:17px}.topbar .step{margin-left:auto;color:var(--sub);font-size:13px}
 .live{background:var(--ok-bg);color:var(--ok);border:1px solid #a6f4c5;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700}
 main{padding:22px 40px 60px}
@@ -174,7 +178,8 @@ def build(case_id, docs_data, doc_dir, truths=None):
     return f"""<!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8">
 <title>TradeGuard — 판독 결과 ({e(case_id)})</title><style>{CSS}</style></head><body>
-<div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
+<div class="topbar"><b class="wordmark">Trade<span>Guard</span></b>
+    <span class="entry">2026 KB AI Challenge 출품작</span>
   <span class="live">● LIVE — extract.py 실제 출력</span>
   <span class="step">① 서류 등록 → <b>② 판독</b> → ③ 하자 검사 → ④ 결과</span></div>
 <main>

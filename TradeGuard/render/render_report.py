@@ -35,8 +35,17 @@ CSS = """
 body{width:1280px;margin:0 auto;background:var(--bg);color:var(--ink);
 font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px}
-.logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
+/* 자체 워드마크 — KB 브랜드 자산(심볼·로고타입)은 사용 권한 미확인으로 사용하지 않는다 */
+.wordmark{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.wordmark span{border-bottom:3px solid var(--kb-yellow);padding-bottom:1px}
+.entry{font-size:11px;font-weight:700;color:var(--sub);background:var(--bg);
+border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
 .topbar b{font-size:17px}.topbar .step{margin-left:auto;color:var(--sub);font-size:13px}
+/* 면책 고지 — 인쇄본에도 반드시 남는다 */
+.site-foot{border-top:2px solid var(--ink);margin-top:26px;padding-top:14px;break-inside:avoid}
+.site-foot .notice{font-size:12.5px;line-height:1.7;background:var(--warn-bg);
+border:1px solid #fde68a;border-radius:10px;padding:11px 15px;color:var(--ink)}
+.site-foot ul{margin:12px 0 0;padding-left:18px;font-size:12px;color:var(--sub);line-height:1.85}
 .live{background:var(--ok-bg);color:var(--ok);border:1px solid #a6f4c5;border-radius:999px;
 padding:4px 12px;font-size:12px;font-weight:700}
 main{padding:28px 40px 60px}
@@ -150,7 +159,8 @@ def build_html(report, source_name, presentation_date=None):
 <html lang="ko"><head><meta charset="UTF-8">
 <title>TradeGuard — 하자 검사 리포트 ({e(report["case_id"])})</title>
 <style>{CSS}</style></head><body>
-<div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
+<div class="topbar"><b class="wordmark">Trade<span>Guard</span></b>
+  <span class="entry">2026 KB AI Challenge 출품작</span>
   <span class="live">● LIVE — detect.py 실제 출력</span>
   <span class="step">① 서류 등록 → ② 판독 → <b>③ 하자 검사</b> → ④ 결과</span></div>
 <main>
@@ -170,6 +180,15 @@ def build_html(report, source_name, presentation_date=None):
     <a class="btn primary" href="screen4_fx_simulator.html">대금 수취 시점 손익 보기 →</a>
     <button class="btn ghost" onclick="window.print()">🖨 하자 리포트 PDF 저장</button>
     <a class="btn ghost" href="index.html">← 데모 홈</a>
+  </div>
+  <div class="site-foot">
+    <p class="notice"><b>본 리포트는 2026 KB AI Challenge 출품을 위해 개발된 프로토타입의 산출물입니다.</b>
+      KB국민은행이 운영하거나 보증하는 서비스가 아니며, 은행 제출 전 <b>참고용 사전 점검</b> 결과입니다.
+      은행의 최종 심사 결과와 다를 수 있습니다.</p>
+    <ul>
+      <li>UCP600 조항 요지는 학습용 요약본입니다. 정확한 해석은 국제상업회의소(ICC) 공식 간행물을 따릅니다.</li>
+      <li>본 리포트는 법률·무역 실무에 대한 자문이 아닙니다.</li>
+    </ul>
   </div>
   <footer>
     입력: {e(source_name)} · 생성 {datetime.now():%Y-%m-%d %H:%M} ·

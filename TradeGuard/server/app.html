@@ -4,22 +4,52 @@
 <meta charset="UTF-8">
 <title>TradeGuard — 수출 서류 하자 진단 AI</title>
 <style>
-:root{--kb-yellow:#FFBC00;--ink:#26282c;--sub:#696e76;--line:#e4e6ea;--card:#fff;--bg:#f6f7f8;
---danger:#d92d20;--danger-bg:#fef0ef;--warn:#b54708;--warn-bg:#fffaeb;--ok:#067647;--ok-bg:#ecfdf3;
---blue:#175cd3;--blue-bg:#eff6ff}
+/* 디자인 토큰 — KB_디지털_UI_리서치.md §디자인 토큰 초안 참조
+   ⚠️ KB 공식 색상값이 아니다. 공식 HEX가 이미지로만 제공되어 확인 불가하여
+   금융 UI 관례와 WCAG AA 대비 기준에 따라 자체 정의했다.
+   원칙: 브랜드색(primary)은 '행동 유도'에만, 상태색과 분리해서 쓴다. */
+:root{
+  --kb-yellow:#FFBC00;          /* CTA·선택 상태 전용. 배경/장식 금지 */
+  --ink:#26282c;                /* 본문 (흰 배경 대비 14.2:1) */
+  --sub:#5b6068;                /* 보조 텍스트 (6.4:1) — 기존 #696e76에서 대비 상향 */
+  --line:#e4e6ea;--card:#fff;--bg:#f6f7f8;
+  --danger:#c42b22;--danger-bg:#fef0ef;   /* 5.9:1 — 기존 #d92d20에서 상향 */
+  --warn:#b54708;--warn-bg:#fffaeb;       /* 6.1:1 */
+  --ok:#067647;--ok-bg:#ecfdf3;           /* 5.3:1 */
+  --blue:#175cd3;--blue-bg:#eff6ff;       /* 6.5:1 */
+}
 *{box-sizing:border-box;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+/* 접근성 — 스킵 링크 (kbstar.com「본문이동」 패턴 참조) */
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--ink);color:#fff;
+padding:12px 20px;border-radius:0 0 8px 0;font-weight:700;text-decoration:none}
+.skip:focus{left:0}
+/* 접근성 — 키보드 포커스를 색상 외 수단으로도 표시 */
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible{
+outline:3px solid var(--blue);outline-offset:2px}
 .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-.logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
-.topbar b{font-size:17px}
+/* 자체 워드마크 — 아래 노란 밑줄은 KB 심볼 형태와 무관한 타이포 강조 장치다 */
+.wordmark{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.wordmark span{border-bottom:3px solid var(--kb-yellow);padding-bottom:1px}
+.entry{font-size:11px;font-weight:700;color:var(--sub);background:var(--bg);
+border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
 .tagline{font-size:12.5px;color:var(--sub);border-left:1px solid var(--line);padding-left:12px}
+@media (max-width:900px){.tagline,.entry{display:none}}
 .steps{margin-left:auto;display:flex;gap:6px;font-size:13px;color:var(--sub)}
 .steps .s{padding:4px 10px;border-radius:999px}
 .steps .s.on{background:var(--ink);color:var(--kb-yellow);font-weight:700}
 .steps .s.done{color:var(--ok)}
 .provider{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--sub)}
-main{max-width:1280px;margin:0 auto;padding:26px 40px 80px}
+main{max-width:1280px;margin:0 auto;padding:26px 40px 40px}
+/* 금융 수치 표기 — 자릿수 정렬로 비교 가능하게 (금융 UI 관례) */
+.pl,.fxcell .rt,.evi-box .v,.ctl input[type=number]{font-variant-numeric:tabular-nums}
 h2.sec{font-size:16px;margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+.sec-note{font-size:12.5px;color:var(--sub);margin:-6px 0 12px;line-height:1.6}
+/* 상태를 색상만으로 구분하지 않는다 — 심각도 배지에 기호를 함께 표기 */
+.sev::before{margin-right:4px;font-weight:900}
+.sev.high::before{content:"!!"}
+.sev.medium::before{content:"!"}
+.sev.low::before{content:"·"}
 h2.sec .count{background:var(--danger);color:#fff;font-size:12px;border-radius:999px;padding:2px 9px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .hide{display:none!important}
@@ -153,27 +183,62 @@ padding:12px 16px;font-size:13.5px;color:var(--warn);line-height:1.65}
 .err{background:var(--danger-bg);border:1px solid #f5c6c2;color:var(--danger);border-radius:10px;padding:14px 18px;font-size:13.5px;line-height:1.6}
 .meta{font-size:12px;color:#98a2b3;margin-top:16px;line-height:1.7;border-top:1px solid var(--line);padding-top:12px}
 
+/* 면책 푸터 */
+.site-foot{background:#fff;border-top:1px solid var(--line);margin-top:40px}
+.foot-in{max-width:1280px;margin:0 auto;padding:24px 40px 32px}
+.notice{font-size:13px;line-height:1.7;color:var(--ink);background:var(--warn-bg);
+border:1px solid #fde68a;border-radius:10px;padding:12px 16px}
+.foot-list{margin:14px 0 0;padding-left:18px;font-size:12.5px;color:var(--sub);line-height:1.9}
+.foot-list li{margin-bottom:2px}
+.foot-end{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+font-size:12px;color:#98a2b3}
+
+/* 반응형 — 데스크톱 우선, 태블릿 이하에서 열을 접는다 */
+@media (max-width:1000px){
+  main,.foot-in{padding-left:20px;padding-right:20px}
+  .topbar{padding:12px 20px;flex-wrap:wrap;gap:8px}
+  .steps{margin-left:0;width:100%;font-size:12px}
+  .modes,.rx{grid-template-columns:1fr}
+  .samples{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+  .evi{grid-template-columns:1fr}
+  .fxgrid{grid-template-columns:1fr}
+  .ctrls{gap:14px}
+  .cause{flex-direction:column;align-items:flex-start;gap:12px}
+  .cause .dates{margin-left:0;text-align:left}
+}
+@media (max-width:640px){
+  .samples{grid-template-columns:1fr}
+  .btn{width:100%;text-align:center}
+  .cta{flex-direction:column}
+}
+
 @media print{
   @page{size:A4;margin:12mm}
-  .topbar,.cta,.modes,.samples,.drop,.doctabs,#step1{display:none!important}
+  .topbar,.cta,.modes,.samples,.drop,.doctabs,#step1,.skip{display:none!important}
   body{background:#fff}main{padding:0;max-width:none}
   .card,.disc,.fxcell,.rxcard{box-shadow:none;break-inside:avoid}
+  /* 인쇄본에도 면책 고지가 반드시 남는다 */
+  .site-foot{border-top:2px solid var(--ink);margin-top:20px;break-inside:avoid}
+  .foot-in{padding:14px 0}
 }
 </style>
 </head>
 <body>
+<a href="#main" class="skip">본문 바로가기</a>
 <div class="topbar">
-  <div class="logo-dot">T</div>
-  <b>TradeGuard</b>
+  <!-- 자체 워드마크. KB 브랜드 자산(심볼·로고타입)은 사용 권한 미확인으로 사용하지 않는다. -->
+  <b class="wordmark">Trade<span>Guard</span></b>
+  <span class="entry">2026 KB AI Challenge 출품작</span>
   <span class="tagline">서류 하자로 대금 못 받는 일을 막습니다</span>
   <span class="provider" id="prov">연결 확인 중…</span>
-  <div class="steps">
+  <nav class="steps" aria-label="진행 단계">
     <span class="s on" id="st1">① 서류 등록</span><span class="s" id="st2">② 판독</span>
     <span class="s" id="st3">③ 하자 검사</span><span class="s" id="st4">④ 결과</span>
-  </div>
+  </nav>
 </div>
 
-<main>
+<main id="main">
   <!-- STEP 1 -->
   <section id="step1">
     <div class="modes">
@@ -238,7 +303,9 @@ padding:12px 16px;font-size:13.5px;color:var(--warn);line-height:1.65}
       </div>
     </div>
 
-    <h2 class="sec">발견된 하자 <span class="count" id="discCount">0</span></h2>
+    <h2 class="sec">③ 발견된 하자 <span class="count" id="discCount">0</span></h2>
+    <p class="sec-note">은행 제출 전 <b>참고용 사전 점검</b> 결과입니다.
+      은행의 최종 심사 결과와 다를 수 있습니다.</p>
     <div id="discList"></div>
 
     <h2 class="sec">판독 결과 (추출 필드)</h2>
@@ -279,6 +346,27 @@ padding:12px 16px;font-size:13.5px;color:var(--warn);line-height:1.65}
     </div>
   </section>
 </main>
+
+<!-- 면책·출처 고지 — KB 공식 사이트가 규제·법적 고지를 푸터에 밀집 배치하는 패턴 참조.
+     공식 서비스 오인을 막기 위해 상시 노출하며 접히지 않는다. -->
+<footer class="site-foot">
+  <div class="foot-in">
+    <p class="notice">
+      <b>본 서비스는 2026 KB AI Challenge 출품을 위해 개발된 프로토타입입니다.</b>
+      KB국민은행이 운영하거나 보증하는 서비스가 아니며, 실제 금융거래를 처리하지 않습니다.
+    </p>
+    <ul class="foot-list">
+      <li><b>판정 성격</b> — 은행 제출 전 <b>참고용 사전 점검</b> 결과입니다.
+        은행의 최종 심사 결과와 다를 수 있으며, 법률·무역 실무에 대한 자문이 아닙니다.</li>
+      <li><b>규정 근거</b> — UCP600 조항 요지는 학습용 요약본입니다.
+        정확한 해석은 국제상업회의소(ICC) 공식 간행물을 따릅니다.</li>
+      <li><b>환율 출처</b> — 한국은행 ECOS 매매기준율(통계코드 731Y001).
+        실시간 시장환율이 아니며, 조회 기준일을 화면에 함께 표시합니다.</li>
+      <li><b>서류 처리</b> — 업로드한 이미지는 분석 후 즉시 삭제되며 서버에 보관하지 않습니다.</li>
+    </ul>
+    <p class="foot-end">TradeGuard · 2026 KB AI Challenge 출품작 · 부산대학교 3인 팀</p>
+  </div>
+</footer>
 
 <script>
 let MODE = "sample", FILES = [], DOCS = {}, CUR = null;

@@ -90,6 +90,26 @@ run "환율 스냅샷에 API 키 노출 없음" "python3 -c \"
 import json,re
 d=open('mockups/fx_snapshot.json').read()
 assert not re.search(r'[A-Z0-9]{16,}', d), '키 노출'\""
+run "KB 브랜드 자산 미사용 (오인 방지)" "python3 -c \"
+import glob,re
+pat = re.compile(r'(Star-b|kbfg\.com/.*\.(jpg|png|zip)|KB_SymbolMark|KB_Logotype|KB_Signature)')
+bad = [f for f in glob.glob('mockups/*.html')+glob.glob('server/*.html') if pat.search(open(f).read())]
+assert not bad, f'KB 브랜드 자산 참조: {bad}'\""
+run "출품작 고지 + 면책 문구 상시 노출" "python3 -c \"
+import glob
+need = 'KB AI Challenge 출품작'
+for f in glob.glob('mockups/*.html')+['server/app.html']:
+    assert need in open(f).read(), f
+for f in glob.glob('mockups/live_*.html')+['mockups/screen3_live.html','server/app.html']:
+    s=open(f).read()
+    assert '프로토타입' in s and '최종 심사 결과' in s, f'면책 누락: {f}'\""
+run "접근성 — 스킵 링크·포커스 표시·색상 외 상태 표현" "python3 -c \"
+s=open('server/app.html').read()
+assert 'class=\\\"skip\\\"' in s, '스킵 링크 없음'
+assert 'focus-visible' in s, '포커스 표시 없음'
+assert '.sev.high::before' in s, '색상 외 상태 표현 없음'
+assert '--sub:#5b6068' in s, '대비 상향 미적용'\""
+run "반응형 — 태블릿·모바일 분기 존재" "grep -q 'max-width:1000px' server/app.html && grep -q 'max-width:640px' server/app.html"
 run "화면 간 링크 유효" "python3 -c \"
 import re,os,glob
 for f in glob.glob('mockups/*.html'):

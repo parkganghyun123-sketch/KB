@@ -260,8 +260,9 @@ def index():
     return FileResponse(ROOT / "server" / "app.html")
 
 
-app.mount("/mockups", StaticFiles(directory=str(ROOT / "mockups")), name="mockups")
-app.mount("/render", StaticFiles(directory=str(ROOT / "render")), name="render")
+# html=True → 디렉터리 접근 시 index.html을 자동으로 서빙 (없으면 404가 난다)
+app.mount("/mockups", StaticFiles(directory=str(ROOT / "mockups"), html=True), name="mockups")
+app.mount("/render", StaticFiles(directory=str(ROOT / "render"), html=True), name="render")
 
 
 def main():

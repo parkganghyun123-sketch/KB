@@ -121,6 +121,8 @@ try:
         assert d['meta']['cost_usd'] == 0.0, '샘플 모드인데 비용 발생'
         assert len(d['fx']['scenarios']) == 3, '환노출 시나리오 누락'
     assert urllib.request.urlopen('http://127.0.0.1:8899/').status == 200, '프론트 서빙 실패'
+    for path in ('/mockups/', '/mockups/screen3_live.html', '/render/sample_output/DEFECT-001_lc.html'):
+        assert urllib.request.urlopen('http://127.0.0.1:8899' + path).status == 200, f'정적 서빙 실패: {path}'
 finally:
     p.terminate(); p.wait(timeout=10)
 PYEOF"

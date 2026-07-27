@@ -3,6 +3,7 @@ fastapi>=0.110
 jinja2>=3.1,<4
 jsonschema>=4.23,<5
 openai>=1.68
+playwright>=1.50,<2
 python-multipart>=0.0.9
 requests>=2.31,<3
 uvicorn[standard]>=0.27

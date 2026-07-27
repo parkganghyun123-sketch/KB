@@ -7,6 +7,19 @@
 #   bash test_all.sh
 set -u
 cd "$(dirname "$0")"
+
+# Windows의 앱 실행 별칭(python3.exe)이 실제 Python이 아닌 경우가 있어
+# 동작하는 python 명령으로 자동 폴백한다.
+if ! python3 -c "import sys" >/dev/null 2>&1; then
+  if python -c "import sys" >/dev/null 2>&1; then
+    python3() { python "$@"; }
+  else
+    echo "Python 3 실행기를 찾을 수 없습니다."
+    exit 1
+  fi
+fi
+export PYTHONUTF8=1
+
 PASS=0; FAIL=0
 ok()  { echo "  ✅ $1"; PASS=$((PASS+1)); }
 ng()  { echo "  ❌ $1"; FAIL=$((FAIL+1)); }

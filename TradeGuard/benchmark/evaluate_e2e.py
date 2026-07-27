@@ -145,7 +145,7 @@ def main():
         case = json.loads(f.read_text(encoding="utf-8"))
         cid = case["case_id"]
         print(f"[{i}/{len(files)}] {cid} … ", end="", flush=True)
-        extracted, c_hit, c_tot = {}, 0, 0
+        extracted, c_hit, c_tot, c_wrong = {}, 0, 0, []
         try:
             for doc_key, suffix in DOC_KEYS:
                 img = images_dir / f"{cid}_{suffix}.png"
@@ -160,8 +160,14 @@ def main():
                 h, t, wrong = field_accuracy(case["documents"][doc_key], got)
                 c_hit += h
                 c_tot += t
-                for k, _, _ in wrong:
+                for k, expected, actual in wrong:
                     worst_fields[f"{doc_key}.{k}"] += 1
+                    c_wrong.append({
+                        "document": doc_key,
+                        "field": k,
+                        "expected": expected,
+                        "actual": actual,
+                    })
         except Exception as e:
             print(f"❌ {str(e)[:120]}")
             per_case.append({"case_id": cid, "error": str(e)[:200]})
@@ -185,7 +191,8 @@ def main():
         per_case.append({"case_id": cid, "field_accuracy": round(acc, 4),
                          "tp": sorted(c_tp), "fp": sorted(c_fp), "fn": sorted(c_fn),
                          "grade": rep["overall_risk"]["grade"],
-                         "grade_truth": case["ground_truth"]["overall_risk"]["grade"]})
+                         "grade_truth": case["ground_truth"]["overall_risk"]["grade"],
+                         "field_errors": c_wrong})
 
     p, r, f1 = prf(tp, fp, fn)
     fa = hit_sum / tot_sum if tot_sum else 0

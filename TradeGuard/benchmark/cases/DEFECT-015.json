@@ -5,17 +5,17 @@
     "BL_SIGNATURE_DEFECT"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND USD 174,000 · 주입 하자: BL_SIGNATURE_DEFECT",
-  "presentation_date": "2026-07-21",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → PACIFIC RIM IMPORTS INC., LITHIUM-ION BATTERY CELLS 3.7V USD 196,480 · 주입 하자: BL_SIGNATURE_DEFECT",
+  "presentation_date": "2026-07-18",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-14480",
+      "lc_number": "LC-2026-63414",
       "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-12",
+      "issue_date": "2026-05-21",
       "expiry": {
-        "date": "2026-08-05",
+        "date": "2026-08-10",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -24,20 +24,20 @@
         "country": "US"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 174000.0,
+      "amount": 196480.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-07-18",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-400, 120 MT AS PER PROFORMA INVOICE NO. PI-2655, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-19",
+      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-564, 61,400 PCS AS PER PROFORMA INVOICE NO. PI-2349, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-1446",
-      "invoice_date": "2026-07-08",
-      "lc_number_ref": "LC-2026-14480",
+      "invoice_number": "INV-2026-4559",
+      "invoice_date": "2026-07-10",
+      "lc_number_ref": "LC-2026-63414",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "buyer": {
         "name": "PACIFIC RIM IMPORTS INC.",
         "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 174000.0,
+      "total_amount": 196480.0,
       "goods": [
         {
-          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-400, AS PER PROFORMA INVOICE NO. PI-2655",
-          "quantity": 120,
-          "unit": "MT",
-          "unit_price": 1450.0,
-          "amount": 174000.0,
-          "hs_code": "3902.10"
+          "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-564, AS PER PROFORMA INVOICE NO. PI-2349",
+          "quantity": 61400,
+          "unit": "PCS",
+          "unit_price": 3.2,
+          "amount": 196480.0,
+          "hs_code": "8507.60"
         }
       ],
       "incoterms": {
@@ -93,39 +93,50 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-4",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-2456",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "packages": "2456 CARTONS",
+      "net_weight": "2,947.2 KGS",
+      "gross_weight": "3,183.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-7145495",
-      "issue_date": "2026-07-11",
+      "bl_number": "DBS-4775706",
+      "issue_date": "2026-07-10",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-11",
+        "date": "2026-07-10",
         "method": "pre_printed"
       },
-      "vessel_name": "SUNRISE GLORY",
-      "voyage_number": "V.85E",
+      "vessel_name": "PACIFIC VOYAGER",
+      "voyage_number": "V.172E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
       "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
       "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "4 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "2456 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
       "container_numbers": [
-        "KMTU4018898"
+        "DBSU5084318"
       ],
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-2456",
+      "package_count": "2456 CTNS",
+      "gross_weight": "3,183.0 KGS",
+      "measurement": "110.52 CBM",
+      "booking_number": "BKG352797",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,

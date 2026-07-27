@@ -3,17 +3,17 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "hard",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT · B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상",
-  "presentation_date": "2026-07-31",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → MEKONG INDUSTRIAL TRADING CO., LTD, COTTON KNITTED T-SHIRTS · B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상",
+  "presentation_date": "2026-07-10",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-74097",
+      "lc_number": "LC-2026-96677",
       "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-14",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-08-17",
+        "date": "2026-07-26",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -22,20 +22,20 @@
         "country": "VN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 189140.0,
+      "amount": 165120.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-07-22",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-449, 19,300 SET AS PER PROFORMA INVOICE NO. PI-2272, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-06",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, 25,800 PCS AS PER PROFORMA INVOICE NO. PI-2368, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -63,57 +63,63 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-8077",
-      "invoice_date": "2026-07-15",
-      "lc_number_ref": "LC-2026-74097",
+      "invoice_number": "INV-2026-4250",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-96677",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
         "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 189140.0,
+      "total_amount": 165120.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-449, AS PER PROFORMA INVOICE NO. PI-2272",
-          "quantity": 19300,
-          "unit": "SET",
-          "unit_price": 9.8,
-          "amount": 189140.0,
-          "hs_code": "4016.93"
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, AS PER PROFORMA INVOICE NO. PI-2368",
+          "quantity": 25800,
+          "unit": "PCS",
+          "unit_price": 6.4,
+          "amount": 165120.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-772",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "1032 CARTONS",
+      "net_weight": "4,128.0 KGS",
+      "gross_weight": "4,458.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-4487086",
-      "issue_date": "2026-07-17",
+      "bl_number": "KMT-9496688",
+      "issue_date": "2026-06-30",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-17",
+        "date": "2026-06-30",
         "method": "on_board_notation"
       },
       "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.54E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
+      "voyage_number": "V.26E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
       "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
@@ -122,15 +128,20 @@
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
       "goods_description": "GENERAL MERCHANDISE AS PER INVOICE",
       "container_numbers": [
-        "KMTU5849189"
+        "DBSU8623520"
       ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "package_count": "1032 CTNS",
+      "gross_weight": "4,458.2 KGS",
+      "measurement": "46.44 CBM",
+      "booking_number": "BKG613115",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
-        "signer_capacity": "agent_for_carrier"
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

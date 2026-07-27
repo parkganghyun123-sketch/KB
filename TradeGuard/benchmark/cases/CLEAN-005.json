@@ -3,23 +3,23 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, AUTOMOTIVE RUBBER SEAL KIT · 완전 정합 케이스",
-  "presentation_date": "2026-07-21",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, POLYPROPYLENE RESIN COMPOUND · 완전 정합 케이스",
+  "presentation_date": "2026-07-11",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-71511",
-      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "lc_number": "LC-2026-38486",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-17",
+      "issue_date": "2026-05-16",
       "expiry": {
-        "date": "2026-08-06",
+        "date": "2026-07-30",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
-        "country": "CN"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
       },
       "beneficiary": {
         "name": "DAEYANG POLYMER CO., LTD.",
@@ -27,15 +27,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 52920.0,
+      "amount": 145000.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "latest_shipment_date": "2026-07-17",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-190, 5,400 SET AS PER PROFORMA INVOICE NO. PI-2600, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-03",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-158, 100 MT AS PER PROFORMA INVOICE NO. PI-2413, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,74 +63,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-6851",
-      "invoice_date": "2026-07-12",
-      "lc_number_ref": "LC-2026-71511",
+      "invoice_number": "INV-2026-2645",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-38486",
       "seller": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 52920.0,
+      "total_amount": 145000.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-190, AS PER PROFORMA INVOICE NO. PI-2600",
-          "quantity": 5400,
-          "unit": "SET",
-          "unit_price": 9.8,
-          "amount": 52920.0,
-          "hs_code": "4016.93"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-158, AS PER PROFORMA INVOICE NO. PI-2413",
+          "quantity": 100,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 145000.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-216",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "4 CARTONS",
+      "net_weight": "100,000.0 KGS",
+      "gross_weight": "108,000.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-1619361",
-      "issue_date": "2026-07-14",
+      "bl_number": "DBS-8798012",
+      "issue_date": "2026-06-29",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-14",
-        "method": "on_board_notation"
+        "date": "2026-06-29",
+        "method": "pre_printed"
       },
-      "vessel_name": "OCEAN SENTINEL",
-      "voyage_number": "V.27E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "place_of_delivery": "SHANGHAI CY",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.137E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
-      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
-      "goods_description": "216 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "4 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "KMTU9122848"
+        "DBSU1583547"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4",
+      "package_count": "4 CTNS",
+      "gross_weight": "108,000.0 KGS",
+      "measurement": "0.18 CBM",
+      "booking_number": "BKG303495",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → GULF STAR GENERAL TRADING LLC, CNC MACHINED ALUMINUM HOUSING PARTS · 완전 정합 케이스",
-  "presentation_date": "2026-08-01",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, POLYPROPYLENE RESIN COMPOUND · 완전 정합 케이스",
+  "presentation_date": "2026-08-02",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-23411",
-      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
+      "lc_number": "LC-2026-26179",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-22",
+      "issue_date": "2026-05-24",
       "expiry": {
-        "date": "2026-08-08",
+        "date": "2026-08-19",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
-        "country": "AE"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 298200.0,
+      "amount": 87000.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "latest_shipment_date": "2026-07-21",
-      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-476, 14,200 PCS AS PER PROFORMA INVOICE NO. PI-2182, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-28",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-647, 60 MT AS PER PROFORMA INVOICE NO. PI-2343, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,73 +63,84 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-1449",
-      "invoice_date": "2026-07-16",
-      "lc_number_ref": "LC-2026-23411",
+      "invoice_number": "INV-2026-1324",
+      "invoice_date": "2026-07-19",
+      "lc_number_ref": "LC-2026-26179",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 298200.0,
+      "total_amount": 87000.0,
       "goods": [
         {
-          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-476, AS PER PROFORMA INVOICE NO. PI-2182",
-          "quantity": 14200,
-          "unit": "PCS",
-          "unit_price": 21.0,
-          "amount": 298200.0,
-          "hs_code": "7616.99"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-647, AS PER PROFORMA INVOICE NO. PI-2343",
+          "quantity": 60,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 87000.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-568",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-2",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "2 CARTONS",
+      "net_weight": "60,000.0 KGS",
+      "gross_weight": "64,800.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-1601270",
-      "issue_date": "2026-07-18",
+      "bl_number": "DBS-5570064",
+      "issue_date": "2026-07-22",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-18",
+        "date": "2026-07-22",
         "method": "on_board_notation"
       },
-      "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.152E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "place_of_delivery": "JEBEL ALI CY",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.127E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "568 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "2 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "SHCU8916403"
+        "SHCU4469291"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-2",
+      "package_count": "2 CTNS",
+      "gross_weight": "64,800.0 KGS",
+      "measurement": "0.09 CBM",
+      "booking_number": "BKG570286",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
         "signer_capacity": "master"
       },
       "field_confidence": {},

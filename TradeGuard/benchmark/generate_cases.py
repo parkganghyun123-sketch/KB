@@ -56,6 +56,18 @@ EXPORTERS_BY_CODE = {
 
 MIN_AMOUNT, MAX_AMOUNT = 30_000, 300_000
 
+# 업종코드 → 단위(unit)당 순중량(kg). net/gross weight, packages 산정에 사용
+WEIGHT_KG_PER_UNIT = {
+    "AH": 0.42,     # PCS, CNC 알루미늄 하우징
+    "PP": 1000.0,   # MT, 수지 컴파운드 (1 MT = 1000kg)
+    "TS": 0.16,     # PCS, 니트 티셔츠
+    "RN": 7.5,      # CTN, 라면 40개입 박스
+    "BC": 0.048,    # PCS, 리튬이온 배터리 셀
+    "RS": 1.3,      # SET, 고무 씰 키트
+    "SF": 0.85,     # PCS, 스테인리스 파이프 피팅
+    "LP": 1.9,      # PCS, LED 패널 라이트
+}
+
 
 def qty_for_price(price, rng):
     """거래금액(qty*price)이 스펙 범위(MIN_AMOUNT~MAX_AMOUNT)에 들도록 qty를 역산한다."""
@@ -130,6 +142,14 @@ def base_case(rng, seq):
     desc_full = (f"{goods}, MODEL {model}, {qty:,} {unit} AS PER PROFORMA INVOICE NO. {pi_no}, "
                  f"FOB {loading.split(',')[0]} INCOTERMS 2020")
 
+    # 서류 현실성 필드: 포장/중량/용적/부킹번호 (업종별 단위중량 기반 역산)
+    pkg_count = max(1, qty // 25)
+    net_weight_kg = round(qty * WEIGHT_KG_PER_UNIT[code], 1)
+    gross_weight_kg = round(net_weight_kg * 1.08, 1)
+    measurement_cbm = round(pkg_count * 0.045, 2)
+    booking_no = f"BKG{rng.randint(100000, 999999)}"
+    shipping_marks = f"{buy_name.split()[0]} / {discharge.split(',')[0]} / C/NO. 1-{pkg_count}"
+
     lc = {
         "doc_type": "letter_of_credit", "lc_number": lc_no,
         "issuing_bank": bank, "advising_bank": "KB KOOKMIN BANK, SEOUL",
@@ -164,7 +184,11 @@ def base_case(rng, seq):
                    "quantity": qty, "unit": unit, "unit_price": price, "amount": amount, "hs_code": hs}],
         "incoterms": {"term": "FOB", "place": loading.split(",")[0]},
         "payment_terms": "L/C AT SIGHT",
-        "shipping_marks": f"{buy_name.split()[0]} / {discharge.split(',')[0]} / C/NO. 1-{max(1, qty // 25)}",
+        "shipping_marks": shipping_marks,
+        "country_of_origin": "REPUBLIC OF KOREA",
+        "port_of_loading": loading, "port_of_discharge": discharge,
+        "packages": f"{pkg_count} CARTONS",
+        "net_weight": f"{net_weight_kg:,.1f} KGS", "gross_weight": f"{gross_weight_kg:,.1f} KGS",
         "signed": True, "field_confidence": {}, "unreadable_fields": [],
     }
     bl = {
@@ -179,8 +203,11 @@ def base_case(rng, seq):
         "shipper": {"name": exp_name, "address": exp_addr},
         "consignee": {"raw_text": f"TO ORDER OF {bank.split(',')[0]}", "is_to_order": True},
         "notify_party": f"{buy_name}, {buy_addr}",
-        "goods_description": f"{max(1, qty // 25)} CARTONS OF {goods}",
+        "goods_description": f"{pkg_count} CARTONS OF {goods}",
         "container_numbers": [f"{rng.choice(['KMTU', 'DBSU', 'SHCU'])}{rng.randint(1000000, 9999999)}"],
+        "shipping_marks": shipping_marks, "package_count": f"{pkg_count} CTNS",
+        "gross_weight": f"{gross_weight_kg:,.1f} KGS", "measurement": f"{measurement_cbm:.2f} CBM",
+        "booking_number": booking_no,
         "freight_terms": "COLLECT", "clean": True, "originals_count": 3,
         "signature": {"signed": True, "carrier_name": rng.choice(CARRIERS),
                       "signer_capacity": rng.choice(["carrier", "agent_for_carrier", "master"])},

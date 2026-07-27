@@ -3,17 +3,17 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, LITHIUM-ION BATTERY CELLS 3.7V · 완전 정합 케이스",
-  "presentation_date": "2026-07-03",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, AUTOMOTIVE RUBBER SEAL KIT · 완전 정합 케이스",
+  "presentation_date": "2026-08-05",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-87714",
+      "lc_number": "LC-2026-64566",
       "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-03",
+      "issue_date": "2026-05-23",
       "expiry": {
-        "date": "2026-07-21",
+        "date": "2026-08-29",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -22,20 +22,20 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 36480.0,
+      "amount": 296940.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-06-29",
-      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-665, 11,400 PCS AS PER PROFORMA INVOICE NO. PI-2267, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-08-01",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-582, 30,300 SET AS PER PROFORMA INVOICE NO. PI-2180, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -63,74 +63,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-9499",
-      "invoice_date": "2026-06-20",
-      "lc_number_ref": "LC-2026-87714",
+      "invoice_number": "INV-2026-6590",
+      "invoice_date": "2026-07-24",
+      "lc_number_ref": "LC-2026-64566",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 36480.0,
+      "total_amount": 296940.0,
       "goods": [
         {
-          "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-665, AS PER PROFORMA INVOICE NO. PI-2267",
-          "quantity": 11400,
-          "unit": "PCS",
-          "unit_price": 3.2,
-          "amount": 36480.0,
-          "hs_code": "8507.60"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-582, AS PER PROFORMA INVOICE NO. PI-2180",
+          "quantity": 30300,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 296940.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-456",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1212",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1212 CARTONS",
+      "net_weight": "39,390.0 KGS",
+      "gross_weight": "42,541.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-7156864",
-      "issue_date": "2026-06-23",
+      "bl_number": "DBS-5466557",
+      "issue_date": "2026-07-25",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-23",
-        "method": "on_board_notation"
+        "date": "2026-07-25",
+        "method": "pre_printed"
       },
       "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.69E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
+      "voyage_number": "V.145E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "456 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+      "goods_description": "1212 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "SHCU4705015"
+        "DBSU3185744"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1212",
+      "package_count": "1212 CTNS",
+      "gross_weight": "42,541.2 KGS",
+      "measurement": "54.54 CBM",
+      "booking_number": "BKG164698",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "carrier"
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

@@ -52,6 +52,12 @@
     },
     "payment_terms": { "type": ["string", "null"] },
     "shipping_marks": { "type": ["string", "null"] },
+    "country_of_origin": { "type": ["string", "null"] },
+    "port_of_loading": { "type": ["string", "null"] },
+    "port_of_discharge": { "type": ["string", "null"] },
+    "packages": { "type": ["string", "null"], "description": "포장 수량 (예: '40 CARTONS')" },
+    "net_weight": { "type": ["string", "null"] },
+    "gross_weight": { "type": ["string", "null"] },
     "signed": { "type": ["boolean", "null"], "description": "서명 존재 여부 (L/C가 SIGNED INVOICE 요구 시 대조)" },
     "field_confidence": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 } },
     "unreadable_fields": { "type": "array", "items": { "type": "string" } }

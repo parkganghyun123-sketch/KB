@@ -5,39 +5,39 @@
     "BL_NO_ONBOARD_NOTATION"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, STAINLESS STEEL PIPE FITTINGS USD 289,800 · 주입 하자: BL_NO_ONBOARD_NOTATION",
-  "presentation_date": "2026-08-14",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → MEKONG INDUSTRIAL TRADING CO., LTD, COTTON KNITTED T-SHIRTS USD 257,920 · 주입 하자: BL_NO_ONBOARD_NOTATION",
+  "presentation_date": "2026-06-30",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-23940",
-      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "lc_number": "LC-2026-25987",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-24",
+      "issue_date": "2026-05-20",
       "expiry": {
-        "date": "2026-08-31",
+        "date": "2026-07-23",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
-        "country": "IN"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+        "country": "VN"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 289800.0,
+      "amount": 257920.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-08-01",
-      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-837, 23,000 PCS AS PER PROFORMA INVOICE NO. PI-2186, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-07-05",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-893, 40,300 PCS AS PER PROFORMA INVOICE NO. PI-2507, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4973",
-      "invoice_date": "2026-07-31",
-      "lc_number_ref": "LC-2026-23940",
+      "invoice_number": "INV-2026-8860",
+      "invoice_date": "2026-06-24",
+      "lc_number_ref": "LC-2026-25987",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 289800.0,
+      "total_amount": 257920.0,
       "goods": [
         {
-          "description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-837, AS PER PROFORMA INVOICE NO. PI-2186",
-          "quantity": 23000,
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-893, AS PER PROFORMA INVOICE NO. PI-2507",
+          "quantity": 40300,
           "unit": "PCS",
-          "unit_price": 12.6,
-          "amount": 289800.0,
-          "hs_code": "7307.29"
+          "unit_price": 6.4,
+          "amount": 257920.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -93,46 +93,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-920",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1612",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "1612 CARTONS",
+      "net_weight": "6,448.0 KGS",
+      "gross_weight": "6,963.8 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-3436414",
-      "issue_date": "2026-07-31",
+      "bl_number": "KMT-8445152",
+      "issue_date": "2026-06-25",
       "shipped_on_board": {
         "indicated": false,
         "date": null,
         "method": null
       },
-      "vessel_name": "OCEAN SENTINEL",
-      "voyage_number": "V.128E",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.97E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "place_of_delivery": "NHAVA SHEVA CY",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
-      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "920 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+      "goods_description": "1612 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "KMTU6395688"
+        "DBSU8102457"
       ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1612",
+      "package_count": "1612 CTNS",
+      "gross_weight": "6,963.8 KGS",
+      "measurement": "72.54 CBM",
+      "booking_number": "BKG870031",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

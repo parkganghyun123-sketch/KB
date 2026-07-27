@@ -2,43 +2,43 @@
   "case_id": "DEFECT-019",
   "label": "defect",
   "defect_types": [
-    "GOODS_DESC_MISMATCH",
-    "LATE_SHIPMENT"
+    "AMOUNT_EXCEEDS_LC",
+    "BL_SIGNATURE_DEFECT"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND USD 43,500 · 주입 하자: GOODS_DESC_MISMATCH, LATE_SHIPMENT",
-  "presentation_date": "2026-07-24",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS USD 225,280 · 주입 하자: AMOUNT_EXCEEDS_LC, BL_SIGNATURE_DEFECT",
+  "presentation_date": "2026-07-21",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-24581",
-      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "lc_number": "LC-2026-61100",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-02",
+      "issue_date": "2026-05-23",
       "expiry": {
-        "date": "2026-08-04",
+        "date": "2026-08-17",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-        "country": "US"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 43500.0,
+      "amount": 225280.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-07-08",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-663, 30 MT AS PER PROFORMA INVOICE NO. PI-2445, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-20",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-407, 35,200 PCS AS PER PROFORMA INVOICE NO. PI-2558, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -48,7 +48,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -66,27 +66,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-5299",
-      "invoice_date": "2026-06-26",
-      "lc_number_ref": "LC-2026-24581",
+      "invoice_number": "INV-2026-9206",
+      "invoice_date": "2026-07-11",
+      "lc_number_ref": "LC-2026-61100",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 43500.0,
+      "total_amount": 247190.61,
       "goods": [
         {
-          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-660, AS PER PROFORMA INVOICE NO. PI-2445",
-          "quantity": 30,
-          "unit": "MT",
-          "unit_price": 1450.0,
-          "amount": 43500.0,
-          "hs_code": "3902.10"
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-407, AS PER PROFORMA INVOICE NO. PI-2558",
+          "quantity": 35200,
+          "unit": "PCS",
+          "unit_price": 7.02,
+          "amount": 247190.61,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -94,46 +94,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1408",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1408 CARTONS",
+      "net_weight": "5,632.0 KGS",
+      "gross_weight": "6,082.6 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-4204339",
-      "issue_date": "2026-07-12",
+      "bl_number": "KMT-7451069",
+      "issue_date": "2026-07-14",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-12",
-        "method": "on_board_notation"
+        "date": "2026-07-14",
+        "method": "pre_printed"
       },
-      "vessel_name": "PACIFIC VOYAGER",
-      "voyage_number": "V.45E",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.195E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "place_of_delivery": "LOS ANGELES CY",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
-      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "1 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "1408 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "DBSU5471980"
+        "SHCU9861483"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1408",
+      "package_count": "1408 CTNS",
+      "gross_weight": "6,082.6 KGS",
+      "measurement": "63.36 CBM",
+      "booking_number": "BKG663598",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
-        "signer_capacity": "master"
+        "signer_capacity": "unclear"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -150,54 +161,49 @@
     "discrepancies": [
       {
         "id": "DISC-001",
-        "type": "GOODS_DESC_MISMATCH",
+        "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 상품명세의 모델번호(PP-660)가 신용장 45A(PP-663)와 불일치합니다.",
+        "description_ko": "송장 금액(USD 247,190.61)이 신용장 금액(USD 225,280.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
-            "field": "goods_description",
-            "value": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-663, 30 MT AS PER PROFORMA INVOICE NO. PI-2445, FOB BUSAN INCOTERMS 2020"
+            "field": "amount",
+            "value": "225280.0"
           },
           {
             "doc": "commercial_invoice",
-            "field": "goods[0].description",
-            "value": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-660, AS PER PROFORMA INVOICE NO. PI-2445"
+            "field": "total_amount",
+            "value": "247190.61"
           }
         ],
         "ucp_basis": {
-          "article": "UCP600 18(c)",
-          "quote_ko": "상업송장의 물품 명세는 신용장상의 명세와 상응하여야 한다."
+          "article": "UCP600 18(b) · 30(b)",
+          "quote_ko": "신용장 금액을 초과하는 금액으로 발행된 상업송장은 수리 거절 사유가 될 수 있다. 과부족 허용(tolerance)이 명시된 경우 그 범위 내에서만 허용된다."
         },
-        "suggested_fix_ko": "송장 모델번호를 'PP-663'으로 수정하세요."
+        "suggested_fix_ko": "송장 금액을 신용장 한도 이내로 수정하세요."
       },
       {
         "id": "DISC-002",
-        "type": "LATE_SHIPMENT",
-        "severity": "high",
-        "description_ko": "선적일(2026-07-12)이 최종선적기일(2026-07-08)을 4일 초과했습니다.",
+        "type": "BL_SIGNATURE_DEFECT",
+        "severity": "medium",
+        "description_ko": "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
         "evidence": [
           {
-            "doc": "letter_of_credit",
-            "field": "latest_shipment_date",
-            "value": "2026-07-08"
-          },
-          {
             "doc": "bill_of_lading",
-            "field": "shipped_on_board.date",
-            "value": "2026-07-12"
+            "field": "signature.signer_capacity",
+            "value": "unclear"
           }
         ],
         "ucp_basis": {
-          "article": "UCP600 14조 · L/C 44C",
-          "quote_ko": "선하증권의 본선적재일은 신용장에 명시된 최종선적기일 이내여야 한다."
+          "article": "UCP600 20(a)(i)",
+          "quote_ko": "선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며, 대리인의 서명은 운송인 또는 선장을 위한 것임과 그 자격을 표시하여야 한다."
         },
-        "suggested_fix_ko": "개설의뢰인의 하자 수락(waiver) 또는 조건변경을 요청하세요."
+        "suggested_fix_ko": "'AS AGENT FOR THE CARRIER, KOREA MARINE TRANSPORT CO., LTD.' 자격 문구 명기를 요청하세요."
       }
     ],
     "overall_risk": {
-      "grade": "D",
-      "score": 50,
+      "grade": "C",
+      "score": 65,
       "summary_ko": "2건의 하자가 주입된 케이스입니다."
     }
   }

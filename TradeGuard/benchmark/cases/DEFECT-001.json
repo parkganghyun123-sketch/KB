@@ -6,7 +6,7 @@
   ],
   "difficulty": "easy",
   "scenario_note_ko": "SEJIN TEXTILE CORPORATION → GULF STAR GENERAL TRADING LLC, COTTON KNITTED T-SHIRTS USD 180,480 · 주입 하자: AMOUNT_EXCEEDS_LC",
-  "presentation_date": "2026-07-27",
+  "presentation_date": "2026-07-25",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
@@ -65,7 +65,7 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4012",
+      "invoice_number": "INV-2026-2164",
       "invoice_date": "2026-07-11",
       "lc_number_ref": "LC-2026-46486",
       "seller": {
@@ -77,14 +77,14 @@
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 187660.94,
+      "total_amount": 194537.7,
       "goods": [
         {
           "description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, AS PER PROFORMA INVOICE NO. PI-2065",
           "quantity": 28200,
           "unit": "PCS",
-          "unit_price": 6.65,
-          "amount": 187660.94,
+          "unit_price": 6.9,
+          "amount": 194537.7,
           "hs_code": "6109.10"
         }
       ],
@@ -94,21 +94,27 @@
       },
       "payment_terms": "L/C AT SIGHT",
       "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-1128",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "packages": "1128 CARTONS",
+      "net_weight": "4,512.0 KGS",
+      "gross_weight": "4,873.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-3408614",
+      "bl_number": "KMT-4396775",
       "issue_date": "2026-07-13",
       "shipped_on_board": {
         "indicated": true,
         "date": "2026-07-13",
-        "method": "on_board_notation"
+        "method": "pre_printed"
       },
       "vessel_name": "OCEAN SENTINEL",
-      "voyage_number": "V.156E",
+      "voyage_number": "V.166E",
       "place_of_receipt": "INCHEON CY",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
@@ -124,15 +130,20 @@
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
       "goods_description": "1128 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "DBSU1304451"
+        "KMTU2824621"
       ],
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-1128",
+      "package_count": "1128 CTNS",
+      "gross_weight": "4,873.0 KGS",
+      "measurement": "50.76 CBM",
+      "booking_number": "BKG292793",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -151,7 +162,7 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 187,660.94)이 신용장 금액(USD 180,480.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 194,537.70)이 신용장 금액(USD 180,480.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
@@ -161,7 +172,7 @@
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "187660.94"
+            "value": "194537.7"
           }
         ],
         "ucp_basis": {

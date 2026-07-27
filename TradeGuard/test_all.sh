@@ -110,7 +110,7 @@ try:
     else: raise SystemExit('서버 기동 실패')
     h = json.load(urllib.request.urlopen('http://127.0.0.1:8899/api/health'))
     assert h['modes']['sample'], '샘플 모드 비활성'
-    expect = {'CLEAN-017':'A', 'DEFECT-019':'D', 'DEFECT-001':'D'}
+    expect = {'CLEAN-017':'A', 'DEFECT-019':'C', 'DEFECT-001':'D'}
     for cid, want in expect.items():
         req = urllib.request.Request('http://127.0.0.1:8899/api/analyze/sample',
               data=json.dumps({'case_id':cid}).encode(),

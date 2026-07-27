@@ -2,43 +2,43 @@
   "case_id": "DEFECT-020",
   "label": "defect",
   "defect_types": [
-    "PORT_MISMATCH",
-    "GOODS_DESC_MISMATCH"
+    "BL_SIGNATURE_DEFECT",
+    "PORT_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, STAINLESS STEEL PIPE FITTINGS USD 191,520 · 주입 하자: PORT_MISMATCH, GOODS_DESC_MISMATCH",
-  "presentation_date": "2026-07-04",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., AUTOMOTIVE RUBBER SEAL KIT USD 104,860 · 주입 하자: BL_SIGNATURE_DEFECT, PORT_MISMATCH",
+  "presentation_date": "2026-07-02",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-94688",
-      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "lc_number": "LC-2026-49883",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-17",
+      "issue_date": "2026-05-14",
       "expiry": {
-        "date": "2026-07-30",
+        "date": "2026-07-20",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
-        "country": "IN"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 191520.0,
+      "amount": 104860.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-07-03",
-      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-457, 15,200 PCS AS PER PROFORMA INVOICE NO. PI-2550, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-06-29",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-670, 10,700 SET AS PER PROFORMA INVOICE NO. PI-2600, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -48,7 +48,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -66,27 +66,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-9653",
-      "invoice_date": "2026-06-24",
-      "lc_number_ref": "LC-2026-94688",
+      "invoice_number": "INV-2026-3414",
+      "invoice_date": "2026-06-22",
+      "lc_number_ref": "LC-2026-49883",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 191520.0,
+      "total_amount": 104860.0,
       "goods": [
         {
-          "description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-547, AS PER PROFORMA INVOICE NO. PI-2550",
-          "quantity": 15200,
-          "unit": "PCS",
-          "unit_price": 12.6,
-          "amount": 191520.0,
-          "hs_code": "7307.29"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-670, AS PER PROFORMA INVOICE NO. PI-2600",
+          "quantity": 10700,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 104860.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
@@ -94,46 +94,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-608",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-428",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "packages": "428 CARTONS",
+      "net_weight": "13,910.0 KGS",
+      "gross_weight": "15,022.8 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-5270743",
-      "issue_date": "2026-06-26",
+      "bl_number": "SHC-5850290",
+      "issue_date": "2026-06-23",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-26",
+        "date": "2026-06-23",
         "method": "on_board_notation"
       },
       "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.145E",
+      "voyage_number": "V.69E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "GWANGYANG, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "place_of_delivery": "NHAVA SHEVA CY",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "608 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "428 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "DBSU6835489"
+        "DBSU2367045"
       ],
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-428",
+      "package_count": "428 CTNS",
+      "gross_weight": "15,022.8 KGS",
+      "measurement": "19.26 CBM",
+      "booking_number": "BKG901614",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "carrier"
+        "signer_capacity": "unclear"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -150,6 +161,24 @@
     "discrepancies": [
       {
         "id": "DISC-001",
+        "type": "BL_SIGNATURE_DEFECT",
+        "severity": "medium",
+        "description_ko": "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
+        "evidence": [
+          {
+            "doc": "bill_of_lading",
+            "field": "signature.signer_capacity",
+            "value": "unclear"
+          }
+        ],
+        "ucp_basis": {
+          "article": "UCP600 20(a)(i)",
+          "quote_ko": "선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며, 대리인의 서명은 운송인 또는 선장을 위한 것임과 그 자격을 표시하여야 한다."
+        },
+        "suggested_fix_ko": "'AS AGENT FOR THE CARRIER, SEOHAE CONTAINER LINES' 자격 문구 명기를 요청하세요."
+      },
+      {
+        "id": "DISC-002",
         "type": "PORT_MISMATCH",
         "severity": "medium",
         "description_ko": "B/L 선적항(GWANGYANG, KOREA)이 신용장 44E(BUSAN, KOREA)와 다릅니다.",
@@ -170,34 +199,11 @@
           "quote_ko": "선하증권은 신용장에 명시된 선적항으로부터 도착항까지의 선적을 표시하여야 한다."
         },
         "suggested_fix_ko": "B/L 선적항 표기 정정을 운송사에 요청하세요."
-      },
-      {
-        "id": "DISC-002",
-        "type": "GOODS_DESC_MISMATCH",
-        "severity": "high",
-        "description_ko": "송장 상품명세의 모델번호(SF-547)가 신용장 45A(SF-457)와 불일치합니다.",
-        "evidence": [
-          {
-            "doc": "letter_of_credit",
-            "field": "goods_description",
-            "value": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-457, 15,200 PCS AS PER PROFORMA INVOICE NO. PI-2550, FOB BUSAN INCOTERMS 2020"
-          },
-          {
-            "doc": "commercial_invoice",
-            "field": "goods[0].description",
-            "value": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-547, AS PER PROFORMA INVOICE NO. PI-2550"
-          }
-        ],
-        "ucp_basis": {
-          "article": "UCP600 18(c)",
-          "quote_ko": "상업송장의 물품 명세는 신용장상의 명세와 상응하여야 한다."
-        },
-        "suggested_fix_ko": "송장 모델번호를 'SF-457'으로 수정하세요."
       }
     ],
     "overall_risk": {
-      "grade": "C",
-      "score": 65,
+      "grade": "B",
+      "score": 80,
       "summary_ko": "2건의 하자가 주입된 케이스입니다."
     }
   }

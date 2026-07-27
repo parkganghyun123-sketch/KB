@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, CNC MACHINED ALUMINUM HOUSING PARTS · 완전 정합 케이스",
-  "presentation_date": "2026-07-04",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, AUTOMOTIVE RUBBER SEAL KIT · 완전 정합 케이스",
+  "presentation_date": "2026-07-06",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-30774",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-38452",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-14",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-07-28",
+        "date": "2026-08-01",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 65100.0,
+      "amount": 109760.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-06-30",
-      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-833, 3,100 PCS AS PER PROFORMA INVOICE NO. PI-2567, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-10",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-969, 11,200 SET AS PER PROFORMA INVOICE NO. PI-2639, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,27 +63,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4418",
-      "invoice_date": "2026-06-21",
-      "lc_number_ref": "LC-2026-30774",
+      "invoice_number": "INV-2026-1469",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-38452",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 65100.0,
+      "total_amount": 109760.0,
       "goods": [
         {
-          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-833, AS PER PROFORMA INVOICE NO. PI-2567",
-          "quantity": 3100,
-          "unit": "PCS",
-          "unit_price": 21.0,
-          "amount": 65100.0,
-          "hs_code": "7616.99"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-969, AS PER PROFORMA INVOICE NO. PI-2639",
+          "quantity": 11200,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 109760.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
@@ -91,46 +91,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-124",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-448",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "448 CARTONS",
+      "net_weight": "14,560.0 KGS",
+      "gross_weight": "15,724.8 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-1778511",
-      "issue_date": "2026-06-24",
+      "bl_number": "SHC-6767029",
+      "issue_date": "2026-07-01",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-24",
-        "method": "pre_printed"
+        "date": "2026-07-01",
+        "method": "on_board_notation"
       },
       "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.191E",
+      "voyage_number": "V.178E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "124 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "448 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "SHCU5963751"
+        "SHCU8937225"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-448",
+      "package_count": "448 CTNS",
+      "gross_weight": "15,724.8 KGS",
+      "measurement": "20.16 CBM",
+      "booking_number": "BKG519280",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

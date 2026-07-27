@@ -5,23 +5,23 @@
     "LATE_SHIPMENT"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → GULF STAR GENERAL TRADING LLC, AUTOMOTIVE RUBBER SEAL KIT USD 59,780 · 주입 하자: LATE_SHIPMENT",
-  "presentation_date": "2026-07-03",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, POLYPROPYLENE RESIN COMPOUND USD 130,500 · 주입 하자: LATE_SHIPMENT",
+  "presentation_date": "2026-07-16",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-19846",
-      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
+      "lc_number": "LC-2026-62515",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-02",
+      "issue_date": "2026-05-17",
       "expiry": {
-        "date": "2026-07-09",
+        "date": "2026-07-20",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
-        "country": "AE"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
         "name": "DAEYANG POLYMER CO., LTD.",
@@ -29,15 +29,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 59780.0,
+      "amount": 130500.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "latest_shipment_date": "2026-06-20",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-286, 6,100 SET AS PER PROFORMA INVOICE NO. PI-2391, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-01",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-490, 90 MT AS PER PROFORMA INVOICE NO. PI-2257, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,74 +65,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-1101",
-      "invoice_date": "2026-06-19",
-      "lc_number_ref": "LC-2026-19846",
+      "invoice_number": "INV-2026-8642",
+      "invoice_date": "2026-06-23",
+      "lc_number_ref": "LC-2026-62515",
       "seller": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 59780.0,
+      "total_amount": 130500.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-286, AS PER PROFORMA INVOICE NO. PI-2391",
-          "quantity": 6100,
-          "unit": "SET",
-          "unit_price": 9.8,
-          "amount": 59780.0,
-          "hs_code": "4016.93"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-490, AS PER PROFORMA INVOICE NO. PI-2257",
+          "quantity": 90,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 130500.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-244",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "3 CARTONS",
+      "net_weight": "90,000.0 KGS",
+      "gross_weight": "97,200.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-4104963",
-      "issue_date": "2026-06-28",
+      "bl_number": "SHC-7933764",
+      "issue_date": "2026-07-04",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-28",
-        "method": "pre_printed"
+        "date": "2026-07-04",
+        "method": "on_board_notation"
       },
-      "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.75E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "place_of_delivery": "JEBEL ALI CY",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.40E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "244 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "3 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "DBSU9856507"
+        "SHCU5137908"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3",
+      "package_count": "3 CTNS",
+      "gross_weight": "97,200.0 KGS",
+      "measurement": "0.14 CBM",
+      "booking_number": "BKG797247",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
-        "signer_capacity": "agent_for_carrier"
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "master"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -151,17 +162,17 @@
         "id": "DISC-001",
         "type": "LATE_SHIPMENT",
         "severity": "high",
-        "description_ko": "선적일(2026-06-28)이 최종선적기일(2026-06-20)을 8일 초과했습니다.",
+        "description_ko": "선적일(2026-07-04)이 최종선적기일(2026-07-01)을 3일 초과했습니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "latest_shipment_date",
-            "value": "2026-06-20"
+            "value": "2026-07-01"
           },
           {
             "doc": "bill_of_lading",
             "field": "shipped_on_board.date",
-            "value": "2026-06-28"
+            "value": "2026-07-04"
           }
         ],
         "ucp_basis": {

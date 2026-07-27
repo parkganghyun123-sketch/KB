@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, POLYPROPYLENE RESIN COMPOUND · 완전 정합 케이스",
-  "presentation_date": "2026-07-02",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, CNC MACHINED ALUMINUM HOUSING PARTS · 완전 정합 케이스",
+  "presentation_date": "2026-07-23",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-63712",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-86466",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-01",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-07-20",
+        "date": "2026-08-22",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 130500.0,
+      "amount": 94500.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-06-29",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-569, 90 MT AS PER PROFORMA INVOICE NO. PI-2001, FOB INCHEON INCOTERMS 2020",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-25",
+      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-639, 4,500 PCS AS PER PROFORMA INVOICE NO. PI-2384, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,27 +63,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4560",
-      "invoice_date": "2026-06-18",
-      "lc_number_ref": "LC-2026-63712",
+      "invoice_number": "INV-2026-8663",
+      "invoice_date": "2026-07-15",
+      "lc_number_ref": "LC-2026-86466",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 130500.0,
+      "total_amount": 94500.0,
       "goods": [
         {
-          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-569, AS PER PROFORMA INVOICE NO. PI-2001",
-          "quantity": 90,
-          "unit": "MT",
-          "unit_price": 1450.0,
-          "amount": 130500.0,
-          "hs_code": "3902.10"
+          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-639, AS PER PROFORMA INVOICE NO. PI-2384",
+          "quantity": 4500,
+          "unit": "PCS",
+          "unit_price": 21.0,
+          "amount": 94500.0,
+          "hs_code": "7616.99"
         }
       ],
       "incoterms": {
@@ -91,46 +91,57 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-3",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-180",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "180 CARTONS",
+      "net_weight": "1,890.0 KGS",
+      "gross_weight": "2,041.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-6155018",
-      "issue_date": "2026-06-19",
+      "bl_number": "KMT-2704617",
+      "issue_date": "2026-07-16",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-19",
+        "date": "2026-07-16",
         "method": "pre_printed"
       },
-      "vessel_name": "PACIFIC VOYAGER",
-      "voyage_number": "V.103E",
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.180E",
       "place_of_receipt": "INCHEON CY",
       "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "3 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "180 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
       "container_numbers": [
-        "DBSU8391416"
+        "SHCU4964394"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-180",
+      "package_count": "180 CTNS",
+      "gross_weight": "2,041.2 KGS",
+      "measurement": "8.10 CBM",
+      "booking_number": "BKG275806",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "agent_for_carrier"
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>TradeGuard — 수출 대금회수 리스크 진단</title>
+<title>TradeGuard — 수출 서류 하자 진단 AI</title>
 <style>
 :root{--kb-yellow:#FFBC00;--ink:#26282c;--sub:#696e76;--line:#e4e6ea;--card:#fff;--bg:#f6f7f8;
 --danger:#d92d20;--danger-bg:#fef0ef;--warn:#b54708;--warn-bg:#fffaeb;--ok:#067647;--ok-bg:#ecfdf3;
@@ -12,6 +12,7 @@ body{background:var(--bg);color:var(--ink);font-family:"Pretendard","Apple SD Go
 .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 40px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
 .logo-dot{width:26px;height:26px;border-radius:7px;background:var(--kb-yellow);display:grid;place-items:center;font-weight:800;font-size:13px}
 .topbar b{font-size:17px}
+.tagline{font-size:12.5px;color:var(--sub);border-left:1px solid var(--line);padding-left:12px}
 .steps{margin-left:auto;display:flex;gap:6px;font-size:13px;color:var(--sub)}
 .steps .s{padding:4px 10px;border-radius:999px}
 .steps .s.on{background:var(--ink);color:var(--kb-yellow);font-weight:700}
@@ -33,6 +34,10 @@ h2.sec .count{background:var(--danger);color:#fff;font-size:12px;border-radius:9
 .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:6px}
 .tag.free{background:var(--ok-bg);color:var(--ok)}
 .tag.paid{background:var(--warn-bg);color:var(--warn)}
+.why{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--kb-yellow);
+border-radius:12px;padding:18px 22px;margin-bottom:22px}
+.why-q{font-size:15.5px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px}
+.why-a{font-size:13.5px;color:var(--sub);line-height:1.75}
 
 /* 샘플 목록 */
 .samples{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -125,11 +130,13 @@ tr.low td{background:var(--warn-bg)}
 </head>
 <body>
 <div class="topbar">
-  <div class="logo-dot">T</div><b>TradeGuard</b>
+  <div class="logo-dot">T</div>
+  <b>TradeGuard</b>
+  <span class="tagline">서류 하자로 대금 못 받는 일을 막습니다</span>
   <span class="provider" id="prov">연결 확인 중…</span>
   <div class="steps">
-    <span class="s on" id="st1">① 업로드</span><span class="s" id="st2">② 판독</span>
-    <span class="s" id="st3">③ 하자 검사</span><span class="s" id="st4">④ 환노출</span>
+    <span class="s on" id="st1">① 서류 등록</span><span class="s" id="st2">② 판독</span>
+    <span class="s" id="st3">③ 하자 검사</span><span class="s" id="st4">④ 결과</span>
   </div>
 </div>
 
@@ -147,6 +154,15 @@ tr.low td{background:var(--warn-bg)}
         <p>실제 이미지를 올리면 AI가 판독합니다. 신용장·상업송장·선하증권 PNG/JPG.
            10~30초 소요.</p>
       </button>
+    </div>
+
+    <div class="why">
+      <div class="why-q">신용장 거래에서 서류에 한 글자만 틀려도 은행은 대금 지급을 거절할 수 있습니다.</div>
+      <div class="why-a">
+        대기업은 전담 외환팀이 미리 걸러냅니다. <b>중소 수출기업은 그 인력이 없습니다.</b><br>
+        TradeGuard는 <b>은행에 내기 전에</b> 서류를 스스로 검사하고,
+        하자마다 <b>UCP600 조항 번호</b>로 왜 문제인지 알려줍니다.
+      </div>
     </div>
 
     <div id="paneSample">
@@ -196,7 +212,9 @@ tr.low td{background:var(--warn-bg)}
     <div class="doctabs" id="docTabs"></div>
     <div class="card" style="padding:0"><table class="fields" id="fieldTable"></table></div>
 
-    <h2 class="sec">환노출 &amp; 헤지 처방</h2>
+    <h2 class="sec">부가 분석 — 대금 수취 시점의 외화 손익
+      <span style="font-weight:400;font-size:12.5px;color:var(--sub)">
+        하자를 치유해 대금을 받더라도, 수취 시점 환율에 따라 원화 수령액이 달라집니다</span></h2>
     <div class="card">
       <div id="fxHead" style="font-size:14px;line-height:1.7"></div>
       <div class="fxgrid" id="fxGrid"></div>

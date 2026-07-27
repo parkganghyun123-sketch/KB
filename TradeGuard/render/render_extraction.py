@@ -176,7 +176,7 @@ def build(case_id, docs_data, doc_dir, truths=None):
 <title>TradeGuard — 판독 결과 ({e(case_id)})</title><style>{CSS}</style></head><body>
 <div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
   <span class="live">● LIVE — extract.py 실제 출력</span>
-  <span class="step">① 업로드 → <b>② 판독</b> → ③ 하자 검사 → ④ 환노출·처방</span></div>
+  <span class="step">① 서류 등록 → <b>② 판독</b> → ③ 하자 검사 → ④ 결과</span></div>
 <main>
   <div class="summary">
     <div class="stat"><div class="k">케이스</div><div class="v">{e(case_id)}</div></div>

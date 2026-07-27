@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>TradeGuard — 환노출 시뮬레이터</title>
+<title>TradeGuard — 대금 수취 시점 손익</title>
 <style>
   :root { --kb-yellow: #FFBC00; --ink: #26282c; --sub: #696e76; --line: #e4e6ea;
           --card: #fff; --bg: #f6f7f8; --danger: #d92d20; --ok: #067647;
@@ -89,10 +89,10 @@
 <body>
   <div class="topbar">
     <div class="logo-dot">T</div><b>TradeGuard</b>
-    <span class="step">① 업로드 → ② 판독 → ③ 하자 검사 → <b>④ 환노출·처방</b></span>
+    <span class="step">① 서류 등록 → ② 판독 → ③ 하자 검사 → <b>④ 결과</b></span>
   </div>
   <main>
-    <div class="print-head"><b>TradeGuard 환노출 분석 리포트</b>
+    <div class="print-head"><b>TradeGuard 대금 수취 시점 손익 분석</b>
       <span id="printDate">케이스 DEFECT-001</span></div>
     <h2 class="sec">수취 현금흐름 캘린더 <span style="color:var(--sub);font-weight:400;font-size:13px">— 서류에서 자동 생성 (케이스 DEFECT-001)</span></h2>
     <div class="card">
@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <h2 class="sec">환율 3시나리오 시뮬레이터</h2>
+    <h2 class="sec">환율 3시나리오 — 대금 수취 시점 손익</h2>
     <div class="card">
       <div class="controls">
         <div class="ctl"><label>현재 환율 (KRW/USD)</label><input type="number" id="spot" value="1385" step="1">
@@ -156,7 +156,7 @@
     </div>
 
     <div class="cta-bar">
-      <button class="btn primary" onclick="window.print()">🖨 환노출 리포트 PDF 저장</button>
+      <button class="btn primary" onclick="window.print()">🖨 손익 분석 PDF 저장</button>
       <a class="btn ghost" href="screen3_live.html">← 하자 리포트로</a>
       <a class="btn ghost" href="index.html">데모 홈</a>
     </div>

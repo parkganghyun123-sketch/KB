@@ -152,7 +152,7 @@ def build_html(report, source_name, presentation_date=None):
 <style>{CSS}</style></head><body>
 <div class="topbar"><div class="logo-dot">T</div><b>TradeGuard</b>
   <span class="live">● LIVE — detect.py 실제 출력</span>
-  <span class="step">① 업로드 → ② 판독 → <b>③ 하자 검사</b> → ④ 환노출·처방</span></div>
+  <span class="step">① 서류 등록 → ② 판독 → <b>③ 하자 검사</b> → ④ 결과</span></div>
 <main>
   <div class="print-head"><b>TradeGuard 하자 검사 리포트</b>
     <span>케이스 {e(report["case_id"])} · {datetime.now():%Y-%m-%d}</span></div>
@@ -167,7 +167,7 @@ def build_html(report, source_name, presentation_date=None):
   {section}
   {body}
   <div class="cta">
-    <a class="btn primary" href="screen4_fx_simulator.html">환노출 분석으로 이동 →</a>
+    <a class="btn primary" href="screen4_fx_simulator.html">대금 수취 시점 손익 보기 →</a>
     <button class="btn ghost" onclick="window.print()">🖨 하자 리포트 PDF 저장</button>
     <a class="btn ghost" href="index.html">← 데모 홈</a>
   </div>

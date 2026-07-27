@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND · 완전 정합 케이스",
-  "presentation_date": "2026-07-19",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, POLYPROPYLENE RESIN COMPOUND · 완전 정합 케이스",
+  "presentation_date": "2026-07-22",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-14558",
-      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "lc_number": "LC-2026-71356",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-15",
+      "issue_date": "2026-05-11",
       "expiry": {
-        "date": "2026-08-01",
+        "date": "2026-08-08",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-        "country": "US"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 5800000.0,
+      "amount": 130500.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-07-13",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-298, 4,000 MT AS PER PROFORMA INVOICE NO. PI-2102, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-14",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-846, 90 MT AS PER PROFORMA INVOICE NO. PI-2695, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,26 +63,26 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-2626",
-      "invoice_date": "2026-07-02",
-      "lc_number_ref": "LC-2026-14558",
+      "invoice_number": "INV-2026-6230",
+      "invoice_date": "2026-07-10",
+      "lc_number_ref": "LC-2026-71356",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 5800000.0,
+      "total_amount": 130500.0,
       "goods": [
         {
-          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-298, AS PER PROFORMA INVOICE NO. PI-2102",
-          "quantity": 4000,
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-846, AS PER PROFORMA INVOICE NO. PI-2695",
+          "quantity": 90,
           "unit": "MT",
           "unit_price": 1450.0,
-          "amount": 5800000.0,
+          "amount": 130500.0,
           "hs_code": "3902.10"
         }
       ],
@@ -91,46 +91,46 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-160",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-3",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-8568524",
-      "issue_date": "2026-07-05",
+      "bl_number": "SHC-8967115",
+      "issue_date": "2026-07-13",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-05",
+        "date": "2026-07-13",
         "method": "pre_printed"
       },
-      "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.164E",
+      "vessel_name": "PACIFIC VOYAGER",
+      "voyage_number": "V.134E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "place_of_delivery": "LOS ANGELES CY",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
-      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "160 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "3 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "KMTU8543250"
+        "KMTU9656807"
       ],
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "agent_for_carrier"
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

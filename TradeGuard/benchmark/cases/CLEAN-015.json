@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "NARAE FOODS CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS · 완전 정합 케이스",
-  "presentation_date": "2026-07-24",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., AUTOMOTIVE RUBBER SEAL KIT · 완전 정합 케이스",
+  "presentation_date": "2026-06-18",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-88746",
-      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "lc_number": "LC-2026-40331",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-13",
+      "issue_date": "2026-05-01",
       "expiry": {
-        "date": "2026-08-09",
+        "date": "2026-07-20",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
-        "country": "IN"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 19200.0,
+      "amount": 168560.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-07-19",
-      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-995, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2110, FOB INCHEON INCOTERMS 2020",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-06-21",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-278, 17,200 SET AS PER PROFORMA INVOICE NO. PI-2405, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,66 +63,66 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-7129",
-      "invoice_date": "2026-07-12",
-      "lc_number_ref": "LC-2026-88746",
+      "invoice_number": "INV-2026-3592",
+      "invoice_date": "2026-06-10",
+      "lc_number_ref": "LC-2026-40331",
       "seller": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 19200.0,
+      "total_amount": 168560.0,
       "goods": [
         {
-          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-995, AS PER PROFORMA INVOICE NO. PI-2110",
-          "quantity": 3000,
-          "unit": "PCS",
-          "unit_price": 6.4,
-          "amount": 19200.0,
-          "hs_code": "6109.10"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-278, AS PER PROFORMA INVOICE NO. PI-2405",
+          "quantity": 17200,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 168560.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "INCHEON"
+        "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-120",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-688",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-5037363",
-      "issue_date": "2026-07-14",
+      "bl_number": "KMT-8849708",
+      "issue_date": "2026-06-12",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-14",
+        "date": "2026-06-12",
         "method": "on_board_notation"
       },
-      "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.111E",
-      "place_of_receipt": "INCHEON CY",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "place_of_delivery": "NHAVA SHEVA CY",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.142E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "120 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "688 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "KMTU4207908"
+        "KMTU4209120"
       ],
       "freight_terms": "COLLECT",
       "clean": true,
@@ -130,7 +130,7 @@
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

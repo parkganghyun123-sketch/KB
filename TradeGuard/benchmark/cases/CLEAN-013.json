@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
-  "presentation_date": "2026-07-03",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → PACIFIC RIM IMPORTS INC., LITHIUM-ION BATTERY CELLS 3.7V · 완전 정합 케이스",
+  "presentation_date": "2026-07-09",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-87716",
-      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "lc_number": "LC-2026-67644",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-10",
+      "issue_date": "2026-05-21",
       "expiry": {
-        "date": "2026-07-25",
+        "date": "2026-07-30",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
-        "country": "IN"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 18500.0,
+      "amount": 160960.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-07-02",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, 1,000 CTN AS PER PROFORMA INVOICE NO. PI-2409, FOB INCHEON INCOTERMS 2020",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-07-05",
+      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-507, 50,300 PCS AS PER PROFORMA INVOICE NO. PI-2622, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,73 +63,73 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-8218",
-      "invoice_date": "2026-06-25",
-      "lc_number_ref": "LC-2026-87716",
+      "invoice_number": "INV-2026-5130",
+      "invoice_date": "2026-06-24",
+      "lc_number_ref": "LC-2026-67644",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "buyer": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 18500.0,
+      "total_amount": 160960.0,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, AS PER PROFORMA INVOICE NO. PI-2409",
-          "quantity": 1000,
-          "unit": "CTN",
-          "unit_price": 18.5,
-          "amount": 18500.0,
-          "hs_code": "1902.30"
+          "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-507, AS PER PROFORMA INVOICE NO. PI-2622",
+          "quantity": 50300,
+          "unit": "PCS",
+          "unit_price": 3.2,
+          "amount": 160960.0,
+          "hs_code": "8507.60"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "INCHEON"
+        "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-40",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-2012",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-6056758",
-      "issue_date": "2026-06-28",
+      "bl_number": "SHC-4171461",
+      "issue_date": "2026-06-25",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-28",
+        "date": "2026-06-25",
         "method": "pre_printed"
       },
-      "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.63E",
-      "place_of_receipt": "INCHEON CY",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "place_of_delivery": "NHAVA SHEVA CY",
+      "vessel_name": "OCEAN SENTINEL",
+      "voyage_number": "V.150E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "40 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "2012 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
       "container_numbers": [
-        "DBSU6237094"
+        "SHCU4366103"
       ],
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
+        "carrier_name": "DONGBANG SHIPPING LINE",
         "signer_capacity": "master"
       },
       "field_confidence": {},

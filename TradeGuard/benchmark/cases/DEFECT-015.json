@@ -5,7 +5,7 @@
     "BL_SIGNATURE_DEFECT"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "NARAE FOODS CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND USD 2,900,000 · 주입 하자: BL_SIGNATURE_DEFECT",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND USD 174,000 · 주입 하자: BL_SIGNATURE_DEFECT",
   "presentation_date": "2026-07-21",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "US"
       },
       "beneficiary": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 2900000.0,
+      "amount": 174000.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
       "latest_shipment_date": "2026-07-18",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-400, 2,000 MT AS PER PROFORMA INVOICE NO. PI-2655, FOB BUSAN INCOTERMS 2020",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-400, 120 MT AS PER PROFORMA INVOICE NO. PI-2655, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-07-08",
       "lc_number_ref": "LC-2026-14480",
       "seller": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "PACIFIC RIM IMPORTS INC.",
         "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 2900000.0,
+      "total_amount": 174000.0,
       "goods": [
         {
           "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-400, AS PER PROFORMA INVOICE NO. PI-2655",
-          "quantity": 2000,
+          "quantity": 120,
           "unit": "MT",
           "unit_price": 1450.0,
-          "amount": 2900000.0,
+          "amount": 174000.0,
           "hs_code": "3902.10"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-80",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-4",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "LOS ANGELES, USA",
       "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
       "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "80 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "4 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "KMTU4018898"
       ],

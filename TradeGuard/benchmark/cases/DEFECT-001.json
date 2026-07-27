@@ -5,7 +5,7 @@
     "AMOUNT_EXCEEDS_LC"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → GULF STAR GENERAL TRADING LLC, COTTON KNITTED T-SHIRTS USD 12,800 · 주입 하자: AMOUNT_EXCEEDS_LC",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → GULF STAR GENERAL TRADING LLC, COTTON KNITTED T-SHIRTS USD 180,480 · 주입 하자: AMOUNT_EXCEEDS_LC",
   "presentation_date": "2026-07-27",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "AE"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 12800.0,
+      "amount": 180480.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
       "latest_shipment_date": "2026-07-19",
-      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2065, FOB INCHEON INCOTERMS 2020",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, 28,200 PCS AS PER PROFORMA INVOICE NO. PI-2065, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-07-11",
       "lc_number_ref": "LC-2026-46486",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
         "name": "GULF STAR GENERAL TRADING LLC",
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 13309.29,
+      "total_amount": 187660.94,
       "goods": [
         {
           "description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, AS PER PROFORMA INVOICE NO. PI-2065",
-          "quantity": 2000,
+          "quantity": 28200,
           "unit": "PCS",
           "unit_price": 6.65,
-          "amount": 13309.29,
+          "amount": 187660.94,
           "hs_code": "6109.10"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-80",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-1128",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "JEBEL ALI, UAE",
       "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "80 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "goods_description": "1128 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
         "DBSU1304451"
       ],
@@ -151,17 +151,17 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 13,309.29)이 신용장 금액(USD 12,800.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 187,660.94)이 신용장 금액(USD 180,480.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "amount",
-            "value": "12800.0"
+            "value": "180480.0"
           },
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "13309.29"
+            "value": "187660.94"
           }
         ],
         "ucp_basis": {

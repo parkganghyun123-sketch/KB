@@ -5,8 +5,8 @@
     "LATE_SHIPMENT"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, STAINLESS STEEL PIPE FITTINGS USD 25,200 · 주입 하자: LATE_SHIPMENT",
-  "presentation_date": "2026-06-29",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, STAINLESS STEEL PIPE FITTINGS USD 143,640 · 주입 하자: LATE_SHIPMENT",
+  "presentation_date": "2026-07-01",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
@@ -24,12 +24,12 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 25200.0,
+      "amount": 143640.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "latest_shipment_date": "2026-06-17",
-      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-517, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2573, FOB INCHEON INCOTERMS 2020",
+      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-517, 11,400 PCS AS PER PROFORMA INVOICE NO. PI-2573, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-06-13",
       "lc_number_ref": "LC-2026-65552",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 25200.0,
+      "total_amount": 143640.0,
       "goods": [
         {
           "description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-517, AS PER PROFORMA INVOICE NO. PI-2573",
-          "quantity": 2000,
+          "quantity": 11400,
           "unit": "PCS",
           "unit_price": 12.6,
-          "amount": 25200.0,
+          "amount": 143640.0,
           "hs_code": "7307.29"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-80",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-456",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "80 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+      "goods_description": "456 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
       "container_numbers": [
         "SHCU6166963"
       ],

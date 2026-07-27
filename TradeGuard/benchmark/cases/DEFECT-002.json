@@ -5,7 +5,7 @@
     "AMOUNT_EXCEEDS_LC"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "NARAE FOODS CO., LTD. → GULF STAR GENERAL TRADING LLC, STAINLESS STEEL PIPE FITTINGS USD 6,300 · 주입 하자: AMOUNT_EXCEEDS_LC",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → GULF STAR GENERAL TRADING LLC, STAINLESS STEEL PIPE FITTINGS USD 55,440 · 주입 하자: AMOUNT_EXCEEDS_LC",
   "presentation_date": "2026-07-12",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "AE"
       },
       "beneficiary": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 6300.0,
+      "amount": 55440.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
       "latest_shipment_date": "2026-07-07",
-      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-336, 500 PCS AS PER PROFORMA INVOICE NO. PI-2125, FOB BUSAN INCOTERMS 2020",
+      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-336, 4,400 PCS AS PER PROFORMA INVOICE NO. PI-2125, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-07-03",
       "lc_number_ref": "LC-2026-97035",
       "seller": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "buyer": {
         "name": "GULF STAR GENERAL TRADING LLC",
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 6567.34,
+      "total_amount": 57792.55,
       "goods": [
         {
           "description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-336, AS PER PROFORMA INVOICE NO. PI-2125",
-          "quantity": 500,
+          "quantity": 4400,
           "unit": "PCS",
           "unit_price": 13.13,
-          "amount": 6567.34,
+          "amount": 57792.55,
           "hs_code": "7307.29"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-20",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-176",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "JEBEL ALI, UAE",
       "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "NARAE FOODS CO., LTD.",
-        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "20 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+      "goods_description": "176 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
       "container_numbers": [
         "KMTU2222020"
       ],
@@ -151,17 +151,17 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 6,567.34)이 신용장 금액(USD 6,300.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 57,792.55)이 신용장 금액(USD 55,440.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "amount",
-            "value": "6300.0"
+            "value": "55440.0"
           },
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "6567.34"
+            "value": "57792.55"
           }
         ],
         "ucp_basis": {

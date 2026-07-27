@@ -3,6 +3,6 @@
   "date": null,
   "source": "fallback",
   "label": "시연용 기본값 · ECOS 조회 실패",
-  "error": "HTTPSConnectionPool(host='ecos.bok.or.kr', port=443): Max retries exceeded with url: /api/StatisticSearch/<ECOS_API_KEY>/json/kr/1/100/731Y001/D/20260717/20260727/0000001 (Caused by ProxyError('Unable",
+  "error": "ECOS_API_KEY 없음 — .env를 확인하세요",
   "fetched_at": "2026-07-27"
 }

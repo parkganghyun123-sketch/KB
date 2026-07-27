@@ -5,7 +5,7 @@
     "BENEFICIARY_NAME_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT USD 39,200 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT USD 247,940 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
   "presentation_date": "2026-06-26",
   "documents": {
     "letter_of_credit": {
@@ -13,9 +13,9 @@
       "lc_number": "LC-2026-14456",
       "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-08",
+      "issue_date": "2026-05-03",
       "expiry": {
-        "date": "2026-07-22",
+        "date": "2026-07-26",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -24,20 +24,20 @@
         "country": "VN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 39200.0,
+      "amount": 247940.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-06-24",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, 4,000 SET AS PER PROFORMA INVOICE NO. PI-2693, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-06-28",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-656, 25,300 SET AS PER PROFORMA INVOICE NO. PI-2224, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-06-18",
       "lc_number_ref": "LC-2026-14456",
       "seller": {
-        "name": "KOWON ENERGY CELL COMPANY LTD",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER COMPANY LTD",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 39200.0,
+      "total_amount": 247940.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, AS PER PROFORMA INVOICE NO. PI-2693",
-          "quantity": 4000,
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-656, AS PER PROFORMA INVOICE NO. PI-2224",
+          "quantity": 25300,
           "unit": "SET",
           "unit_price": 9.8,
-          "amount": 39200.0,
+          "amount": 247940.0,
           "hs_code": "4016.93"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-160",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1012",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
       "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "160 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "goods_description": "1012 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
         "KMTU6233769"
       ],
@@ -151,24 +151,24 @@
         "id": "DISC-001",
         "type": "BENEFICIARY_NAME_MISMATCH",
         "severity": "high",
-        "description_ko": "송장 발행인(KOWON ENERGY CELL COMPANY LTD)이 신용장 수익자(KOWON ENERGY CELL CO., LTD.)와 불일치합니다.",
+        "description_ko": "송장 발행인(DAEYANG POLYMER COMPANY LTD)이 신용장 수익자(DAEYANG POLYMER CO., LTD.)와 불일치합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "beneficiary.name",
-            "value": "KOWON ENERGY CELL CO., LTD."
+            "value": "DAEYANG POLYMER CO., LTD."
           },
           {
             "doc": "commercial_invoice",
             "field": "seller.name",
-            "value": "KOWON ENERGY CELL COMPANY LTD"
+            "value": "DAEYANG POLYMER COMPANY LTD"
           }
         ],
         "ucp_basis": {
           "article": "UCP600 18(a)(i)",
           "quote_ko": "상업송장은 수익자가 발행한 것으로 보여야 한다."
         },
-        "suggested_fix_ko": "송장 발행인 명의를 'KOWON ENERGY CELL CO., LTD.'로 수정하세요."
+        "suggested_fix_ko": "송장 발행인 명의를 'DAEYANG POLYMER CO., LTD.'로 수정하세요."
       }
     ],
     "overall_risk": {

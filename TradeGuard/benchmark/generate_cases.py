@@ -13,6 +13,7 @@ prompts/02_synthetic_benchmark.md의 배분표를 코드로 구현한다.
   python3 generate_cases.py --out cases --render   # 생성 후 render.py로 HTML까지
 """
 import json
+import math
 import random
 import subprocess
 import sys
@@ -40,6 +41,30 @@ EXPORTERS = [
     ("NARAE FOODS CO., LTD.", "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"),
     ("KOWON ENERGY CELL CO., LTD.", "300 TECHNO 2-RO, DAEJEON, KOREA"),
 ]
+# 업종코드(INDUSTRIES 3번째 원소) → 실제로 그 품목을 취급할 법한 수출자만 매칭
+# (예: KOWON ENERGY CELL은 배터리만 수출, 라면(NARAE FOODS)을 수출하지 않도록 고정)
+EXPORTERS_BY_CODE = {
+    "AH": [EXPORTERS[0]],  # HANSOL PRECISION → 정밀가공 부품
+    "PP": [EXPORTERS[1]],  # DAEYANG POLYMER → 수지/폴리머
+    "TS": [EXPORTERS[2]],  # SEJIN TEXTILE → 섬유
+    "RN": [EXPORTERS[3]],  # NARAE FOODS → 식품
+    "BC": [EXPORTERS[4]],  # KOWON ENERGY CELL → 배터리
+    "RS": [EXPORTERS[1]],  # DAEYANG POLYMER → 고무/폴리머
+    "SF": [EXPORTERS[0]],  # HANSOL PRECISION → 금속가공
+    "LP": [EXPORTERS[0]],  # HANSOL PRECISION → 정밀전자부품
+}
+
+MIN_AMOUNT, MAX_AMOUNT = 30_000, 300_000
+
+
+def qty_for_price(price, rng):
+    """거래금액(qty*price)이 스펙 범위(MIN_AMOUNT~MAX_AMOUNT)에 들도록 qty를 역산한다."""
+    low = max(1, math.ceil(MIN_AMOUNT / price))
+    high = max(low, math.floor(MAX_AMOUNT / price))
+    qty = rng.randint(low, high)
+    step = 100 if high >= 1000 else (10 if high >= 100 else 1)
+    qty = min(high, max(low, round(qty / step) * step))
+    return qty
 BUYERS = [
     ("MEKONG INDUSTRIAL TRADING CO., LTD", "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
      "VN", "HO CHI MINH CITY, VIETNAM", "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY"),
@@ -88,10 +113,10 @@ def gt_item(idx, dtype, sev, desc, evidence, kb_key, fix):
 def base_case(rng, seq):
     """정합성이 완전한 서류 3종을 만든다. 하자는 이후 mutate에서 주입."""
     goods, code, unit, price, hs = rng.choice(INDUSTRIES)
-    exp_name, exp_addr = rng.choice(EXPORTERS)
+    exp_name, exp_addr = rng.choice(EXPORTERS_BY_CODE[code])
     buy_name, buy_addr, cc, discharge, bank = rng.choice(BUYERS)
     model = f"{code}-{rng.randint(100, 999)}"
-    qty = rng.choice([500, 1000, 2000, 3000, 4000, 6000])
+    qty = qty_for_price(price, rng)
     amount = round(qty * price, 2)
     pi_no = f"PI-{rng.randint(2000, 2699)}"
 
@@ -224,6 +249,8 @@ def inject(dtype, docs, meta, rng, idx):
         over = latest + timedelta(days=rng.randint(2, 8))
         bl["shipped_on_board"]["date"] = over.isoformat()
         bl["issue_date"] = over.isoformat()
+        # 선적일이 뒤로 밀렸으므로 제시일도 함께 밀어 제시일<선적일 모순을 방지한다
+        meta["presentation_date"] = (over + timedelta(days=rng.randint(5, 14))).isoformat()
         return gt_item(idx, dtype, "high",
                        f"선적일({over})이 최종선적기일({latest})을 {(over - latest).days}일 초과했습니다.",
                        [ev("letter_of_credit", "latest_shipment_date", latest),
@@ -233,6 +260,9 @@ def inject(dtype, docs, meta, rng, idx):
     if dtype == "LC_EXPIRED_OR_LATE_PRESENTATION":
         # 선적일을 과거로 크게 당겨 제시기한(선적+21일)이 이미 경과하도록
         old_ship = date(2026, 5, 10) + timedelta(days=rng.randint(0, 10))
+        # issue_date도 함께 앞당겨 issue ≤ latest_ship ≤ expiry 불변식을 보장한다
+        # (기존 버그: issue_date를 갱신하지 않아 최종선적기일이 발행일보다 앞서는 모순 발생 — DEFECT-011)
+        lc["issue_date"] = (old_ship - timedelta(days=rng.randint(5, 15))).isoformat()
         lc["latest_shipment_date"] = (old_ship + timedelta(days=5)).isoformat()
         lc["expiry"]["date"] = (old_ship + timedelta(days=25)).isoformat()
         bl["shipped_on_board"]["date"] = old_ship.isoformat()

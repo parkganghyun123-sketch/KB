@@ -3,17 +3,17 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
-  "presentation_date": "2026-08-04",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., AUTOMOTIVE RUBBER SEAL KIT · 완전 정합 케이스",
+  "presentation_date": "2026-07-10",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-56752",
+      "lc_number": "LC-2026-38452",
       "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-25",
+      "issue_date": "2026-05-17",
       "expiry": {
-        "date": "2026-08-30",
+        "date": "2026-07-31",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -27,15 +27,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 9250.0,
+      "amount": 230300.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-08-01",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-399, 500 CTN AS PER PROFORMA INVOICE NO. PI-2267, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-10",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-863, 23,500 SET AS PER PROFORMA INVOICE NO. PI-2140, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -63,9 +63,9 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-9727",
-      "invoice_date": "2026-07-24",
-      "lc_number_ref": "LC-2026-56752",
+      "invoice_number": "INV-2026-7551",
+      "invoice_date": "2026-07-05",
+      "lc_number_ref": "LC-2026-38452",
       "seller": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
@@ -75,40 +75,40 @@
         "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 9250.0,
+      "total_amount": 230300.0,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-399, AS PER PROFORMA INVOICE NO. PI-2267",
-          "quantity": 500,
-          "unit": "CTN",
-          "unit_price": 18.5,
-          "amount": 9250.0,
-          "hs_code": "1902.30"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-863, AS PER PROFORMA INVOICE NO. PI-2140",
+          "quantity": 23500,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 230300.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-20",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-940",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-7086324",
-      "issue_date": "2026-07-26",
+      "bl_number": "KMT-6767029",
+      "issue_date": "2026-07-05",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-26",
-        "method": "pre_printed"
+        "date": "2026-07-05",
+        "method": "on_board_notation"
       },
-      "vessel_name": "PACIFIC VOYAGER",
-      "voyage_number": "V.169E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.178E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
       "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
@@ -120,9 +120,9 @@
         "is_to_order": true
       },
       "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "940 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "SHCU3298988"
+        "SHCU8937225"
       ],
       "freight_terms": "COLLECT",
       "clean": true,

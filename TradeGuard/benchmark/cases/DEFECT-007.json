@@ -5,7 +5,7 @@
     "BENEFICIARY_NAME_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → GULF STAR GENERAL TRADING LLC, AUTOMOTIVE RUBBER SEAL KIT USD 9,800 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → GULF STAR GENERAL TRADING LLC, AUTOMOTIVE RUBBER SEAL KIT USD 102,900 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
   "presentation_date": "2026-07-21",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "AE"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 9800.0,
+      "amount": 102900.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
       "latest_shipment_date": "2026-07-17",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-988, 1,000 SET AS PER PROFORMA INVOICE NO. PI-2614, FOB INCHEON INCOTERMS 2020",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-988, 10,500 SET AS PER PROFORMA INVOICE NO. PI-2614, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-07-07",
       "lc_number_ref": "LC-2026-53470",
       "seller": {
-        "name": "HANSOL PRECISION COMPANY LTD",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER COMPANY LTD",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "GULF STAR GENERAL TRADING LLC",
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 9800.0,
+      "total_amount": 102900.0,
       "goods": [
         {
           "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-988, AS PER PROFORMA INVOICE NO. PI-2614",
-          "quantity": 1000,
+          "quantity": 10500,
           "unit": "SET",
           "unit_price": 9.8,
-          "amount": 9800.0,
+          "amount": 102900.0,
           "hs_code": "4016.93"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-40",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-420",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "JEBEL ALI, UAE",
       "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "40 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "goods_description": "420 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
         "KMTU2723413"
       ],
@@ -151,24 +151,24 @@
         "id": "DISC-001",
         "type": "BENEFICIARY_NAME_MISMATCH",
         "severity": "high",
-        "description_ko": "송장 발행인(HANSOL PRECISION COMPANY LTD)이 신용장 수익자(HANSOL PRECISION CO., LTD.)와 불일치합니다.",
+        "description_ko": "송장 발행인(DAEYANG POLYMER COMPANY LTD)이 신용장 수익자(DAEYANG POLYMER CO., LTD.)와 불일치합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "beneficiary.name",
-            "value": "HANSOL PRECISION CO., LTD."
+            "value": "DAEYANG POLYMER CO., LTD."
           },
           {
             "doc": "commercial_invoice",
             "field": "seller.name",
-            "value": "HANSOL PRECISION COMPANY LTD"
+            "value": "DAEYANG POLYMER COMPANY LTD"
           }
         ],
         "ucp_basis": {
           "article": "UCP600 18(a)(i)",
           "quote_ko": "상업송장은 수익자가 발행한 것으로 보여야 한다."
         },
-        "suggested_fix_ko": "송장 발행인 명의를 'HANSOL PRECISION CO., LTD.'로 수정하세요."
+        "suggested_fix_ko": "송장 발행인 명의를 'DAEYANG POLYMER CO., LTD.'로 수정하세요."
       }
     ],
     "overall_risk": {

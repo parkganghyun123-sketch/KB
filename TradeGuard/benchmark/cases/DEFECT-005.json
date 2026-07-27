@@ -5,7 +5,7 @@
     "GOODS_DESC_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → GULF STAR GENERAL TRADING LLC, LITHIUM-ION BATTERY CELLS 3.7V USD 9,600 · 주입 하자: GOODS_DESC_MISMATCH",
+  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → GULF STAR GENERAL TRADING LLC, LITHIUM-ION BATTERY CELLS 3.7V USD 225,920 · 주입 하자: GOODS_DESC_MISMATCH",
   "presentation_date": "2026-07-02",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "AE"
       },
       "beneficiary": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 9600.0,
+      "amount": 225920.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
       "latest_shipment_date": "2026-06-28",
-      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-990, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2163, FOB BUSAN INCOTERMS 2020",
+      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-990, 70,600 PCS AS PER PROFORMA INVOICE NO. PI-2163, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-06-17",
       "lc_number_ref": "LC-2026-82461",
       "seller": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "buyer": {
         "name": "GULF STAR GENERAL TRADING LLC",
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 9600.0,
+      "total_amount": 225920.0,
       "goods": [
         {
           "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-997, AS PER PROFORMA INVOICE NO. PI-2163",
-          "quantity": 3000,
+          "quantity": 70600,
           "unit": "PCS",
           "unit_price": 3.2,
-          "amount": 9600.0,
+          "amount": 225920.0,
           "hs_code": "8507.60"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-120",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-2824",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "JEBEL ALI, UAE",
       "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+        "name": "KOWON ENERGY CELL CO., LTD.",
+        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "120 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+      "goods_description": "2824 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
       "container_numbers": [
         "SHCU1734124"
       ],
@@ -156,7 +156,7 @@
           {
             "doc": "letter_of_credit",
             "field": "goods_description",
-            "value": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-990, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2163, FOB BUSAN INCOTERMS 2020"
+            "value": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-990, 70,600 PCS AS PER PROFORMA INVOICE NO. PI-2163, FOB BUSAN INCOTERMS 2020"
           },
           {
             "doc": "commercial_invoice",

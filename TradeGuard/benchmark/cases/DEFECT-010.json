@@ -5,39 +5,39 @@
     "LATE_SHIPMENT"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → SHANGHAI HONGDA TRADE CO., LTD, LITHIUM-ION BATTERY CELLS 3.7V USD 3,200 · 주입 하자: LATE_SHIPMENT",
-  "presentation_date": "2026-07-31",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → GULF STAR GENERAL TRADING LLC, AUTOMOTIVE RUBBER SEAL KIT USD 59,780 · 주입 하자: LATE_SHIPMENT",
+  "presentation_date": "2026-07-03",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-23957",
-      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "lc_number": "LC-2026-19846",
+      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-23",
+      "issue_date": "2026-05-02",
       "expiry": {
-        "date": "2026-08-08",
+        "date": "2026-07-09",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
-        "country": "CN"
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
+        "country": "AE"
       },
       "beneficiary": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 3200.0,
+      "amount": 59780.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "latest_shipment_date": "2026-07-19",
-      "goods_description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-735, 1,000 PCS AS PER PROFORMA INVOICE NO. PI-2096, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "latest_shipment_date": "2026-06-20",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-286, 6,100 SET AS PER PROFORMA INVOICE NO. PI-2391, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4799",
-      "invoice_date": "2026-07-18",
-      "lc_number_ref": "LC-2026-23957",
+      "invoice_number": "INV-2026-1101",
+      "invoice_date": "2026-06-19",
+      "lc_number_ref": "LC-2026-19846",
       "seller": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 3200.0,
+      "total_amount": 59780.0,
       "goods": [
         {
-          "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-735, AS PER PROFORMA INVOICE NO. PI-2096",
-          "quantity": 1000,
-          "unit": "PCS",
-          "unit_price": 3.2,
-          "amount": 3200.0,
-          "hs_code": "8507.60"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-286, AS PER PROFORMA INVOICE NO. PI-2391",
+          "quantity": 6100,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 59780.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
@@ -93,45 +93,45 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-40",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-244",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-1103908",
-      "issue_date": "2026-07-21",
+      "bl_number": "KMT-4104963",
+      "issue_date": "2026-06-28",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-21",
-        "method": "on_board_notation"
+        "date": "2026-06-28",
+        "method": "pre_printed"
       },
-      "vessel_name": "PACIFIC VOYAGER",
-      "voyage_number": "V.181E",
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.75E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "place_of_delivery": "SHANGHAI CY",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "SEJIN TEXTILE CORPORATION",
-        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
-      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
-      "goods_description": "40 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
+      "goods_description": "244 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "DBSU7395885"
+        "DBSU9856507"
       ],
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
         "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
@@ -151,17 +151,17 @@
         "id": "DISC-001",
         "type": "LATE_SHIPMENT",
         "severity": "high",
-        "description_ko": "선적일(2026-07-21)이 최종선적기일(2026-07-19)을 2일 초과했습니다.",
+        "description_ko": "선적일(2026-06-28)이 최종선적기일(2026-06-20)을 8일 초과했습니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "latest_shipment_date",
-            "value": "2026-07-19"
+            "value": "2026-06-20"
           },
           {
             "doc": "bill_of_lading",
             "field": "shipped_on_board.date",
-            "value": "2026-07-21"
+            "value": "2026-06-28"
           }
         ],
         "ucp_basis": {

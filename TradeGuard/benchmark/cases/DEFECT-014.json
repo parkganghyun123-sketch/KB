@@ -5,7 +5,7 @@
     "PORT_MISMATCH"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) USD 37,000 · 주입 하자: PORT_MISMATCH",
+  "scenario_note_ko": "NARAE FOODS CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) USD 136,900 · 주입 하자: PORT_MISMATCH",
   "presentation_date": "2026-07-08",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "VN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 37000.0,
+      "amount": 136900.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
       "latest_shipment_date": "2026-07-10",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-159, 2,000 CTN AS PER PROFORMA INVOICE NO. PI-2164, FOB BUSAN INCOTERMS 2020",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-890, 7,400 CTN AS PER PROFORMA INVOICE NO. PI-2164, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-07-01",
       "lc_number_ref": "LC-2026-98342",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "buyer": {
         "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 37000.0,
+      "total_amount": 136900.0,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-159, AS PER PROFORMA INVOICE NO. PI-2164",
-          "quantity": 2000,
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-890, AS PER PROFORMA INVOICE NO. PI-2164",
+          "quantity": 7400,
           "unit": "CTN",
           "unit_price": 18.5,
-          "amount": 37000.0,
+          "amount": 136900.0,
           "hs_code": "1902.30"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-80",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-296",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
       "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "80 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "296 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
         "KMTU3217781"
       ],

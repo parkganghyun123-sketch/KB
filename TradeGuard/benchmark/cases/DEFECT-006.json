@@ -5,7 +5,7 @@
     "GOODS_DESC_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, LED PANEL LIGHT 40W USD 45,900 · 주입 하자: GOODS_DESC_MISMATCH",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, LED PANEL LIGHT 40W USD 246,330 · 주입 하자: GOODS_DESC_MISMATCH",
   "presentation_date": "2026-06-22",
   "documents": {
     "letter_of_credit": {
@@ -24,12 +24,12 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 45900.0,
+      "amount": 246330.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
@@ -37,7 +37,7 @@
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "latest_shipment_date": "2026-06-23",
-      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-993, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCOTERMS 2020",
+      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-993, 16,100 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -69,22 +69,22 @@
       "invoice_date": "2026-06-13",
       "lc_number_ref": "LC-2026-73722",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 45900.0,
+      "total_amount": 246330.0,
       "goods": [
         {
           "description": "LED PANEL LIGHT 40W, MODEL LP-998, AS PER PROFORMA INVOICE NO. PI-2462",
-          "quantity": 3000,
+          "quantity": 16100,
           "unit": "PCS",
           "unit_price": 15.3,
-          "amount": 45900.0,
+          "amount": 246330.0,
           "hs_code": "9405.11"
         }
       ],
@@ -93,7 +93,7 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-120",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-644",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
@@ -114,15 +114,15 @@
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "120 CARTONS OF LED PANEL LIGHT 40W",
+      "goods_description": "644 CARTONS OF LED PANEL LIGHT 40W",
       "container_numbers": [
         "SHCU3469001"
       ],
@@ -156,7 +156,7 @@
           {
             "doc": "letter_of_credit",
             "field": "goods_description",
-            "value": "LED PANEL LIGHT 40W, MODEL LP-993, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCOTERMS 2020"
+            "value": "LED PANEL LIGHT 40W, MODEL LP-993, 16,100 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCOTERMS 2020"
           },
           {
             "doc": "commercial_invoice",

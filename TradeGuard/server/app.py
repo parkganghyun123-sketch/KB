@@ -25,6 +25,7 @@ import sys
 import tempfile
 import time
 import traceback
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -54,8 +55,33 @@ def find_case(case_id: str) -> dict:
     raise HTTPException(404, f"케이스를 찾을 수 없습니다: {case_id}")
 
 
-def fx_block(docs: dict) -> dict:
-    """추출된 서류에서 현금흐름을 만들고 환노출을 계산한다 (fx_exposure 스키마 축약형)"""
+# 하자 심각도별 예상 처리 지연(영업일) — 실무 관행 기반 추정치
+# high  : 서류 재발행·재제시 또는 개설의뢰인 waiver 협의
+# medium: 운송사·발행처 정정 요청
+DELAY_DAYS = {"high": 5, "medium": 2, "low": 0}
+
+
+def delay_block(report: dict) -> dict:
+    """하자 → 예상 지연 일수. **경쟁 서비스에 없는 연결 고리.**
+
+    서류 하자는 단순한 '오류'가 아니라 대금 수취를 미루는 원인이다.
+    지연된 기간만큼 외화가 환율에 노출되므로, 하자와 환노출은 하나의 인과로 이어진다."""
+    items = []
+    total = 0
+    for d in report.get("discrepancies", []):
+        days = DELAY_DAYS.get(d["severity"], 0)
+        if days:
+            total += days
+            items.append({"id": d["id"], "type": d["type"], "severity": d["severity"],
+                          "days": days, "reason_ko": d["description_ko"][:60]})
+    return {"total_business_days": total, "items": items,
+            "basis_ko": "HIGH 하자 1건당 5영업일(재발행·waiver 협의), MEDIUM 1건당 2영업일(정정 요청) 가정"}
+
+
+def fx_block(docs: dict, delay_days: int = 0) -> dict:
+    """추출된 서류에서 현금흐름을 만들고 환노출을 계산한다 (fx_exposure 스키마 축약형)
+
+    delay_days: 하자로 인한 예상 지연. 수취 예정일을 그만큼 밀어 노출 기간을 늘린다."""
     inv = docs.get("commercial_invoice") or {}
     bl = docs.get("bill_of_lading") or {}
     amount = inv.get("total_amount")
@@ -77,10 +103,22 @@ def fx_block(docs: dict) -> dict:
             scenarios.append({"name": name, "rate_change_pct": pct,
                               "assumed_rate": round(r, 2),
                               "pnl_krw": round(amount * (r - rate))})
+    # 수취 예정일 = 선적일 + 결제기간(가정 25일) + 하자로 인한 지연
+    expected, delayed = None, None
+    if ship:
+        try:
+            base = date.fromisoformat(ship) + timedelta(days=25)
+            expected = base.isoformat()
+            delayed = (base + timedelta(days=round(delay_days * 7 / 5))).isoformat()  # 영업일→달력일
+        except Exception:
+            pass
+
     return {
         "spot_rate": {"KRW/USD": round(rate, 2)}, "rate_source": rate_src, "rate_date": rate_date,
-        "cash_flows": ([{"expected_date": ship, "direction": "inflow", "currency": currency,
-                         "amount": amount, "certainty": "estimated",
+        "rate_label_ko": "한국은행 매매기준율 (통계코드 731Y001)",
+        "expected_date": expected, "delayed_date": delayed, "delay_days": delay_days,
+        "cash_flows": ([{"expected_date": delayed or expected or ship, "direction": "inflow",
+                         "currency": currency, "amount": amount, "certainty": "estimated",
                          "source": {"doc": "commercial_invoice", "field": "total_amount"}}]
                        if amount else []),
         "scenarios": scenarios,
@@ -102,8 +140,10 @@ def fx_block(docs: dict) -> dict:
 
 def analyze(docs: dict, case_id: str, presentation_date=None, meta=None) -> dict:
     report = build_report(case_id, docs, parse_date(presentation_date))
+    delay = delay_block(report)
     return {"case_id": case_id, "documents": docs, "report": report,
-            "fx": fx_block(docs), "meta": meta or {}}
+            "delay": delay,
+            "fx": fx_block(docs, delay["total_business_days"]), "meta": meta or {}}
 
 
 # ---------- API ----------

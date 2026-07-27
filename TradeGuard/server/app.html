@@ -92,6 +92,17 @@ border-radius:12px;padding:18px 22px;margin-bottom:22px}
 .ucp q{color:var(--sub);font-size:13px;line-height:1.6}
 .fix{background:var(--blue-bg);border:1px solid #d3e2fb;border-radius:8px;padding:11px 14px;font-size:13.5px;color:var(--blue);line-height:1.6}
 .fix b{font-size:12px;display:block;margin-bottom:3px}
+/* 수정 체크리스트 — 경쟁 서비스에 없는 '할 일' 전환 */
+.todo{display:flex;align-items:center;gap:10px;margin-top:10px;padding:11px 14px;cursor:pointer;
+background:#fff;border:1px solid var(--line);border-radius:10px;font-size:13.5px}
+.todo:hover{border-color:var(--kb-yellow)}
+.todo input{width:17px;height:17px;accent-color:var(--ok);cursor:pointer}
+.todo .txt{flex:1;font-weight:600}
+.todo .who{font-size:11.5px;font-weight:700;color:var(--blue);background:var(--blue-bg);
+padding:3px 10px;border-radius:999px}
+.todo .eta{font-size:11.5px;color:var(--sub);background:var(--bg);padding:3px 10px;border-radius:999px}
+.todo.done{background:var(--ok-bg);border-color:#a6f4c5}
+.todo.done .txt{text-decoration:line-through;color:var(--sub);font-weight:400}
 
 table.fields{width:100%;border-collapse:collapse}
 table.fields td{padding:8px 14px;border-bottom:1px solid #f0f1f3;font-size:13px;vertical-align:top}
@@ -101,6 +112,28 @@ tr.low td{background:var(--warn-bg)}
 .dtab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;font-family:inherit}
 .dtab.on{background:var(--ink);color:var(--kb-yellow);border-color:var(--ink)}
 
+/* 하자 → 지연 → 환노출 인과 배너 (차별화 핵심) */
+.cause{background:var(--ink);color:#fff;border-radius:14px;padding:18px 24px;margin-bottom:14px;
+display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.cause .chain{font-size:14.5px;line-height:1.7}
+.cause b{color:var(--kb-yellow)}
+.cause .dates{margin-left:auto;text-align:right;font-size:13px;line-height:1.6;color:#c9cdd3}
+.cause .dates .to{font-size:18px;font-weight:800;color:#fff}
+.cause .dates .from{text-decoration:line-through;opacity:.6}
+.cause.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #a6f4c5}
+.cause.ok b{color:var(--ok)}.cause.ok .dates{color:var(--ok)}.cause.ok .dates .to{color:var(--ok)}
+
+.ctrls{display:flex;gap:26px;align-items:center;flex-wrap:wrap;padding-bottom:14px;
+border-bottom:1px solid var(--line)}
+.ctl{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--sub)}
+.ctl input[type=number]{width:104px;font-size:15px;font-weight:700;padding:7px 9px;color:var(--ink);
+border:1px solid var(--line);border-radius:8px;text-align:right;font-family:inherit}
+.ctl input[type=range]{width:150px;accent-color:var(--kb-yellow)}
+.ctl .val{color:var(--ink);font-size:14px;min-width:46px}
+.ctl .src{font-size:11.5px}
+.btn.sm{padding:8px 16px;font-size:13px}
+.fxnote{margin-top:14px;background:var(--warn-bg);border:1px solid #fde68a;border-radius:10px;
+padding:12px 16px;font-size:13.5px;color:var(--warn);line-height:1.65}
 .fxgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
 .fxcell{text-align:center;border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
 .fxcell .nm{font-size:13px;font-weight:700}
@@ -212,12 +245,30 @@ tr.low td{background:var(--warn-bg)}
     <div class="doctabs" id="docTabs"></div>
     <div class="card" style="padding:0"><table class="fields" id="fieldTable"></table></div>
 
-    <h2 class="sec">부가 분석 — 대금 수취 시점의 외화 손익
+    <h2 class="sec">④ 영향 분석 — 이 하자가 대금 수취에 미치는 영향
       <span style="font-weight:400;font-size:12.5px;color:var(--sub)">
-        하자를 치유해 대금을 받더라도, 수취 시점 환율에 따라 원화 수령액이 달라집니다</span></h2>
+        하자는 오류가 아니라 <b>지연의 원인</b>입니다. 지연된 기간만큼 외화가 환율에 노출됩니다</span></h2>
+
+    <div class="cause" id="causeBanner"></div>
+
     <div class="card">
-      <div id="fxHead" style="font-size:14px;line-height:1.7"></div>
+      <div class="ctrls">
+        <label class="ctl">기준 환율
+          <input type="number" id="spot" step="0.1">
+          <span class="src" id="rateSrc"></span>
+        </label>
+        <label class="ctl">지연 일수
+          <input type="range" id="delay" min="0" max="30" step="1">
+          <b class="val" id="delayLbl">0일</b>
+        </label>
+        <label class="ctl">환율 변동폭
+          <input type="range" id="band" min="1" max="10" step="0.5" value="5">
+          <b class="val" id="bandLbl">±5%</b>
+        </label>
+        <button class="btn ghost sm" onclick="resetFx()">기본값</button>
+      </div>
       <div class="fxgrid" id="fxGrid"></div>
+      <div id="fxHead" class="fxnote"></div>
       <div class="rx" id="rxList"></div>
     </div>
 
@@ -235,6 +286,20 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const GRADE = {A:["하자가 발견되지 않았습니다","안전"],B:["경미한 하자가 있습니다","주의"],
                C:["지급거절 가능성이 있습니다","위험"],D:["지급거절 가능성이 높습니다","고위험"]};
+const DELAY_D = {high:5, medium:2, low:0};
+// 하자 유형 → 구체적 행동 + 담당 주체. "문제 목록"을 "할 일 목록"으로 바꾼다.
+const ACTION = {
+  AMOUNT_EXCEEDS_LC:        {what:"송장 금액을 신용장 한도 이내로 재발행", who:"우리"},
+  CURRENCY_MISMATCH:        {what:"송장을 신용장과 동일 통화로 재발행", who:"우리"},
+  GOODS_DESC_MISMATCH:      {what:"송장 상품명세를 신용장 45A 원문과 일치시켜 재발행", who:"우리"},
+  BENEFICIARY_NAME_MISMATCH:{what:"송장 발행인 명의를 신용장 59필드와 동일하게 정정", who:"우리"},
+  APPLICANT_NAME_MISMATCH:  {what:"송장 수신인 명의를 신용장 50필드와 동일하게 정정", who:"우리"},
+  LATE_SHIPMENT:            {what:"개설의뢰인에게 하자 수락(waiver) 또는 조건변경 요청", who:"바이어"},
+  LC_EXPIRED_OR_LATE_PRESENTATION:{what:"은행과 네고 협의 + 개설의뢰인 waiver 요청", who:"바이어·은행"},
+  PORT_MISMATCH:            {what:"운송사에 B/L 항구 표기 정정 요청", who:"운송사"},
+  BL_SIGNATURE_DEFECT:      {what:"운송사에 서명자 자격 문구 명기한 B/L 재발행 요청", who:"운송사"},
+  BL_NO_ONBOARD_NOTATION:   {what:"운송사에 선적일 명기된 ON BOARD 부기 요청", who:"운송사"},
+};
 
 fetch("/api/health").then(r => r.json()).then(h => {
   $("prov").textContent = h.llm.available
@@ -359,6 +424,10 @@ function render(d){
       <div class="ucp"><span class="ucp-badge">${esc(x.ucp_basis.article)}</span>
         <q>${esc(x.ucp_basis.quote_ko||"")}</q></div>
       ${x.suggested_fix_ko ? `<div class="fix"><b>수정 제안</b>${esc(x.suggested_fix_ko)}</div>` : ""}
+      <label class="todo"><input type="checkbox" onchange="this.parentNode.classList.toggle('done',this.checked)">
+        <span class="txt">${esc(ACTION[x.type] ? ACTION[x.type].what : "해당 서류 수정 후 재제시")}</span>
+        <span class="who">${esc(ACTION[x.type] ? ACTION[x.type].who : "우리")}</span>
+        <span class="eta">${DELAY_D[x.severity] || 0}영업일</span></label>
     </article>`).join("")
     : `<div class="card" style="text-align:center;color:var(--sub);padding:36px">
          교차 대조 결과 하자가 발견되지 않았습니다.</div>`;
@@ -368,31 +437,103 @@ function render(d){
     `<button class="dtab${i?"":" on"}" onclick="showDoc('${k}',this)">${esc(k)}</button>`).join("");
   if(keys.length) showDoc(keys[0], $("docTabs").firstChild);
 
-  const fx = d.fx;
-  $("fxHead").innerHTML = fx.scenarios.length
-    ? `기준 환율 <b>${fx.spot_rate["KRW/USD"].toLocaleString()}</b> KRW/USD
-       <span class="chip ${fx.rate_source==="ecos"?"ok":""}" style="margin-left:8px">
-       ${fx.rate_source==="ecos" ? "● 한국은행 ECOS 실시간 "+esc(fx.rate_date) : "시연용 기본값"}</span>`
-    : "금액을 판독하지 못해 환노출을 계산할 수 없습니다.";
-  const NM = {krw_strong:"원화 강세 (−5%)", base:"기준", krw_weak:"원화 약세 (+5%)"};
-  $("fxGrid").innerHTML = fx.scenarios.map(s => {
-    const cls = s.pnl_krw > 0 ? "pos" : (s.pnl_krw < 0 ? "neg" : "zero");
-    const sign = s.pnl_krw > 0 ? "+" : "";
-    return `<div class="fxcell"><div class="nm">${NM[s.name]}</div>
-      <div class="rt">${s.assumed_rate.toLocaleString()} KRW/USD</div>
-      <div class="pl ${cls}">${sign}${Math.round(s.pnl_krw).toLocaleString()} 원</div></div>`;
-  }).join("");
-  $("rxList").innerHTML = (fx.hedge_recommendation.instruments||[]).map(i => `
-    <div class="rxcard"><span class="t">${esc(i.product_type).toUpperCase()}</span>
-      <h4>${esc(i.product_name_ko)}</h4><p>${esc(i.fit_reason_ko)}</p></div>`).join("")
-    + `<div class="rxcard" style="grid-column:1/-1;background:#26282c;color:#fff;border:0">
-         <p style="color:#fff">${esc(fx.hedge_recommendation.rationale_ko)}</p></div>`;
+  renderImpact(d);
 
   const m = d.meta;
   $("meta").innerHTML = `${esc(m.source||"")} · 소요 ${m.elapsed_sec}초 ·
     예상 비용 $${(m.cost_usd??0).toFixed(3)} · 판정 엔진 detect.py (결정적 규칙, LLM 미사용)
     ${m.errors&&m.errors.length ? "<br>⚠️ "+m.errors.map(esc).join(" / ") : ""}`;
 }
+
+// ── ④ 영향 분석 — 하자 → 지연 → 환노출 연결 ───────────────────
+// 서버가 준 기본값으로 컨트롤을 세팅한 뒤, 조작 시 프론트에서 즉시 재계산한다.
+// (추가 API 호출 없음 → 데모 중 네트워크에 의존하지 않는다)
+function renderImpact(d){
+  const fx = d.fx, dl = d.delay || {total_business_days:0, items:[]};
+  const amt = (d.documents.commercial_invoice||{}).total_amount;
+
+  $("spot").value = fx.spot_rate["KRW/USD"];
+  $("delay").value = dl.total_business_days;
+  $("band").value = 5;
+  $("rateSrc").innerHTML = fx.rate_source === "ecos"
+    ? `<b style="color:#067647">● 실데이터</b> ${esc(fx.rate_date)} · ${esc(fx.rate_label_ko||"")}`
+    : "시연용 기본값 · ECOS 조회 실패";
+
+  const hi = (d.report.discrepancies||[]).filter(x=>x.severity==="high").length;
+  const me = (d.report.discrepancies||[]).filter(x=>x.severity==="medium").length;
+  const banner = $("causeBanner");
+  if(dl.total_business_days > 0){
+    banner.className = "cause";
+    banner.innerHTML = `
+      <div class="chain">
+        하자 ${hi?`<b>HIGH ${hi}건</b>`:""}${hi&&me?" · ":""}${me?`MEDIUM ${me}건`:""}
+        &nbsp;→&nbsp; 재발행·정정에 <b>약 ${dl.total_business_days}영업일</b> 소요 예상
+        &nbsp;→&nbsp; 그만큼 <b>외화가 환율에 더 오래 노출</b>됩니다
+        <div style="font-size:12px;color:#98a2b3;margin-top:6px">${esc(dl.basis_ko||"")}</div>
+      </div>
+      <div class="dates">대금 수취 예정일<br>
+        <span class="from">${esc(fx.expected_date||"-")}</span>
+        <span class="to">→ ${esc(fx.delayed_date||"-")}</span></div>`;
+  } else {
+    banner.className = "cause ok";
+    banner.innerHTML = `<div class="chain"><b>지연 요인 없음</b> — 하자로 인한 재제시가 필요 없어
+      예정대로 대금을 수취할 수 있습니다.</div>
+      <div class="dates">대금 수취 예정일<br><span class="to">${esc(fx.expected_date||"-")}</span></div>`;
+  }
+
+  if(!amt){
+    $("fxGrid").innerHTML = `<div class="fxcell" style="grid-column:1/-1;color:var(--sub)">
+      송장 금액을 판독하지 못해 손익을 계산할 수 없습니다.</div>`;
+    $("fxHead").textContent = ""; $("rxList").innerHTML = "";
+    return;
+  }
+  window.__fx = {amt, rec: fx.hedge_recommendation||{}, baseDelay: dl.total_business_days,
+                 expected: fx.expected_date};
+  calcFx();
+}
+
+function calcFx(){
+  const s = window.__fx; if(!s) return;
+  const rate = parseFloat($("spot").value) || 0;
+  const band = parseFloat($("band").value);
+  const delay = parseInt($("delay").value, 10);
+  $("bandLbl").textContent = `±${band}%`;
+  $("delayLbl").textContent = `${delay}일`;
+
+  const rows = [["원화 강세", -band], ["기준 (현재 환율)", 0], ["원화 약세", band]];
+  $("fxGrid").innerHTML = rows.map(([nm, pct]) => {
+    const r = rate * (1 + pct/100), pnl = s.amt * (r - rate);
+    const cls = pnl > 0 ? "pos" : (pnl < 0 ? "neg" : "zero");
+    const sign = pnl > 0 ? "+" : "";
+    return `<div class="fxcell">
+      <div class="nm">${nm}${pct?` (${pct>0?"+":""}${pct}%)`:""}</div>
+      <div class="rt">${r.toLocaleString(undefined,{maximumFractionDigits:1})} KRW/USD</div>
+      <div class="pl ${cls}">${sign}${Math.round(pnl).toLocaleString()} 원</div></div>`;
+  }).join("");
+
+  const worst = Math.abs(Math.round(s.amt * rate * band/100));
+  $("fxHead").innerHTML = delay > 0
+    ? `⚠️ 하자로 <b>${delay}영업일</b>이 밀리는 동안 <b>${s.amt.toLocaleString()} USD</b>가 환율에 노출됩니다.
+       변동폭 ±${band}% 가정 시 원화 수령액이 <b>최대 ${worst.toLocaleString()}원</b> 달라집니다.
+       <b>하자를 오늘 고치면 이 노출을 없앨 수 있습니다.</b>`
+    : `지연 요인이 없습니다. 예정일에 수취하더라도 변동폭 ±${band}% 가정 시
+       원화 수령액은 최대 ${worst.toLocaleString()}원 달라질 수 있습니다.`;
+
+  const rec = s.rec;
+  $("rxList").innerHTML = (rec.instruments||[]).map(i => `
+    <div class="rxcard"><span class="t">${esc(i.product_type).toUpperCase()}</span>
+      <h4>${esc(i.product_name_ko)}</h4><p>${esc(i.fit_reason_ko)}</p></div>`).join("");
+}
+
+function resetFx(){
+  const s = window.__fx; if(!s) return;
+  $("delay").value = s.baseDelay; $("band").value = 5;
+  if(CUR) $("spot").value = CUR.fx.spot_rate["KRW/USD"];
+  calcFx();
+}
+["spot","delay","band"].forEach(id => {
+  const el = $(id); if(el) el.addEventListener("input", calcFx);
+});
 
 function showDoc(key, btn){
   document.querySelectorAll(".dtab").forEach(b => b.classList.remove("on"));

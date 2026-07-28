@@ -115,6 +115,20 @@ def ev(doc, field, value):
     return {"doc": doc, "field": field, "value": str(value)}
 
 
+def set_invoice_amount(inv, target):
+    """송장 금액을 바꾸되 **수량 × 단가 = 총액**이 정확히 성립하도록 맞춘다.
+
+    총액에서 단가를 역산해 2자리로 반올림하면 인쇄된 송장의 산술이 어긋난다
+    (예: 500 × 19.11 = 9,555.00 인데 총액은 9,556.52 → 차이 1.52).
+    실제 상업송장은 내적으로 일관되므로 단가를 먼저 확정하고 총액을 파생시킨다.
+    반환: 실제로 적용된 총액"""
+    g = inv["goods"][0]
+    price = round(target / g["quantity"], 2)
+    amount = round(price * g["quantity"], 2)
+    g["unit_price"], g["amount"], inv["total_amount"] = price, amount, amount
+    return amount
+
+
 def gt_item(idx, dtype, sev, desc, evidence, kb_key, fix):
     kb = UCP[kb_key]
     return {"id": f"DISC-{idx:03d}", "type": dtype, "severity": sev, "description_ko": desc,
@@ -143,7 +157,10 @@ def base_case(rng, seq):
                  f"FOB {loading.split(',')[0]} INCOTERMS 2020")
 
     # 서류 현실성 필드: 포장/중량/용적/부킹번호 (업종별 단위중량 기반 역산)
-    pkg_count = max(1, qty // 25)
+    # ⚠️ 거래 단위가 이미 CTN(카톤)이면 수량 자체가 포장 개수다.
+    #    이를 다시 25로 나누면 B/L에 "20 CARTONS", L/C에 "500 CTN"이 찍혀
+    #    사람 눈에는 명백한 수량 불일치인데 정답 라벨에는 없는 '우발 하자'가 된다.
+    pkg_count = qty if unit == "CTN" else max(1, qty // 25)
     net_weight_kg = round(qty * WEIGHT_KG_PER_UNIT[code], 1)
     gross_weight_kg = round(net_weight_kg * 1.08, 1)
     measurement_cbm = round(pkg_count * 0.045, 2)
@@ -225,10 +242,10 @@ def inject(dtype, docs, meta, rng, idx):
     lc, inv, bl = docs["letter_of_credit"], docs["commercial_invoice"], docs["bill_of_lading"]
 
     if dtype == "AMOUNT_EXCEEDS_LC":
-        over = round(lc["amount"] * rng.uniform(1.03, 1.12), 2)
-        inv["total_amount"] = over
-        inv["goods"][0]["amount"] = over
-        inv["goods"][0]["unit_price"] = round(over / inv["goods"][0]["quantity"], 2)
+        over = set_invoice_amount(inv, round(lc["amount"] * rng.uniform(1.03, 1.12), 2))
+        # 반올림 후에도 초과가 유지되는지 보장 — 단가 반올림이 금액을 한도 아래로 끌어내릴 수 있다.
+        while over <= lc["amount"]:
+            over = set_invoice_amount(inv, over + inv["goods"][0]["quantity"] * 0.01)
         return gt_item(idx, dtype, "high",
                        f"송장 금액(USD {over:,.2f})이 신용장 금액(USD {lc['amount']:,.2f})을 초과합니다.",
                        [ev("letter_of_credit", "amount", lc["amount"]),
@@ -334,10 +351,9 @@ def apply_trap(kind, docs, meta, rng):
     lc, inv, bl = docs["letter_of_credit"], docs["commercial_invoice"], docs["bill_of_lading"]
     if kind == "tolerance_ok":
         lc["tolerance"] = {"plus_pct": 10.0, "minus_pct": 10.0}
-        new = round(lc["amount"] * 1.07, 2)  # 한도 내 초과
-        inv["total_amount"] = new
-        inv["goods"][0]["amount"] = new
-        inv["goods"][0]["unit_price"] = round(new / inv["goods"][0]["quantity"], 2)
+        new = set_invoice_amount(inv, round(lc["amount"] * 1.07, 2))  # 한도 내 초과
+        # 함정의 성립 조건: 반올림 후에도 '초과이면서 허용치 이내'여야 한다.
+        assert lc["amount"] < new <= lc["amount"] * 1.10, f"tolerance 함정 무효화: {new}"
         return "송장 금액이 신용장 금액보다 7% 크지만 39A 과부족 허용 10% 이내 → 정상"
     if kind == "bl_generic_desc":
         bl["goods_description"] = "GENERAL MERCHANDISE AS PER INVOICE"

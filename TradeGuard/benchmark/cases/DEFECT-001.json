@@ -77,14 +77,14 @@
         "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 194537.7,
+      "total_amount": 194580.0,
       "goods": [
         {
           "description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, AS PER PROFORMA INVOICE NO. PI-2065",
           "quantity": 28200,
           "unit": "PCS",
           "unit_price": 6.9,
-          "amount": 194537.7,
+          "amount": 194580.0,
           "hs_code": "6109.10"
         }
       ],
@@ -162,7 +162,7 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 194,537.70)이 신용장 금액(USD 180,480.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 194,580.00)이 신용장 금액(USD 180,480.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
@@ -172,7 +172,7 @@
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "194537.7"
+            "value": "194580.0"
           }
         ],
         "ucp_basis": {

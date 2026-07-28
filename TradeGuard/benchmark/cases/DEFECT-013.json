@@ -93,11 +93,11 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-608",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-15200",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
-      "packages": "608 CARTONS",
+      "packages": "15200 CARTONS",
       "net_weight": "114,000.0 KGS",
       "gross_weight": "123,120.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "608 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "15200 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
         "KMTU9284369"
       ],
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-608",
-      "package_count": "608 CTNS",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-15200",
+      "package_count": "15200 CTNS",
       "gross_weight": "123,120.0 KGS",
-      "measurement": "27.36 CBM",
+      "measurement": "684.00 CBM",
       "booking_number": "BKG522408",
       "freight_terms": "COLLECT",
       "clean": true,

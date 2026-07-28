@@ -78,14 +78,14 @@
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 109910.4,
+      "total_amount": 109782.0,
       "goods": [
         {
           "description": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-552, AS PER PROFORMA INVOICE NO. PI-2051",
           "quantity": 32100,
           "unit": "PCS",
           "unit_price": 3.42,
-          "amount": 109910.4,
+          "amount": 109782.0,
           "hs_code": "8507.60"
         }
       ],

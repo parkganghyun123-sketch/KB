@@ -93,11 +93,11 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-628",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-15700",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "packages": "628 CARTONS",
+      "packages": "15700 CARTONS",
       "net_weight": "117,750.0 KGS",
       "gross_weight": "127,170.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "628 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "15700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
         "SHCU9654526"
       ],
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-628",
-      "package_count": "628 CTNS",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-15700",
+      "package_count": "15700 CTNS",
       "gross_weight": "127,170.0 KGS",
-      "measurement": "28.26 CBM",
+      "measurement": "706.50 CBM",
       "booking_number": "BKG611975",
       "freight_terms": "COLLECT",
       "clean": true,

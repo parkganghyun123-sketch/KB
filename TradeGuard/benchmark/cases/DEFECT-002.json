@@ -77,14 +77,14 @@
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 47113.14,
+      "total_amount": 47103.0,
       "goods": [
         {
           "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-765, AS PER PROFORMA INVOICE NO. PI-2443",
           "quantity": 2100,
           "unit": "PCS",
           "unit_price": 22.43,
-          "amount": 47113.14,
+          "amount": 47103.0,
           "hs_code": "7616.99"
         }
       ],
@@ -162,7 +162,7 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 47,113.14)이 신용장 금액(USD 44,100.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 47,103.00)이 신용장 금액(USD 44,100.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
@@ -172,7 +172,7 @@
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "47113.14"
+            "value": "47103.0"
           }
         ],
         "ucp_basis": {

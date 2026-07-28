@@ -91,11 +91,11 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-228",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-5700",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "SHANGHAI, CHINA",
-      "packages": "228 CARTONS",
+      "packages": "5700 CARTONS",
       "net_weight": "42,750.0 KGS",
       "gross_weight": "46,170.0 KGS",
       "signed": true,
@@ -126,14 +126,14 @@
         "is_to_order": true
       },
       "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
-      "goods_description": "228 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "5700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
         "KMTU8459322"
       ],
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-228",
-      "package_count": "228 CTNS",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-5700",
+      "package_count": "5700 CTNS",
       "gross_weight": "46,170.0 KGS",
-      "measurement": "10.26 CBM",
+      "measurement": "256.50 CBM",
       "booking_number": "BKG368618",
       "freight_terms": "COLLECT",
       "clean": true,

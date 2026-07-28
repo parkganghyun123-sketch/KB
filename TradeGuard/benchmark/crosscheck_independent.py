@@ -113,12 +113,26 @@ def extra_checks(case):
     bl = case["documents"]["bill_of_lading"]
     a = []
     g = inv["goods"][0]
+    # 실제 상업송장은 인쇄된 수량×단가가 총액과 정확히 일치한다.
+    # 과거 허용오차 1%는 단가 반올림으로 생긴 수십 USD 오차를 통과시켜
+    # 사람 눈에는 보이는데 라벨에는 없는 '우발 하자'를 남겼다 → 엄격 비교로 전환.
     if g.get("quantity") and g.get("unit_price"):
         calc = round(g["quantity"] * g["unit_price"], 2)
-        if abs(calc - g["amount"]) > max(1.0, g["amount"] * 0.01):
+        if abs(calc - g["amount"]) > 0.01:
             a.append(f"산술 qty*price={calc}!=amount={g['amount']}")
-    if abs(sum(x["amount"] for x in inv["goods"]) - inv["total_amount"]) > 1.0:
+    if abs(sum(x["amount"] for x in inv["goods"]) - inv["total_amount"]) > 0.01:
         a.append("산술 goods합!=total_amount")
+    # 포장 개수 정합성 — 거래 단위가 CTN이면 수량 자체가 포장 개수여야 한다.
+    # (L/C "500 CTN" vs B/L "20 CARTONS" 같은 모순 방지)
+    m = re.match(r"\s*([\d,]+)\s*CARTONS", (bl.get("goods_description") or "").upper())
+    if m and g.get("unit") == "CTN":
+        n = int(m.group(1).replace(",", ""))
+        if n != g["quantity"]:
+            a.append(f"포장수량 B/L={n} CARTONS != 송장 {g['quantity']} CTN")
+    marks = (inv.get("shipping_marks") or "")
+    mm = re.search(r"C/NO\.\s*1-([\d,]+)", marks.upper())
+    if mm and g.get("unit") == "CTN" and int(mm.group(1).replace(",", "")) != g["quantity"]:
+        a.append(f"화인 C/NO. 1-{mm.group(1)} != 송장 {g['quantity']} CTN")
     iss, exp = d(lc.get("issue_date")), d(lc["expiry"]["date"])
     ship = d(bl.get("shipped_on_board", {}).get("date"))
     latest = d(lc.get("latest_shipment_date"))

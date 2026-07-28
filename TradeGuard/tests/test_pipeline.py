@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 sys.path.insert(0, str(ROOT / "benchmark"))
 
-from detect import build_report, d as parse_date
+from detect import build_report, d as parse_date, same_port
 from evaluate_e2e import field_counts
 
 
@@ -34,6 +34,11 @@ class PipelineRegressionTests(unittest.TestCase):
         for document in self.case["documents"].values():
             correct, total = field_counts(document, document)
             self.assertEqual(total, correct)
+
+    def test_port_comparison_tolerates_one_ocr_character_only(self):
+        self.assertTrue(same_port("NHAVA SHEVA, INDIA", "NAVA SHEVA, INDIA"))
+        self.assertTrue(same_port("NHAVA SHEVA, INDIA", "NHAWA SHEVA, INDIA"))
+        self.assertFalse(same_port("BUSAN, KOREA", "GWANGYANG, KOREA"))
 
 
 if __name__ == "__main__":

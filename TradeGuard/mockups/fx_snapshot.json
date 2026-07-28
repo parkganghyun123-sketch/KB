@@ -1,8 +1,7 @@
 {
-  "rate": 1385.0,
-  "date": null,
-  "source": "fallback",
-  "label": "시연용 기본값 · ECOS 조회 실패",
-  "error": "ECOS_API_KEY 없음 — .env를 확인하세요",
+  "rate": 1466.3,
+  "date": "2026-07-27",
+  "source": "ecos",
+  "label": "한국은행 ECOS 매매기준율 (통계코드 731Y001)",
   "fetched_at": "2026-07-27"
 }

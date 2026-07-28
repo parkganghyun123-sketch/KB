@@ -87,20 +87,20 @@ text-decoration:none;display:inline-block;font-family:inherit}
   <span class="step">① 서류 등록 → ② 판독 → <b>③ 하자 검사</b> → ④ 결과</span></div>
 <main>
   <div class="print-head"><b>TradeGuard 하자 검사 리포트</b>
-    <span>케이스 DEFECT-019 · 2026-07-27</span></div>
+    <span>케이스 DEFECT-019 · 2026-07-28</span></div>
   <section class="risk-hero">
     <div class="grade-badge danger"><span class="g">C</span><span class="s">위험</span></div>
     <div class="risk-info">
       <h1>지급거절 가능성이 있습니다 <span class="score">· 65 / 100</span></h1>
       <p>총 2건의 하자 발견 (HIGH 1건). 지급거절 위험이 높으므로 네고 전 하자 치유 또는 개설의뢰인 waiver 확인이 필요합니다.</p>
-      <div class="chips"><span class="chip">케이스 DEFECT-019</span><span class="chip">3종 서류 검사</span><span class="chip red">HIGH 1건</span><span class="chip">MEDIUM 1건</span><span class="chip">제시일 2026-07-15</span></div>
+      <div class="chips"><span class="chip">케이스 DEFECT-019</span><span class="chip">3종 서류 검사</span><span class="chip red">HIGH 1건</span><span class="chip">MEDIUM 1건</span><span class="chip">제시일 2026-07-21</span></div>
     </div>
   </section>
   <h2 class="sec">발견된 하자 <span class="count">2</span></h2>
   <article class="disc-card high">
   <div class="disc-head"><span class="sev high">HIGH</span>
-    <h3>송장 금액(USD 9,556.52)이 신용장 허용 한도(USD 9,250.00)를 초과합니다.</h3><span class="disc-id">DISC-001</span></div>
-  <div class="evi"><div class="evi-box"><div class="doc">Letter of Credit</div><div class="field">amount</div><div class="val">9250.0</div></div><div class="evi-box"><div class="doc">Commercial Invoice</div><div class="field">total_amount</div><div class="val">9556.52</div></div></div>
+    <h3>송장 금액(USD 247,190.61)이 신용장 허용 한도(USD 225,280.00)를 초과합니다.</h3><span class="disc-id">DISC-001</span></div>
+  <div class="evi"><div class="evi-box"><div class="doc">Letter of Credit</div><div class="field">amount</div><div class="val">225280.0</div></div><div class="evi-box"><div class="doc">Commercial Invoice</div><div class="field">total_amount</div><div class="val">247190.61</div></div></div>
   <div class="ucp"><span class="ucp-badge">UCP600 18(b) · 신용장 금액조건</span><q>은행은 신용장 허용금액을 초과한 상업송장을 수리할 수 있으나, 허용금액을 초과하여 결제하거나 매입해서는 안 된다.</q></div>
   <div class="fix"><b>수정 제안</b>송장 금액을 신용장 한도 이내로 수정하거나 초과분을 별도 결제(T/T)로 분리하세요.</div>
 </article><article class="disc-card medium">
@@ -125,7 +125,7 @@ text-decoration:none;display:inline-block;font-family:inherit}
     </ul>
   </div>
   <footer>
-    입력: DEFECT-019.json · 생성 2026-07-27 19:10 ·
+    입력: DEFECT-019.json · 생성 2026-07-28 22:06 ·
     판정 엔진 pipeline/detect.py (결정적 규칙, LLM 미사용) ·
     조항 인용 pipeline/ucp600_kb.json<br>
     이 화면의 모든 값은 하드코딩이 아니라 실제 검출 결과를 렌더링한 것입니다.

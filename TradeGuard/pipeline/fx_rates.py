@@ -10,10 +10,12 @@
   DATA_GO_KR_KEY=...        # 디코딩(원본) 키를 넣을 것. params로 넘기므로 인코딩 키는 오류남
 
 사용법:
-  python3 fx_rates.py --check              # 두 API 키 동작 검증 (오늘 할 일)
+  python3 fx_rates.py --check              # API 키 동작 + 변동성 실측 검증
   python3 fx_rates.py --spot               # 최신 원/달러 매매기준율
   python3 fx_rates.py --spot --date 20260724
+  python3 fx_rates.py --vol                # 최근 1년 연율 변동성(σ) 실측
 """
+import math
 import os
 import sys
 from datetime import date, timedelta
@@ -41,18 +43,39 @@ def load_env(path=None):
 
 
 # ---------- 한국은행 ECOS (주 데이터원) ----------
-def ecos_rates(start: str, end: str, item=ECOS_ITEM_USD, key=None):
-    """기간 내 일별 환율. 반환: [(YYYYMMDD, float), ...] 오름차순"""
+def ecos_rates(start: str, end: str, item=ECOS_ITEM_USD, key=None, first=1, last=100):
+    """기간 내 일별 환율. 반환: [(YYYYMMDD, float), ...] 오름차순
+    ECOS는 1회 요청당 반환 행수에 상한이 있어 first/last로 구간을 지정한다."""
     key = key or os.environ.get("ECOS_API_KEY")
     if not key:
         raise RuntimeError("ECOS_API_KEY 없음 — .env를 확인하세요")
-    url = f"{ECOS_BASE}/{key}/json/kr/1/100/{ECOS_STAT}/D/{start}/{end}/{item}"
+    url = f"{ECOS_BASE}/{key}/json/kr/{first}/{last}/{ECOS_STAT}/D/{start}/{end}/{item}"
     r = requests.get(url, timeout=15)
     r.raise_for_status()
     body = r.json()
     if "StatisticSearch" not in body:
         raise RuntimeError(f"ECOS 오류 응답: {body}")
     return [(x["TIME"], float(x["DATA_VALUE"])) for x in body["StatisticSearch"]["row"]]
+
+
+def ecos_series(start: str, end: str, item=ECOS_ITEM_USD, key=None, page=100, max_rows=400):
+    """기간 전체 시계열을 페이지 단위로 모아 반환. 반환: [(YYYYMMDD, float), ...] 오름차순
+    1년치(약 250영업일)는 1회 요청 상한을 넘으므로 분할 조회가 필요하다."""
+    out, first = [], 1
+    while first <= max_rows:
+        rows = ecos_rates(start, end, item=item, key=key, first=first, last=first + page - 1)
+        if not rows:
+            break
+        out.extend(rows)
+        if len(rows) < page:
+            break
+        first += page
+    seen, uniq = set(), []
+    for t, v in sorted(out):
+        if t not in seen:
+            seen.add(t)
+            uniq.append((t, v))
+    return uniq
 
 
 def ecos_spot(on: date = None, lookback=10, key=None):
@@ -63,6 +86,49 @@ def ecos_spot(on: date = None, lookback=10, key=None):
     if not rows:
         raise RuntimeError("ECOS 데이터 없음 — 조회 기간을 늘려보세요")
     return rows[-1]
+
+
+# ---------- 변동성 실측 (환노출 시뮬레이터의 근거) ----------
+TRADING_DAYS = 252  # 연간 영업일 — 연율화 상수
+
+
+def annualized_volatility(rows):
+    """일별 환율 시계열 → 연율 변동성(σ).
+
+    원리: 환율 로그수익률은 근사적으로 독립·동일분포이므로, 분산은 기간에 비례하고
+    표준편차는 기간의 제곱근에 비례한다(√t 규칙). 따라서
+        σ_연율 = stdev(일간 로그수익률) × √252
+    이 값이 있어야 "지연 N영업일 동안의 변동폭"을 임의 가정이 아니라 실측으로 말할 수 있다.
+
+    반환: (sigma_annual, n_returns) — 표본이 부족하면 예외
+    """
+    vals = [v for _, v in rows if v and v > 0]
+    if len(vals) < 30:
+        raise RuntimeError(f"변동성 산출에 표본 부족 (관측 {len(vals)}건, 최소 30건)")
+    rets = [math.log(vals[i] / vals[i - 1]) for i in range(1, len(vals))]
+    mean = sum(rets) / len(rets)
+    var = sum((x - mean) ** 2 for x in rets) / (len(rets) - 1)  # 표본분산
+    return math.sqrt(var) * math.sqrt(TRADING_DAYS), len(rets)
+
+
+def ecos_volatility(on: date = None, years=1, key=None):
+    """ECOS 최근 `years`년 시계열로 연율 변동성을 실측한다.
+    반환: {sigma_annual, n_observations, start, end, source}"""
+    on = on or date.today()
+    start = (on - timedelta(days=int(365 * years) + 10)).strftime("%Y%m%d")
+    rows = ecos_series(start, on.strftime("%Y%m%d"), key=key)
+    sigma, n = annualized_volatility(rows)
+    return {"sigma_annual": round(sigma, 6), "n_observations": n,
+            "start": rows[0][0], "end": rows[-1][0],
+            "source": "ecos", "stat_code": ECOS_STAT,
+            "method_ko": "일간 로그수익률 표본표준편차 × √252 (연율화)"}
+
+
+def period_sigma(sigma_annual: float, business_days: int) -> float:
+    """√t 규칙 — 연율 변동성을 지연 기간(영업일) 변동성으로 환산."""
+    if business_days <= 0:
+        return 0.0
+    return sigma_annual * math.sqrt(business_days / TRADING_DAYS)
 
 
 # ---------- 관세청 관세환율 (보조) ----------
@@ -134,6 +200,14 @@ def check():
     try:
         t, v = ecos_spot()
         print(f"  ✅ 정상 — 최근 매매기준율 {t}: {v:,.2f} KRW/USD")
+        try:
+            vol = ecos_volatility()
+            print(f"  ✅ 변동성 실측 — σ(연율) {vol['sigma_annual']:.2%} "
+                  f"({vol['start']}~{vol['end']}, 수익률 {vol['n_observations']}건)")
+            for d in (3, 7, 14):
+                print(f"       지연 {d:2d}영업일 → σ(기간) {period_sigma(vol['sigma_annual'], d):.2%}")
+        except Exception as e2:
+            print(f"  ⚠️  변동성 산출 실패: {_diagnose(e2)}")
     except Exception as e:
         ok = False
         print(f"  ❌ 실패: {_diagnose(e)}")
@@ -178,6 +252,9 @@ def main():
             on = date(int(s[:4]), int(s[4:6]), int(s[6:8]))
         t, v = ecos_spot(on)
         print(f"{t}\t{v}")
+    if "--vol" in args:
+        import json as _json
+        print(_json.dumps(ecos_volatility(), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

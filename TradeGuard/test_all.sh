@@ -103,6 +103,28 @@ run "환율 스냅샷에 API 키 노출 없음" "python3 -c \"
 import json,re
 d=open('mockups/fx_snapshot.json').read()
 assert not re.search(r'[A-Z0-9]{16,}', d), '키 노출'\""
+# 회귀 방지: 과거 산식이 delay를 무시해 '하자→지연→환노출' 인과가 화면에서 성립하지 않았다.
+run "환노출이 지연 일수에 반응 (√t 규칙)" "python3 -c \"
+import sys; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from app import fx_block
+import json
+docs=json.load(open('samples/DEFECT-001.json'))['documents']
+vals=[fx_block(docs,d)['exposure_krw'] for d in (0,3,7,14,30)]
+assert vals[0]==0, f'지연 0일이면 노출 0이어야 함: {vals[0]}'
+assert all(a<b for a,b in zip(vals,vals[1:])), f'지연이 늘면 노출도 늘어야 함: {vals}'
+import math
+from fx_rates import period_sigma
+assert abs(period_sigma(0.09,252)-0.09)<1e-9, '연율화 일관성 실패'\""
+run "환노출 산식이 3개 구현체에서 동일 (백엔드·SPA·screen4)" "python3 -c \"
+import re
+srcs={'app.html':'server/app.html','screen4':'mockups/screen4_fx_simulator.html'}
+for n,p in srcs.items():
+    t=open(p,encoding='utf-8').read()
+    assert 'TRADING_DAYS = 252' in t, n+': 연율 상수 불일치'
+    assert 'Z95 = 1.645' in t, n+': 신뢰수준 상수 불일치'
+    assert 'Math.sqrt(d' in t or 'Math.sqrt(days' in t, n+': √t 규칙 없음'
+t=open('pipeline/fx_rates.py',encoding='utf-8').read()
+assert 'TRADING_DAYS = 252' in t, 'fx_rates: 연율 상수 불일치'\""
 run "KB 브랜드 자산 미사용 (오인 방지)" "python3 -c \"
 import glob,re
 pat = re.compile(r'(Star-b|kbfg\.com/.*\.(jpg|png|zip)|KB_SymbolMark|KB_Logotype|KB_Signature)')

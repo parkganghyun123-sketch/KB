@@ -113,8 +113,11 @@
       <div class="controls">
         <div class="ctl"><label>현재 환율 (KRW/USD)</label><input type="number" id="spot" value="1385" step="1">
           <span id="rateSrc" style="font-size:11.5px;color:var(--sub)">불러오는 중…</span></div>
-        <div class="ctl"><label>변동폭 가정</label><input type="range" id="band" min="1" max="10" step="0.5" value="5">
-          <span class="pct" id="bandLbl">±5%</span></div>
+        <div class="ctl"><label>하자로 인한 지연</label><input type="range" id="delay" min="0" max="30" step="1" value="12">
+          <span class="pct" id="delayLbl">12영업일</span></div>
+        <div class="ctl"><label>연율 변동성 σ</label><input type="range" id="band" min="1" max="20" step="0.5" value="9">
+          <span class="pct" id="bandLbl">9%</span>
+          <span id="volSrc" style="font-size:11.5px;color:var(--sub)">불러오는 중…</span></div>
         <div class="ctl" style="color:var(--sub);font-size:13px">기준 수취액: <b id="baseKrw" style="margin-left:4px"></b></div>
       </div>
       <div class="bars">
@@ -142,7 +145,7 @@
       <div class="rx-card">
         <span class="tag">FORWARD · 권장</span>
         <h3>KB 선물환 (매도)</h3>
-        <p>수취 예정일(2026-08-12) 만기로 <b>USD 84,000 전액</b>을 지금 환율에 확정.
+        <p>수취 예정일(2026-08-12) 만기로 <b>USD 84,000 전액</b>(샘플 케이스 DEFECT-001 송장 금액)을 지금 환율에 확정.
            원화 강세 손실을 원천 차단합니다. 하자 waiver 확정 전이면 만기 여유분 +7일 권장.</p>
       </div>
       <div class="rx-card">
@@ -168,13 +171,23 @@
 
 <script>
 // 환노출: fx_exposure.schema.json 구조를 따르는 시연용 계산기
+// 값은 samples/DEFECT-001.json(데모 기준 케이스)과 동일하며, 산식은 server/app.py·app.html과 일치시킨다.
 const CF = { currency: "USD", amount: 84000, date: "2026-08-12" }; // cash_flows[0] (inflow, estimated)
 const fmt = n => Math.round(n).toLocaleString("ko-KR");
 
+// √t 규칙 — 환율 변동성은 기간의 제곱근에 비례한다(pipeline/fx_rates.period_sigma와 동일).
+// 지연이 길수록 노출이 커진다는 인과가 이 산식으로 성립한다.
+const TRADING_DAYS = 252, Z95 = 1.645;
+const periodSigma = (sa, d) => d <= 0 ? 0 : sa * Math.sqrt(d / TRADING_DAYS);
+
 function recalc() {
   const spot = parseFloat(document.getElementById("spot").value) || 0;
-  const band = parseFloat(document.getElementById("band").value);
-  document.getElementById("bandLbl").textContent = `±${band}%`;
+  const sigmaA = parseFloat(document.getElementById("band").value) / 100;
+  const delay = parseInt(document.getElementById("delay").value, 10);
+  const sigmaP = periodSigma(sigmaA, delay);
+  const band = sigmaP * Z95 * 100;                  // 이 기간의 95% 변동폭(±%)
+  document.getElementById("bandLbl").textContent = `${(sigmaA * 100).toFixed(1)}%`;
+  document.getElementById("delayLbl").textContent = `${delay}영업일`;
 
   const rStrong = spot * (1 - band / 100), rWeak = spot * (1 + band / 100);
   const pnlStrong = CF.amount * (rStrong - spot);   // 음수
@@ -182,23 +195,26 @@ function recalc() {
 
   document.getElementById("baseKrw").textContent = `약 ${fmt(CF.amount * spot)} 원`;
   document.getElementById("rateBase").textContent = `${fmt(spot)} KRW/USD`;
-  document.getElementById("rateStrong").textContent = `${fmt(rStrong)} KRW/USD (−${band}%)`;
-  document.getElementById("rateWeak").textContent = `${fmt(rWeak)} KRW/USD (+${band}%)`;
+  document.getElementById("rateStrong").textContent = `${fmt(rStrong)} KRW/USD (−${band.toFixed(2)}%)`;
+  document.getElementById("rateWeak").textContent = `${fmt(rWeak)} KRW/USD (+${band.toFixed(2)}%)`;
   document.getElementById("pnlStrong").textContent = `− ${fmt(Math.abs(pnlStrong))} 원`;
   document.getElementById("pnlWeak").textContent = `+ ${fmt(pnlWeak)} 원`;
 
   const maxH = 86; // px, 절반 높이
-  const h = Math.max(10, Math.min(maxH, maxH * band / 10));
+  const h = Math.max(4, Math.min(maxH, maxH * band / 6));
   document.getElementById("barStrong").style.height = h + "px";
   document.getElementById("barWeak").style.height = h + "px";
 
-  document.getElementById("rxHead").innerHTML =
-    `환헤지 미실행 시, 환율이 ${band}% 하락(원화 강세)하면 이 거래에서만 ` +
-    `<b>약 ${fmt(Math.abs(pnlStrong))}원</b>의 환차손이 발생합니다. ` +
-    `권장: <b>USD ${CF.amount.toLocaleString()} 선물환 매도, 만기 ${CF.date}</b>`;
+  document.getElementById("rxHead").innerHTML = delay > 0
+    ? `하자로 <b>${delay}영업일</b>이 밀리는 동안 USD ${CF.amount.toLocaleString()}가 환율에 노출됩니다. ` +
+      `연율 변동성 ${(sigmaA * 100).toFixed(1)}% 기준 이 기간 변동폭 ±${band.toFixed(2)}%(95% 구간), ` +
+      `원화 수령액 <b>최대 ${fmt(Math.abs(pnlStrong))}원</b> 변동. ` +
+      `<b>하자를 고쳐 지연을 없애면 이 노출도 사라집니다.</b>`
+    : `<b>지연 요인 없음 — 노출 0원.</b> 예정일에 수취하면 이 기간의 환율 변동에 노출되지 않습니다.`;
 }
 document.getElementById("spot").addEventListener("input", recalc);
 document.getElementById("band").addEventListener("input", recalc);
+document.getElementById("delay").addEventListener("input", recalc);
 recalc();
 
 // 실환율 주입 — render/fx_snapshot.py가 만든 스냅샷을 읽는다.
@@ -210,13 +226,24 @@ fetch("fx_snapshot.json")
     if (fx.source === "ecos") {
       document.getElementById("spot").value = Math.round(fx.rate * 100) / 100;
       src.innerHTML = `<b style="color:#067647">● 실데이터</b> ${fx.date} 한국은행 ECOS`;
-      recalc();
     } else {
       src.textContent = "시연용 기본값 · 실서비스는 한국은행 ECOS 연동";
     }
+    // 변동성도 실측치를 주입한다. 가정치와 반드시 구분해 표기한다.
+    const vs = document.getElementById("volSrc"), v = fx.volatility;
+    if (v && v.sigma_annual != null) {
+      document.getElementById("band").value = (v.sigma_annual * 100).toFixed(1);
+      vs.innerHTML = v.source === "ecos"
+        ? `<b style="color:#067647">● 실측</b> ${v.start || ""}~${v.end || ""} · 수익률 ${v.n_observations || "-"}건`
+        : "가정치 (실측 실패) · 실서비스는 ECOS 시계열로 산출";
+    } else {
+      vs.textContent = "가정치 · 실서비스는 ECOS 시계열로 산출";
+    }
+    recalc();
   })
   .catch(() => {
     document.getElementById("rateSrc").textContent = "시연용 기본값 · 실서비스는 한국은행 ECOS 연동";
+    document.getElementById("volSrc").textContent = "가정치 · 실서비스는 ECOS 시계열로 산출";
   });
 </script>
 </body>

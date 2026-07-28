@@ -96,11 +96,30 @@ def fx_block(docs: dict, delay_days: int = 0) -> dict:
     except Exception:
         pass
 
+    # 연율 변동성 — 가정치가 아니라 ECOS 시계열 실측값을 우선 사용한다.
+    sigma_annual, vol_src = 0.09, "fallback"
+    vol_meta = {"method_ko": "실측 실패 — 시연용 가정치"}
+    try:
+        from fx_rates import ecos_volatility
+        vm = ecos_volatility()
+        sigma_annual, vol_src = vm["sigma_annual"], vm["source"]
+        vol_meta = {k: vm[k] for k in ("n_observations", "start", "end", "method_ko") if k in vm}
+    except Exception:
+        pass
+
+    # √t 규칙 — 지연 기간이 길수록 노출 변동폭이 커진다.
+    # 이 연결이 없으면 "하자 → 지연 → 환노출" 인과가 화면에서 성립하지 않는다.
+    from fx_rates import period_sigma
+    sigma_period = period_sigma(sigma_annual, delay_days)
+    Z_95 = 1.645  # 정규분포 단측 95%
+    band_pct = round(sigma_period * Z_95 * 100, 3)
+
     scenarios = []
     if amount:
-        for name, pct in (("krw_strong", -5), ("base", 0), ("krw_weak", 5)):
+        for name, mult in (("krw_strong", -Z_95), ("base", 0.0), ("krw_weak", Z_95)):
+            pct = sigma_period * mult * 100
             r = rate * (1 + pct / 100)
-            scenarios.append({"name": name, "rate_change_pct": pct,
+            scenarios.append({"name": name, "rate_change_pct": round(pct, 3),
                               "assumed_rate": round(r, 2),
                               "pnl_krw": round(amount * (r - rate))})
     # 수취 예정일 = 선적일 + 결제기간(가정 25일) + 하자로 인한 지연
@@ -117,6 +136,12 @@ def fx_block(docs: dict, delay_days: int = 0) -> dict:
         "spot_rate": {"KRW/USD": round(rate, 2)}, "rate_source": rate_src, "rate_date": rate_date,
         "rate_label_ko": "한국은행 매매기준율 (통계코드 731Y001)",
         "expected_date": expected, "delayed_date": delayed, "delay_days": delay_days,
+        "volatility": {"sigma_annual": round(sigma_annual, 6), "source": vol_src,
+                       "sigma_period": round(sigma_period, 6),
+                       "confidence_z": Z_95, "band_pct": band_pct,
+                       "basis_ko": "σ(기간) = σ(연율) × √(지연영업일/252) · 정규분포 95% 구간",
+                       **vol_meta},
+        "exposure_krw": (round(amount * rate * sigma_period * Z_95) if amount else 0),
         "cash_flows": ([{"expected_date": delayed or expected or ship, "direction": "inflow",
                          "currency": currency, "amount": amount, "certainty": "estimated",
                          "source": {"doc": "commercial_invoice", "field": "total_amount"}}]

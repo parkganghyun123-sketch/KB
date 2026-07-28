@@ -332,9 +332,10 @@ font-size:12px;color:#98a2b3}
           <input type="range" id="delay" min="0" max="30" step="1">
           <b class="val" id="delayLbl">0일</b>
         </label>
-        <label class="ctl">환율 변동폭
-          <input type="range" id="band" min="1" max="10" step="0.5" value="5">
-          <b class="val" id="bandLbl">±5%</b>
+        <label class="ctl">연율 변동성 σ
+          <input type="range" id="band" min="1" max="20" step="0.5" value="9">
+          <b class="val" id="bandLbl">9%</b>
+          <span class="src" id="volSrc"></span>
         </label>
         <button class="btn ghost sm" onclick="resetFx()">기본값</button>
       </div>
@@ -544,12 +545,19 @@ function renderImpact(d){
   const fx = d.fx, dl = d.delay || {total_business_days:0, items:[]};
   const amt = (d.documents.commercial_invoice||{}).total_amount;
 
+  const vol = fx.volatility || {};
+  const sigmaPct = (vol.sigma_annual != null ? vol.sigma_annual : 0.09) * 100;
   $("spot").value = fx.spot_rate["KRW/USD"];
   $("delay").value = dl.total_business_days;
-  $("band").value = 5;
+  $("band").value = sigmaPct.toFixed(1);
   $("rateSrc").innerHTML = fx.rate_source === "ecos"
     ? `<b style="color:#067647">● 실데이터</b> ${esc(fx.rate_date)} · ${esc(fx.rate_label_ko||"")}`
     : "시연용 기본값 · ECOS 조회 실패";
+  // 변동성이 가정치인지 실측치인지 반드시 구분해 표시한다 — 근거 없는 수치로 보이면 안 된다.
+  $("volSrc").innerHTML = vol.source === "ecos"
+    ? `<b style="color:#067647">● 실측</b> ECOS ${esc(vol.start||"")}~${esc(vol.end||"")}
+       · 수익률 ${vol.n_observations||"-"}건 · ${esc(vol.method_ko||"")}`
+    : `가정치 (실측 실패) · ${esc(vol.method_ko||"")}`;
 
   const hi = (d.report.discrepancies||[]).filter(x=>x.severity==="high").length;
   const me = (d.report.discrepancies||[]).filter(x=>x.severity==="medium").length;
@@ -580,36 +588,44 @@ function renderImpact(d){
     return;
   }
   window.__fx = {amt, rec: fx.hedge_recommendation||{}, baseDelay: dl.total_business_days,
-                 expected: fx.expected_date};
+                 baseSigmaPct: sigmaPct, expected: fx.expected_date};
   calcFx();
 }
+
+// √t 규칙 — 환율 변동성은 기간의 제곱근에 비례한다(백엔드 fx_rates.period_sigma와 동일 산식).
+// 지연이 길수록 노출이 커진다는 인과를 화면에서 성립시키는 핵심 계산.
+const TRADING_DAYS = 252, Z95 = 1.645;
+const periodSigma = (sigmaAnnual, days) => days <= 0 ? 0 : sigmaAnnual * Math.sqrt(days / TRADING_DAYS);
 
 function calcFx(){
   const s = window.__fx; if(!s) return;
   const rate = parseFloat($("spot").value) || 0;
-  const band = parseFloat($("band").value);
+  const sigmaA = parseFloat($("band").value) / 100;   // 연율 변동성
   const delay = parseInt($("delay").value, 10);
-  $("bandLbl").textContent = `±${band}%`;
+  const sigmaP = periodSigma(sigmaA, delay);          // 지연 기간 변동성
+  const bandPct = sigmaP * Z95 * 100;                 // 95% 구간 (±%)
+  $("bandLbl").textContent = `${(sigmaA*100).toFixed(1)}%`;
   $("delayLbl").textContent = `${delay}일`;
 
-  const rows = [["원화 강세", -band], ["기준 (현재 환율)", 0], ["원화 약세", band]];
+  const rows = [["원화 강세", -bandPct], ["기준 (현재 환율)", 0], ["원화 약세", bandPct]];
   $("fxGrid").innerHTML = rows.map(([nm, pct]) => {
     const r = rate * (1 + pct/100), pnl = s.amt * (r - rate);
     const cls = pnl > 0 ? "pos" : (pnl < 0 ? "neg" : "zero");
     const sign = pnl > 0 ? "+" : "";
     return `<div class="fxcell">
-      <div class="nm">${nm}${pct?` (${pct>0?"+":""}${pct}%)`:""}</div>
+      <div class="nm">${nm}${pct?` (${pct>0?"+":""}${pct.toFixed(2)}%)`:""}</div>
       <div class="rt">${r.toLocaleString(undefined,{maximumFractionDigits:1})} KRW/USD</div>
       <div class="pl ${cls}">${sign}${Math.round(pnl).toLocaleString()} 원</div></div>`;
   }).join("");
 
-  const worst = Math.abs(Math.round(s.amt * rate * band/100));
+  const worst = Math.abs(Math.round(s.amt * rate * sigmaP * Z95));
   $("fxHead").innerHTML = delay > 0
     ? `⚠️ 하자로 <b>${delay}영업일</b>이 밀리는 동안 <b>${s.amt.toLocaleString()} USD</b>가 환율에 노출됩니다.
-       변동폭 ±${band}% 가정 시 원화 수령액이 <b>최대 ${worst.toLocaleString()}원</b> 달라집니다.
-       <b>하자를 오늘 고치면 이 노출을 없앨 수 있습니다.</b>`
-    : `지연 요인이 없습니다. 예정일에 수취하더라도 변동폭 ±${band}% 가정 시
-       원화 수령액은 최대 ${worst.toLocaleString()}원 달라질 수 있습니다.`;
+       연율 변동성 ${(sigmaA*100).toFixed(1)}% 기준 이 기간 변동폭은 ±${bandPct.toFixed(2)}%(95% 구간)이고,
+       원화 수령액이 <b>최대 ${worst.toLocaleString()}원</b> 달라집니다.
+       <b>하자를 고쳐 지연을 없애면 이 노출도 사라집니다.</b>`
+    : `✅ <b>지연 요인 없음 — 노출 0원.</b> 예정일에 수취하면 이 기간의 환율 변동에 노출되지 않습니다.
+       (지연 일수를 올리면 노출이 어떻게 커지는지 확인할 수 있습니다.)`;
 
   const rec = s.rec;
   $("rxList").innerHTML = (rec.instruments||[]).map(i => `
@@ -619,7 +635,8 @@ function calcFx(){
 
 function resetFx(){
   const s = window.__fx; if(!s) return;
-  $("delay").value = s.baseDelay; $("band").value = 5;
+  $("delay").value = s.baseDelay;
+  $("band").value = (s.baseSigmaPct != null ? s.baseSigmaPct : 9).toFixed(1);
   if(CUR) $("spot").value = CUR.fx.spot_rate["KRW/USD"];
   calcFx();
 }

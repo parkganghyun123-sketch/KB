@@ -13,3 +13,5 @@ __pycache__/
 *.py[cod]
 TradeGuard/render/out/
 TradeGuard/benchmark/cases/rendered/
+TradeGuard/.demo.*.log
+TradeGuard/benchmark/.e2e*.log

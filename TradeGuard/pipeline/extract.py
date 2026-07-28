@@ -65,8 +65,15 @@ def extract(client, images, doc_type):
                 "`:47A:`의 각 줄도 '+'를 제외한 본문만 additional_conditions 배열에 넣는다.\n")
     elif doc_type == "bill_of_lading":
         hint = ("\n주의: 운송인 명칭(carrier_name)은 좌측 상단 로고 영역에 크게 인쇄돼 있다. "
-                "서명란에 'AS AGENT FOR THE CARRIER' 등 자격 문구가 있으면 signer_capacity를 해당 값으로, "
-                "서명은 있으나 자격 문구가 전혀 없으면 'unclear'로 기록한다. "
+                "우측 하단 SIGNED BY 칸에 필기체 이름이나 서명이 보이면 signature.signed=true다. "
+                "그 바로 아래 자격 문구를 다음처럼 정확히 매핑한다: "
+                "'AS CARRIER'→'carrier', 'AS MASTER OF THE VESSEL'→'master', "
+                "'AS AGENT FOR THE CARRIER'→'agent_for_carrier', "
+                "'AS AGENT ON BEHALF OF THE MASTER'→'agent_for_master'. "
+                "이 네 문구 중 하나가 있으면 절대 'unclear'로 기록하지 않는다. "
+                "서명은 있으나 자격 문구가 전혀 없을 때만 'unclear'로 기록한다. "
+                "Port of Loading/Discharge와 Place of Receipt/Delivery는 서로 다른 표의 칸이므로 "
+                "각 라벨 바로 아래 값을 그대로 옮기고, 특히 V를 W로 바꾸거나 CY를 다른 칸에 붙이지 않는다. "
                 "본선적재는 별도 스탬프 박스(SHIPPED ON BOARD)면 method='on_board_notation', "
                 "본문에 인쇄된 문구(LADEN ON BOARD THE VESSEL)면 'pre_printed'다.\n")
     base = (f"첨부 이미지는 {doc_type} 서류입니다. 아래 JSON 스키마에 따라 모든 필드를 추출하시오.{hint}\n"

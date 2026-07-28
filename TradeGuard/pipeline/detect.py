@@ -33,6 +33,42 @@ def norm_nopunct(s):
     return re.sub(r"[^A-Z0-9 ]", "", norm(s)).strip()
 
 
+def _edit_distance_at_most_one(a, b):
+    """OCR 한 글자 삽입·삭제·치환까지 같은 값으로 볼 때만 True."""
+    if a == b:
+        return True
+    if abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) > len(b):
+        a, b = b, a
+    i = j = edits = 0
+    while i < len(a) and j < len(b):
+        if a[i] == b[j]:
+            i += 1
+            j += 1
+            continue
+        edits += 1
+        if edits > 1:
+            return False
+        if len(a) == len(b):
+            i += 1
+        j += 1
+    return edits + (j < len(b)) <= 1
+
+
+def same_port(a, b):
+    """항구명 비교 시 이미지 OCR의 단일 문자 오류만 허용한다.
+
+    예: NHAVA ↔ NAVA, NHAVA ↔ NHAWA. BUSAN ↔ GWANGYANG처럼 실제로
+    다른 항구는 거리가 커서 기존대로 하자로 판정된다.
+    """
+    left = norm_nopunct(a).replace(" ", "")
+    right = norm_nopunct(b).replace(" ", "")
+    if left == right:
+        return True
+    return min(len(left), len(right)) >= 8 and _edit_distance_at_most_one(left, right)
+
+
 def d(iso):
     return date.fromisoformat(iso) if iso else None
 
@@ -218,7 +254,7 @@ def run_checks(docs, presentation_date=None):
 
     # 7) 항구 (20a3) — 결정적
     for f_lc, f_bl in [("port_of_loading", "port_of_loading"), ("port_of_discharge", "port_of_discharge")]:
-        if lc.get(f_lc) and bl.get(f_bl) and norm_nopunct(lc[f_lc]) != norm_nopunct(bl[f_bl]):
+        if lc.get(f_lc) and bl.get(f_bl) and not same_port(lc[f_lc], bl[f_bl]):
             out.append(disc("PORT_MISMATCH", "medium",
                             f"B/L의 {f_bl}({bl[f_bl]})가 신용장({lc[f_lc]})과 다릅니다.",
                             [ev("letter_of_credit", f_lc, lc[f_lc]), ev("bill_of_lading", f_bl, bl[f_bl])],

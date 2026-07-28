@@ -5,39 +5,39 @@
     "PORT_MISMATCH"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT USD 19,600 · 주입 하자: PORT_MISMATCH",
-  "presentation_date": "2026-06-30",
+  "scenario_note_ko": "NARAE FOODS CO., LTD. → GULF STAR GENERAL TRADING LLC, INSTANT RAMEN NOODLE (BOX OF 40) USD 281,200 · 주입 하자: PORT_MISMATCH",
+  "presentation_date": "2026-07-18",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-10467",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-62436",
+      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-01",
+      "issue_date": "2026-05-02",
       "expiry": {
-        "date": "2026-07-18",
+        "date": "2026-08-09",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
+        "country": "AE"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 19600.0,
+      "amount": 281200.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-06-24",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-528, 2,000 SET AS PER PROFORMA INVOICE NO. PI-2158, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "latest_shipment_date": "2026-07-10",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-789, 15,200 CTN AS PER PROFORMA INVOICE NO. PI-2011, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,74 +65,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-9451",
-      "invoice_date": "2026-06-16",
-      "lc_number_ref": "LC-2026-10467",
+      "invoice_number": "INV-2026-6134",
+      "invoice_date": "2026-07-03",
+      "lc_number_ref": "LC-2026-62436",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
       },
       "currency": "USD",
-      "total_amount": 19600.0,
+      "total_amount": 281200.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-528, AS PER PROFORMA INVOICE NO. PI-2158",
-          "quantity": 2000,
-          "unit": "SET",
-          "unit_price": 9.8,
-          "amount": 19600.0,
-          "hs_code": "4016.93"
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-789, AS PER PROFORMA INVOICE NO. PI-2011",
+          "quantity": 15200,
+          "unit": "CTN",
+          "unit_price": 18.5,
+          "amount": 281200.0,
+          "hs_code": "1902.30"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-80",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-608",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "packages": "608 CARTONS",
+      "net_weight": "114,000.0 KGS",
+      "gross_weight": "123,120.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-7656851",
-      "issue_date": "2026-06-16",
+      "bl_number": "SHC-6374386",
+      "issue_date": "2026-07-04",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-16",
-        "method": "on_board_notation"
+        "date": "2026-07-04",
+        "method": "pre_printed"
       },
-      "vessel_name": "SUNRISE GLORY",
-      "voyage_number": "V.137E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "GWANGYANG, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.182E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "place_of_delivery": "JEBEL ALI CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "80 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
+      "goods_description": "608 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "DBSU4589853"
+        "KMTU9284369"
       ],
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-608",
+      "package_count": "608 CTNS",
+      "gross_weight": "123,120.0 KGS",
+      "measurement": "27.36 CBM",
+      "booking_number": "BKG522408",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "carrier_name": "DONGBANG SHIPPING LINE",
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -151,17 +162,17 @@
         "id": "DISC-001",
         "type": "PORT_MISMATCH",
         "severity": "medium",
-        "description_ko": "B/L 선적항(GWANGYANG, KOREA)이 신용장 44E(BUSAN, KOREA)와 다릅니다.",
+        "description_ko": "B/L 선적항(BUSAN, KOREA)이 신용장 44E(INCHEON, KOREA)와 다릅니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "port_of_loading",
-            "value": "BUSAN, KOREA"
+            "value": "INCHEON, KOREA"
           },
           {
             "doc": "bill_of_lading",
             "field": "port_of_loading",
-            "value": "GWANGYANG, KOREA"
+            "value": "BUSAN, KOREA"
           }
         ],
         "ucp_basis": {

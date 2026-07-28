@@ -3,17 +3,17 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
-  "presentation_date": "2026-07-03",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS · 완전 정합 케이스",
+  "presentation_date": "2026-07-26",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-87716",
+      "lc_number": "LC-2026-88746",
       "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-10",
+      "issue_date": "2026-05-13",
       "expiry": {
-        "date": "2026-07-25",
+        "date": "2026-08-09",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -22,20 +22,20 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 18500.0,
+      "amount": 210560.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-07-02",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, 1,000 CTN AS PER PROFORMA INVOICE NO. PI-2409, FOB INCHEON INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-19",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-995, 32,900 PCS AS PER PROFORMA INVOICE NO. PI-2110, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -63,27 +63,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-8218",
-      "invoice_date": "2026-06-25",
-      "lc_number_ref": "LC-2026-87716",
+      "invoice_number": "INV-2026-1682",
+      "invoice_date": "2026-07-12",
+      "lc_number_ref": "LC-2026-88746",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 18500.0,
+      "total_amount": 210560.0,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-900, AS PER PROFORMA INVOICE NO. PI-2409",
-          "quantity": 1000,
-          "unit": "CTN",
-          "unit_price": 18.5,
-          "amount": 18500.0,
-          "hs_code": "1902.30"
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-995, AS PER PROFORMA INVOICE NO. PI-2110",
+          "quantity": 32900,
+          "unit": "PCS",
+          "unit_price": 6.4,
+          "amount": 210560.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -91,46 +91,57 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-40",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1316",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1316 CARTONS",
+      "net_weight": "5,264.0 KGS",
+      "gross_weight": "5,685.1 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-6056758",
-      "issue_date": "2026-06-28",
+      "bl_number": "KMT-3927921",
+      "issue_date": "2026-07-14",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-28",
+        "date": "2026-07-14",
         "method": "pre_printed"
       },
-      "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.63E",
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.16E",
       "place_of_receipt": "INCHEON CY",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "40 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "goods_description": "1316 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "DBSU6237094"
+        "KMTU9763593"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1316",
+      "package_count": "1316 CTNS",
+      "gross_weight": "5,685.1 KGS",
+      "measurement": "59.22 CBM",
+      "booking_number": "BKG492281",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

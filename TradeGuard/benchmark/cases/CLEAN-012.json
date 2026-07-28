@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., CNC MACHINED ALUMINUM HOUSING PARTS · 완전 정합 케이스",
-  "presentation_date": "2026-07-21",
+  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, CNC MACHINED ALUMINUM HOUSING PARTS · 완전 정합 케이스",
+  "presentation_date": "2026-07-23",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-93866",
-      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "lc_number": "LC-2026-86466",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-09",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-08-09",
+        "date": "2026-08-22",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-        "country": "US"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 10500.0,
+      "amount": 94500.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-07-14",
-      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-864, 500 PCS AS PER PROFORMA INVOICE NO. PI-2581, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-25",
+      "goods_description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-639, 4,500 PCS AS PER PROFORMA INVOICE NO. PI-2384, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,73 +63,84 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-6658",
-      "invoice_date": "2026-07-08",
-      "lc_number_ref": "LC-2026-93866",
+      "invoice_number": "INV-2026-8663",
+      "invoice_date": "2026-07-15",
+      "lc_number_ref": "LC-2026-86466",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "buyer": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 10500.0,
+      "total_amount": 94500.0,
       "goods": [
         {
-          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-864, AS PER PROFORMA INVOICE NO. PI-2581",
-          "quantity": 500,
+          "description": "CNC MACHINED ALUMINUM HOUSING PARTS, MODEL AH-639, AS PER PROFORMA INVOICE NO. PI-2384",
+          "quantity": 4500,
           "unit": "PCS",
           "unit_price": 21.0,
-          "amount": 10500.0,
+          "amount": 94500.0,
           "hs_code": "7616.99"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-20",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-180",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "180 CARTONS",
+      "net_weight": "1,890.0 KGS",
+      "gross_weight": "2,041.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-7852943",
-      "issue_date": "2026-07-09",
+      "bl_number": "KMT-2704617",
+      "issue_date": "2026-07-16",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-09",
-        "method": "on_board_notation"
+        "date": "2026-07-16",
+        "method": "pre_printed"
       },
       "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.15E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "place_of_delivery": "LOS ANGELES CY",
+      "voyage_number": "V.180E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "HANSOL PRECISION CO., LTD.",
+        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "20 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "180 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
       "container_numbers": [
-        "DBSU5570064"
+        "SHCU4964394"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-180",
+      "package_count": "180 CTNS",
+      "gross_weight": "2,041.2 KGS",
+      "measurement": "8.10 CBM",
+      "booking_number": "BKG275806",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "carrier_name": "DONGBANG SHIPPING LINE",
         "signer_capacity": "carrier"
       },
       "field_confidence": {},

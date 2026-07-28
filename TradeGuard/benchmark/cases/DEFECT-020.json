@@ -2,27 +2,27 @@
   "case_id": "DEFECT-020",
   "label": "defect",
   "defect_types": [
-    "LATE_SHIPMENT",
-    "BL_SIGNATURE_DEFECT"
+    "BL_SIGNATURE_DEFECT",
+    "PORT_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → GULF STAR GENERAL TRADING LLC, POLYPROPYLENE RESIN COMPOUND USD 4,350,000 · 주입 하자: LATE_SHIPMENT, BL_SIGNATURE_DEFECT",
-  "presentation_date": "2026-08-05",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., AUTOMOTIVE RUBBER SEAL KIT USD 104,860 · 주입 하자: BL_SIGNATURE_DEFECT, PORT_MISMATCH",
+  "presentation_date": "2026-07-02",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-73138",
-      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
+      "lc_number": "LC-2026-49883",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-23",
+      "issue_date": "2026-05-14",
       "expiry": {
-        "date": "2026-08-26",
+        "date": "2026-07-20",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
-        "country": "AE"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
         "name": "DAEYANG POLYMER CO., LTD.",
@@ -30,15 +30,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 4350000.0,
+      "amount": 104860.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "latest_shipment_date": "2026-07-31",
-      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-176, 3,000 MT AS PER PROFORMA INVOICE NO. PI-2307, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-06-29",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-670, 10,700 SET AS PER PROFORMA INVOICE NO. PI-2600, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -48,7 +48,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -66,27 +66,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-6723",
-      "invoice_date": "2026-07-20",
-      "lc_number_ref": "LC-2026-73138",
+      "invoice_number": "INV-2026-3414",
+      "invoice_date": "2026-06-22",
+      "lc_number_ref": "LC-2026-49883",
       "seller": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "GULF STAR GENERAL TRADING LLC",
-        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 4350000.0,
+      "total_amount": 104860.0,
       "goods": [
         {
-          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-176, AS PER PROFORMA INVOICE NO. PI-2307",
-          "quantity": 3000,
-          "unit": "MT",
-          "unit_price": 1450.0,
-          "amount": 4350000.0,
-          "hs_code": "3902.10"
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-670, AS PER PROFORMA INVOICE NO. PI-2600",
+          "quantity": 10700,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 104860.0,
+          "hs_code": "4016.93"
         }
       ],
       "incoterms": {
@@ -94,39 +94,50 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-120",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-428",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "packages": "428 CARTONS",
+      "net_weight": "13,910.0 KGS",
+      "gross_weight": "15,022.8 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-9403307",
-      "issue_date": "2026-08-03",
+      "bl_number": "SHC-5850290",
+      "issue_date": "2026-06-23",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-08-03",
+        "date": "2026-06-23",
         "method": "on_board_notation"
       },
       "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.166E",
+      "voyage_number": "V.69E",
       "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "JEBEL ALI, UAE",
-      "place_of_delivery": "JEBEL ALI CY",
+      "port_of_loading": "GWANGYANG, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "120 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "428 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
       "container_numbers": [
-        "DBSU5592631"
+        "DBSU2367045"
       ],
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-428",
+      "package_count": "428 CTNS",
+      "gross_weight": "15,022.8 KGS",
+      "measurement": "19.26 CBM",
+      "booking_number": "BKG901614",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
@@ -150,29 +161,6 @@
     "discrepancies": [
       {
         "id": "DISC-001",
-        "type": "LATE_SHIPMENT",
-        "severity": "high",
-        "description_ko": "선적일(2026-08-03)이 최종선적기일(2026-07-31)을 3일 초과했습니다.",
-        "evidence": [
-          {
-            "doc": "letter_of_credit",
-            "field": "latest_shipment_date",
-            "value": "2026-07-31"
-          },
-          {
-            "doc": "bill_of_lading",
-            "field": "shipped_on_board.date",
-            "value": "2026-08-03"
-          }
-        ],
-        "ucp_basis": {
-          "article": "UCP600 14조 · L/C 44C",
-          "quote_ko": "선하증권의 본선적재일은 신용장에 명시된 최종선적기일 이내여야 한다."
-        },
-        "suggested_fix_ko": "개설의뢰인의 하자 수락(waiver) 또는 조건변경을 요청하세요."
-      },
-      {
-        "id": "DISC-002",
         "type": "BL_SIGNATURE_DEFECT",
         "severity": "medium",
         "description_ko": "B/L 서명자의 자격(운송인/선장/대리인) 표시가 없습니다.",
@@ -188,11 +176,34 @@
           "quote_ko": "선하증권은 운송인의 명칭을 표시하고 운송인, 선장 또는 그 대리인이 서명하여야 하며, 대리인의 서명은 운송인 또는 선장을 위한 것임과 그 자격을 표시하여야 한다."
         },
         "suggested_fix_ko": "'AS AGENT FOR THE CARRIER, SEOHAE CONTAINER LINES' 자격 문구 명기를 요청하세요."
+      },
+      {
+        "id": "DISC-002",
+        "type": "PORT_MISMATCH",
+        "severity": "medium",
+        "description_ko": "B/L 선적항(GWANGYANG, KOREA)이 신용장 44E(BUSAN, KOREA)와 다릅니다.",
+        "evidence": [
+          {
+            "doc": "letter_of_credit",
+            "field": "port_of_loading",
+            "value": "BUSAN, KOREA"
+          },
+          {
+            "doc": "bill_of_lading",
+            "field": "port_of_loading",
+            "value": "GWANGYANG, KOREA"
+          }
+        ],
+        "ucp_basis": {
+          "article": "UCP600 20(a)(iii)",
+          "quote_ko": "선하증권은 신용장에 명시된 선적항으로부터 도착항까지의 선적을 표시하여야 한다."
+        },
+        "suggested_fix_ko": "B/L 선적항 표기 정정을 운송사에 요청하세요."
       }
     ],
     "overall_risk": {
-      "grade": "C",
-      "score": 65,
+      "grade": "B",
+      "score": 80,
       "summary_ko": "2건의 하자가 주입된 케이스입니다."
     }
   }

@@ -6,23 +6,23 @@
     "BL_SIGNATURE_DEFECT"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → MEKONG INDUSTRIAL TRADING CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) USD 9,250 · 주입 하자: AMOUNT_EXCEEDS_LC, BL_SIGNATURE_DEFECT",
-  "presentation_date": "2026-07-15",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS USD 225,280 · 주입 하자: AMOUNT_EXCEEDS_LC, BL_SIGNATURE_DEFECT",
+  "presentation_date": "2026-07-21",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-88049",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-61100",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-08",
+      "issue_date": "2026-05-23",
       "expiry": {
-        "date": "2026-08-02",
+        "date": "2026-08-17",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
       },
       "beneficiary": {
         "name": "SEJIN TEXTILE CORPORATION",
@@ -30,15 +30,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 9250.0,
+      "amount": 225280.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-07-09",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-759, 500 CTN AS PER PROFORMA INVOICE NO. PI-2040, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-07-20",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-407, 35,200 PCS AS PER PROFORMA INVOICE NO. PI-2558, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -48,7 +48,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -66,27 +66,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-9795",
-      "invoice_date": "2026-07-08",
-      "lc_number_ref": "LC-2026-88049",
+      "invoice_number": "INV-2026-9206",
+      "invoice_date": "2026-07-11",
+      "lc_number_ref": "LC-2026-61100",
       "seller": {
         "name": "SEJIN TEXTILE CORPORATION",
         "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 9556.52,
+      "total_amount": 247190.61,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-759, AS PER PROFORMA INVOICE NO. PI-2040",
-          "quantity": 500,
-          "unit": "CTN",
-          "unit_price": 19.11,
-          "amount": 9556.52,
-          "hs_code": "1902.30"
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-407, AS PER PROFORMA INVOICE NO. PI-2558",
+          "quantity": 35200,
+          "unit": "PCS",
+          "unit_price": 7.02,
+          "amount": 247190.61,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -94,39 +94,50 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-20",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1408",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1408 CARTONS",
+      "net_weight": "5,632.0 KGS",
+      "gross_weight": "6,082.6 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-6290149",
-      "issue_date": "2026-07-08",
+      "bl_number": "KMT-7451069",
+      "issue_date": "2026-07-14",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-08",
-        "method": "on_board_notation"
+        "date": "2026-07-14",
+        "method": "pre_printed"
       },
-      "vessel_name": "SUNRISE GLORY",
-      "voyage_number": "V.77E",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.195E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
         "name": "SEJIN TEXTILE CORPORATION",
         "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "1408 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "DBSU4204339"
+        "SHCU9861483"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1408",
+      "package_count": "1408 CTNS",
+      "gross_weight": "6,082.6 KGS",
+      "measurement": "63.36 CBM",
+      "booking_number": "BKG663598",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
@@ -152,17 +163,17 @@
         "id": "DISC-001",
         "type": "AMOUNT_EXCEEDS_LC",
         "severity": "high",
-        "description_ko": "송장 금액(USD 9,556.52)이 신용장 금액(USD 9,250.00)을 초과합니다.",
+        "description_ko": "송장 금액(USD 247,190.61)이 신용장 금액(USD 225,280.00)을 초과합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "amount",
-            "value": "9250.0"
+            "value": "225280.0"
           },
           {
             "doc": "commercial_invoice",
             "field": "total_amount",
-            "value": "9556.52"
+            "value": "247190.61"
           }
         ],
         "ucp_basis": {

@@ -5,39 +5,39 @@
     "LC_EXPIRED_OR_LATE_PRESENTATION"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, LED PANEL LIGHT 40W USD 30,600 · 주입 하자: LC_EXPIRED_OR_LATE_PRESENTATION",
-  "presentation_date": "2026-06-15",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS USD 149,120 · 주입 하자: LC_EXPIRED_OR_LATE_PRESENTATION",
+  "presentation_date": "2026-06-14",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-91989",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-72638",
+      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-22",
+      "issue_date": "2026-05-06",
       "expiry": {
-        "date": "2026-06-10",
+        "date": "2026-06-13",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
+        "country": "IN"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 30600.0,
+      "amount": 149120.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-05-21",
-      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-865, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2410, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "latest_shipment_date": "2026-05-24",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-227, 23,300 PCS AS PER PROFORMA INVOICE NO. PI-2021, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-5040",
-      "invoice_date": "2026-05-16",
-      "lc_number_ref": "LC-2026-91989",
+      "invoice_number": "INV-2026-7097",
+      "invoice_date": "2026-05-19",
+      "lc_number_ref": "LC-2026-72638",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "BHARAT GLOBAL SOURCING PVT LTD",
+        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 30600.0,
+      "total_amount": 149120.0,
       "goods": [
         {
-          "description": "LED PANEL LIGHT 40W, MODEL LP-865, AS PER PROFORMA INVOICE NO. PI-2410",
-          "quantity": 2000,
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-227, AS PER PROFORMA INVOICE NO. PI-2021",
+          "quantity": 23300,
           "unit": "PCS",
-          "unit_price": 15.3,
-          "amount": 30600.0,
-          "hs_code": "9405.11"
+          "unit_price": 6.4,
+          "amount": 149120.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -93,46 +93,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-80",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-932",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "932 CARTONS",
+      "net_weight": "3,728.0 KGS",
+      "gross_weight": "4,026.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-7703158",
-      "issue_date": "2026-05-16",
+      "bl_number": "SHC-9150010",
+      "issue_date": "2026-05-19",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-05-16",
-        "method": "on_board_notation"
+        "date": "2026-05-19",
+        "method": "pre_printed"
       },
-      "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.50E",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.82E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "80 CARTONS OF LED PANEL LIGHT 40W",
+      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+      "goods_description": "932 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "KMTU9185010"
+        "DBSU1459057"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-932",
+      "package_count": "932 CTNS",
+      "gross_weight": "4,026.2 KGS",
+      "measurement": "41.94 CBM",
+      "booking_number": "BKG698853",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
-        "signer_capacity": "agent_for_carrier"
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -151,17 +162,17 @@
         "id": "DISC-001",
         "type": "LC_EXPIRED_OR_LATE_PRESENTATION",
         "severity": "high",
-        "description_ko": "서류 제시기한(2026-06-06)이 이미 경과했습니다.",
+        "description_ko": "서류 제시기한(2026-06-09)이 이미 경과했습니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "expiry.date",
-            "value": "2026-06-10"
+            "value": "2026-06-13"
           },
           {
             "doc": "bill_of_lading",
             "field": "shipped_on_board.date",
-            "value": "2026-05-16"
+            "value": "2026-05-19"
           }
         ],
         "ucp_basis": {

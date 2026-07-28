@@ -3,23 +3,23 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "NARAE FOODS CO., LTD. → PACIFIC RIM IMPORTS INC., COTTON KNITTED T-SHIRTS · 완전 정합 케이스",
-  "presentation_date": "2026-07-16",
+  "scenario_note_ko": "NARAE FOODS CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) · 완전 정합 케이스",
+  "presentation_date": "2026-07-05",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-97942",
-      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
+      "lc_number": "LC-2026-78365",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-24",
+      "issue_date": "2026-05-12",
       "expiry": {
-        "date": "2026-08-09",
+        "date": "2026-08-03",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-        "country": "US"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": "CN"
       },
       "beneficiary": {
         "name": "NARAE FOODS CO., LTD.",
@@ -27,15 +27,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 12800.0,
+      "amount": 105450.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "latest_shipment_date": "2026-07-11",
-      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN INCOTERMS 2020",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-09",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-941, 5,700 CTN AS PER PROFORMA INVOICE NO. PI-2209, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,74 +63,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-5414",
-      "invoice_date": "2026-07-10",
-      "lc_number_ref": "LC-2026-97942",
+      "invoice_number": "INV-2026-5417",
+      "invoice_date": "2026-06-26",
+      "lc_number_ref": "LC-2026-78365",
       "seller": {
         "name": "NARAE FOODS CO., LTD.",
         "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "buyer": {
-        "name": "PACIFIC RIM IMPORTS INC.",
-        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
       },
       "currency": "USD",
-      "total_amount": 12800.0,
+      "total_amount": 105450.0,
       "goods": [
         {
-          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-131, AS PER PROFORMA INVOICE NO. PI-2352",
-          "quantity": 2000,
-          "unit": "PCS",
-          "unit_price": 6.4,
-          "amount": 12800.0,
-          "hs_code": "6109.10"
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-941, AS PER PROFORMA INVOICE NO. PI-2209",
+          "quantity": 5700,
+          "unit": "CTN",
+          "unit_price": 18.5,
+          "amount": 105450.0,
+          "hs_code": "1902.30"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-80",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-228",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "228 CARTONS",
+      "net_weight": "42,750.0 KGS",
+      "gross_weight": "46,170.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-8916403",
-      "issue_date": "2026-07-10",
+      "bl_number": "KMT-7674704",
+      "issue_date": "2026-06-29",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-10",
-        "method": "on_board_notation"
+        "date": "2026-06-29",
+        "method": "pre_printed"
       },
-      "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.92E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "LOS ANGELES, USA",
-      "place_of_delivery": "LOS ANGELES CY",
+      "vessel_name": "OCEAN SENTINEL",
+      "voyage_number": "V.175E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
       "shipper": {
         "name": "NARAE FOODS CO., LTD.",
         "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
         "is_to_order": true
       },
-      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "80 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "228 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "SHCU7146054"
+        "KMTU8459322"
       ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-228",
+      "package_count": "228 CTNS",
+      "gross_weight": "46,170.0 KGS",
+      "measurement": "10.26 CBM",
+      "booking_number": "BKG368618",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
         "carrier_name": "SEOHAE CONTAINER LINES",
-        "signer_capacity": "master"
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

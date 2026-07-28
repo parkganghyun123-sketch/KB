@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "easy",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, LED PANEL LIGHT 40W · 완전 정합 케이스",
-  "presentation_date": "2026-08-04",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → PACIFIC RIM IMPORTS INC., COTTON KNITTED T-SHIRTS · 완전 정합 케이스",
+  "presentation_date": "2026-07-18",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-31990",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-97942",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-20",
+      "issue_date": "2026-05-24",
       "expiry": {
-        "date": "2026-08-15",
+        "date": "2026-08-09",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 30600.0,
+      "amount": 172160.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-07-28",
-      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-557, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2131, FOB INCHEON INCOTERMS 2020",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-07-11",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 26,900 PCS AS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,74 +63,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-2975",
-      "invoice_date": "2026-07-26",
-      "lc_number_ref": "LC-2026-31990",
+      "invoice_number": "INV-2026-8730",
+      "invoice_date": "2026-07-10",
+      "lc_number_ref": "LC-2026-97942",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 30600.0,
+      "total_amount": 172160.0,
       "goods": [
         {
-          "description": "LED PANEL LIGHT 40W, MODEL LP-557, AS PER PROFORMA INVOICE NO. PI-2131",
-          "quantity": 2000,
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-131, AS PER PROFORMA INVOICE NO. PI-2352",
+          "quantity": 26900,
           "unit": "PCS",
-          "unit_price": 15.3,
-          "amount": 30600.0,
-          "hs_code": "9405.11"
+          "unit_price": 6.4,
+          "amount": 172160.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "INCHEON"
+        "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-80",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1076",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "packages": "1076 CARTONS",
+      "net_weight": "4,304.0 KGS",
+      "gross_weight": "4,648.3 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-9711739",
-      "issue_date": "2026-07-27",
+      "bl_number": "SHC-3061858",
+      "issue_date": "2026-07-10",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-27",
-        "method": "on_board_notation"
+        "date": "2026-07-10",
+        "method": "pre_printed"
       },
-      "vessel_name": "OCEAN SENTINEL",
-      "voyage_number": "V.81E",
-      "place_of_receipt": "INCHEON CY",
-      "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.162E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "80 CARTONS OF LED PANEL LIGHT 40W",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "1076 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "SHCU1423881"
+        "DBSU2523363"
       ],
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1076",
+      "package_count": "1076 CTNS",
+      "gross_weight": "4,648.3 KGS",
+      "measurement": "48.42 CBM",
+      "booking_number": "BKG382514",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "agent_for_carrier"
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

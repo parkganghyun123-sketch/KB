@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "hard",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → SHANGHAI HONGDA TRADE CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) · B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상",
-  "presentation_date": "2026-07-15",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → MEKONG INDUSTRIAL TRADING CO., LTD, COTTON KNITTED T-SHIRTS · B/L 명세가 일반 표현이나 UCP600 14(e)상 저촉되지 않음 → 정상",
+  "presentation_date": "2026-07-10",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-84836",
-      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "lc_number": "LC-2026-96677",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-16",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-08-03",
+        "date": "2026-07-26",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
-        "country": "CN"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+        "country": "VN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 74000.0,
+      "amount": 165120.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "latest_shipment_date": "2026-07-14",
-      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-936, 4,000 CTN AS PER PROFORMA INVOICE NO. PI-2625, FOB INCHEON INCOTERMS 2020",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-07-06",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, 25,800 PCS AS PER PROFORMA INVOICE NO. PI-2368, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,27 +63,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4230",
-      "invoice_date": "2026-07-03",
-      "lc_number_ref": "LC-2026-84836",
+      "invoice_number": "INV-2026-4250",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-96677",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
-        "name": "SHANGHAI HONGDA TRADE CO., LTD",
-        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 74000.0,
+      "total_amount": 165120.0,
       "goods": [
         {
-          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-936, AS PER PROFORMA INVOICE NO. PI-2625",
-          "quantity": 4000,
-          "unit": "CTN",
-          "unit_price": 18.5,
-          "amount": 74000.0,
-          "hs_code": "1902.30"
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, AS PER PROFORMA INVOICE NO. PI-2368",
+          "quantity": 25800,
+          "unit": "PCS",
+          "unit_price": 6.4,
+          "amount": 165120.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
@@ -91,46 +91,57 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-160",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "1032 CARTONS",
+      "net_weight": "4,128.0 KGS",
+      "gross_weight": "4,458.2 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "DBS-7984508",
-      "issue_date": "2026-07-06",
+      "bl_number": "KMT-9496688",
+      "issue_date": "2026-06-30",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-06",
+        "date": "2026-06-30",
         "method": "on_board_notation"
       },
-      "vessel_name": "HANJIN AURORA",
-      "voyage_number": "V.137E",
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.26E",
       "place_of_receipt": "INCHEON CY",
       "port_of_loading": "INCHEON, KOREA",
-      "port_of_discharge": "SHANGHAI, CHINA",
-      "place_of_delivery": "SHANGHAI CY",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
-      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
       "goods_description": "GENERAL MERCHANDISE AS PER INVOICE",
       "container_numbers": [
-        "DBSU7917900"
+        "DBSU8623520"
       ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "package_count": "1032 CTNS",
+      "gross_weight": "4,458.2 KGS",
+      "measurement": "46.44 CBM",
+      "booking_number": "BKG613115",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "master"
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []

@@ -5,17 +5,17 @@
     "CURRENCY_MISMATCH"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "HANSOL PRECISION CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, LED PANEL LIGHT 40W USD 61,200 · 주입 하자: CURRENCY_MISMATCH",
-  "presentation_date": "2026-07-15",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, POLYPROPYLENE RESIN COMPOUND USD 30,450 · 주입 하자: CURRENCY_MISMATCH",
+  "presentation_date": "2026-07-04",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-72658",
+      "lc_number": "LC-2026-17283",
       "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-14",
+      "issue_date": "2026-05-03",
       "expiry": {
-        "date": "2026-08-14",
+        "date": "2026-07-31",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -24,20 +24,20 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 61200.0,
+      "amount": 30450.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-07-15",
-      "goods_description": "LED PANEL LIGHT 40W, MODEL LP-895, 4,000 PCS AS PER PROFORMA INVOICE NO. PI-2395, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-02",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-526, 21 MT AS PER PROFORMA INVOICE NO. PI-2242, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-7820",
-      "invoice_date": "2026-07-06",
-      "lc_number_ref": "LC-2026-72658",
+      "invoice_number": "INV-2026-2235",
+      "invoice_date": "2026-06-27",
+      "lc_number_ref": "LC-2026-17283",
       "seller": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "EUR",
-      "total_amount": 61200.0,
+      "total_amount": 30450.0,
       "goods": [
         {
-          "description": "LED PANEL LIGHT 40W, MODEL LP-895, AS PER PROFORMA INVOICE NO. PI-2395",
-          "quantity": 4000,
-          "unit": "PCS",
-          "unit_price": 15.3,
-          "amount": 61200.0,
-          "hs_code": "9405.11"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-526, AS PER PROFORMA INVOICE NO. PI-2242",
+          "quantity": 21,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 30450.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
@@ -93,39 +93,50 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-160",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1 CARTONS",
+      "net_weight": "21,000.0 KGS",
+      "gross_weight": "22,680.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-4978929",
-      "issue_date": "2026-07-06",
+      "bl_number": "SHC-7011829",
+      "issue_date": "2026-06-28",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-07-06",
-        "method": "on_board_notation"
+        "date": "2026-06-28",
+        "method": "pre_printed"
       },
-      "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.62E",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.122E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "HANSOL PRECISION CO., LTD.",
-        "address": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "160 CARTONS OF LED PANEL LIGHT 40W",
+      "goods_description": "1 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "SHCU3218417"
+        "SHCU9253970"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1",
+      "package_count": "1 CTNS",
+      "gross_weight": "22,680.0 KGS",
+      "measurement": "0.04 CBM",
+      "booking_number": "BKG364945",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,

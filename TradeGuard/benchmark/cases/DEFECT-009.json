@@ -5,17 +5,17 @@
     "LATE_SHIPMENT"
   ],
   "difficulty": "easy",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, STAINLESS STEEL PIPE FITTINGS USD 25,200 · 주입 하자: LATE_SHIPMENT",
-  "presentation_date": "2026-06-29",
+  "scenario_note_ko": "SEJIN TEXTILE CORPORATION → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS USD 236,800 · 주입 하자: LATE_SHIPMENT",
+  "presentation_date": "2026-07-18",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-65552",
+      "lc_number": "LC-2026-96106",
       "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-01",
+      "issue_date": "2026-05-18",
       "expiry": {
-        "date": "2026-07-06",
+        "date": "2026-08-07",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -24,20 +24,20 @@
         "country": "IN"
       },
       "beneficiary": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 25200.0,
+      "amount": 236800.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "INCHEON, KOREA",
+      "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-06-17",
-      "goods_description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-517, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2573, FOB INCHEON INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-11",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-445, 37,000 PCS AS PER PROFORMA INVOICE NO. PI-2345, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -65,74 +65,85 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-3129",
-      "invoice_date": "2026-06-13",
-      "lc_number_ref": "LC-2026-65552",
+      "invoice_number": "INV-2026-6668",
+      "invoice_date": "2026-07-02",
+      "lc_number_ref": "LC-2026-96106",
       "seller": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "buyer": {
         "name": "BHARAT GLOBAL SOURCING PVT LTD",
         "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
       },
       "currency": "USD",
-      "total_amount": 25200.0,
+      "total_amount": 236800.0,
       "goods": [
         {
-          "description": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-517, AS PER PROFORMA INVOICE NO. PI-2573",
-          "quantity": 2000,
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-445, AS PER PROFORMA INVOICE NO. PI-2345",
+          "quantity": 37000,
           "unit": "PCS",
-          "unit_price": 12.6,
-          "amount": 25200.0,
-          "hs_code": "7307.29"
+          "unit_price": 6.4,
+          "amount": 236800.0,
+          "hs_code": "6109.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "INCHEON"
+        "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-80",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1480",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "NHAVA SHEVA, INDIA",
+      "packages": "1480 CARTONS",
+      "net_weight": "5,920.0 KGS",
+      "gross_weight": "6,393.6 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-7912346",
-      "issue_date": "2026-06-22",
+      "bl_number": "SHC-4063733",
+      "issue_date": "2026-07-13",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-22",
-        "method": "pre_printed"
+        "date": "2026-07-13",
+        "method": "on_board_notation"
       },
       "vessel_name": "EVER PROSPER",
-      "voyage_number": "V.96E",
-      "place_of_receipt": "INCHEON CY",
-      "port_of_loading": "INCHEON, KOREA",
+      "voyage_number": "V.21E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
       "place_of_delivery": "NHAVA SHEVA CY",
       "shipper": {
-        "name": "DAEYANG POLYMER CO., LTD.",
-        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "80 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+      "goods_description": "1480 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "SHCU6166963"
+        "KMTU1283016"
       ],
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1480",
+      "package_count": "1480 CTNS",
+      "gross_weight": "6,393.6 KGS",
+      "measurement": "66.60 CBM",
+      "booking_number": "BKG837469",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "master"
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "carrier"
       },
       "field_confidence": {},
       "unreadable_fields": []
@@ -151,17 +162,17 @@
         "id": "DISC-001",
         "type": "LATE_SHIPMENT",
         "severity": "high",
-        "description_ko": "선적일(2026-06-22)이 최종선적기일(2026-06-17)을 5일 초과했습니다.",
+        "description_ko": "선적일(2026-07-13)이 최종선적기일(2026-07-11)을 2일 초과했습니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "latest_shipment_date",
-            "value": "2026-06-17"
+            "value": "2026-07-11"
           },
           {
             "doc": "bill_of_lading",
             "field": "shipped_on_board.date",
-            "value": "2026-06-22"
+            "value": "2026-07-13"
           }
         ],
         "ucp_basis": {

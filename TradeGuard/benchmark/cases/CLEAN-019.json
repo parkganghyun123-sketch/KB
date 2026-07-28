@@ -3,39 +3,39 @@
   "label": "clean",
   "defect_types": [],
   "difficulty": "hard",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → BHARAT GLOBAL SOURCING PVT LTD, COTTON KNITTED T-SHIRTS · 분할선적 허용 조건이며 실제 단일 선적 → 정상",
-  "presentation_date": "2026-06-25",
+  "scenario_note_ko": "NARAE FOODS CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, INSTANT RAMEN NOODLE (BOX OF 40) · 분할선적 허용 조건이며 실제 단일 선적 → 정상",
+  "presentation_date": "2026-08-02",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-36696",
-      "issuing_bank": "INDUS MERCANTILE BANK, MUMBAI",
+      "lc_number": "LC-2026-89800",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-07",
+      "issue_date": "2026-05-17",
       "expiry": {
-        "date": "2026-07-13",
+        "date": "2026-08-19",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA",
-        "country": "IN"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+        "country": "VN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 19200.0,
+      "amount": 142450.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "latest_shipment_date": "2026-06-23",
-      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-928, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2310, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-07-22",
+      "goods_description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-437, 7,700 CTN AS PER PROFORMA INVOICE NO. PI-2545, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -45,7 +45,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -63,27 +63,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-5671",
-      "invoice_date": "2026-06-15",
-      "lc_number_ref": "LC-2026-36696",
+      "invoice_number": "INV-2026-4476",
+      "invoice_date": "2026-07-18",
+      "lc_number_ref": "LC-2026-89800",
       "seller": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "buyer": {
-        "name": "BHARAT GLOBAL SOURCING PVT LTD",
-        "address": "17 MARINE DRIVE, MUMBAI 400020, INDIA"
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 19200.0,
+      "total_amount": 142450.0,
       "goods": [
         {
-          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-928, AS PER PROFORMA INVOICE NO. PI-2310",
-          "quantity": 3000,
-          "unit": "PCS",
-          "unit_price": 6.4,
-          "amount": 19200.0,
-          "hs_code": "6109.10"
+          "description": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-437, AS PER PROFORMA INVOICE NO. PI-2545",
+          "quantity": 7700,
+          "unit": "CTN",
+          "unit_price": 18.5,
+          "amount": 142450.0,
+          "hs_code": "1902.30"
         }
       ],
       "incoterms": {
@@ -91,45 +91,56 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-120",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-308",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "308 CARTONS",
+      "net_weight": "57,750.0 KGS",
+      "gross_weight": "62,370.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-1717417",
-      "issue_date": "2026-06-15",
+      "bl_number": "SHC-4260849",
+      "issue_date": "2026-07-21",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-15",
+        "date": "2026-07-21",
         "method": "pre_printed"
       },
-      "vessel_name": "SUNRISE GLORY",
-      "voyage_number": "V.33E",
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.83E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "place_of_delivery": "NHAVA SHEVA CY",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "NARAE FOODS CO., LTD.",
+        "address": "12 SIKPUM-RO, IKSAN-SI, JEONBUK, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF INDUS MERCANTILE BANK",
+        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
-      "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "120 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+      "goods_description": "308 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "DBSU7101141"
+        "SHCU8099247"
       ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-308",
+      "package_count": "308 CTNS",
+      "gross_weight": "62,370.0 KGS",
+      "measurement": "13.86 CBM",
+      "booking_number": "BKG947486",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "SEOHAE CONTAINER LINES",
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
         "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},

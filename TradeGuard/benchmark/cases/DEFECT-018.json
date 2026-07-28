@@ -5,23 +5,23 @@
     "BL_NO_ONBOARD_NOTATION"
   ],
   "difficulty": "medium",
-  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, COTTON KNITTED T-SHIRTS USD 38,400 · 주입 하자: BL_NO_ONBOARD_NOTATION",
-  "presentation_date": "2026-07-29",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → PACIFIC RIM IMPORTS INC., POLYPROPYLENE RESIN COMPOUND USD 43,500 · 주입 하자: BL_NO_ONBOARD_NOTATION",
+  "presentation_date": "2026-07-04",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-92406",
-      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "lc_number": "LC-2026-24581",
+      "issuing_bank": "FIRST PACIFIC NATIONAL BANK, LOS ANGELES",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-16",
+      "issue_date": "2026-05-02",
       "expiry": {
-        "date": "2026-08-15",
+        "date": "2026-08-04",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-        "country": "VN"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+        "country": "US"
       },
       "beneficiary": {
         "name": "DAEYANG POLYMER CO., LTD.",
@@ -29,15 +29,15 @@
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 38400.0,
+      "amount": 43500.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-07-19",
-      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-893, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2556, FOB BUSAN INCOTERMS 2020",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "latest_shipment_date": "2026-07-08",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-663, 30 MT AS PER PROFORMA INVOICE NO. PI-2445, FOB BUSAN INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -47,7 +47,7 @@
         {
           "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
           "copies": "3/3 ORIGINALS",
-          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+          "requirements": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "doc_name": "PACKING LIST",
@@ -65,27 +65,27 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-4899",
-      "invoice_date": "2026-07-18",
-      "lc_number_ref": "LC-2026-92406",
+      "invoice_number": "INV-2026-5299",
+      "invoice_date": "2026-06-26",
+      "lc_number_ref": "LC-2026-24581",
       "seller": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
-        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
-        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        "name": "PACIFIC RIM IMPORTS INC.",
+        "address": "1400 HARBOR BLVD, LONG BEACH, CA 90802, USA"
       },
       "currency": "USD",
-      "total_amount": 38400.0,
+      "total_amount": 43500.0,
       "goods": [
         {
-          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-893, AS PER PROFORMA INVOICE NO. PI-2556",
-          "quantity": 6000,
-          "unit": "PCS",
-          "unit_price": 6.4,
-          "amount": 38400.0,
-          "hs_code": "6109.10"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-663, AS PER PROFORMA INVOICE NO. PI-2445",
+          "quantity": 30,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 43500.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
@@ -93,46 +93,57 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-240",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "packages": "1 CARTONS",
+      "net_weight": "30,000.0 KGS",
+      "gross_weight": "32,400.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "SHC-3046401",
-      "issue_date": "2026-07-18",
+      "bl_number": "DBS-4204339",
+      "issue_date": "2026-06-28",
       "shipped_on_board": {
         "indicated": false,
         "date": null,
         "method": null
       },
       "vessel_name": "PACIFIC VOYAGER",
-      "voyage_number": "V.123E",
+      "voyage_number": "V.45E",
       "place_of_receipt": "BUSAN CY",
       "port_of_loading": "BUSAN, KOREA",
-      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "place_of_delivery": "HO CHI MINH CITY CY",
+      "port_of_discharge": "LOS ANGELES, USA",
+      "place_of_delivery": "LOS ANGELES CY",
       "shipper": {
         "name": "DAEYANG POLYMER CO., LTD.",
         "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
-        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "raw_text": "TO ORDER OF FIRST PACIFIC NATIONAL BANK",
         "is_to_order": true
       },
-      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "240 CARTONS OF COTTON KNITTED T-SHIRTS",
+      "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
+      "goods_description": "1 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "DBSU1989328"
+        "DBSU5471980"
       ],
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1",
+      "package_count": "1 CTNS",
+      "gross_weight": "32,400.0 KGS",
+      "measurement": "0.04 CBM",
+      "booking_number": "BKG912968",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "DONGBANG SHIPPING LINE",
-        "signer_capacity": "agent_for_carrier"
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "master"
       },
       "field_confidence": {},
       "unreadable_fields": []

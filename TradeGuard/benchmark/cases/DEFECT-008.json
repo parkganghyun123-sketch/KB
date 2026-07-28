@@ -5,17 +5,17 @@
     "BENEFICIARY_NAME_MISMATCH"
   ],
   "difficulty": "hard",
-  "scenario_note_ko": "KOWON ENERGY CELL CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, AUTOMOTIVE RUBBER SEAL KIT USD 39,200 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
-  "presentation_date": "2026-06-26",
+  "scenario_note_ko": "DAEYANG POLYMER CO., LTD. → MEKONG INDUSTRIAL TRADING CO., LTD, POLYPROPYLENE RESIN COMPOUND USD 290,000 · 주입 하자: BENEFICIARY_NAME_MISMATCH",
+  "presentation_date": "2026-07-28",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
-      "lc_number": "LC-2026-14456",
+      "lc_number": "LC-2026-63767",
       "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
       "advising_bank": "KB KOOKMIN BANK, SEOUL",
-      "issue_date": "2026-05-08",
+      "issue_date": "2026-05-22",
       "expiry": {
-        "date": "2026-07-22",
+        "date": "2026-08-22",
         "place": "SEOUL, KOREA"
       },
       "applicant": {
@@ -24,20 +24,20 @@
         "country": "VN"
       },
       "beneficiary": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA",
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
         "country": "KR"
       },
       "currency": "USD",
-      "amount": 39200.0,
+      "amount": 290000.0,
       "tolerance": null,
       "available_with_by": "ANY BANK BY NEGOTIATION",
       "partial_shipments": "NOT ALLOWED",
       "transhipment": "NOT ALLOWED",
-      "port_of_loading": "BUSAN, KOREA",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "latest_shipment_date": "2026-06-24",
-      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, 4,000 SET AS PER PROFORMA INVOICE NO. PI-2693, FOB BUSAN INCOTERMS 2020",
+      "latest_shipment_date": "2026-07-24",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-598, 200 MT AS PER PROFORMA INVOICE NO. PI-2232, FOB INCHEON INCOTERMS 2020",
       "documents_required": [
         {
           "doc_name": "SIGNED COMMERCIAL INVOICE",
@@ -65,73 +65,84 @@
     },
     "commercial_invoice": {
       "doc_type": "commercial_invoice",
-      "invoice_number": "INV-2026-7794",
-      "invoice_date": "2026-06-18",
-      "lc_number_ref": "LC-2026-14456",
+      "invoice_number": "INV-2026-5498",
+      "invoice_date": "2026-07-16",
+      "lc_number_ref": "LC-2026-63767",
       "seller": {
-        "name": "KOWON ENERGY CELL COMPANY LTD",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER COMPANY LTD",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "buyer": {
         "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
         "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
       },
       "currency": "USD",
-      "total_amount": 39200.0,
+      "total_amount": 290000.0,
       "goods": [
         {
-          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-199, AS PER PROFORMA INVOICE NO. PI-2693",
-          "quantity": 4000,
-          "unit": "SET",
-          "unit_price": 9.8,
-          "amount": 39200.0,
-          "hs_code": "4016.93"
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-598, AS PER PROFORMA INVOICE NO. PI-2232",
+          "quantity": 200,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 290000.0,
+          "hs_code": "3902.10"
         }
       ],
       "incoterms": {
         "term": "FOB",
-        "place": "BUSAN"
+        "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-160",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "8 CARTONS",
+      "net_weight": "200,000.0 KGS",
+      "gross_weight": "216,000.0 KGS",
       "signed": true,
       "field_confidence": {},
       "unreadable_fields": []
     },
     "bill_of_lading": {
       "doc_type": "bill_of_lading",
-      "bl_number": "KMT-2768961",
-      "issue_date": "2026-06-18",
+      "bl_number": "SHC-1033733",
+      "issue_date": "2026-07-17",
       "shipped_on_board": {
         "indicated": true,
-        "date": "2026-06-18",
+        "date": "2026-07-17",
         "method": "on_board_notation"
       },
-      "vessel_name": "OCEAN SENTINEL",
-      "voyage_number": "V.158E",
-      "place_of_receipt": "BUSAN CY",
-      "port_of_loading": "BUSAN, KOREA",
+      "vessel_name": "SUNRISE GLORY",
+      "voyage_number": "V.26E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
       "place_of_delivery": "HO CHI MINH CITY CY",
       "shipper": {
-        "name": "KOWON ENERGY CELL CO., LTD.",
-        "address": "300 TECHNO 2-RO, DAEJEON, KOREA"
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
       },
       "consignee": {
         "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
         "is_to_order": true
       },
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "160 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "goods_description": "8 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
-        "KMTU6233769"
+        "SHCU8732004"
       ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8",
+      "package_count": "8 CTNS",
+      "gross_weight": "216,000.0 KGS",
+      "measurement": "0.36 CBM",
+      "booking_number": "BKG527171",
       "freight_terms": "COLLECT",
       "clean": true,
       "originals_count": 3,
       "signature": {
         "signed": true,
-        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "carrier_name": "SEOHAE CONTAINER LINES",
         "signer_capacity": "agent_for_carrier"
       },
       "field_confidence": {},
@@ -151,24 +162,24 @@
         "id": "DISC-001",
         "type": "BENEFICIARY_NAME_MISMATCH",
         "severity": "high",
-        "description_ko": "송장 발행인(KOWON ENERGY CELL COMPANY LTD)이 신용장 수익자(KOWON ENERGY CELL CO., LTD.)와 불일치합니다.",
+        "description_ko": "송장 발행인(DAEYANG POLYMER COMPANY LTD)이 신용장 수익자(DAEYANG POLYMER CO., LTD.)와 불일치합니다.",
         "evidence": [
           {
             "doc": "letter_of_credit",
             "field": "beneficiary.name",
-            "value": "KOWON ENERGY CELL CO., LTD."
+            "value": "DAEYANG POLYMER CO., LTD."
           },
           {
             "doc": "commercial_invoice",
             "field": "seller.name",
-            "value": "KOWON ENERGY CELL COMPANY LTD"
+            "value": "DAEYANG POLYMER COMPANY LTD"
           }
         ],
         "ucp_basis": {
           "article": "UCP600 18(a)(i)",
           "quote_ko": "상업송장은 수익자가 발행한 것으로 보여야 한다."
         },
-        "suggested_fix_ko": "송장 발행인 명의를 'KOWON ENERGY CELL CO., LTD.'로 수정하세요."
+        "suggested_fix_ko": "송장 발행인 명의를 'DAEYANG POLYMER CO., LTD.'로 수정하세요."
       }
     ],
     "overall_risk": {

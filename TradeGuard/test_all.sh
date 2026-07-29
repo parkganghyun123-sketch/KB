@@ -82,6 +82,26 @@ for f in glob.glob('/tmp/tg_regen/*.json'):
 run "독립 교차검증 — 우발 하자 0건 (A-2)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '우발 하자 0건, 미검출 0건')"
 # 회귀 방지: 라벨에 없고 엔진도 안 잡지만 사람 눈에는 보이는 '우발 하자'를 서류 단계에서 차단한다.
 run "서류 물리 정합성 — 부가 이상치 0건 (포장·산술·적재)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '이상치 없음')"
+run "폐쇄 루프 — 재심사 통과율 100% · 신규 하자 0건" "(cd benchmark && python3 evaluate_closedloop.py | grep -q '재심사 통과율      100.0%') && (cd benchmark && python3 evaluate_closedloop.py | grep -q '신규 하자          0건')"
+run "수정 제안이 신용장 기준값에서 도출 (LLM 미사용)" "python3 -c \"
+import sys,json; sys.path.insert(0,'pipeline')
+from detect import build_report
+from remedy import propose_all
+d=json.load(open('benchmark/cases/DEFECT-019.json'))
+docs=d['documents']; r=build_report('x',docs,None)
+ps=[p for p in propose_all(docs,r) if p['curable']]
+assert ps, '제안 없음'
+amt=[p for p in ps if p['type']=='AMOUNT_EXCEEDS_LC']
+assert amt and amt[0]['after']==docs['letter_of_credit']['amount'], '제안값이 L/C 금액과 불일치'\""
+run "치유 불가 하자를 치유 가능으로 표시하지 않음" "python3 -c \"
+import sys,json; sys.path.insert(0,'pipeline')
+from detect import build_report
+from remedy import propose_all
+d=json.load(open('samples/DEFECT-001.json'))
+docs=d['documents']; r=build_report('x',docs,None)
+ps=propose_all(docs,r)
+late=[p for p in ps if p['type']=='LATE_SHIPMENT']
+assert late and not late[0]['curable'], '선적기일 경과가 치유 가능으로 표시됨'\""
 
 echo "══ 4. C — 렌더링 파이프라인 ══"
 run "케이스 JSON → 서류 HTML 3종" "python3 render/render.py samples/DEFECT-001.json --out /tmp/tg_render"

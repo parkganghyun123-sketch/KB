@@ -36,6 +36,7 @@ from fastapi.responses import FileResponse, JSONResponse  # noqa: E402
 from fastapi.staticfiles import StaticFiles  # noqa: E402
 
 from detect import build_report, d as parse_date  # noqa: E402
+from remedy import propose_all, apply_edits  # noqa: E402
 from llm import get_client, image_block, load_env  # noqa: E402
 
 load_env()
@@ -156,11 +157,29 @@ def fx_block(docs: dict, delay_days: int = 0) -> dict:
                 {"product_type": "fx_deposit", "product_name_ko": "KB 외화예금",
                  "fit_reason_ko": "즉시 환전 대신 예치 후 분할 환전 — 유연성 우선 시"},
             ],
-            "rationale_ko": (f"환율이 5% 하락하면 이 거래에서만 약 "
-                             f"{abs(round(amount * rate * 0.05)):,}원의 환차손이 발생합니다."
+            "rationale_ko": ((f"하자로 {delay_days}영업일이 지연되는 동안 연율 변동성 "
+                              f"{sigma_annual:.1%} 기준 원화 수령액이 최대 "
+                              f"{abs(round(amount * rate * sigma_period * Z_95)):,}원 달라질 수 있습니다."
+                              if delay_days > 0 else
+                              "지연 요인이 없어 이 구간의 환율 변동에 노출되지 않습니다.")
                              if amount else "금액을 판독하지 못해 계산할 수 없습니다."),
         },
     }
+
+
+def _now_iso() -> str:
+    from datetime import datetime
+    return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def engine_version() -> str:
+    """판정 엔진 버전 = 현재 커밋 해시. 감사 추적에서 '무엇이 판정했는가'를 특정한다."""
+    try:
+        import subprocess
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(ROOT),
+                              capture_output=True, text=True, timeout=3).stdout.strip() or "unknown"
+    except Exception:
+        return "unknown"
 
 
 def analyze(docs: dict, case_id: str, presentation_date=None, meta=None) -> dict:
@@ -168,7 +187,13 @@ def analyze(docs: dict, case_id: str, presentation_date=None, meta=None) -> dict
     delay = delay_block(report)
     return {"case_id": case_id, "documents": docs, "report": report,
             "delay": delay,
-            "fx": fx_block(docs, delay["total_business_days"]), "meta": meta or {}}
+            # 하자마다 '무엇을 어떤 값으로 고쳐야 하는가'를 함께 준다.
+            # 제안값은 전부 신용장 기재값에서 결정적으로 도출된다(LLM 미사용).
+            "remedies": propose_all(docs, report),
+            "fx": fx_block(docs, delay["total_business_days"]),
+            "presentation_date": presentation_date,
+            "engine_version": engine_version(),
+            "meta": meta or {}}
 
 
 # ---------- API ----------
@@ -214,6 +239,64 @@ def analyze_sample(body: dict):
                         "elapsed_sec": round(time.time() - t0, 2),
                         "source": "저장된 케이스 JSON (추출 단계 생략 · LLM 미사용)"})
     res["ground_truth"] = case.get("ground_truth")
+    return res
+
+
+@app.post("/api/redetect")
+def redetect(body: dict):
+    """수정 반영 후 재심사 — 폐쇄 루프의 핵심.
+
+    입력: {documents, edits[], presentation_date?, case_id?, before?}
+      edits = /api/analyze가 준 remedies 중 사용자가 **승인한** 항목.
+              after 값을 사용자가 바꿨다면 그 값이 그대로 반영된다(최종 결정권은 사람).
+    출력: 재심사 리포트 + Before/After 비교 + 감사 이력
+
+    LLM을 호출하지 않는다. 판정도 제안도 결정적이므로 비용 0원·재현 가능하며,
+    같은 입력에 항상 같은 결과가 나온다.
+    """
+    body = body or {}
+    docs = body.get("documents")
+    if not docs:
+        raise HTTPException(400, "documents가 필요합니다")
+
+    case_id = body.get("case_id") or "REDETECT"
+    pres = body.get("presentation_date")
+    t0 = time.time()
+
+    before = body.get("before") or build_report(case_id, docs, parse_date(pres))
+    fixed_docs, applied = apply_edits(docs, body.get("edits") or [])
+    res = analyze(fixed_docs, case_id, pres,
+                  meta={"mode": "redetect", "cost_usd": 0.0,
+                        "elapsed_sec": round(time.time() - t0, 3),
+                        "source": "결정적 재심사 (LLM 미호출)"})
+
+    before_types = {x["type"] for x in before.get("discrepancies", [])}
+    after_types = {x["type"] for x in res["report"]["discrepancies"]}
+    remaining = res["report"]["discrepancies"]
+    incurable = [r for r in res["remedies"] if not r["curable"]]
+
+    res["comparison"] = {
+        "before": {"grade": before["overall_risk"]["grade"],
+                   "score": before["overall_risk"]["score"],
+                   "count": len(before.get("discrepancies", []))},
+        "after": {"grade": res["report"]["overall_risk"]["grade"],
+                  "score": res["report"]["overall_risk"]["score"],
+                  "count": len(remaining)},
+        "resolved": sorted(before_types - after_types),
+        "new_defects": sorted(after_types - before_types),
+        # 제출 가능 = 잔여 하자 0건. 치유 불가 하자가 남아 있으면 여기서 막힌다.
+        "submittable": len(remaining) == 0,
+        "blocked_by_ko": ([r["type"] for r in incurable] if incurable else []),
+    }
+    # 감사 추적 — 누가 무엇을 어떤 엔진으로 바꿨는지 리포트에 남긴다.
+    res["audit"] = {
+        "timestamp": _now_iso(),
+        "engine_version": res["engine_version"],
+        "edits": [{"doc": a["doc"], "field": a["field"],
+                   "before": a["before"], "after": a["after"],
+                   "type": a["type"], "basis_ko": a.get("basis_ko")} for a in applied],
+        "note_ko": "판정·제안 모두 결정적 규칙 기반이며 LLM을 호출하지 않았습니다.",
+    }
     return res
 
 

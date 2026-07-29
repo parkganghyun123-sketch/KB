@@ -1,0 +1,357 @@
+{
+  "summary": {
+    "n_defect_cases": 20,
+    "n_all_curable": 16,
+    "n_partially_curable": 4,
+    "repass_rate": 1.0,
+    "curable_resolution_rate": 1.0,
+    "proposal_accuracy": 1.0,
+    "new_defects_introduced": 0,
+    "avg_recheck_ms": 0.1,
+    "max_recheck_ms": 0.11
+  },
+  "per_case": [
+    {
+      "case_id": "DEFECT-001",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "AMOUNT_EXCEEDS_LC"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.11
+    },
+    {
+      "case_id": "DEFECT-002",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "AMOUNT_EXCEEDS_LC"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.11
+    },
+    {
+      "case_id": "DEFECT-003",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "CURRENCY_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-004",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "GOODS_DESC_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-005",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "GOODS_DESC_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.09
+    },
+    {
+      "case_id": "DEFECT-006",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "GOODS_DESC_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.09
+    },
+    {
+      "case_id": "DEFECT-007",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BENEFICIARY_NAME_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-008",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BENEFICIARY_NAME_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.11
+    },
+    {
+      "case_id": "DEFECT-009",
+      "before_grade": "C",
+      "after_grade": "C",
+      "before_count": 1,
+      "after_count": 1,
+      "curable": 0,
+      "incurable": 1,
+      "incurable_types": [
+        "LATE_SHIPMENT"
+      ],
+      "resolved": [],
+      "new_defects": [],
+      "proposal_correct": 0,
+      "proposal_total": 0,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-010",
+      "before_grade": "C",
+      "after_grade": "C",
+      "before_count": 1,
+      "after_count": 1,
+      "curable": 0,
+      "incurable": 1,
+      "incurable_types": [
+        "LATE_SHIPMENT"
+      ],
+      "resolved": [],
+      "new_defects": [],
+      "proposal_correct": 0,
+      "proposal_total": 0,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-011",
+      "before_grade": "C",
+      "after_grade": "C",
+      "before_count": 1,
+      "after_count": 1,
+      "curable": 0,
+      "incurable": 1,
+      "incurable_types": [
+        "LC_EXPIRED_OR_LATE_PRESENTATION"
+      ],
+      "resolved": [],
+      "new_defects": [],
+      "proposal_correct": 0,
+      "proposal_total": 0,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-012",
+      "before_grade": "C",
+      "after_grade": "C",
+      "before_count": 1,
+      "after_count": 1,
+      "curable": 0,
+      "incurable": 1,
+      "incurable_types": [
+        "LC_EXPIRED_OR_LATE_PRESENTATION"
+      ],
+      "resolved": [],
+      "new_defects": [],
+      "proposal_correct": 0,
+      "proposal_total": 0,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-013",
+      "before_grade": "B",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "PORT_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-014",
+      "before_grade": "B",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "PORT_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-015",
+      "before_grade": "B",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.11
+    },
+    {
+      "case_id": "DEFECT-016",
+      "before_grade": "B",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-017",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BL_NO_ONBOARD_NOTATION"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-018",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 1,
+      "after_count": 0,
+      "curable": 1,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BL_NO_ONBOARD_NOTATION"
+      ],
+      "new_defects": [],
+      "proposal_correct": 1,
+      "proposal_total": 1,
+      "elapsed_ms": 0.11
+    },
+    {
+      "case_id": "DEFECT-019",
+      "before_grade": "C",
+      "after_grade": "A",
+      "before_count": 2,
+      "after_count": 0,
+      "curable": 2,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "AMOUNT_EXCEEDS_LC",
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "new_defects": [],
+      "proposal_correct": 2,
+      "proposal_total": 2,
+      "elapsed_ms": 0.1
+    },
+    {
+      "case_id": "DEFECT-020",
+      "before_grade": "B",
+      "after_grade": "A",
+      "before_count": 2,
+      "after_count": 0,
+      "curable": 2,
+      "incurable": 0,
+      "incurable_types": [],
+      "resolved": [
+        "BL_SIGNATURE_DEFECT",
+        "PORT_MISMATCH"
+      ],
+      "new_defects": [],
+      "proposal_correct": 2,
+      "proposal_total": 2,
+      "elapsed_ms": 0.1
+    }
+  ]
+}

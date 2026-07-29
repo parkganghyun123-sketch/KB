@@ -160,8 +160,16 @@ def base_case(rng, seq):
     # ⚠️ 거래 단위가 이미 CTN(카톤)이면 수량 자체가 포장 개수다.
     #    이를 다시 25로 나누면 B/L에 "20 CARTONS", L/C에 "500 CTN"이 찍혀
     #    사람 눈에는 명백한 수량 불일치인데 정답 라벨에는 없는 '우발 하자'가 된다.
-    pkg_count = qty if unit == "CTN" else max(1, qty // 25)
+    # ⚠️ 무게 단위(MT)는 수량 자체가 톤 수이므로 "qty // 25"를 그대로 쓰면
+    #    "100 MT → 4 CARTONS"처럼 물리적으로 불가능한 값이 찍힌다.
+    #    수지 컴파운드는 25kg들이 백 단위로 포장되므로 총중량 기준으로 역산한다.
     net_weight_kg = round(qty * WEIGHT_KG_PER_UNIT[code], 1)
+    if unit == "CTN":
+        pkg_count, pkg_word, pkg_abbr = qty, "CARTONS", "CTNS"
+    elif unit == "MT":
+        pkg_count, pkg_word, pkg_abbr = max(1, round(net_weight_kg / 25)), "BAGS", "BAGS"
+    else:
+        pkg_count, pkg_word, pkg_abbr = max(1, qty // 25), "CARTONS", "CTNS"
     gross_weight_kg = round(net_weight_kg * 1.08, 1)
     measurement_cbm = round(pkg_count * 0.045, 2)
     booking_no = f"BKG{rng.randint(100000, 999999)}"
@@ -204,7 +212,7 @@ def base_case(rng, seq):
         "shipping_marks": shipping_marks,
         "country_of_origin": "REPUBLIC OF KOREA",
         "port_of_loading": loading, "port_of_discharge": discharge,
-        "packages": f"{pkg_count} CARTONS",
+        "packages": f"{pkg_count} {pkg_word}",
         "net_weight": f"{net_weight_kg:,.1f} KGS", "gross_weight": f"{gross_weight_kg:,.1f} KGS",
         "signed": True, "field_confidence": {}, "unreadable_fields": [],
     }
@@ -220,9 +228,9 @@ def base_case(rng, seq):
         "shipper": {"name": exp_name, "address": exp_addr},
         "consignee": {"raw_text": f"TO ORDER OF {bank.split(',')[0]}", "is_to_order": True},
         "notify_party": f"{buy_name}, {buy_addr}",
-        "goods_description": f"{pkg_count} CARTONS OF {goods}",
+        "goods_description": f"{pkg_count} {pkg_word} OF {goods}",
         "container_numbers": [f"{rng.choice(['KMTU', 'DBSU', 'SHCU'])}{rng.randint(1000000, 9999999)}"],
-        "shipping_marks": shipping_marks, "package_count": f"{pkg_count} CTNS",
+        "shipping_marks": shipping_marks, "package_count": f"{pkg_count} {pkg_abbr}",
         "gross_weight": f"{gross_weight_kg:,.1f} KGS", "measurement": f"{measurement_cbm:.2f} CBM",
         "booking_number": booking_no,
         "freight_terms": "COLLECT", "clean": True, "originals_count": 3,

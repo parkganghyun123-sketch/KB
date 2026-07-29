@@ -93,11 +93,11 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1200",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "LOS ANGELES, USA",
-      "packages": "1 CARTONS",
+      "packages": "1200 BAGS",
       "net_weight": "30,000.0 KGS",
       "gross_weight": "32,400.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
-      "goods_description": "1 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "1200 BAGS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "DBSU5471980"
       ],
-      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1",
-      "package_count": "1 CTNS",
+      "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-1200",
+      "package_count": "1200 BAGS",
       "gross_weight": "32,400.0 KGS",
-      "measurement": "0.04 CBM",
+      "measurement": "54.00 CBM",
       "booking_number": "BKG912968",
       "freight_terms": "COLLECT",
       "clean": true,

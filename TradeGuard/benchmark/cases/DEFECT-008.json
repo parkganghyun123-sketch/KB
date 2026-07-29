@@ -93,11 +93,11 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8000",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
-      "packages": "8 CARTONS",
+      "packages": "8000 BAGS",
       "net_weight": "200,000.0 KGS",
       "gross_weight": "216,000.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-      "goods_description": "8 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "8000 BAGS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "SHCU8732004"
       ],
-      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8",
-      "package_count": "8 CTNS",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-8000",
+      "package_count": "8000 BAGS",
       "gross_weight": "216,000.0 KGS",
-      "measurement": "0.36 CBM",
+      "measurement": "360.00 CBM",
       "booking_number": "BKG527171",
       "freight_terms": "COLLECT",
       "clean": true,

@@ -144,6 +144,18 @@ def extra_checks(case):
             expected = max(1, round(net_kg / 25))
             if abs(n - expected) > 1:
                 a.append(f"포장수량 B/L={n} != 순중량 {net_kg}kg 기준 예상 {expected}백(25kg/백)")
+    # 적재 가능성 — B/L의 용적·중량이 기재된 컨테이너 대수에 물리적으로 들어가야 한다.
+    # (706 CBM · 127톤인데 컨테이너 번호 1개 같은 값 방지. 40ft HC 기준 67 CBM / 26톤)
+    try:
+        cbm = float((bl.get("measurement") or "0").upper().replace("CBM", "").replace(",", ""))
+        gw = float((bl.get("gross_weight") or "0").upper().replace("KGS", "").replace(",", ""))
+        nc = len(bl.get("container_numbers") or [])
+        if nc:
+            need = max(cbm / 67.0, gw / 26000.0)
+            if need > nc * 1.05:
+                a.append(f"적재불가 {cbm:.1f}CBM·{gw/1000:.1f}t → 최소 {need:.1f}기 필요, B/L 기재 {nc}기")
+    except ValueError:
+        pass
     iss, exp = d(lc.get("issue_date")), d(lc["expiry"]["date"])
     ship = d(bl.get("shipped_on_board", {}).get("date"))
     latest = d(lc.get("latest_shipment_date"))

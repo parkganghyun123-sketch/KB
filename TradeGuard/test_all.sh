@@ -80,6 +80,8 @@ for f in glob.glob('/tmp/tg_regen/*.json'):
     a=json.load(open(f)); b=json.load(open('benchmark/cases/'+os.path.basename(f)))
     assert a==b, os.path.basename(f)\""
 run "독립 교차검증 — 우발 하자 0건 (A-2)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '우발 하자 0건, 미검출 0건')"
+# 회귀 방지: 라벨에 없고 엔진도 안 잡지만 사람 눈에는 보이는 '우발 하자'를 서류 단계에서 차단한다.
+run "서류 물리 정합성 — 부가 이상치 0건 (포장·산술·적재)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '이상치 없음')"
 
 echo "══ 4. C — 렌더링 파이프라인 ══"
 run "케이스 JSON → 서류 HTML 3종" "python3 render/render.py samples/DEFECT-001.json --out /tmp/tg_render"

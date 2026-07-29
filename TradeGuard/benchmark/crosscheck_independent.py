@@ -133,6 +133,17 @@ def extra_checks(case):
     mm = re.search(r"C/NO\.\s*1-([\d,]+)", marks.upper())
     if mm and g.get("unit") == "CTN" and int(mm.group(1).replace(",", "")) != g["quantity"]:
         a.append(f"화인 C/NO. 1-{mm.group(1)} != 송장 {g['quantity']} CTN")
+    # 무게 단위(MT)는 "톤 수 // 25"가 아니라 총중량(순중량) 기준 25kg 백 수여야 한다.
+    # (100 MT를 "4 CARTONS"로 찍는 물리적으로 불가능한 값 방지 — 독립 재계산으로 검증)
+    if g.get("unit") == "MT":
+        nm = re.match(r"\s*([\d,]+)\s*(BAGS|CARTONS)", (bl.get("goods_description") or "").upper())
+        wm = re.match(r"\s*([\d,.]+)\s*KGS", (inv.get("net_weight") or "").upper())
+        if nm and wm:
+            n = int(nm.group(1).replace(",", ""))
+            net_kg = float(wm.group(1).replace(",", ""))
+            expected = max(1, round(net_kg / 25))
+            if abs(n - expected) > 1:
+                a.append(f"포장수량 B/L={n} != 순중량 {net_kg}kg 기준 예상 {expected}백(25kg/백)")
     iss, exp = d(lc.get("issue_date")), d(lc["expiry"]["date"])
     ship = d(bl.get("shipped_on_board", {}).get("date"))
     latest = d(lc.get("latest_shipment_date"))

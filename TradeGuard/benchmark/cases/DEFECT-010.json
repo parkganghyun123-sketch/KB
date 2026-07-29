@@ -93,11 +93,11 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3600",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "SHANGHAI, CHINA",
-      "packages": "3 CARTONS",
+      "packages": "3600 BAGS",
       "net_weight": "90,000.0 KGS",
       "gross_weight": "97,200.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
-      "goods_description": "3 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "3600 BAGS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "SHCU5137908"
       ],
-      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3",
-      "package_count": "3 CTNS",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-3600",
+      "package_count": "3600 BAGS",
       "gross_weight": "97,200.0 KGS",
-      "measurement": "0.14 CBM",
+      "measurement": "162.00 CBM",
       "booking_number": "BKG797247",
       "freight_terms": "COLLECT",
       "clean": true,

@@ -93,11 +93,11 @@
         "place": "BUSAN"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-7",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-7600",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "BUSAN, KOREA",
       "port_of_discharge": "JEBEL ALI, UAE",
-      "packages": "7 CARTONS",
+      "packages": "7600 BAGS",
       "net_weight": "190,000.0 KGS",
       "gross_weight": "205,200.0 KGS",
       "signed": true,
@@ -128,14 +128,14 @@
         "is_to_order": true
       },
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
-      "goods_description": "7 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "7600 BAGS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "KMTU9609330"
       ],
-      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-7",
-      "package_count": "7 CTNS",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-7600",
+      "package_count": "7600 BAGS",
       "gross_weight": "205,200.0 KGS",
-      "measurement": "0.32 CBM",
+      "measurement": "342.00 CBM",
       "booking_number": "BKG446616",
       "freight_terms": "COLLECT",
       "clean": true,

@@ -91,11 +91,11 @@
         "place": "INCHEON"
       },
       "payment_terms": "L/C AT SIGHT",
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4000",
       "country_of_origin": "REPUBLIC OF KOREA",
       "port_of_loading": "INCHEON, KOREA",
       "port_of_discharge": "NHAVA SHEVA, INDIA",
-      "packages": "4 CARTONS",
+      "packages": "4000 BAGS",
       "net_weight": "100,000.0 KGS",
       "gross_weight": "108,000.0 KGS",
       "signed": true,
@@ -126,14 +126,14 @@
         "is_to_order": true
       },
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-      "goods_description": "4 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
+      "goods_description": "4000 BAGS OF POLYPROPYLENE RESIN COMPOUND",
       "container_numbers": [
         "DBSU1583547"
       ],
-      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4",
-      "package_count": "4 CTNS",
+      "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-4000",
+      "package_count": "4000 BAGS",
       "gross_weight": "108,000.0 KGS",
-      "measurement": "0.18 CBM",
+      "measurement": "180.00 CBM",
       "booking_number": "BKG303495",
       "freight_terms": "COLLECT",
       "clean": true,

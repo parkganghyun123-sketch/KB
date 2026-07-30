@@ -12,6 +12,17 @@ secrets.json
 __pycache__/
 *.py[cod]
 TradeGuard/render/out/
-TradeGuard/benchmark/cases/rendered/
 TradeGuard/.demo.*.log
+
+# 렌더 산출물 120장(12MB)은 커밋하지 않는다 — generate_cases.py + render.py로 언제든 재생성된다.
+# 다만 **업로드 모드 데모용 2케이스(6장)는 예외로 포함**한다.
+# 이게 없으면 저장소를 클론한 심사위원은 Playwright + chromium을 설치해야만
+# "이미지를 올리면 AI가 읽는다"는 핵심 장면을 재현할 수 있다.
+# 디렉터리 자체를 무시하면 하위 예외가 먹지 않으므로 `/*`로 지정한다.
+TradeGuard/benchmark/cases/rendered/*
+!TradeGuard/benchmark/cases/rendered/CLEAN-017_*.png
+!TradeGuard/benchmark/cases/rendered/DEFECT-019_*.png
 TradeGuard/benchmark/.e2e*.log
+
+# 제출물 패키징 산출물
+dist/

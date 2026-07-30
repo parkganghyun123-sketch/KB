@@ -1,0 +1,226 @@
+{
+  "case_id": "DEFECT-016",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-95143",
+      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "issue_date": "2026-05-24",
+      "expiry": {
+        "date": "2026-08-26",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
+        "country": "UAE"
+      },
+      "beneficiary": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "country": "KOREA"
+      },
+      "currency": "USD",
+      "amount": 101500,
+      "tolerance": null,
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "latest_shipment_date": "2026-07-28",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-528, 70 MT AS PER PROFORMA INVOICE NO. PI-2434, FOB INCHEON INCO TERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": null
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {
+        "lc_number": 1.0,
+        "issuing_bank": 1.0,
+        "advising_bank": 1.0,
+        "available_with_by": 1.0,
+        "issue_date": 1.0,
+        "expiry": 1.0,
+        "applicant": 1.0,
+        "beneficiary": 1.0,
+        "currency": 1.0,
+        "amount": 1.0,
+        "partial_shipments": 1.0,
+        "transhipment": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "latest_shipment_date": 1.0,
+        "goods_description": 1.0,
+        "documents_required": 1.0,
+        "additional_conditions": 1.0,
+        "presentation_period_days": 1.0,
+        "confirmation_instructions": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-1199",
+      "invoice_date": "2026-07-25",
+      "lc_number_ref": "LC-2026-95143",
+      "seller": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "buyer": {
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
+      },
+      "currency": "USD",
+      "total_amount": 101500.0,
+      "goods": [
+        {
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-528, AS PER PROFORMA INVOICE NO. PI-2434",
+          "quantity": 70,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 101500.0,
+          "hs_code": "3902.10"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "INCHEON"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-2800",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "packages": "2800 BAGS",
+      "net_weight": "70,000.0 KGS",
+      "gross_weight": "75,600.0 KGS",
+      "signed": true,
+      "field_confidence": {
+        "invoice_number": 1.0,
+        "invoice_date": 1.0,
+        "lc_number_ref": 1.0,
+        "seller.name": 1.0,
+        "seller.address": 1.0,
+        "buyer.name": 1.0,
+        "buyer.address": 1.0,
+        "currency": 1.0,
+        "total_amount": 1.0,
+        "goods[0].description": 1.0,
+        "goods[0].quantity": 1.0,
+        "goods[0].unit": 1.0,
+        "goods[0].unit_price": 1.0,
+        "goods[0].amount": 1.0,
+        "goods[0].hs_code": 1.0,
+        "incoterms.term": 1.0,
+        "incoterms.place": 1.0,
+        "payment_terms": 1.0,
+        "shipping_marks": 1.0,
+        "country_of_origin": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "packages": 1.0,
+        "net_weight": 1.0,
+        "gross_weight": 1.0,
+        "signed": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "DBS-2784330",
+      "issue_date": "2026-07-25",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-25",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "EVER PROSPER V47E",
+      "voyage_number": null,
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "place_of_delivery": "JEBEL ALI CY",
+      "shipper": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
+        "is_to_order": true
+      },
+      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
+      "goods_description": "2800 BAGS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD",
+      "container_numbers": [
+        "DBSU8737274",
+        "DBSU8737275",
+        "DBSU8737276"
+      ],
+      "shipping_marks": "GULF / JEBEL ALI / CNO. 1-2800",
+      "package_count": "2800 BAGS",
+      "gross_weight": "75,600.0 KGS",
+      "measurement": "126.0 CBM",
+      "booking_number": "BKG705378",
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "unclear"
+      },
+      "field_confidence": {
+        "bl_number": 1.0,
+        "issue_date": 1.0,
+        "shipped_on_board.indicated": 1.0,
+        "shipped_on_board.date": 1.0,
+        "shipped_on_board.method": 1.0,
+        "vessel_name": 1.0,
+        "voyage_number": 0.5,
+        "place_of_receipt": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "place_of_delivery": 1.0,
+        "shipper.name": 1.0,
+        "shipper.address": 1.0,
+        "consignee.raw_text": 1.0,
+        "consignee.is_to_order": 1.0,
+        "notify_party": 1.0,
+        "goods_description": 1.0,
+        "container_numbers": 1.0,
+        "shipping_marks": 1.0,
+        "package_count": 1.0,
+        "gross_weight": 1.0,
+        "measurement": 1.0,
+        "booking_number": 1.0,
+        "freight_terms": 1.0,
+        "clean": 1.0,
+        "originals_count": 1.0,
+        "signature.signed": 1.0,
+        "signature.carrier_name": 1.0,
+        "signature.signer_capacity": 0.5
+      },
+      "unreadable_fields": []
+    }
+  },
+  "presentation_date": "2026-08-04"
+}

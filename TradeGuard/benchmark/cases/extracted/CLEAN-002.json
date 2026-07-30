@@ -1,0 +1,217 @@
+{
+  "case_id": "CLEAN-002",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-38452",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "issue_date": "2026-05-22",
+      "expiry": {
+        "date": "2026-08-01",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": null
+      },
+      "beneficiary": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "country": null
+      },
+      "currency": "USD",
+      "amount": 109760.0,
+      "tolerance": null,
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-10",
+      "goods_description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-969, 11,200 SET AS PER PROFORMA INVOICE NO. PI-2639, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": null
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {
+        "lc_number": 1.0,
+        "issuing_bank": 1.0,
+        "advising_bank": 1.0,
+        "available_with_by": 1.0,
+        "issue_date": 1.0,
+        "expiry": 1.0,
+        "applicant": 1.0,
+        "beneficiary": 1.0,
+        "currency": 1.0,
+        "amount": 1.0,
+        "partial_shipments": 1.0,
+        "transhipment": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "latest_shipment_date": 1.0,
+        "goods_description": 1.0,
+        "documents_required": 1.0,
+        "additional_conditions": 1.0,
+        "presentation_period_days": 1.0,
+        "confirmation_instructions": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-1469",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-38452",
+      "seller": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "buyer": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+      },
+      "currency": "USD",
+      "total_amount": 109760.0,
+      "goods": [
+        {
+          "description": "AUTOMOTIVE RUBBER SEAL KIT, MODEL RS-969, AS PER PROFORMA INVOICE NO. PI-2639",
+          "quantity": 11200,
+          "unit": "SET",
+          "unit_price": 9.8,
+          "amount": 109760.0,
+          "hs_code": "4016.93"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-448",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "448 CARTONS",
+      "net_weight": "14,560.0 KGS",
+      "gross_weight": "15,724.8 KGS",
+      "signed": true,
+      "field_confidence": {
+        "invoice_number": 1.0,
+        "invoice_date": 1.0,
+        "lc_number_ref": 1.0,
+        "seller.name": 1.0,
+        "seller.address": 1.0,
+        "buyer.name": 1.0,
+        "buyer.address": 1.0,
+        "currency": 1.0,
+        "total_amount": 1.0,
+        "goods[0].description": 1.0,
+        "goods[0].quantity": 1.0,
+        "goods[0].unit": 1.0,
+        "goods[0].unit_price": 1.0,
+        "goods[0].amount": 1.0,
+        "goods[0].hs_code": 1.0,
+        "incoterms.term": 1.0,
+        "incoterms.place": 1.0,
+        "payment_terms": 1.0,
+        "shipping_marks": 1.0,
+        "country_of_origin": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "packages": 1.0,
+        "net_weight": 1.0,
+        "gross_weight": 1.0,
+        "signed": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "SHC-6767029",
+      "issue_date": "2026-07-01",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-01",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "HANJIN AURORA",
+      "voyage_number": "V.178E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
+      "shipper": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "is_to_order": true
+      },
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "448 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+      "container_numbers": [
+        "SHCU8937225"
+      ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-448",
+      "package_count": "448 CTNS",
+      "gross_weight": "15724.8 KGS",
+      "measurement": "20.16 CBM",
+      "booking_number": "BKG519280",
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "agent_for_carrier"
+      },
+      "field_confidence": {
+        "bl_number": 1.0,
+        "issue_date": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "shipper.name": 1.0,
+        "shipper.address": 1.0,
+        "consignee.raw_text": 1.0,
+        "notify_party": 1.0,
+        "goods_description": 1.0,
+        "container_numbers": 1.0,
+        "shipping_marks": 1.0,
+        "package_count": 1.0,
+        "gross_weight": 1.0,
+        "measurement": 1.0,
+        "booking_number": 1.0,
+        "freight_terms": 1.0,
+        "clean": 1.0,
+        "originals_count": 1.0,
+        "vessel_name": 1.0,
+        "voyage_number": 1.0,
+        "place_of_receipt": 1.0,
+        "place_of_delivery": 1.0
+      },
+      "unreadable_fields": []
+    }
+  },
+  "presentation_date": "2026-07-06"
+}

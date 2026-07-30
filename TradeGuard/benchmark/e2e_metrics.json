@@ -2,7 +2,7 @@
   "provider": "openai",
   "model": "gpt-4o",
   "n_cases": 40,
-  "field_accuracy": 0.955,
+  "field_accuracy": 0.938,
   "classify_accuracy": 1.0,
   "discrepancy": {
     "tp": 20,
@@ -12,39 +12,1073 @@
     "recall": 0.9091,
     "f1": 0.8889
   },
-  "grade_accuracy": 0.9,
+  "grade_accuracy": 0.875,
   "worst_fields": {
-    "letter_of_credit.documents_required[0].requirements": 30,
-    "bill_of_lading.goods_description": 20,
-    "bill_of_lading.voyage_number": 11,
-    "letter_of_credit.goods_description": 10,
-    "bill_of_lading.vessel_name": 9,
+    "letter_of_credit.documents_required[0].requirements": 29,
+    "bill_of_lading.goods_description": 28,
+    "bill_of_lading.gross_weight": 17,
+    "letter_of_credit.goods_description": 15,
+    "bill_of_lading.shipping_marks": 15,
+    "bill_of_lading.voyage_number": 12,
+    "bill_of_lading.container_numbers[0]": 11,
+    "bill_of_lading.vessel_name": 10,
     "bill_of_lading.port_of_discharge": 9,
-    "bill_of_lading.notify_party": 8,
-    "bill_of_lading.place_of_delivery": 7,
-    "bill_of_lading.container_numbers[0]": 4,
-    "letter_of_credit.documents_required[1].copies": 3,
-    "bill_of_lading.shipper.address": 3,
-    "commercial_invoice.goods[0].hs_code": 3,
-    "commercial_invoice.lc_number_ref": 3,
-    "letter_of_credit.documents_required[1].doc_name": 2,
-    "letter_of_credit.latest_shipment_date": 2,
-    "letter_of_credit.issue_date": 2,
-    "bill_of_lading.shipped_on_board.indicated": 2,
-    "letter_of_credit.documents_required[1].requirements": 1,
-    "letter_of_credit.presentation_period_days": 1,
-    "letter_of_credit.lc_number": 1
+    "bill_of_lading.place_of_delivery": 8,
+    "commercial_invoice.lc_number_ref": 6,
+    "bill_of_lading.container_numbers[1]": 6,
+    "bill_of_lading.notify_party": 6,
+    "commercial_invoice.net_weight": 3,
+    "bill_of_lading.container_numbers[2]": 3,
+    "bill_of_lading.container_numbers[3]": 3,
+    "bill_of_lading.container_numbers[4]": 3,
+    "letter_of_credit.documents_required[1].requirements": 2,
+    "letter_of_credit.applicant.address": 2,
+    "letter_of_credit.beneficiary.address": 2
   },
   "per_case": [
     {
       "case_id": "CLEAN-001",
-      "field_accuracy": 0.9324,
+      "field_accuracy": 0.9765,
       "tp": [],
       "fp": [],
       "fn": [],
       "grade": "A",
       "grade_truth": "A",
       "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "436 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+          "actual": "436 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "SHCU6890086",
+          "actual": "SHUC6989036"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-002",
+      "field_accuracy": 0.9765,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "15,724.8 KGS",
+          "actual": "15724.8 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-003",
+      "field_accuracy": 0.9882,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "commercial_invoice",
+          "field": "lc_number_ref",
+          "expected": "LC-2026-31467",
+          "actual": "LC-2026-34167"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-004",
+      "field_accuracy": 0.9647,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "OCEAN SENTINEL",
+          "actual": "OCEAN SENTINEL V.27E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.27E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "7,581.6 KGS",
+          "actual": "7581.6 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-005",
+      "field_accuracy": 0.9213,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "bl_number",
+          "expected": "DBS-8798012",
+          "actual": "DBS-9789012"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "SUNRISE GLORY",
+          "actual": "SUNRISE GLORY V.137E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.137E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "4000 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "4000 BAGS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-006",
+      "field_accuracy": 0.9535,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "lc_number_ref",
+          "expected": "LC-2026-44522",
+          "actual": "LC-2026-4522"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "DBSU2445544",
+          "actual": "DBSU2445543"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "3,540.7 KGS",
+          "actual": "3540.7 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-007",
+      "field_accuracy": 0.9176,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-622, 4,100 PCS AS PER PROFORMA INVOICE NO. PI-2457, FOB BUSAN INCOTERMS 2020",
+          "actual": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-622,\n4,100 PCS AS PER PROFORMA INVOICE NO. PI-2457,\nFOB BUSAN INCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "notify_party",
+          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "164 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+          "actual": "164 CARTONS OF STAINLESS STEEL PIPE FITTINGS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-164",
+          "actual": "BHARAT / NHAWA SHEVA / C/NO. 1-164"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-008",
+      "field_accuracy": 0.9651,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "DBSU1727308",
+          "actual": "DBSU127308"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "DBSU1727309",
+          "actual": "DBSU127309"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "29,764.8 KGS",
+          "actual": "29764.8 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-009",
+      "field_accuracy": 0.9412,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 26,900 PCS AS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 26,900 PCS\nAS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN\nINCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[1].requirements",
+          "expected": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT",
+          "actual": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL\nBANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "DBSU2523363",
+          "actual": "PACIFIC / LOS ANGELES / C/NO. 1-1076 DBSU2253363"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "PACIFIC / LOS ANGELES / C/NO. 1-1076",
+          "actual": "PACIFIC / LOS ANGELES / C/NO. 1-1076 DBSU2253363"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-010",
+      "field_accuracy": 0.9425,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "SUNRISE GLORY",
+          "actual": "SUNRISE GLORY V.127E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.127E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "2400 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "2400 BAGS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "64,800.0 KGS",
+          "actual": "64800.0 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-011",
+      "field_accuracy": 0.9318,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-941, 5,700 CTN AS PER PROFORMA INVOICE NO. PI-2209, FOB INCHEON INCOTERMS 2020",
+          "actual": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-941,\n5,700 CTN AS PER PROFORMA INVOICE NO. PI-2209,\nFOB INCHEON INCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "OCEAN SENTINEL",
+          "actual": "OCEAN SENTINEL V.175E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.175E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "5700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+          "actual": "5700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40) CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "46,170.0 KGS",
+          "actual": "46170.0 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-012",
+      "field_accuracy": 0.8941,
+      "tp": [],
+      "fp": [
+        "LC_EXPIRED_OR_LATE_PRESENTATION"
+      ],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "issue_date",
+          "expected": "2026-05-22",
+          "actual": "2022-05-26"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "expiry.date",
+          "expected": "2026-08-22",
+          "actual": "2022-08-26"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "lc_number_ref",
+          "expected": "LC-2026-86466",
+          "actual": "LC-2026-8646"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "EVER PROSPER",
+          "actual": "EVER PROSPER V.180E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.180E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "180 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+          "actual": "180 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "SHCU4964394",
+          "actual": "SHANGHAI / SHANGHAI / C/NO. 1-180 SHCU4964394"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "SHANGHAI / SHANGHAI / C/NO. 1-180",
+          "actual": "SHANGHAI / SHANGHAI / C/NO. 1-180 SHCU4964394"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-013",
+      "field_accuracy": 0.9294,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-995, 32,900 PCS AS PER PROFORMA INVOICE NO. PI-2110, FOB INCHEON INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-995, 32,900 PCS AS PER PROFORMA INVOICE NO. PI-2110, FOB INCHEON INCTERMS 2020"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1316 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "1316 CARTONS OF COTTON KNITTED T-SHIRTS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-1316",
+          "actual": "BHARAT / NHAWA SHEVA / CNO. 1-1316"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "5,685.1 KGS",
+          "actual": "5685.1 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-014",
+      "field_accuracy": 0.9302,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-271, 43,700 PCS AS PER PROFORMA INVOICE NO. PI-2479, FOB INCHEON INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-271, 43,700 PCS AS PER PROFORMA INVOICE NO. PI-2479, FOB INCHEON INCTERMS 2020"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "OCEAN SENTINEL",
+          "actual": "OCEAN SENTINEL V.13E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.13E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1748 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "1748 CARTONS OF COTTON KNITTED T-SHIRTS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "PACIFIC / LOS ANGELES / C/NO. 1-1748",
+          "actual": "PACIFIC / LOS ANGELES / C/NO. 1-1748\nDBSU2571397\nDBSU2571398"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "7,551.4 KGS",
+          "actual": "7551.4 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-015",
+      "field_accuracy": 0.9529,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.138E",
+          "actual": "V.13E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "776 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
+          "actual": "776 CARTONS OF STAINLESS STEEL PIPE FITTINGS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "17,809.2 KGS",
+          "actual": "17809.2 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-016",
+      "field_accuracy": 0.9186,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "notify_party",
+          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1212 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+          "actual": "1212 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-1212",
+          "actual": "BHARAT / NHAWA SHEVA / CNO. 1-1212"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "42,541.2 KGS",
+          "actual": "42541.2 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-017",
+      "field_accuracy": 0.8621,
+      "tp": [],
+      "fp": [
+        "PORT_MISMATCH"
+      ],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "applicant.address",
+          "expected": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+          "actual": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "beneficiary.address",
+          "expected": "300 TECHNO 2-RO, DAEJEON, KOREA",
+          "actual": "300 TECHNO 2-RO, DAEJEON"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL BC-552, 32,100 PCS AS PER PROFORMA INVOICE NO. PI-2051, FOB BUSAN INCOTERMS 2020",
+          "actual": "LITHIUM-ION BATTERY CELLS 3.7V, MODEL EC-552, 32,100 PCS AS PER PROFORMA INVOICE NO. PI-2051, FOB BUSAN INCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "net_weight",
+          "expected": "1,540.8 KGS",
+          "actual": "1,540.3 KGS"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "OCEAN SENTINEL",
+          "actual": "OCEAN SENTINEL V.92E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.92E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "HO CHI MINH CITY, VIETNAM",
+          "actual": "HO CHI MINH CY, VIETNAM"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipper.address",
+          "expected": "300 TECHNO 2-RO, DAEJEON, KOREA",
+          "actual": "300 TECHNO 2-RO, DAJEON, KOREA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1284 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+          "actual": "1284 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "DBSU8529546",
+          "actual": "DBSU8525946"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "1,664.1 KGS",
+          "actual": "1664.1 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-018",
+      "field_accuracy": 0.9412,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-480, 25,800 PCS AS PER PROFORMA INVOICE NO. PI-2368, FOB INCHEON INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-480, 25,800 PCS AS PER PROFORMA INVOICE NO. PI-2368, FOB INCHEON INCTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "net_weight",
+          "expected": "4,128.0 KGS",
+          "actual": "4128.0 KGS"
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "gross_weight",
+          "expected": "4,458.2 KGS",
+          "actual": "4458.2 KGS"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "GENERAL MERCHANDISE AS PER INVOICE",
+          "actual": "GENERAL MERCHANDISE AS PER INVOICE CLEAN ON BOARD"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-019",
+      "field_accuracy": 0.8778,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "consignee.raw_text",
+          "expected": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+          "actual": "TO ORDER OF VIETN COMMERCIAL JOINT STOCK BANK"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "notify_party",
+          "expected": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+          "actual": "MEKONG INDUSTRIAL TRADING CO., LTD., 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "7700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+          "actual": "7700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40) CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "SHCU8099247",
+          "actual": "SHCU899247"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "SHCU8099248",
+          "actual": "SHCU899248"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[2]",
+          "expected": "SHCU8099249",
+          "actual": "SHCU899249"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[3]",
+          "expected": "SHCU8099250",
+          "actual": "SHCU899250"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[4]",
+          "expected": "SHCU8099251",
+          "actual": "SHCU899251"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[5]",
+          "expected": "SHCU8099252",
+          "actual": "SHCU899252"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "62,370.0 KGS",
+          "actual": "62370.0"
+        }
+      ]
+    },
+    {
+      "case_id": "CLEAN-020",
+      "field_accuracy": 0.8764,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "grade": "A",
+      "grade_truth": "A",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-288, 7,000 CTN AS PER PROFORMA INVOICE NO. PI-2600, FOB INCHEON INCOTERMS 2020",
+          "actual": "INSTANT RAMEN NOODLE (BOX OF 40), MODEL RN-288,\n7,000 CTN AS PER PROFORMA INVOICE NO. PI-2600,\nFOB INCHEON INCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "lc_number_ref",
+          "expected": "LC-2026-48992",
+          "actual": "LC-2026-4892"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "7000 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+          "actual": "7000 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "DBSU8207693",
+          "actual": "DBSU207693"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "DBSU8207694",
+          "actual": "DBSU207694"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[2]",
+          "expected": "DBSU8207695",
+          "actual": "DBSU207695"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[3]",
+          "expected": "DBSU8207696",
+          "actual": "DBSU207696"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[4]",
+          "expected": "DBSU8207697",
+          "actual": "DBSU207697"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "56,700.0 KGS",
+          "actual": "56700.0 KGS"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "measurement",
+          "expected": "315.00 CBM",
+          "actual": "315.0 CBM"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-001",
+      "field_accuracy": 0.9059,
+      "tp": [
+        "AMOUNT_EXCEEDS_LC"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-745, 28,200 PCS AS PER PROFORMA INVOICE NO. PI-2065, FOB INCHEON INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-745, 28,200 PCS AS PER PROFORMA INVOICE NO. PI-2065, FOB INCHEON INCOMTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "net_weight",
+          "expected": "4,512.0 KGS",
+          "actual": "4512.0 KGS"
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "gross_weight",
+          "expected": "4,873.0 KGS",
+          "actual": "4873.0 KGS"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1128 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "1128 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "KMTU2824621",
+          "actual": "KMUTU284261"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "GULF / JEBEL ALI / C/NO. 1-1128",
+          "actual": "GULF / JEBEL ALI / CNO. 1-1128"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "booking_number",
+          "expected": "BKG292793",
+          "actual": "BKG929793"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-002",
+      "field_accuracy": 0.9412,
+      "tp": [
+        "AMOUNT_EXCEEDS_LC"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "applicant.address",
+          "expected": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+          "actual": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "beneficiary.address",
+          "expected": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN, KOREA",
+          "actual": "217 MIEUM SANDAN-RO, GANGSEO-GU, BUSAN"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "commercial_invoice",
+          "field": "lc_number_ref",
+          "expected": "LC-2026-99061",
+          "actual": "LC-2026-99601"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "84 CARTONS OF CNC MACHINED ALUMINUM HOUSING PARTS",
+          "actual": "84 CARTONS OF CNC MACHINED ALUMINIUM HOUSING PARTS"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-003",
+      "field_accuracy": 0.8824,
+      "tp": [
+        "CURRENCY_MISMATCH"
+      ],
+      "fp": [
+        "GOODS_DESC_MISMATCH"
+      ],
+      "fn": [],
+      "grade": "D",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-526, 21 MT AS PER PROFORMA INVOICE NO. PI-2242, FOB BUSAN INCOTERMS 2020",
+          "actual": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-526, 21 MT AS PER PROFORMA INVOICE NO. PI-2424, FOB BUSAN INCOTERMS 2020"
+        },
         {
           "document": "letter_of_credit",
           "field": "documents_required[0].requirements",
@@ -64,352 +1098,10 @@
           "actual": null
         },
         {
-          "document": "bill_of_lading",
-          "field": "shipper.address",
-          "expected": "300 TECHNO 2-RO, DAEJEON, KOREA",
-          "actual": "300 TECHNO 2-RO, DAJEON, KOREA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "240 CARTONS OF STAINLESS STEEL PIPE FITTINGS",
-          "actual": "240 CARTONS OF STAINLESS STEEL PIPE FITTINGS CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-002",
-      "field_accuracy": 0.9459,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "LED PANEL LIGHT 40W, MODEL LP-864, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2383, FOB INCHEON INCOTERMS 2020",
-          "actual": "LED PANEL LIGHT 40W, MODEL LP-864, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2383, FOB INCHEON INCO TERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "commercial_invoice",
-          "field": "goods[0].hs_code",
-          "expected": "9405.11",
-          "actual": "9405.41"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "80 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-003",
-      "field_accuracy": 0.973,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "container_numbers[0]",
-          "expected": "SHCU3298988",
-          "actual": "SHCU298988"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-004",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "OCEAN SENTINEL",
-          "actual": "OCEAN SENTINEL V.48E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.48E",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
-          "actual": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40) CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-005",
-      "field_accuracy": 0.9865,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
           "document": "commercial_invoice",
           "field": "lc_number_ref",
-          "expected": "LC-2026-72698",
-          "actual": "LC-2026-7269"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-006",
-      "field_accuracy": 0.973,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.88E",
-          "actual": "V.89E"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-007",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-298, 4,000 MT AS PER PROFORMA INVOICE NO. PI-2102, FOB BUSAN INCOTERMS 2020",
-          "actual": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-298, 4,000 MT AS PER PROFORMA INVOICE NO. PI-2102, FOB BUSAN INCO TERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "container_numbers[0]",
-          "expected": "KMTU8543250",
-          "actual": "KMITU8543250"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-008",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "LED PANEL LIGHT 40W, MODEL LP-808, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2486, FOB BUSAN INCOTERMS 2020",
-          "actual": "LED PANEL LIGHT 40W, MODEL LP-808, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2486, FOB BUSAN INCO TERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "240 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "240 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-009",
-      "field_accuracy": 0.9324,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "commercial_invoice",
-          "field": "goods[0].hs_code",
-          "expected": "9405.11",
-          "actual": "9405.41"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "OCEAN SENTINEL",
-          "actual": "OCEAN SENTINEL V.81E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.81E",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "80 CARTONS OF LED PANEL LIGHT 40W\nCLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-010",
-      "field_accuracy": 0.9865,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-011",
-      "field_accuracy": 0.9189,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 2,000 PCS AS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN INCOTERMS 2020",
-          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-131, 2,000 PCS\nAS PER PROFORMA INVOICE NO. PI-2352, FOB BUSAN\nINCOTERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[1].copies",
-          "expected": "3/3 ORIGINALS",
-          "actual": "IN 3/3 ORIGINALS"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[1].requirements",
-          "expected": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT",
-          "actual": "MADE OUT TO ORDER OF FIRST PACIFIC NATIONAL\nBANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "EVER PROSPER",
-          "actual": "EVER PROSPER V.92E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.92E",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF COTTON KNITTED T-SHIRTS",
-          "actual": "80 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-012",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "EVER PROSPER",
-          "actual": "EVER PROSPER V.15E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.15E",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-013",
-      "field_accuracy": 0.9324,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
+          "expected": "LC-2026-17283",
+          "actual": "LC-2026-1783"
         },
         {
           "document": "bill_of_lading",
@@ -432,310 +1124,20 @@
         {
           "document": "bill_of_lading",
           "field": "goods_description",
-          "expected": "40 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
-          "actual": "40 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)\nCLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-014",
-      "field_accuracy": 0.973,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "presentation_period_days",
-          "expected": 21,
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-015",
-      "field_accuracy": 0.9189,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
+          "expected": "840 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "840 BAGS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD"
         },
         {
           "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.111E",
-          "actual": "V.11E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NHAWA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "place_of_delivery",
-          "expected": "NHAVA SHEVA CY",
-          "actual": "NHAWA SHEVA CY"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "120 CARTONS OF COTTON KNITTED T-SHIRTS",
-          "actual": "120 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-016",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "LED PANEL LIGHT 40W, MODEL LP-262, 1,000 PCS AS PER PROFORMA INVOICE NO. PI-2610, FOB BUSAN INCOTERMS 2020",
-          "actual": "LED PANEL LIGHT 40W, MODEL LP-262, 1,000 PCS AS PER PROFORMA INVOICE NO. PI-2610, FOB BUSAN INCO TERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "40 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "40 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-017",
-      "field_accuracy": 0.9737,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "160 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
-          "actual": "160 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-018",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "commercial_invoice",
-          "field": "lc_number_ref",
-          "expected": "LC-2026-84836",
-          "actual": "LC-2026-8486"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "GENERAL MERCHANDISE AS PER INVOICE",
-          "actual": "GENERAL MERCHANDISE AS PER INVOICE CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-019",
-      "field_accuracy": 0.9459,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NHAWA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "place_of_delivery",
-          "expected": "NHAVA SHEVA CY",
-          "actual": "NHAWA SHEVA CY"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "120 CARTONS OF COTTON KNITTED T-SHIRTS",
-          "actual": "120 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "CLEAN-020",
-      "field_accuracy": 0.9595,
-      "tp": [],
-      "fp": [],
-      "fn": [],
-      "grade": "A",
-      "grade_truth": "A",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NHAWA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "place_of_delivery",
-          "expected": "NHAVA SHEVA CY",
-          "actual": "NHAWA SHEVA CY"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-001",
-      "field_accuracy": 0.973,
-      "tp": [
-        "AMOUNT_EXCEEDS_LC"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF COTTON KNITTED T-SHIRTS",
-          "actual": "80 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-002",
-      "field_accuracy": 0.9865,
-      "tp": [
-        "AMOUNT_EXCEEDS_LC"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "container_numbers[0]",
-          "expected": "KMTU2222020",
-          "actual": "KM TU2222020"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-003",
-      "field_accuracy": 0.9459,
-      "tp": [
-        "CURRENCY_MISMATCH"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NAVA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "160 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "160 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-840",
+          "actual": "BHARAT / NHAWA SHEVA / C/NO. 1-840"
         }
       ]
     },
     {
       "case_id": "DEFECT-004",
-      "field_accuracy": 0.9054,
+      "field_accuracy": 0.9674,
       "tp": [
         "GOODS_DESC_MISMATCH"
       ],
@@ -747,8 +1149,8 @@
         {
           "document": "letter_of_credit",
           "field": "goods_description",
-          "expected": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-482, 3,000 MT AS PER PROFORMA INVOICE NO. PI-2503, FOB BUSAN INCOTERMS 2020",
-          "actual": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-482, 3,000 MT AS PER PROFORMA INVOICE NO. PI-2503, FOB BUSAN INCO TERMS 2020"
+          "expected": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-207, 190 MT AS PER PROFORMA INVOICE NO. PI-2229, FOB BUSAN INCOTERMS 2020",
+          "actual": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-207, 190 MT AS PER PROFORMA INVOICE NO. PI-2229, FOB BUSAN INCO TERMS 2020"
         },
         {
           "document": "letter_of_credit",
@@ -758,39 +1160,46 @@
         },
         {
           "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "OCEAN SENTINEL",
-          "actual": "OCEAN SENTINEL V.145E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.145E",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NHAWA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "place_of_delivery",
-          "expected": "NHAVA SHEVA CY",
-          "actual": "NHAWA SHEVA CY"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
-          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
+          "field": "goods_description",
+          "expected": "7600 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "7600 BAGS OF POLYPROPYLENE RESIN COMPOUND\nCLEAN ON BOARD"
         }
       ]
     },
     {
       "case_id": "DEFECT-005",
-      "field_accuracy": 0.9595,
+      "field_accuracy": 0.9647,
+      "tp": [
+        "GOODS_DESC_MISMATCH"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "LED PANEL LIGHT 40W, MODEL LP-775, 3,100 PCS AS PER PROFORMA INVOICE NO. PI-2489, FOB BUSAN INCOTERMS 2020",
+          "actual": "LED PANEL LIGHT 40W, MODEL LP-775, 3,100 PCS AS PER PROFORMA INVOICE NO. PI-2489, FOB BUSAN INCO TERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "124 CARTONS OF LED PANEL LIGHT 40W",
+          "actual": "124 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-006",
+      "field_accuracy": 0.977,
       "tp": [
         "GOODS_DESC_MISMATCH"
       ],
@@ -807,72 +1216,15 @@
         },
         {
           "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "PACIFIC VOYAGER",
-          "actual": "PACIFIC VOYAGER V.41E"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.41E",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-006",
-      "field_accuracy": 0.9189,
-      "tp": [
-        "GOODS_DESC_MISMATCH"
-      ],
-      "fp": [
-        "LATE_SHIPMENT"
-      ],
-      "fn": [],
-      "grade": "D",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "latest_shipment_date",
-          "expected": "2026-06-23",
-          "actual": "2023-06-26"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "LED PANEL LIGHT 40W, MODEL LP-993, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCOTERMS 2020",
-          "actual": "LED PANEL LIGHT 40W, MODEL LP-993, 3,000 PCS AS PER PROFORMA INVOICE NO. PI-2462, FOB BUSAN INCO TERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NAVA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "shipper.address",
-          "expected": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
-          "actual": "88 GONGNAM-RO, YEOSU-SI, JEONNAM, KOREA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "120 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "120 CARTONS OF LED PANEL LIGHT 40W\nCLEAN ON BOARD"
+          "field": "container_numbers[0]",
+          "expected": "KMTU2087048",
+          "actual": "KMTU2078049"
         }
       ]
     },
     {
       "case_id": "DEFECT-007",
-      "field_accuracy": 0.9865,
+      "field_accuracy": 0.9882,
       "tp": [
         "BENEFICIARY_NAME_MISMATCH"
       ],
@@ -891,7 +1243,7 @@
     },
     {
       "case_id": "DEFECT-008",
-      "field_accuracy": 0.9595,
+      "field_accuracy": 0.9892,
       "tp": [
         "BENEFICIARY_NAME_MISMATCH"
       ],
@@ -901,28 +1253,16 @@
       "grade_truth": "C",
       "field_errors": [
         {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
           "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "OCEAN SENTINEL",
-          "actual": "OCEAN SENTINEL V.158"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "voyage_number",
-          "expected": "V.158E",
-          "actual": null
+          "field": "gross_weight",
+          "expected": "216,000.0 KGS",
+          "actual": "216000.0 KGS"
         }
       ]
     },
     {
       "case_id": "DEFECT-009",
-      "field_accuracy": 0.9595,
+      "field_accuracy": 0.8941,
       "tp": [
         "LATE_SHIPMENT"
       ],
@@ -933,247 +1273,27 @@
       "field_errors": [
         {
           "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-445, 37,000 PCS AS PER PROFORMA INVOICE NO. PI-2345, FOB BUSAN INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-445, 37,000 PCS\nAS PER PROFORMA INVOICE NO. PI-2345, FOB BUSAN\nINCOTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
           "field": "documents_required[0].requirements",
           "expected": "INDICATING THIS L/C NUMBER",
           "actual": null
         },
         {
-          "document": "bill_of_lading",
-          "field": "port_of_discharge",
-          "expected": "NHAVA SHEVA, INDIA",
-          "actual": "NHAWA SHEVA, INDIA"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "place_of_delivery",
-          "expected": "NHAVA SHEVA CY",
-          "actual": "NHAWA SHEVA CY"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-010",
-      "field_accuracy": 0.9865,
-      "tp": [
-        "LATE_SHIPMENT"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
           "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-011",
-      "field_accuracy": 0.9054,
-      "tp": [
-        "LC_EXPIRED_OR_LATE_PRESENTATION"
-      ],
-      "fp": [
-        "LATE_SHIPMENT"
-      ],
-      "fn": [],
-      "grade": "D",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "issue_date",
-          "expected": "2026-05-22",
-          "actual": "2022-05-26"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "latest_shipment_date",
-          "expected": "2026-05-21",
-          "actual": "2021-05-26"
-        },
-        {
-          "document": "commercial_invoice",
-          "field": "lc_number_ref",
-          "expected": "LC-2026-91989",
-          "actual": "LC-2026-9189"
-        },
-        {
-          "document": "commercial_invoice",
-          "field": "goods[0].hs_code",
-          "expected": "9405.11",
-          "actual": "9405.41"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "vessel_name",
-          "expected": "EVER PROSPER",
-          "actual": "EVER PROSPER V.50E"
+          "field": "documents_required[1].requirements",
+          "expected": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT",
+          "actual": "MADE OUT TO ORDER OF INDUS MERCANTILE BANK\nMARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
         },
         {
           "document": "bill_of_lading",
           "field": "voyage_number",
-          "expected": "V.50E",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF LED PANEL LIGHT 40W",
-          "actual": "80 CARTONS OF LED PANEL LIGHT 40W CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-012",
-      "field_accuracy": 0.9865,
-      "tp": [
-        "LC_EXPIRED_OR_LATE_PRESENTATION"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-013",
-      "field_accuracy": 0.9865,
-      "tp": [
-        "PORT_MISMATCH"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "B",
-      "grade_truth": "B",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-014",
-      "field_accuracy": 0.9595,
-      "tp": [
-        "PORT_MISMATCH"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "B",
-      "grade_truth": "B",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "lc_number",
-          "expected": "LC-2026-98342",
-          "actual": "LC-2026-99342"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "notify_party",
-          "expected": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
-          "actual": "MEKONG INDUSTRIAL TRADING CO., LTD., 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
-          "actual": "80 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)\nCLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-015",
-      "field_accuracy": 0.973,
-      "tp": [
-        "BL_SIGNATURE_DEFECT"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "B",
-      "grade_truth": "B",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "80 CARTONS OF POLYPROPYLENE RESIN COMPOUND",
-          "actual": "80 CARTONS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "container_numbers[0]",
-          "expected": "KMTU4018898",
-          "actual": "KMITU4018989"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-016",
-      "field_accuracy": 0.973,
-      "tp": [
-        "BL_SIGNATURE_DEFECT"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "B",
-      "grade_truth": "B",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "LED PANEL LIGHT 40W, MODEL LP-675, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2616, FOB INCHEON INCOTERMS 2020",
-          "actual": "LED PANEL LIGHT 40W, MODEL LP-675, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2616, FOB INCHEON INCTERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-017",
-      "field_accuracy": 0.9028,
-      "tp": [],
-      "fp": [],
-      "fn": [
-        "BL_NO_ONBOARD_NOTATION"
-      ],
-      "grade": "A",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-837, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2186, FOB BUSAN INCOTERMS 2020",
-          "actual": "STAINLESS STEEL PIPE FITTINGS, MODEL SF-837,\n6,000 PCS AS PER PROFORMA INVOICE NO. PI-2186,\nFOB BUSAN INCOTERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "shipped_on_board.indicated",
-          "expected": false,
-          "actual": true
+          "expected": "V.21E",
+          "actual": "21E"
         },
         {
           "document": "bill_of_lading",
@@ -1186,103 +1306,31 @@
           "field": "place_of_delivery",
           "expected": "NHAVA SHEVA CY",
           "actual": "NHAWA SHEVA CY"
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "shipper.address",
-          "expected": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
-          "actual": "88 GONGBANG-RO, YEOSU-SI, JEONNAM, KOREA"
         },
         {
           "document": "bill_of_lading",
           "field": "notify_party",
           "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
           "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-018",
-      "field_accuracy": 0.9028,
-      "tp": [],
-      "fp": [
-        "BENEFICIARY_NAME_MISMATCH"
-      ],
-      "fn": [
-        "BL_NO_ONBOARD_NOTATION"
-      ],
-      "grade": "B",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "letter_of_credit",
-          "field": "issue_date",
-          "expected": "2026-05-16",
-          "actual": "2026-05-12"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "beneficiary.name",
-          "expected": "DAEYANG POLYMER CO., LTD.",
-          "actual": "DAEYANG POLYMER CO., LTD"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "goods_description",
-          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-893, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2556, FOB BUSAN INCOTERMS 2020",
-          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-893, 6,000 PCS AS PER PROFORMA INVOICE NO. PI-2556, FOB BUSAN INCTERMS 2020"
-        },
-        {
-          "document": "letter_of_credit",
-          "field": "documents_required[0].requirements",
-          "expected": "INDICATING THIS L/C NUMBER",
-          "actual": null
-        },
-        {
-          "document": "bill_of_lading",
-          "field": "shipped_on_board.indicated",
-          "expected": false,
-          "actual": true
         },
         {
           "document": "bill_of_lading",
           "field": "goods_description",
-          "expected": "240 CARTONS OF COTTON KNITTED T-SHIRTS",
-          "actual": "240 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
+          "expected": "1480 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "1480 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
         },
         {
           "document": "bill_of_lading",
-          "field": "signature.carrier_name",
-          "expected": "DONGBANG SHIPPING LINE",
-          "actual": "DONGNANG SHIPPING LINE"
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-1480",
+          "actual": "BHARAT / NHAWA SHEVA / C/NO. 1-1480"
         }
       ]
     },
     {
-      "case_id": "DEFECT-019",
-      "field_accuracy": 0.9865,
+      "case_id": "DEFECT-010",
+      "field_accuracy": 0.9318,
       "tp": [
-        "AMOUNT_EXCEEDS_LC",
-        "BL_SIGNATURE_DEFECT"
-      ],
-      "fp": [],
-      "fn": [],
-      "grade": "C",
-      "grade_truth": "C",
-      "field_errors": [
-        {
-          "document": "bill_of_lading",
-          "field": "goods_description",
-          "expected": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
-          "actual": "20 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40) CLEAN ON BOARD"
-        }
-      ]
-    },
-    {
-      "case_id": "DEFECT-020",
-      "field_accuracy": 0.9324,
-      "tp": [
-        "BL_SIGNATURE_DEFECT",
         "LATE_SHIPMENT"
       ],
       "fp": [],
@@ -1296,6 +1344,98 @@
           "expected": "INDICATING THIS L/C NUMBER",
           "actual": null
         },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "HANJIN AURORA",
+          "actual": "HANJIN AURORA V.40E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.40E",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "3600 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "3600 BAGS OF POLYPROPYLENE RESIN COMPOUND\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "SHANGHAI / SHANGHAI / C/NO. 1-3600",
+          "actual": "SHANGHAI / SHANGHAI / C.NO. 1-3600"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "97,200.0 KGS",
+          "actual": "97200.0 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-011",
+      "field_accuracy": 0.9294,
+      "tp": [
+        "LC_EXPIRED_OR_LATE_PRESENTATION"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "notify_party",
+          "expected": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
+          "actual": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400002, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "932 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "932 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "DBSU1459057",
+          "actual": "DBSU1459507"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-932",
+          "actual": "BHARAT / NHAWA SHEVA / C/NO. 1-932"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-012",
+      "field_accuracy": 0.8526,
+      "tp": [
+        "LC_EXPIRED_OR_LATE_PRESENTATION"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
         {
           "document": "letter_of_credit",
           "field": "documents_required[1].doc_name",
@@ -1310,15 +1450,367 @@
         },
         {
           "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "15700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+          "actual": "15700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[0]",
+          "expected": "SHCU9654526",
+          "actual": "MEKONG / HO CHI MINH CITY / C/NO. 1-15700"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "SHCU9654527",
+          "actual": "SHCU9654506"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[2]",
+          "expected": "SHCU9654528",
+          "actual": "SHCU9654527"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[3]",
+          "expected": "SHCU9654529",
+          "actual": "SHCU9654528"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[4]",
+          "expected": "SHCU9654530",
+          "actual": "SHCU9654529"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[5]",
+          "expected": "SHCU9654531",
+          "actual": "SHCU9654530"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[6]",
+          "expected": "SHCU9654532",
+          "actual": "SHCU9654531"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[7]",
+          "expected": "SHCU9654533",
+          "actual": "SHCU9654532"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[8]",
+          "expected": "SHCU9654534",
+          "actual": "SHCU9654533"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[9]",
+          "expected": "SHCU9654535",
+          "actual": "SHCU9654534"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[10]",
+          "expected": "SHCU9654536",
+          "actual": "SHCU9654535"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-013",
+      "field_accuracy": 0.9895,
+      "tp": [
+        "PORT_MISMATCH"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "B",
+      "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "15200 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
+          "actual": "15200 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40) CLEAN ON BOARD"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-014",
+      "field_accuracy": 0.9882,
+      "tp": [
+        "PORT_MISMATCH"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "B",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-015",
+      "field_accuracy": 0.9419,
+      "tp": [
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "B",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "2456 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V",
+          "actual": "2456 CARTONS OF LITHIUM-ION BATTERY CELLS 3.7V\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "container_numbers[1]",
+          "expected": "DBSU5084319",
+          "actual": "DBSU6084319"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "PACIFIC / LOS ANGELES / C/NO. 1-2456",
+          "actual": "PACIFIC / LOS ANGELES/\nC/NO. 1-2456\nDBSU5084318\nDBSU6084319"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "signature.signer_capacity",
+          "expected": "unclear",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-016",
+      "field_accuracy": 0.9195,
+      "tp": [
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "B",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-528, 70 MT AS PER PROFORMA INVOICE NO. PI-2434, FOB INCHEON INCOTERMS 2020",
+          "actual": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-528, 70 MT AS PER PROFORMA INVOICE NO. PI-2434, FOB INCHEON INCO TERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
           "field": "vessel_name",
           "expected": "EVER PROSPER",
-          "actual": "EVER PROSPER V.166E"
+          "actual": "EVER PROSPER V47E"
         },
         {
           "document": "bill_of_lading",
           "field": "voyage_number",
-          "expected": "V.166E",
+          "expected": "V.47E",
           "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "2800 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+          "actual": "2800 BAGS OF POLYPROPYLENE RESIN COMPOUND CLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "GULF / JEBEL ALI / C/NO. 1-2800",
+          "actual": "GULF / JEBEL ALI / CNO. 1-2800"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "measurement",
+          "expected": "126.00 CBM",
+          "actual": "126.0 CBM"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-017",
+      "field_accuracy": 0.9762,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "BL_NO_ONBOARD_NOTATION"
+      ],
+      "grade": "A",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipped_on_board.indicated",
+          "expected": false,
+          "actual": true
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-018",
+      "field_accuracy": 0.9643,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "BL_NO_ONBOARD_NOTATION"
+      ],
+      "grade": "A",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "bill_of_lading",
+          "field": "shipped_on_board.indicated",
+          "expected": false,
+          "actual": true
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "PACIFIC / LOS ANGELES / C/NO. 1-1200",
+          "actual": "PACIFIC / LOS ANGELES / C.N.O. 1-1200"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "32,400.0 KGS",
+          "actual": "32400.0 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-019",
+      "field_accuracy": 0.9176,
+      "tp": [
+        "AMOUNT_EXCEEDS_LC",
+        "BL_SIGNATURE_DEFECT"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "C",
+      "grade_truth": "C",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "goods_description",
+          "expected": "COTTON KNITTED T-SHIRTS, MODEL TS-407, 35,200 PCS AS PER PROFORMA INVOICE NO. PI-2558, FOB BUSAN INCOTERMS 2020",
+          "actual": "COTTON KNITTED T-SHIRTS, MODEL TS-407, 35,200 PCS AS PER PROFORMA INVOICE NO. PI-2558, FOB BUSAN INCTERMS 2020"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "port_of_discharge",
+          "expected": "NHAVA SHEVA, INDIA",
+          "actual": "NHAWA SHEVA, INDIA"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "place_of_delivery",
+          "expected": "NHAVA SHEVA CY",
+          "actual": "NHAWA SHEVA CY"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "1408 CARTONS OF COTTON KNITTED T-SHIRTS",
+          "actual": "1408 CARTONS OF COTTON KNITTED T-SHIRTS\nCLEAN ON BOARD"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "shipping_marks",
+          "expected": "BHARAT / NHAVA SHEVA / C/NO. 1-1408",
+          "actual": "BHARAT / NHAWA SHEVA / C/NO. 1-1408"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "gross_weight",
+          "expected": "6,082.6 KGS",
+          "actual": "6082.6 KGS"
+        }
+      ]
+    },
+    {
+      "case_id": "DEFECT-020",
+      "field_accuracy": 0.9412,
+      "tp": [
+        "BL_SIGNATURE_DEFECT",
+        "PORT_MISMATCH"
+      ],
+      "fp": [],
+      "fn": [],
+      "grade": "B",
+      "grade_truth": "B",
+      "field_errors": [
+        {
+          "document": "letter_of_credit",
+          "field": "lc_number",
+          "expected": "LC-2026-49883",
+          "actual": "LC-2026-49983"
+        },
+        {
+          "document": "letter_of_credit",
+          "field": "documents_required[0].requirements",
+          "expected": "INDICATING THIS L/C NUMBER",
+          "actual": null
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "vessel_name",
+          "expected": "EVER PROSPER",
+          "actual": "EVER PROSPER V"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "voyage_number",
+          "expected": "V.69E",
+          "actual": "69E"
+        },
+        {
+          "document": "bill_of_lading",
+          "field": "goods_description",
+          "expected": "428 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT",
+          "actual": "428 CARTONS OF AUTOMOTIVE RUBBER SEAL KIT\nCLEAN ON BOARD"
         }
       ]
     }

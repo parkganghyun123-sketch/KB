@@ -109,6 +109,8 @@ def main():
     cases_dir = Path(opt("--cases", "cases"))
     # --rendered-dir 은 --images 의 별칭 (B 브랜치 문서·스크립트 호환)
     images_dir = Path(opt("--images", opt("--rendered-dir", str(cases_dir / "rendered"))))
+    extracted_dir = images_dir.parent / "extracted"
+    extracted_dir.mkdir(exist_ok=True)
     limit = int(opt("--limit", "0") or 0)
     out_path = opt("--out")
     md_path = opt("--md")
@@ -172,6 +174,17 @@ def main():
             print(f"❌ {str(e)[:120]}")
             per_case.append({"case_id": cid, "error": str(e)[:200]})
             continue
+
+        # 실제 LLM 추출 결과를 보존한다. 폐쇄 루프 검증은 이 파일을 입력으로
+        # 사용해 추출 오류가 수정 제안까지 전파되는지를 별도 확인한다.
+        (extracted_dir / f"{cid}.json").write_text(
+            json.dumps({
+                "case_id": cid,
+                "documents": extracted,
+                "presentation_date": case.get("presentation_date"),
+            }, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
 
         rep = build_report(cid, extracted, parse_date(case.get("presentation_date")))
         found = {x["type"] for x in rep["discrepancies"]}

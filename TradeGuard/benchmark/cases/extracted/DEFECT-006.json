@@ -1,0 +1,215 @@
+{
+  "case_id": "DEFECT-006",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-55356",
+      "issuing_bank": "BANK OF EASTERN CHINA, SHANGHAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "issue_date": "2026-05-23",
+      "expiry": {
+        "date": "2026-08-23",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA",
+        "country": null
+      },
+      "beneficiary": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA",
+        "country": null
+      },
+      "currency": "USD",
+      "amount": 87000.0,
+      "tolerance": null,
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "latest_shipment_date": "2026-07-27",
+      "goods_description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-875, 60 MT AS PER PROFORMA INVOICE NO. PI-2211, FOB BUSAN INCOTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": null
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF BANK OF EASTERN CHINA MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {
+        "doc_type": 1.0,
+        "lc_number": 1.0,
+        "issuing_bank": 1.0,
+        "advising_bank": 1.0,
+        "available_with_by": 1.0,
+        "issue_date": 1.0,
+        "expiry": 1.0,
+        "applicant": 1.0,
+        "beneficiary": 1.0,
+        "currency": 1.0,
+        "amount": 1.0,
+        "tolerance": 1.0,
+        "partial_shipments": 1.0,
+        "transhipment": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "latest_shipment_date": 1.0,
+        "goods_description": 1.0,
+        "documents_required": 1.0,
+        "additional_conditions": 1.0,
+        "presentation_period_days": 1.0,
+        "confirmation_instructions": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-9598",
+      "invoice_date": "2026-07-24",
+      "lc_number_ref": "LC-2026-55356",
+      "seller": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "buyer": {
+        "name": "SHANGHAI HONGDA TRADE CO., LTD",
+        "address": "2200 PUDONG AVENUE, SHANGHAI, CHINA"
+      },
+      "currency": "USD",
+      "total_amount": 87000.0,
+      "goods": [
+        {
+          "description": "POLYPROPYLENE RESIN COMPOUND, MODEL PP-785, AS PER PROFORMA INVOICE NO. PI-2211",
+          "quantity": 60,
+          "unit": "MT",
+          "unit_price": 1450.0,
+          "amount": 87000.0,
+          "hs_code": "3902.10"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "BUSAN"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-2400",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "packages": "2400 BAGS",
+      "net_weight": "60,000.0 KGS",
+      "gross_weight": "64,800.0 KGS",
+      "signed": true,
+      "field_confidence": {
+        "invoice_number": 1.0,
+        "invoice_date": 1.0,
+        "lc_number_ref": 1.0,
+        "seller": 1.0,
+        "buyer": 1.0,
+        "currency": 1.0,
+        "total_amount": 1.0,
+        "goods": 1.0,
+        "incoterms": 1.0,
+        "payment_terms": 1.0,
+        "shipping_marks": 1.0,
+        "country_of_origin": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "packages": 1.0,
+        "net_weight": 1.0,
+        "gross_weight": 1.0,
+        "signed": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-6011750",
+      "issue_date": "2026-07-24",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-24",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "PACIFIC VOYAGER",
+      "voyage_number": "V.94E",
+      "place_of_receipt": "BUSAN CY",
+      "port_of_loading": "BUSAN, KOREA",
+      "port_of_discharge": "SHANGHAI, CHINA",
+      "place_of_delivery": "SHANGHAI CY",
+      "shipper": {
+        "name": "DAEYANG POLYMER CO., LTD.",
+        "address": "88 GONGDAN-RO, YEOSU-SI, JEONNAM, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF BANK OF EASTERN CHINA",
+        "is_to_order": true
+      },
+      "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
+      "goods_description": "2400 BAGS OF POLYPROPYLENE RESIN COMPOUND",
+      "container_numbers": [
+        "KMTU2078049",
+        "KMTU2087049",
+        "KMTU2087050"
+      ],
+      "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-2400",
+      "package_count": "2400 BAGS",
+      "gross_weight": "64,800.0 KGS",
+      "measurement": "108.00 CBM",
+      "booking_number": "BKG219360",
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "KOREA MARINE TRANSPORT CO., LTD.",
+        "signer_capacity": "master"
+      },
+      "field_confidence": {
+        "bl_number": 1.0,
+        "issue_date": 1.0,
+        "vessel_name": 1.0,
+        "voyage_number": 1.0,
+        "place_of_receipt": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "place_of_delivery": 1.0,
+        "shipper.name": 1.0,
+        "shipper.address": 1.0,
+        "consignee.raw_text": 1.0,
+        "notify_party": 1.0,
+        "goods_description": 1.0,
+        "container_numbers": 1.0,
+        "shipping_marks": 1.0,
+        "package_count": 1.0,
+        "gross_weight": 1.0,
+        "measurement": 1.0,
+        "booking_number": 1.0,
+        "freight_terms": 1.0,
+        "clean": 1.0,
+        "originals_count": 1.0,
+        "signature.carrier_name": 1.0,
+        "signature.signer_capacity": 1.0
+      },
+      "unreadable_fields": []
+    }
+  },
+  "presentation_date": "2026-08-07"
+}

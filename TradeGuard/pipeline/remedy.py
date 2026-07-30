@@ -15,6 +15,7 @@
 
 용어: curable(치유 가능) — ISBP/실무에서 서류 재발행·정정으로 해소되는 하자.
 """
+import math
 from copy import deepcopy
 
 # 하자 유형 → (치유 가능 여부, 대상 문서, 대상 필드, 조치 주체)
@@ -168,8 +169,12 @@ def apply_edits(docs, edits):
         if e["doc"] == "commercial_invoice" and e["field"] == "total_amount":
             g = (target.get("goods") or [{}])[0]
             if g.get("quantity"):
-                g["unit_price"] = round(e["after"] / g["quantity"], 2)
-                g["amount"] = round(g["unit_price"] * g["quantity"], 2)
+                # 단가를 반올림(round)하면 qty × price가 e["after"](신용장 한도)를
+                # 다시 넘어설 수 있다 — 한도 초과 하자를 고치려다 재발시키는 셈이다.
+                # 내림(floor)해 한도를 절대 넘지 않게 한다.
+                price = math.floor(e["after"] / g["quantity"] * 100) / 100
+                g["unit_price"] = price
+                g["amount"] = round(price * g["quantity"], 2)
                 target["total_amount"] = g["amount"]
         applied.append({**e, "before": before, "after": _get(target, e["field"])})
     return out, applied

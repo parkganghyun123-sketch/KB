@@ -20,6 +20,7 @@ API:
   GET  /api/fx                  현재 환율 (ECOS)
 """
 import json
+import re
 import shutil
 import sys
 import tempfile
@@ -31,7 +32,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "pipeline"))
 
-from fastapi import FastAPI, File, HTTPException, UploadFile  # noqa: E402
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile  # noqa: E402
 from fastapi.responses import FileResponse, JSONResponse  # noqa: E402
 from fastapi.staticfiles import StaticFiles  # noqa: E402
 
@@ -47,10 +48,22 @@ DOC_ORDER = [("letter_of_credit", "신용장"), ("commercial_invoice", "상업�
 SAMPLE_DIRS = [ROOT / "samples", ROOT / "benchmark" / "cases"]
 
 
+# 케이스 ID 허용 문자 — 영문 대문자·숫자·하이픈만.
+# 경로 구분자(/ \)와 상위 이동(..)을 문법적으로 배제해 임의 파일 읽기를 막는다.
+# 검증 없이 f"{case_id}.json"을 경로에 이어 붙이면 "../../.."로 저장소 밖 JSON을
+# 읽을 수 있다(경로 조작). 프로토타입이라도 파일 경로에 사용자 입력을 붙일 때는 막는다.
+CASE_ID_RE = re.compile(r"^[A-Z0-9][A-Z0-9-]{0,31}$")
+
+
 # ---------- 공통 ----------
 def find_case(case_id: str) -> dict:
+    if not isinstance(case_id, str) or not CASE_ID_RE.match(case_id):
+        raise HTTPException(400, f"허용되지 않는 케이스 ID 형식입니다: {str(case_id)[:40]}")
     for d in SAMPLE_DIRS:
-        p = d / f"{case_id}.json"
+        p = (d / f"{case_id}.json").resolve()
+        # 정규화 후에도 지정 디렉터리 안에 있는지 이중 확인 (심볼릭 링크 대비)
+        if p.parent != d.resolve():
+            continue
         if p.exists():
             return json.loads(p.read_text(encoding="utf-8"))
     raise HTTPException(404, f"케이스를 찾을 수 없습니다: {case_id}")
@@ -209,20 +222,25 @@ def health():
 @app.get("/api/samples")
 def samples():
     out = []
+    # find_case()가 SAMPLE_DIRS를 앞에서부터 훑어 첫 일치를 반환하므로,
+    # 같은 case_id가 두 디렉터리에 있으면 목록에는 두 장이 뜨는데 클릭 결과는 하나뿐이다.
+    # 카드에 적힌 등급과 실제 판정이 어긋나므로, 목록도 같은 우선순위로 중복을 제거한다.
+    seen = set()
     for d in SAMPLE_DIRS:
         for p in sorted(d.glob("*.json")):
             try:
                 c = json.loads(p.read_text(encoding="utf-8"))
             except Exception:
                 continue
-            if "documents" not in c:
+            if "documents" not in c or c.get("case_id") in seen:
                 continue
+            seen.add(c["case_id"])
             out.append({"case_id": c["case_id"], "label": c.get("label"),
                         "defect_types": c.get("defect_types", []),
                         "note": (c.get("scenario_note_ko") or "")[:90],
                         "expected_grade": (c.get("ground_truth") or {}).get("overall_risk", {}).get("grade")})
     # 데모 추천 순서: A등급 함정 → C등급 → D등급
-    prio = {"CLEAN-017": 0, "DEFECT-019": 1, "DEFECT-001": 2}
+    prio = {"CLEAN-017": 0, "DEFECT-019": 1, "DEMO-001": 2}
     out.sort(key=lambda x: (prio.get(x["case_id"], 9), x["case_id"]))
     return {"count": len(out), "samples": out}
 
@@ -301,12 +319,25 @@ def redetect(body: dict):
 
 
 @app.post("/api/analyze/upload")
-async def analyze_upload(files: list[UploadFile] = File(...)):
+async def analyze_upload(files: list[UploadFile] = File(...),
+                         presentation_date: str = Form(None)):
+    """presentation_date: 서류를 은행에 제시하는(할) 날짜, YYYY-MM-DD.
+
+    이 값이 UCP600 14(c) 제시기한 판정의 기준이 된다. 서류 어디에도 인쇄돼 있지
+    않으므로 추출로는 알 수 없고, 사용자가 지정해야 한다. 미지정 시 오늘로 계산하는데,
+    과거에 발행된 서류(예: 시연용 벤치마크 이미지)를 판독하면 제시기한 경과가
+    일괄로 잡혀 정상 서류까지 하자로 보인다.
+    """
     client = get_client()
     if client is None:
         raise HTTPException(503, "LLM 키가 없습니다. .env를 확인하세요 (샘플 모드는 사용 가능).")
     if not files:
         raise HTTPException(400, "파일이 없습니다")
+    if presentation_date:
+        try:
+            date.fromisoformat(presentation_date)
+        except ValueError:
+            raise HTTPException(400, f"제시일 형식이 올바르지 않습니다 (YYYY-MM-DD): {presentation_date[:20]}")
 
     from extract import classify, extract as extract_doc
     t0 = time.time()
@@ -337,11 +368,12 @@ async def analyze_upload(files: list[UploadFile] = File(...)):
         raise HTTPException(422, {"message": "추출된 서류가 없습니다", "errors": errors})
 
     n = len(docs)
-    res = analyze(docs, "UPLOAD", None,
+    res = analyze(docs, "UPLOAD", presentation_date,
                   meta={"mode": "upload", "provider": client.name, "docs": n,
                         "cost_usd": round(n * 0.02, 3),  # 대략치
                         "elapsed_sec": round(time.time() - t0, 1),
                         "errors": errors,
+                        "presentation_date_source": "user" if presentation_date else "today",
                         "source": f"업로드 이미지 {n}장 · {client.name} 실시간 판독"})
     return res
 

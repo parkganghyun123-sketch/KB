@@ -32,20 +32,20 @@ while [ $# -gt 0 ]; do
 done
 
 echo "══ 1/4 서류 렌더링 (샘플 케이스) ══"
-python3 render/render.py samples/DEFECT-001.json --out render/sample_output
+python3 render/render.py samples/DEMO-001.json --out render/sample_output
 for c in CLEAN-017 DEFECT-019 DEFECT-011; do
   python3 render/render.py "benchmark/cases/$c.json" --out render/sample_output >/dev/null
 done
 echo "  ✅ 서류 HTML 생성 완료 (render/sample_output/)"
 
 echo "══ 2/4 하자 리포트 — detect.py 실제 판정 ══"
-python3 render/render_report.py samples/DEFECT-001.json --out mockups/screen3_live.html
+python3 render/render_report.py samples/DEMO-001.json --out mockups/screen3_live.html
 for c in CLEAN-017 DEFECT-019 DEFECT-011; do
   python3 render/render_report.py "benchmark/cases/$c.json" --out "mockups/live_$c.html"
 done
 
 echo "══ 3/4 판독 화면 — 추출 결과 렌더 ══"
-python3 render/render_extraction.py --from-case samples/DEFECT-001.json \
+python3 render/render_extraction.py --from-case samples/DEMO-001.json \
         --out mockups/screen2_live.html --docs ../render/sample_output
 
 echo "══ 4/4 환율 스냅샷 — 한국은행 ECOS ══"

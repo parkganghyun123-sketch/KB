@@ -84,6 +84,14 @@ border-radius:12px;padding:18px 22px;margin-bottom:22px}
 .drop{border:2px dashed #c9cdd3;border-radius:14px;padding:36px;text-align:center;background:#fff}
 .drop.over{border-color:var(--kb-yellow);background:#fffdf5}
 .filelist{margin-top:12px;font-size:13px;color:var(--sub)}
+.presdate{margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.presdate label{font-size:13.5px;font-weight:700;margin-right:10px}
+.presdate input[type=date]{font:inherit;font-size:13.5px;padding:6px 10px;border:1px solid #c9cdd3;
+  border-radius:8px;background:#fff;color:var(--fg)}
+.presdate .mini{font:inherit;font-size:12.5px;padding:6px 12px;margin-left:8px;border:1px solid var(--line);
+  border-radius:8px;background:var(--bg);color:var(--sub);cursor:pointer}
+.presdate .mini:hover{background:#eef0f3}
+.presdate .hint{margin:10px 0 0;font-size:12.5px;color:var(--sub);line-height:1.7}
 
 /* 진행 */
 .progress{display:flex;gap:10px;align-items:center;font-size:14px}
@@ -104,6 +112,7 @@ border-radius:12px;padding:18px 22px;margin-bottom:22px}
 .chip{font-size:12.5px;padding:5px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--sub)}
 .chip.red{background:var(--danger-bg);border-color:#f5c6c2;color:var(--danger);font-weight:600}
 .chip.ok{background:var(--ok-bg);border-color:#a6f4c5;color:var(--ok);font-weight:600}
+.chip.warn{background:var(--warn-bg);border-color:#fedf89;color:var(--warn);font-weight:600}
 
 .disc{background:#fff;border:1px solid var(--line);border-left:4px solid var(--danger);border-radius:12px;padding:18px 22px;margin-bottom:14px}
 .disc.medium{border-left-color:var(--warn)}.disc.low{border-left-color:var(--sub)}
@@ -323,6 +332,17 @@ font-size:12px;color:#98a2b3}
         <input type="file" id="fileInput" multiple accept=".png,.jpg,.jpeg,.webp" style="display:none">
         <div class="filelist" id="fileList"></div>
       </div>
+      <!-- 제시일은 UCP600 14(c) 제시기한 판정의 기준이다. 기본값을 '오늘'로 두면
+           과거에 발행된 서류를 판독할 때 제시기한 경과가 일괄로 잡힌다.
+           서류에 인쇄돼 있지 않은 값이므로 추출로는 알 수 없다 — 사용자가 정한다. -->
+      <div class="presdate">
+        <label for="presDate">서류 제시(예정)일</label>
+        <input type="date" id="presDate">
+        <button type="button" class="mini" onclick="$('presDate').valueAsDate=new Date()">오늘</button>
+        <p class="hint">은행에 서류를 내는 날짜입니다. <b>UCP600 14(c) 제시기한</b>(선적일+21일과 신용장
+          유효기일 중 이른 날) 판정 기준이 되며, 서류에 인쇄돼 있지 않아 직접 지정해야 합니다.
+          비워두면 오늘 날짜로 계산합니다.</p>
+      </div>
       <div class="cta">
         <button class="btn primary" id="btnUpload" onclick="runUpload()" disabled>분석 시작 →</button>
       </div>
@@ -527,6 +547,9 @@ async function runUpload(){
   log("→ 문서 종류 분류 후 필드 추출 (AI)");
   const fd = new FormData();
   FILES.forEach(f => fd.append("files", f));
+  // 제시일은 서류에 없는 값이라 사용자가 지정한다. 비우면 서버가 오늘로 계산한다.
+  const pres = $("presDate").value;
+  if(pres) fd.append("presentation_date", pres);
   try{
     const r = await fetch("/api/analyze/upload", {method:"POST", body: fd});
     const j = await r.json();
@@ -558,6 +581,11 @@ function render(d){
   if(me) chips.push(`<span class="chip">MEDIUM ${me}건</span>`);
   if(!r.discrepancies.length) chips.push(`<span class="chip ok">하자 없음</span>`);
   if(d.meta.mode==="sample") chips.push(`<span class="chip ok">비용 0원</span>`);
+  // 제시일은 UCP600 14(c) 판정을 좌우하므로, 어떤 값으로 판정했는지 화면에 남긴다.
+  // '오늘로 자동 계산'인 경우 특히 명시해야 한다 — 판정 결과가 실행일에 따라 달라지기 때문.
+  if(d.presentation_date) chips.push(`<span class="chip">제시일 ${esc(d.presentation_date)}</span>`);
+  else if(d.meta.presentation_date_source === "today")
+    chips.push(`<span class="chip warn">제시일 미지정 — 오늘 기준 판정</span>`);
   $("chips").innerHTML = chips.join("");
 
   const order = {high:0, medium:1, low:2};

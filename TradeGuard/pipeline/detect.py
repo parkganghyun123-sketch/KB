@@ -8,7 +8,7 @@
   · 모든 하자에 UCP600 조항 인용(ucp600_kb.json) 부착
 
 사용법:
-  python3 detect.py ../samples/DEFECT-001.json [--out report.json]
+  python3 detect.py ../samples/DEMO-001.json [--out report.json]
   입력: benchmark_case JSON(documents 키 존재 시) 또는 {letter_of_credit, commercial_invoice, bill_of_lading} JSON
   ground_truth가 있으면 판정 결과와 자동 대조(TP/FN/FP)를 출력한다.
 """

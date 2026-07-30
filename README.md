@@ -187,13 +187,13 @@ bash demo.sh
 
 ```bash
 # 서류 이미지 생성 (LLM 불필요)
-python3 render/render.py samples/DEFECT-001.json --out out --png
+python3 render/render.py samples/DEMO-001.json --out out --png
 
 # 하자 검출 (LLM 불필요)
-python3 pipeline/detect.py samples/DEFECT-001.json --out report.json
+python3 pipeline/detect.py samples/DEMO-001.json --out report.json
 
 # 서류 이미지에서 필드 추출 (LLM 필요)
-python3 pipeline/extract.py out/DEFECT-001_lc.png --out lc.json
+python3 pipeline/extract.py out/DEMO-001_lc.png --out lc.json
 
 # 정확도 평가
 cd benchmark
@@ -331,7 +331,7 @@ import sys, json
 sys.path.insert(0, "pipeline")
 from detect import build_report
 
-case = json.load(open("samples/DEFECT-001.json"))
+case = json.load(open("samples/DEMO-001.json"))
 report = build_report(case["case_id"], case["documents"])
 
 print(report["overall_risk"]["grade"])   # 'D'
@@ -367,7 +367,7 @@ curl http://localhost:8000/api/health
 # 샘플 케이스 분석 (무료)
 curl -X POST http://localhost:8000/api/analyze/sample \
      -H "Content-Type: application/json" \
-     -d '{"case_id": "DEFECT-001"}'
+     -d '{"case_id": "DEMO-001"}'
 
 # 서류 이미지 업로드 분석 (LLM 호출 · 유료)
 curl -X POST http://localhost:8000/api/analyze/upload \
@@ -378,7 +378,7 @@ curl -X POST http://localhost:8000/api/analyze/upload \
 
 ```json
 {
-  "case_id": "DEFECT-001",
+  "case_id": "DEMO-001",
   "documents": { "letter_of_credit": {}, "commercial_invoice": {}, "bill_of_lading": {} },
   "report": {
     "overall_risk": { "grade": "D", "score": 40, "summary_ko": "..." },

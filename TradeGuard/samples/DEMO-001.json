@@ -1,9 +1,9 @@
 {
-  "case_id": "DEFECT-001",
+  "case_id": "DEMO-001",
   "label": "defect",
   "defect_types": ["GOODS_DESC_MISMATCH", "LATE_SHIPMENT", "BL_SIGNATURE_DEFECT"],
   "difficulty": "hard",
-  "scenario_note_ko": "한국 CNC 부품 수출사 → 베트남 바이어, USD 84,000. 송장 모델번호 오기(AH-720→AH-702), 최종선적기일 3일 경과, B/L 서명자 자격 미표시의 복합 하자 케이스 (템플릿·화면3 검증용 샘플)",
+  "scenario_note_ko": "한국 CNC 부품 수출사 → 베트남 바이어, USD 84,000. 송장 모델번호 오기(AH-720→AH-702), 최종선적기일 3일 경과, B/L 서명자 자격 미표시의 복합 하자 케이스. 시연·템플릿 검증 전용이며 평가 지표(benchmark/cases 40건)에는 포함되지 않는다.",
   "documents": {
     "letter_of_credit": {
       "doc_type": "letter_of_credit",
@@ -87,7 +87,7 @@
   },
   "rendered_files": null,
   "ground_truth": {
-    "case_id": "DEFECT-001",
+    "case_id": "DEMO-001",
     "documents_checked": ["letter_of_credit", "commercial_invoice", "bill_of_lading"],
     "discrepancies": [
       {

@@ -23,10 +23,10 @@ python3 pipeline/fx_rates.py --check  # 환율 API 키 진단
 
 ```bash
 # 1) 추출: 서류 이미지 → 스키마 JSON (API 키 필요)
-python3 extract.py ../render/out/DEFECT-001_lc.png --out lc.json
+python3 extract.py ../render/sample_output/DEMO-001_lc.png --out lc.json
 
 # 2) 하자 검출: 케이스/문서 JSON → 하자 리포트
-python3 detect.py ../samples/DEFECT-001.json --out report.json
+python3 detect.py ../samples/DEMO-001.json --out report.json
 #    ANTHROPIC_API_KEY 있으면 의미 비교(상품명세·명칭)에 LLM 사용,
 #    없으면 토큰 휴리스틱 폴백으로 동작 (오프라인 테스트 가능)
 ```

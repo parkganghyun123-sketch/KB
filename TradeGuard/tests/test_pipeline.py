@@ -17,7 +17,7 @@ class PipelineRegressionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.case = json.loads(
-            (ROOT / "samples" / "DEFECT-001.json").read_text(encoding="utf-8")
+            (ROOT / "samples" / "DEMO-001.json").read_text(encoding="utf-8")
         )
 
     @patch.dict(os.environ, {"LLM_PROVIDER": "disabled"})

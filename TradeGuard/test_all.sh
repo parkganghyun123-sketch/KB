@@ -42,7 +42,7 @@ echo "══ 2. B — 하자 검출 엔진 ══"
 run "샘플 케이스 정검출 (하자 3건)" "python3 -c \"
 import sys,json; sys.path.insert(0,'pipeline')
 from detect import build_report
-c=json.load(open('samples/DEFECT-001.json'))
+c=json.load(open('samples/DEMO-001.json'))
 r=build_report(c['case_id'],c['documents'])
 got={d['type'] for d in r['discrepancies']}
 exp={d['type'] for d in c['ground_truth']['discrepancies']}
@@ -51,14 +51,14 @@ assert r['overall_risk']['grade']=='D'\""
 run "검출 출력이 discrepancy_report 스키마 준수" "python3 -c \"
 import sys,json,jsonschema; sys.path.insert(0,'pipeline')
 from detect import build_report
-c=json.load(open('samples/DEFECT-001.json'))
+c=json.load(open('samples/DEMO-001.json'))
 jsonschema.validate(build_report(c['case_id'],c['documents']), json.load(open('schemas/discrepancy_report.schema.json')))\""
 
 echo "══ 3. A — 벤치마크 회귀 (규칙 정합성) ══"
 run "판정이 LLM 키 유무와 무관하게 동일 (결정성)" "python3 -c \"
 import sys,json,os; sys.path.insert(0,'pipeline')
 from detect import build_report
-c=json.load(open('samples/DEFECT-001.json'))
+c=json.load(open('samples/DEMO-001.json'))
 a=[d['type'] for d in build_report(c['case_id'],c['documents'])['discrepancies']]
 os.environ['TG_EXPLAIN_LLM']='0'
 b=[d['type'] for d in build_report(c['case_id'],c['documents'])['discrepancies']]
@@ -93,26 +93,46 @@ ps=[p for p in propose_all(docs,r) if p['curable']]
 assert ps, '제안 없음'
 amt=[p for p in ps if p['type']=='AMOUNT_EXCEEDS_LC']
 assert amt and amt[0]['after']==docs['letter_of_credit']['amount'], '제안값이 L/C 금액과 불일치'\""
+# 회귀 방지: 데모 대본이 주장하는 등급 전이가 실제로 재현되는지 못박는다.
+# 초안 대본은 'D→A'였으나 실측상 D→A는 0건이다(치유 불가 하자가 섞이기 때문).
+# DEFECT-019 = 완결 시나리오(제출 가능), DEMO-001 = 정직성 장면(A에 도달하지 않아야 정상).
+run "데모 대본 등급 전이 실측 일치 (DEFECT-019 C→A 제출가능 · DEMO-001 D→C 차단)" "python3 -c \"
+import sys,json; sys.path.insert(0,'pipeline')
+from detect import build_report, d as pd
+from remedy import propose_all, apply_edits
+def loop(path):
+    c=json.load(open(path)); docs=c['documents']; pres=pd(c.get('presentation_date'))
+    b=build_report('x',docs,pres)
+    fixed,_=apply_edits(docs,[p for p in propose_all(docs,b) if p['curable']])
+    a=build_report('x',fixed,pres)
+    return b['overall_risk'], a['overall_risk'], [d['type'] for d in a['discrepancies']]
+b,a,rest=loop('benchmark/cases/DEFECT-019.json')
+assert (b['grade'],b['score'])==('C',65), f'DEFECT-019 수정 전 C/65 아님: {b}'
+assert (a['grade'],a['score'])==('A',100) and not rest, f'DEFECT-019 재심사 후 A/100/0건 아님: {a} {rest}'
+b,a,rest=loop('samples/DEMO-001.json')
+assert (b['grade'],b['score'])==('D',40), f'DEMO-001 수정 전 D/40 아님: {b}'
+assert a['grade']=='C' and rest==['LATE_SHIPMENT'], f'DEMO-001은 치유 불가로 C에 머물러야 함: {a} {rest}'
+\""
 run "치유 불가 하자를 치유 가능으로 표시하지 않음" "python3 -c \"
 import sys,json; sys.path.insert(0,'pipeline')
 from detect import build_report
 from remedy import propose_all
-d=json.load(open('samples/DEFECT-001.json'))
+d=json.load(open('samples/DEMO-001.json'))
 docs=d['documents']; r=build_report('x',docs,None)
 ps=propose_all(docs,r)
 late=[p for p in ps if p['type']=='LATE_SHIPMENT']
 assert late and not late[0]['curable'], '선적기일 경과가 치유 가능으로 표시됨'\""
 
 echo "══ 4. C — 렌더링 파이프라인 ══"
-run "케이스 JSON → 서류 HTML 3종" "python3 render/render.py samples/DEFECT-001.json --out /tmp/tg_render"
+run "케이스 JSON → 서류 HTML 3종" "python3 render/render.py samples/DEMO-001.json --out /tmp/tg_render"
 run "미치환 템플릿 변수 없음" "! grep -l '{{' /tmp/tg_render/*.html"
-run "하자 값이 서류에 반영됨 (AH-702 vs AH-720)" "grep -q 'AH-702' /tmp/tg_render/DEFECT-001_invoice.html && grep -q 'AH-720' /tmp/tg_render/DEFECT-001_lc.html"
+run "하자 값이 서류에 반영됨 (AH-702 vs AH-720)" "grep -q 'AH-702' /tmp/tg_render/DEMO-001_invoice.html && grep -q 'AH-720' /tmp/tg_render/DEMO-001_lc.html"
 run "UI 4화면 + 런처 존재" "test -f mockups/index.html -a -f mockups/screen1_upload.html -a -f mockups/screen2_live.html -a -f mockups/screen3_live.html -a -f mockups/screen4_fx_simulator.html"
 run "구버전 목업이 데모 경로에 없음 (_archive로 격리)" "test ! -f mockups/screen2_extraction.html -a ! -f mockups/screen3_discrepancy_report.html -a -f mockups/_archive/README.md"
 run "PDF 저장 버튼이 실제 동작 (window.print)" "grep -q 'window.print()' mockups/screen3_live.html && grep -q 'window.print()' mockups/screen4_fx_simulator.html"
 run "인쇄용 CSS 존재 (@media print)" "grep -q '@media print' mockups/screen3_live.html && grep -q '@media print' mockups/screen4_fx_simulator.html"
 run "LIVE 화면 재생성 (demo.sh 파이프라인)" "bash demo.sh --no-serve"
-run "LIVE 화면이 실제 판정을 반영 (CLEAN-017=A등급 / DEFECT-001=D등급)" "grep -q '>A<' mockups/live_CLEAN-017.html && grep -q '>D<' mockups/screen3_live.html"
+run "LIVE 화면이 실제 판정을 반영 (CLEAN-017=A등급 / DEMO-001=D등급)" "grep -q '>A<' mockups/live_CLEAN-017.html && grep -q '>D<' mockups/screen3_live.html"
 run "생성 HTML에 중첩 <a> 없음" "python3 -c \"
 import re,glob
 for f in glob.glob('mockups/*.html'):
@@ -130,7 +150,7 @@ run "환노출이 지연 일수에 반응 (√t 규칙)" "python3 -c \"
 import sys; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
 from app import fx_block
 import json
-docs=json.load(open('samples/DEFECT-001.json'))['documents']
+docs=json.load(open('samples/DEMO-001.json'))['documents']
 vals=[fx_block(docs,d)['exposure_krw'] for d in (0,3,7,14,30)]
 assert vals[0]==0, f'지연 0일이면 노출 0이어야 함: {vals[0]}'
 assert all(a<b for a,b in zip(vals,vals[1:])), f'지연이 늘면 노출도 늘어야 함: {vals}'
@@ -187,7 +207,7 @@ try:
     else: raise SystemExit('서버 기동 실패')
     h = json.load(urllib.request.urlopen('http://127.0.0.1:8899/api/health'))
     assert h['modes']['sample'], '샘플 모드 비활성'
-    expect = {'CLEAN-017':'A', 'DEFECT-019':'C', 'DEFECT-001':'D'}
+    expect = {'CLEAN-017':'A', 'DEFECT-019':'C', 'DEMO-001':'D'}
     for cid, want in expect.items():
         req = urllib.request.Request('http://127.0.0.1:8899/api/analyze/sample',
               data=json.dumps({'case_id':cid}).encode(),
@@ -198,8 +218,93 @@ try:
         assert d['meta']['cost_usd'] == 0.0, '샘플 모드인데 비용 발생'
         assert len(d['fx']['scenarios']) == 3, '환노출 시나리오 누락'
     assert urllib.request.urlopen('http://127.0.0.1:8899/').status == 200, '프론트 서빙 실패'
-    for path in ('/mockups/', '/mockups/screen3_live.html', '/render/sample_output/DEFECT-001_lc.html'):
+    for path in ('/mockups/', '/mockups/screen3_live.html', '/render/sample_output/DEMO-001_lc.html'):
         assert urllib.request.urlopen('http://127.0.0.1:8899' + path).status == 200, f'정적 서빙 실패: {path}'
+finally:
+    p.terminate(); p.wait(timeout=10)
+PYEOF"
+
+  # 회귀 방지: samples/와 benchmark/cases/에 같은 case_id가 있으면 목록엔 두 장이 뜨는데
+  # 클릭 결과는 하나뿐이라, 카드에 적힌 등급과 실제 판정이 어긋난다(데모 중 설명 불가).
+  run "샘플 목록에 중복 case_id 없음 · 카드 등급과 실제 판정 일치" "python3 - <<'PYEOF'
+import collections, json, subprocess, sys, time, urllib.request
+p = subprocess.Popen([sys.executable, 'server/app.py', '--port', '8898'],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+try:
+    for _ in range(40):
+        try:
+            urllib.request.urlopen('http://127.0.0.1:8898/api/health', timeout=1); break
+        except Exception: time.sleep(0.3)
+    else: raise SystemExit('서버 기동 실패')
+    s = json.load(urllib.request.urlopen('http://127.0.0.1:8898/api/samples'))['samples']
+    dup = [k for k, v in collections.Counter(x['case_id'] for x in s).items() if v > 1]
+    assert not dup, f'중복 case_id: {dup}'
+    # 화면에 실제로 뜨는 상위 9장은 배지 등급과 판정 등급이 반드시 같아야 한다
+    for x in s[:9]:
+        if not x['expected_grade']: continue
+        req = urllib.request.Request('http://127.0.0.1:8898/api/analyze/sample',
+              data=json.dumps({'case_id': x['case_id']}).encode(),
+              headers={'Content-Type':'application/json'})
+        got = json.load(urllib.request.urlopen(req, timeout=20))['report']['overall_risk']['grade']
+        assert got == x['expected_grade'], f\"{x['case_id']}: 카드 {x['expected_grade']} != 판정 {got}\"
+finally:
+    p.terminate(); p.wait(timeout=10)
+PYEOF"
+
+  # 회귀 방지: 업로드 모드가 제시일을 받지 못하면 detect가 '오늘'로 판정한다.
+  # 그러면 과거 발행 서류(시연용 벤치마크 이미지 포함)에서 제시기한 경과가 일괄로 잡혀
+  # 샘플 모드에서 A등급이던 케이스가 업로드 모드에선 C등급으로 나온다(같은 서류, 다른 결과).
+  run "업로드 모드가 제시일을 받아 판정에 반영 (실행일 무관 재현성)" "python3 - <<'PYEOF'
+import json, subprocess, sys, time, urllib.error, urllib.request
+from datetime import date, timedelta
+sys.path.insert(0, 'pipeline'); sys.path.insert(0, 'server')
+from app import analyze
+
+docs = json.load(open('benchmark/cases/CLEAN-017.json', encoding='utf-8'))['documents']
+# 제시일을 명시하면 오늘이 언제든 정답 등급(A)이 나와야 한다
+r = analyze(docs, 'X', '2026-06-30')
+assert r['report']['overall_risk']['grade'] == 'A', f\"제시일 지정 시 A여야 함: {r['report']['overall_risk']['grade']}\"
+assert r['presentation_date'] == '2026-06-30', '제시일이 응답에 실리지 않음'
+# 미지정 시에는 오늘 기준으로 판정된다(설계상 정상) — 화면이 그 사실을 알 수 있어야 한다
+assert analyze(docs, 'X', None)['presentation_date'] is None
+
+p = subprocess.Popen([sys.executable, 'server/app.py', '--port', '8896'],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+try:
+    for _ in range(40):
+        try:
+            urllib.request.urlopen('http://127.0.0.1:8896/api/health', timeout=1); break
+        except Exception: time.sleep(0.3)
+    else: raise SystemExit('서버 기동 실패')
+    spec = json.load(urllib.request.urlopen('http://127.0.0.1:8896/openapi.json'))
+    body = spec['paths']['/api/analyze/upload']['post']['requestBody']
+    props = list(body['content'].values())[0]['schema']
+    props = props.get('properties') or spec['components']['schemas'][props['\$ref'].split('/')[-1]]['properties']
+    assert 'presentation_date' in props, '업로드 API에 presentation_date 파라미터 없음'
+finally:
+    p.terminate(); p.wait(timeout=10)
+PYEOF"
+
+  # 회귀 방지: case_id를 검증 없이 경로에 이어 붙이면 '../../..'로 저장소 밖 JSON을 읽을 수 있다.
+  run "케이스 ID 경로 조작 차단 (임의 파일 읽기 불가)" "python3 - <<'PYEOF'
+import json, subprocess, sys, time, urllib.error, urllib.request
+p = subprocess.Popen([sys.executable, 'server/app.py', '--port', '8897'],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+try:
+    for _ in range(40):
+        try:
+            urllib.request.urlopen('http://127.0.0.1:8897/api/health', timeout=1); break
+        except Exception: time.sleep(0.3)
+    else: raise SystemExit('서버 기동 실패')
+    for bad in ('../benchmark/e2e_metrics', '../../README', 'DEMO-001/../../.env', '/etc/passwd'):
+        req = urllib.request.Request('http://127.0.0.1:8897/api/analyze/sample',
+              data=json.dumps({'case_id': bad}).encode(),
+              headers={'Content-Type':'application/json'})
+        try:
+            urllib.request.urlopen(req, timeout=10)
+            raise SystemExit(f'경로 조작이 차단되지 않음: {bad}')
+        except urllib.error.HTTPError as e:
+            assert e.code in (400, 404), f'{bad}: 예상 400/404, 실제 {e.code}'
 finally:
     p.terminate(); p.wait(timeout=10)
 PYEOF"

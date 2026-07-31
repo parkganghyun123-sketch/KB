@@ -62,7 +62,7 @@
             "required": ["product_type", "product_name_ko", "fit_reason_ko"],
             "properties": {
               "product_type": { "type": "string", "enum": ["forward", "fx_deposit", "fx_insurance", "other"] },
-              "product_name_ko": { "type": "string", "description": "예: KB 선물환" },
+              "product_name_ko": { "type": "string", "description": "KB국민은행 공개 분류명을 쓴다. 예: 선(현)물환, 외화예금, 수출환어음 매입" },
               "fit_reason_ko": { "type": "string" }
             }
           }

@@ -164,11 +164,15 @@ def fx_block(docs: dict, delay_days: int = 0) -> dict:
         "hedge_recommendation": {
             "needed": bool(amount),
             "notional": amount, "currency": currency,
+            # KB국민은행이 공개한 분류명을 쓴다. 'KB 선물환'은 개별 약관상 상품명이 아니라
+            # 기업뱅킹 FX/파생상품의 '선(현)물환' 카테고리이며, 그 안에 기본 선물환·
+            # 통화옵션·합성선물환이 있다. 없는 이름을 지어내면 실무자에게 바로 걸린다.
             "instruments": [
-                {"product_type": "forward", "product_name_ko": "KB 선물환 (매도)",
-                 "fit_reason_ko": "수취 예정일 만기로 전액 확정 — 원화 강세 손실을 원천 차단"},
-                {"product_type": "fx_deposit", "product_name_ko": "KB 외화예금",
-                 "fit_reason_ko": "즉시 환전 대신 예치 후 분할 환전 — 유연성 우선 시"},
+                {"product_type": "forward", "product_name_ko": "선(현)물환 — 매도",
+                 "fit_reason_ko": "수취 예정일 만기로 환율을 확정해 원화 강세 손실을 차단합니다. "
+                                  "통화옵션·합성선물환도 선택할 수 있습니다."},
+                {"product_type": "fx_deposit", "product_name_ko": "외화예금",
+                 "fit_reason_ko": "즉시 환전하지 않고 예치한 뒤 나눠 환전합니다 — 유연성 우선 시."},
             ],
             "rationale_ko": ((f"하자로 {delay_days}영업일이 지연되는 동안 연율 변동성 "
                               f"{sigma_annual:.1%} 기준 원화 수령액이 최대 "
@@ -195,15 +199,105 @@ def engine_version() -> str:
         return "unknown"
 
 
+# ---------- KB 창구 연결 ----------
+# 서류 하자를 찾아주는 데서 끝나면 반쪽이다. 신용장 서류를 은행에 내는 행위 자체가
+# **수출환어음 매입(네고)** 이고, 하자 유무가 곧 어느 창구로 가는지를 가른다.
+#   하자 없음 → 정상 매입 (즉시 자금화)
+#   치유 가능 → 수정 후 매입
+#   치유 불가 → 하자 네고(개설은행 조회·지급확약 후 매입) 또는 추심 전환
+#
+# ⚠️ 아래는 KB국민은행이 공개한 **상품·서비스 분류명**이다. 개별 약관상 상품명이
+#    아니며 한도·조건은 영업점 상담으로 확정된다. 화면에도 그렇게 표기한다.
+#    환변동보험은 한국무역보험공사(K-SURE) 상품이라 여기 넣지 않는다.
+KB_ONETRADE = "KB ONE TRADE"
+
+
+def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
+    """서류 상태 → 지금 이용할 수 있는 KB 창구·상품."""
+    discs = report.get("discrepancies", [])
+    incurable = [r for r in remedies if not r.get("curable")]
+    delay_days = delay.get("total_business_days", 0)
+    inv = docs.get("commercial_invoice") or {}
+    amount, currency = inv.get("total_amount"), inv.get("currency", "USD")
+
+    items = []
+    if not discs:
+        route = {"status": "clean", "product_ko": "수출환어음 매입",
+                 "headline_ko": "정상 매입(네고) 진행이 가능한 상태입니다",
+                 "detail_ko": "신용장 조건과 서류가 일치하므로 개설은행의 하자 통보 없이 "
+                              "매입이 진행됩니다. 선적 후 곧바로 대금을 자금화할 수 있습니다."}
+        items.append({"category_ko": "결제·자금화", "product_ko": "수출환어음 매입",
+                      "channel_ko": f"{KB_ONETRADE} · 영업점",
+                      "fit_reason_ko": "하자 0건 — 서류를 그대로 제시해 매입 신청하면 됩니다."})
+    elif incurable:
+        blocked = ", ".join(sorted({r["type"] for r in incurable}))
+        route = {"status": "blocked", "product_ko": "하자 네고 / 추심 전환",
+                 "headline_ko": "서류 수정으로 치유되지 않는 하자가 있습니다",
+                 "detail_ko": f"{blocked} 은(는) 이미 발생한 사실이라 서류를 다시 써도 해소되지 "
+                              "않습니다. 개설의뢰인의 하자 수락(waiver) 또는 신용장 조건변경을 "
+                              "먼저 협의하고, 그 결과에 따라 매입 방식을 정하게 됩니다."}
+        items.append({"category_ko": "결제·자금화", "product_ko": "하자 네고 / 추심 전환",
+                      "channel_ko": "영업점 외환 담당",
+                      "fit_reason_ko": "개설은행에 하자를 통보·조회해 지급확약을 받은 뒤 매입하거나, "
+                                       "매입 없이 서류를 보내 추심 후 대금을 받는 방식을 검토합니다."})
+    else:
+        route = {"status": "curable", "product_ko": "수출환어음 매입",
+                 "headline_ko": "수정하면 정상 매입이 가능한 상태입니다",
+                 "detail_ko": "발견된 하자는 모두 서류 재발행·정정으로 해소됩니다. "
+                              "수정 후 제시하면 정상 매입 절차를 그대로 밟을 수 있습니다."}
+        items.append({"category_ko": "결제·자금화", "product_ko": "수출환어음 매입",
+                      "channel_ko": f"{KB_ONETRADE} · 영업점",
+                      "fit_reason_ko": "위 수정 제안을 반영해 재제시하면 하자 없이 매입 신청이 가능합니다."})
+
+    # 서류 작성·신청 채널 — 하자는 대개 서류를 만드는 단계에서 생긴다.
+    items.append({"category_ko": "신청 채널", "product_ko": KB_ONETRADE,
+                  "channel_ko": "기업뱅킹 · 비대면",
+                  "fit_reason_ko": "계약 정보 한 번 입력으로 인보이스·패킹리스트·환어음을 만들고, "
+                                   "신용장·수출환어음 매입을 비대면으로 신청할 수 있습니다."})
+
+    # 대금 수취가 밀리는 만큼 운전자금 공백이 생긴다.
+    if delay_days:
+        items.append({"category_ko": "자금 공백", "product_ko": "무역금융",
+                      "channel_ko": "영업점",
+                      "fit_reason_ko": f"하자 처리로 약 {delay_days}영업일 수취가 지연됩니다. "
+                                       "신용장기준·실적기준·포괄금융으로 그 기간의 운전자금을 "
+                                       "메울 수 있습니다(포괄금융은 연간 수출실적 미화 2억달러 미만 대상)."})
+        # 지연이 있어야 노출 구간이 생긴다. 지연 0이면 환 상품을 권하지 않는다.
+        items.append({"category_ko": "환위험", "product_ko": "선(현)물환",
+                      "channel_ko": "기업뱅킹 FX/파생상품 · 영업점",
+                      "fit_reason_ko": "수취 예정일 만기로 환율을 확정해 지연 구간의 변동을 차단합니다. "
+                                       "기본 선물환 외에 통화옵션·합성선물환도 선택할 수 있습니다."})
+        items.append({"category_ko": "환위험", "product_ko": "외화예금",
+                      "channel_ko": "기업뱅킹",
+                      "fit_reason_ko": "수취 즉시 환전하지 않고 예치한 뒤 나눠 환전합니다. "
+                                       "환율 확정보다 유연성이 필요할 때 씁니다(외화보통예금·외화정기예금)."})
+
+    # 중소 수출기업 우대 — 이 제품이 겨냥한 고객이 정확히 이 대상이다.
+    items.append({"category_ko": "중소기업 우대", "product_ko": "수출입금융 지원제도",
+                  "channel_ko": "기업뱅킹 수출입지원제도",
+                  "fit_reason_ko": "KB글로벌셀러 우대서비스, 특별출연 수출입금융 지원 등 "
+                                   "중소 수출기업 대상 우대 프로그램을 함께 확인해 보십시오."})
+
+    return {
+        "route": route, "items": items,
+        "exposure": {"amount": amount, "currency": currency, "delay_business_days": delay_days},
+        "note_ko": "상품·서비스 안내는 참고용입니다. 실제 이용 가능 여부와 한도·금리·수수료는 "
+                   "영업점 상담으로 확정되며, 본 화면은 은행의 심사 결과가 아닙니다.",
+    }
+
+
 def analyze(docs: dict, case_id: str, presentation_date=None, meta=None) -> dict:
     report = build_report(case_id, docs, parse_date(presentation_date))
     delay = delay_block(report)
+    # 하자마다 '무엇을 어떤 값으로 고쳐야 하는가'를 함께 준다.
+    # 제안값은 전부 신용장 기재값에서 결정적으로 도출된다(LLM 미사용).
+    remedies = propose_all(docs, report)
     return {"case_id": case_id, "documents": docs, "report": report,
             "delay": delay,
-            # 하자마다 '무엇을 어떤 값으로 고쳐야 하는가'를 함께 준다.
-            # 제안값은 전부 신용장 기재값에서 결정적으로 도출된다(LLM 미사용).
-            "remedies": propose_all(docs, report),
+            "remedies": remedies,
             "fx": fx_block(docs, delay["total_business_days"]),
+            # 진단에서 끝내지 않고 '그래서 어느 창구로 가야 하는가'까지 연결한다.
+            "kb": kb_products(report, remedies, delay, docs),
             "presentation_date": presentation_date,
             "engine_version": engine_version(),
             "meta": meta or {}}

@@ -240,10 +240,25 @@ padding:12px 16px;font-size:13.5px;color:var(--warn);line-height:1.65}
 .fxcell .rt{font-size:12px;color:var(--sub);margin:4px 0}
 .fxcell .pl{font-size:17px;font-weight:800}
 .fxcell .pl.pos{color:var(--ok)}.fxcell .pl.neg{color:var(--danger)}.fxcell .pl.zero{color:var(--sub)}
+/* ⑤ KB 창구 연결 — 진단에서 끝내지 않고 '어느 창구로 가는가'까지 잇는다.
+   경로(route)는 서류 상태가 결정하므로 상단에 크게, 개별 상품은 카드로 둔다. */
+.route{border-radius:14px;padding:18px 22px;border:1px solid var(--line);background:#fff;
+border-left:5px solid var(--sub);margin-bottom:14px}
+.route.clean{border-left-color:var(--ok);background:var(--ok-bg)}
+.route.curable{border-left-color:var(--blue);background:var(--blue-bg)}
+.route.blocked{border-left-color:var(--warn);background:var(--warn-bg)}
+.route .rh{font-size:16px;font-weight:700;margin-bottom:6px}
+.route .rp{font-size:13.5px;color:var(--sub);line-height:1.7}
+.route .rprod{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;
+background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px}
 .rx{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
 .rxcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
 .rxcard .t{font-size:11px;font-weight:800;color:var(--blue);background:var(--blue-bg);padding:3px 10px;border-radius:999px}
 .rxcard h4{font-size:15px;margin:8px 0 5px}.rxcard p{font-size:12.5px;color:var(--sub);line-height:1.6}
+.rxcard .ch{display:block;margin-top:8px;font-size:11.5px;color:var(--sub)}
+.rxcard .ch::before{content:"창구 ";font-weight:700}
+.kb-note{font-size:12px;color:var(--sub);line-height:1.65;margin-top:12px}
+@media (max-width:1000px){.rx{grid-template-columns:1fr}}
 
 .cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
 .btn{border:0;border-radius:10px;padding:13px 24px;font-size:14.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;font-family:inherit}
@@ -426,8 +441,13 @@ font-size:12px;color:#98a2b3}
       </div>
       <div class="fxgrid" id="fxGrid"></div>
       <div id="fxHead" class="fxnote"></div>
-      <div class="rx" id="rxList"></div>
     </div>
+
+    <h2 class="sec">⑤ 다음 단계 — 지금 이용할 수 있는 KB 창구
+      <span style="font-weight:400;font-size:12.5px;color:var(--sub)">
+        신용장 서류를 은행에 내는 절차가 곧 <b>수출환어음 매입(네고)</b>입니다.
+        하자 유무가 어느 창구로 갈지를 가릅니다</span></h2>
+    <div id="kbBox"></div>
 
     <div class="meta" id="meta"></div>
     <div class="cta">
@@ -643,6 +663,7 @@ function render(d){
   if(keys.length) showDoc(keys[0], $("docTabs").firstChild);
 
   renderImpact(d);
+  renderKb(d.kb);
 
   const m = d.meta;
   $("meta").innerHTML = `${esc(m.source||"")} · 소요 ${m.elapsed_sec}초 ·
@@ -857,7 +878,7 @@ function renderImpact(d){
   if(!amt){
     $("fxGrid").innerHTML = `<div class="fxcell" style="grid-column:1/-1;color:var(--sub)">
       송장 금액을 판독하지 못해 손익을 계산할 수 없습니다.</div>`;
-    $("fxHead").textContent = ""; $("rxList").innerHTML = "";
+    $("fxHead").textContent = "";
     return;
   }
   window.__fx = {amt, rec: fx.hedge_recommendation||{}, baseDelay: dl.total_business_days,
@@ -900,10 +921,29 @@ function calcFx(){
     : `✅ <b>지연 요인 없음 — 노출 0원.</b> 예정일에 수취하면 이 기간의 환율 변동에 노출되지 않습니다.
        (지연 일수를 올리면 노출이 어떻게 커지는지 확인할 수 있습니다.)`;
 
-  const rec = s.rec;
-  $("rxList").innerHTML = (rec.instruments||[]).map(i => `
-    <div class="rxcard"><span class="t">${esc(i.product_type).toUpperCase()}</span>
-      <h4>${esc(i.product_name_ko)}</h4><p>${esc(i.fit_reason_ko)}</p></div>`).join("");
+}
+
+// ── ⑤ KB 창구 연결 ─────────────────────────────────────────
+// 하자를 찾아주는 데서 끝나면 반쪽이다. 서류 상태가 곧 어느 창구로 가는지를 정한다.
+function renderKb(kb){
+  if(!kb){ $("kbBox").innerHTML = ""; return; }
+  const r = kb.route || {};
+  $("kbBox").innerHTML = `
+    <div class="route ${esc(r.status||"")}">
+      <div class="rh">${esc(r.headline_ko||"")}</div>
+      <div class="rp">${esc(r.detail_ko||"")}</div>
+      ${r.product_ko ? `<span class="rprod">→ ${esc(r.product_ko)}</span>` : ""}
+    </div>
+    <div class="rx">
+      ${(kb.items||[]).map(i => `
+        <div class="rxcard">
+          <span class="t">${esc(i.category_ko)}</span>
+          <h4>${esc(i.product_ko)}</h4>
+          <p>${esc(i.fit_reason_ko)}</p>
+          <span class="ch">${esc(i.channel_ko)}</span>
+        </div>`).join("")}
+    </div>
+    <p class="kb-note">${esc(kb.note_ko||"")}</p>`;
 }
 
 function resetFx(){

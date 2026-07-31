@@ -143,6 +143,48 @@ b,a,rest=loop('samples/DEMO-001.json')
 assert (b['grade'],b['score'])==('D',40), f'DEMO-001 수정 전 D/40 아님: {b}'
 assert a['grade']=='C' and rest==['LATE_SHIPMENT'], f'DEMO-001은 치유 불가로 C에 머물러야 함: {a} {rest}'
 \""
+# 회귀 방지: 하자 진단에서 끝나면 반쪽이다. 서류 상태가 곧 어느 KB 창구로 가는지를 정한다.
+#   하자 없음 → 정상 매입 / 치유 가능 → 수정 후 매입 / 치유 불가 → 하자 네고·추심 전환
+# 지연이 0이면 환노출 구간 자체가 없으므로 환 상품을 권하지 않아야 한다.
+run "KB 창구 연결이 서류 상태에 따라 갈림 (정상매입·수정후매입·하자네고)" "python3 -c \"
+import sys,json; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from app import analyze
+def route(path,cid):
+    c=json.load(open(path)); return analyze(c['documents'],cid,c.get('presentation_date'))
+r=route('benchmark/cases/CLEAN-017.json','CLEAN-017')['kb']
+assert r['route']['status']=='clean', r['route']
+cats={i['category_ko'] for i in r['items']}
+assert '환위험' not in cats, f'지연 0인데 환 상품 권유: {cats}'
+assert any(i['product_ko']=='수출환어음 매입' for i in r['items']), '정상 매입 안내 없음'
+r=route('benchmark/cases/DEFECT-019.json','DEFECT-019')['kb']
+assert r['route']['status']=='curable', r['route']
+assert '환위험' in {i['category_ko'] for i in r['items']}, '지연 있는데 환 상품 없음'
+r=route('samples/DEMO-001.json','DEMO-001')['kb']
+assert r['route']['status']=='blocked', r['route']
+assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
+\""
+# 회귀 방지: 화면에 KB 상품을 적을 때 실재하지 않는 이름을 쓰면 실무자 심사위원에게 바로 걸린다.
+# 환변동보험은 한국무역보험공사(K-SURE) 상품이므로 KB 상품으로 표기하면 안 된다.
+run "KB 상품명이 공개 분류명 화이트리스트 안에 있음" "python3 -c \"
+import sys,json,glob; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from app import analyze
+OK={'수출환어음 매입','하자 네고 / 추심 전환','KB ONE TRADE','무역금융','선(현)물환','외화예금','수출입금융 지원제도'}
+seen=set()
+for f in sorted(glob.glob('benchmark/cases/*.json'))+['samples/DEMO-001.json']:
+    c=json.load(open(f))
+    kb=analyze(c['documents'],c['case_id'],c.get('presentation_date'))['kb']
+    seen |= {i['product_ko'] for i in kb['items']}
+    seen.add(kb['route']['product_ko'])
+bad=seen-OK
+assert not bad, f'화이트리스트 밖 상품명: {bad}'
+# 환변동보험은 한국무역보험공사(K-SURE) 상품이다. KB 상품으로 화면에 내보내면 안 된다.
+# (소스 주석에는 이 단어가 설명으로 등장하므로 '실제 출력'만 검사한다)
+c=json.load(open('benchmark/cases/DEFECT-019.json'))
+res=analyze(c['documents'],c['case_id'],c.get('presentation_date'))
+out=json.dumps({'kb':res['kb'],'hedge':res['fx']['hedge_recommendation']},ensure_ascii=False)
+assert '환변동보험' not in out, 'K-SURE 상품을 KB 상품으로 표기'
+assert 'KB 선물환' not in out, '실재하지 않는 상품명(KB 선물환) 사용'
+\""
 run "치유 불가 하자를 치유 가능으로 표시하지 않음" "python3 -c \"
 import sys,json; sys.path.insert(0,'pipeline')
 from detect import build_report

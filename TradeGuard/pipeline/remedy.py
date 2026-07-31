@@ -150,7 +150,10 @@ def propose(docs, disc):
     return {**base, "curable": True, "doc": doc, "field": field,
             "before": _get(target, field), "after": after,
             "actor_ko": spec["actor_ko"],
-            "basis_ko": f"신용장 {spec['basis_field']} 기준",
+            # 근거가 신용장 기재값(:32B: 등)인 경우와 UCP600 규정인 경우를 구분한다.
+            # 둘을 뭉뚱그려 "신용장 UCP600 20(a)(i) 기준"으로 적으면 틀린 말이 된다.
+            "basis_ko": (f"{spec['basis_field']} 규정" if spec["basis_field"].startswith("UCP600")
+                         else f"신용장 {spec['basis_field']} 기준"),
             "suggested_fix_ko": disc.get("suggested_fix_ko")}
 
 

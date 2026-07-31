@@ -56,16 +56,6 @@ h2.sec .count{background:var(--danger);color:#fff;font-size:12px;border-radius:9
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .hide{display:none!important}
 
-/* 모드 선택 */
-.modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
-.mode{border:2px solid var(--line);border-radius:14px;padding:20px 22px;cursor:pointer;background:#fff;text-align:left;font-family:inherit}
-.mode:hover{border-color:var(--kb-yellow)}
-.mode.on{border-color:var(--ink);background:#fffdf5}
-.mode h3{font-size:16px;margin-bottom:6px}
-.mode p{font-size:13px;color:var(--sub);line-height:1.6}
-.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:6px}
-.tag.free{background:var(--ok-bg);color:var(--ok)}
-.tag.paid{background:var(--warn-bg);color:var(--warn)}
 .why{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--kb-yellow);
 border-radius:12px;padding:18px 22px;margin-bottom:22px}
 .why-q{font-size:15.5px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px}
@@ -92,6 +82,14 @@ border-radius:12px;padding:18px 22px;margin-bottom:22px}
   border-radius:8px;background:var(--bg);color:var(--sub);cursor:pointer}
 .presdate .mini:hover{background:#eef0f3}
 .presdate .hint{margin:10px 0 0;font-size:12.5px;color:var(--sub);line-height:1.7}
+/* 보조 진입 — 시각적으로 낮추되 한 번의 클릭으로 닿게 둔다 */
+.alt-entry{margin-top:16px;text-align:center;font-size:13px;color:var(--sub)}
+.linkbtn{font:inherit;font-size:inherit;background:none;border:0;padding:0;margin-left:4px;
+color:var(--blue);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.linkbtn:hover{color:var(--ink)}
+.notice{background:var(--warn-bg);border:1px solid #fedf89;border-radius:10px;
+padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--warn);line-height:1.65}
+.notice b{color:#93370d}
 
 /* 진행 */
 .progress{display:flex;gap:10px;align-items:center;font-size:14px}
@@ -173,6 +171,9 @@ border:1px solid var(--blue);background:#fff;color:var(--blue);cursor:pointer;wh
 background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 11px;color:#78350f}
 .rem-block b{white-space:nowrap}
 /* 재심사 바 */
+/* [hidden]은 UA 스타일시트의 display:none인데 아래 클래스 규칙(display:flex)이 이를 이긴다.
+   명시적으로 눌러주지 않으면 재심사 후 잔여 제안이 0건이어도 바가 계속 떠 있는다. */
+.loopbar[hidden]{display:none}
 .loopbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 0;
 background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .loopbar .cnt{font-size:13px;color:var(--sub)}
@@ -193,8 +194,24 @@ background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;mar
 .verdict.ok{background:#f0fdf4;border:1px solid #86efac;color:#054f31}
 .verdict.no{background:#fffbeb;border:1px solid #fde68a;color:#78350f}
 .verdict .d{font-weight:500;font-size:12.5px;margin-top:4px}
-.audit{margin-top:10px;font-size:11.5px;color:var(--sub);font-family:ui-monospace,monospace;
-background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+/* 수정 내역 — 감사 추적용. 내부 필드 경로·enum 값을 그대로 노출하면 개발 로그처럼 보인다.
+   금융 SaaS의 승인 이력 UI 관례를 따라 '무슨 서류의 어떤 항목이 무엇에서 무엇으로'만 남긴다. */
+.audit{margin-top:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.audit-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.audit-head b{font-size:13.5px}
+.audit-head time{font-size:12px;color:var(--sub);margin-left:auto}
+.audit-row{display:grid;grid-template-columns:76px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.audit-row .doc{font-size:11.5px;color:var(--sub);background:#fff;border:1px solid var(--line);
+border-radius:6px;padding:3px 0;text-align:center;height:fit-content}
+.audit-row .fld{font-size:13px;font-weight:600;margin-bottom:4px}
+.audit-row .chg{font-size:13px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+font-variant-numeric:tabular-nums}
+.audit-row .from{color:var(--sub);text-decoration:line-through;text-decoration-color:#c9cdd3}
+.audit-row .to{color:var(--ok);font-weight:700}
+.audit-row .basis{font-size:11.5px;color:var(--sub);margin-top:4px}
+.audit-note{font-size:12px;color:var(--sub);line-height:1.65;margin-top:12px;
+padding-top:10px;border-top:1px solid var(--line)}
+.audit-note .eng{font-family:ui-monospace,monospace;font-size:11px;opacity:.75}
 /* 하자 → 지연 → 환노출 인과 배너 (차별화 핵심) */
 .cause{background:var(--ink);color:#fff;border-radius:14px;padding:18px 24px;margin-bottom:14px;
 display:flex;align-items:center;gap:22px;flex-wrap:wrap}
@@ -296,19 +313,7 @@ font-size:12px;color:#98a2b3}
 <main id="main">
   <!-- STEP 1 -->
   <section id="step1">
-    <div class="modes">
-      <button class="mode on" id="mSample" onclick="setMode('sample')">
-        <h3>샘플 케이스로 시연<span class="tag free">비용 0원</span></h3>
-        <p>미리 만들어둔 무역서류 케이스를 분석합니다. LLM을 호출하지 않아 즉시 끝나고,
-           네트워크가 끊겨도 동작합니다. <b>발표 시연에 권장.</b></p>
-      </button>
-      <button class="mode" id="mUpload" onclick="setMode('upload')">
-        <h3>서류 이미지 업로드<span class="tag paid">서류 3장 ≈ $0.06</span></h3>
-        <p>실제 이미지를 올리면 AI가 판독합니다. 신용장·상업송장·선하증권 PNG/JPG.
-           10~30초 소요.</p>
-      </button>
-    </div>
-
+    <div class="notice hide" id="offlineNotice"></div>
     <div class="why">
       <div class="why-q">신용장 거래에서 서류에 한 글자만 틀려도 은행은 대금 지급을 거절할 수 있습니다.</div>
       <div class="why-a">
@@ -318,12 +323,18 @@ font-size:12px;color:#98a2b3}
       </div>
     </div>
 
-    <div id="paneSample">
-      <h2 class="sec">케이스 선택</h2>
+    <!-- 샘플 모드는 보조 경로다. 실제 서비스라면 존재하지 않을 화면이므로 기본으로 띄우지
+         않는다. 다만 LLM 키가 없거나 외부 호출이 막힌 환경(은행 내부망·발표장)에서
+         제품을 확인할 수 있어야 하므로 한 번의 클릭으로 닿게 남겨 둔다. -->
+    <div id="paneSample" class="hide">
+      <h2 class="sec">샘플 서류로 둘러보기</h2>
+      <p class="sec-note">실제 무역서류를 본떠 만든 예시입니다. 판독 단계만 건너뛰고
+        <b>하자 판정·수정 제안·환노출 계산은 실제 엔진이 그대로 수행</b>합니다.
+        <button type="button" class="linkbtn" onclick="setMode('upload')">← 내 서류 올리기</button></p>
       <div class="samples" id="sampleList">불러오는 중…</div>
     </div>
 
-    <div id="paneUpload" class="hide">
+    <div id="paneUpload">
       <h2 class="sec">서류 업로드</h2>
       <div class="drop" id="drop">
         <div style="font-size:34px">📄</div>
@@ -346,6 +357,10 @@ font-size:12px;color:#98a2b3}
       <div class="cta">
         <button class="btn primary" id="btnUpload" onclick="runUpload()" disabled>분석 시작 →</button>
       </div>
+      <p class="alt-entry" id="altEntry">
+        아직 올릴 서류가 없으신가요?
+        <button type="button" class="linkbtn" onclick="setMode('sample')">샘플 서류로 먼저 둘러보기</button>
+      </p>
     </div>
   </section>
 
@@ -444,7 +459,7 @@ font-size:12px;color:#98a2b3}
 </footer>
 
 <script>
-let MODE = "sample", FILES = [], DOCS = {}, CUR = null;
+let MODE = "upload", FILES = [], DOCS = {}, CUR = null;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const GRADE = {A:["하자가 발견되지 않았습니다","안전"],B:["경미한 하자가 있습니다","주의"],
@@ -466,9 +481,19 @@ const ACTION = {
 
 fetch("/api/health").then(r => r.json()).then(h => {
   $("prov").textContent = h.llm.available
-    ? `● ${h.llm.provider} 연결됨` : "● LLM 미연결 — 샘플 모드만 가능";
+    ? `● ${h.llm.provider} 연결됨` : "● 판독 엔진 미연결";
   $("prov").style.color = h.llm.available ? "#067647" : "#b54708";
-  if (!h.llm.available) $("mUpload").disabled = true;
+  // 판독 엔진에 닿지 못하는 환경(키 미설정·내부망·발표장 네트워크 차단)에서는
+  // 업로드가 어차피 실패한다. 막다른 화면을 보여주는 대신 샘플 경로로 자동 전환한다.
+  if (!h.llm.available){
+    const n = $("offlineNotice");
+    n.innerHTML = "<b>서류 판독 엔진에 연결하지 못했습니다.</b> API 키가 설정되지 않았거나 " +
+      "외부 연결이 차단된 환경입니다. 업로드 판독은 사용할 수 없지만, " +
+      "<b>샘플 서류로 하자 판정·수정 제안·환노출 계산을 그대로 확인</b>하실 수 있습니다.";
+    n.classList.remove("hide");
+    $("btnUpload").disabled = true;
+    setMode("sample");
+  }
 }).catch(() => $("prov").textContent = "● 서버 응답 없음");
 
 fetch("/api/samples").then(r => r.json()).then(d => {
@@ -482,8 +507,6 @@ fetch("/api/samples").then(r => r.json()).then(d => {
 
 function setMode(m){
   MODE = m;
-  $("mSample").classList.toggle("on", m === "sample");
-  $("mUpload").classList.toggle("on", m === "upload");
   $("paneSample").classList.toggle("hide", m !== "sample");
   $("paneUpload").classList.toggle("hide", m !== "upload");
 }
@@ -679,6 +702,9 @@ async function recheck(){
   if(!CUR || !PICKED.size) return;
   const edits = REMEDIES.filter(r => r.curable && PICKED.has(r.discrepancy_id));
   const btn = $("btnRecheck"); btn.disabled = true; btn.textContent = "재심사 중…";
+  // 성공하든 실패하든 버튼을 원래 상태로 돌린다. 복구가 없으면 재심사 후에도
+  // '재심사 중…'이 그대로 남아 작업이 안 끝난 것처럼 보인다.
+  const restore = () => { btn.textContent = "↻ 수정 반영하고 재심사"; syncLoopBar(); };
   try{
     const res = await fetch("/api/redetect", {
       method:"POST", headers:{"Content-Type":"application/json"},
@@ -693,7 +719,49 @@ async function recheck(){
     $("cmpBox").scrollIntoView({behavior:"smooth", block:"center"});
   }catch(e){
     fail("재심사에 실패했습니다: " + e.message);
+  }finally{
+    restore();
   }
+}
+
+// ── 수정 내역 표기용 라벨 ──────────────────────────────────
+// 내부 필드 경로(commercial_invoice.total_amount)와 enum 값(agent_for_carrier)을
+// 그대로 보여주면 개발 로그처럼 읽힌다. 사람이 쓰는 말로 옮긴다.
+const DOC_KO = {letter_of_credit:"신용장", commercial_invoice:"상업송장", bill_of_lading:"선하증권"};
+const FIELD_KO = {
+  "total_amount":"송장 금액", "currency":"결제 통화",
+  "seller.name":"송장 발행인", "buyer.name":"송장 수신인",
+  "goods[0].description":"상품 명세",
+  "signature.signer_capacity":"서명자 자격", "signature.signed":"서명 유무",
+  "shipped_on_board.indicated":"본선적재 표기",
+  "port_of_loading":"선적항", "port_of_discharge":"양륙항",
+};
+const CAPACITY_KO = {
+  agent_for_carrier:"운송인 대리인 (AS AGENT FOR THE CARRIER)",
+  agent_for_master:"선장 대리인 (AS AGENT FOR THE MASTER)",
+  carrier:"운송인 (AS CARRIER)", master:"선장 (AS MASTER)",
+  unclear:"자격 미표시",
+};
+const fieldKo = f => FIELD_KO[f] || f.split(".").pop().replace(/_/g, " ");
+
+function fmtVal(field, v){
+  if(v === null || v === undefined || v === "") return "미기재";
+  if(field === "signature.signer_capacity") return CAPACITY_KO[v] || v;
+  if(typeof v === "boolean") return v ? "있음" : "없음";
+  if(field === "total_amount" && typeof v === "number"){
+    const cur = (CUR && CUR.documents.commercial_invoice || {}).currency || "";
+    return `${cur} ${v.toLocaleString("ko-KR", {minimumFractionDigits:2, maximumFractionDigits:2})}`.trim();
+  }
+  const s = String(v);
+  return s.length > 90 ? s.slice(0, 90) + "…" : s;
+}
+
+function fmtTime(iso){
+  const d = new Date(iso);
+  if(isNaN(d)) return iso;
+  return d.toLocaleString("ko-KR",
+    {year:"numeric", month:"long", day:"numeric",
+     hour:"2-digit", minute:"2-digit", hour12:false});
 }
 
 function renderCompare(c, audit){
@@ -722,10 +790,25 @@ function renderCompare(c, audit){
         ${c.new_defects.length ? `<br>⚠️ 수정으로 새로 생긴 하자: ${c.new_defects.map(esc).join(", ")}` : ""}
       </div>
     </div>
-    <div class="audit">감사 이력 · ${esc(audit.timestamp)} · 엔진 ${esc(audit.engine_version)} ·
-      수정 ${audit.edits.length}건<br>
-      ${audit.edits.map(e => `&nbsp;&nbsp;${esc(e.doc)}.${esc(e.field)} : ${esc(short(e.before))} → ${esc(short(e.after))}`).join("<br>")}
-      <br>${esc(audit.note_ko)}</div>`;
+    <div class="audit">
+      <div class="audit-head"><b>수정 내역 ${audit.edits.length}건</b>
+        <time>${esc(fmtTime(audit.timestamp))}</time></div>
+      ${audit.edits.map(e => `
+        <div class="audit-row">
+          <span class="doc">${esc(DOC_KO[e.doc] || e.doc)}</span>
+          <div>
+            <div class="fld">${esc(fieldKo(e.field))}</div>
+            <div class="chg"><span class="from">${esc(fmtVal(e.field, e.before))}</span>
+              <span aria-hidden="true">→</span>
+              <span class="to">${esc(fmtVal(e.field, e.after))}</span></div>
+            ${e.basis_ko ? `<div class="basis">${esc(e.basis_ko)}</div>` : ""}
+          </div>
+        </div>`).join("")}
+      <p class="audit-note">이 내역은 사전 점검 리포트에 함께 기록되어, 은행 제출 시 무엇을 어떻게
+        정정했는지 그대로 확인할 수 있습니다. 하자 판정과 수정 제안은 모두 규칙 엔진이 수행했으며
+        AI 모델을 호출하지 않았습니다.<br>
+        <span class="eng">검사 엔진 ${esc(audit.engine_version)}</span></p>
+    </div>`;
 }
 
 // ── ④ 영향 분석 — 하자 → 지연 → 환노출 연결 ───────────────────

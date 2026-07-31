@@ -1,0 +1,218 @@
+{
+  "case_id": "CLEAN-018",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-96677",
+      "issuing_bank": "VIETIN COMMERCIAL JOINT STOCK BANK, HO CHI MINH CITY",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "issue_date": "2026-05-22",
+      "expiry": {
+        "date": "2026-07-26",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+        "country": "VIETNAM"
+      },
+      "beneficiary": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
+        "country": "KOREA"
+      },
+      "currency": "USD",
+      "amount": 165120.0,
+      "tolerance": null,
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "latest_shipment_date": "2026-07-06",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, 25,800 PCS AS PER PROFORMA INVOICE NO. PI-2368, FOB INCHEON INCTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": null
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {
+        "doc_type": 1.0,
+        "lc_number": 1.0,
+        "issuing_bank": 1.0,
+        "advising_bank": 1.0,
+        "available_with_by": 1.0,
+        "issue_date": 1.0,
+        "expiry": 1.0,
+        "applicant": 1.0,
+        "beneficiary": 1.0,
+        "currency": 1.0,
+        "amount": 0.9,
+        "partial_shipments": 1.0,
+        "transhipment": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "latest_shipment_date": 1.0,
+        "goods_description": 1.0,
+        "documents_required": 1.0,
+        "additional_conditions": 1.0,
+        "presentation_period_days": 1.0,
+        "confirmation_instructions": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-4250",
+      "invoice_date": "2026-06-29",
+      "lc_number_ref": "LC-2026-96677",
+      "seller": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+      },
+      "buyer": {
+        "name": "MEKONG INDUSTRIAL TRADING CO., LTD",
+        "address": "88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM"
+      },
+      "currency": "USD",
+      "total_amount": 165120.0,
+      "goods": [
+        {
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-480, AS PER PROFORMA INVOICE NO. PI-2368",
+          "quantity": 25800,
+          "unit": "PCS",
+          "unit_price": 6.4,
+          "amount": 165120.0,
+          "hs_code": "6109.10"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "INCHEON"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "packages": "1032 CARTONS",
+      "net_weight": "4128.0 KGS",
+      "gross_weight": "4458.2 KGS",
+      "signed": true,
+      "field_confidence": {
+        "invoice_number": 1.0,
+        "invoice_date": 1.0,
+        "lc_number_ref": 1.0,
+        "seller": 1.0,
+        "buyer": 1.0,
+        "currency": 1.0,
+        "total_amount": 1.0,
+        "goods": 1.0,
+        "incoterms": 1.0,
+        "payment_terms": 1.0,
+        "shipping_marks": 1.0,
+        "country_of_origin": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "packages": 1.0,
+        "net_weight": 1.0,
+        "gross_weight": 1.0,
+        "signed": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-9496688",
+      "issue_date": "2026-06-30",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-06-30",
+        "method": "on_board_notation"
+      },
+      "vessel_name": "EVER PROSPER",
+      "voyage_number": "V.26E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "HO CHI MINH CITY, VIETNAM",
+      "place_of_delivery": "HO CHI MINH CITY CY",
+      "shipper": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF VIETIN COMMERCIAL JOINT STOCK BANK",
+        "is_to_order": true
+      },
+      "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
+      "goods_description": "GENERAL MERCHANDISE AS PER INVOICE CLEAN ON BOARD",
+      "container_numbers": [
+        "DBSU8623520"
+      ],
+      "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
+      "package_count": "1032 CTNS",
+      "gross_weight": "4,458.2 KGS",
+      "measurement": "46.44 CBM",
+      "booking_number": "BKG613115",
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "carrier"
+      },
+      "field_confidence": {
+        "doc_type": 1.0,
+        "bl_number": 1.0,
+        "issue_date": 1.0,
+        "shipped_on_board.indicated": 1.0,
+        "shipped_on_board.date": 1.0,
+        "shipped_on_board.method": 1.0,
+        "vessel_name": 1.0,
+        "voyage_number": 1.0,
+        "place_of_receipt": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "place_of_delivery": 1.0,
+        "shipper.name": 1.0,
+        "shipper.address": 1.0,
+        "consignee.raw_text": 1.0,
+        "consignee.is_to_order": 1.0,
+        "notify_party": 1.0,
+        "goods_description": 1.0,
+        "container_numbers": 1.0,
+        "shipping_marks": 1.0,
+        "package_count": 1.0,
+        "gross_weight": 1.0,
+        "measurement": 1.0,
+        "booking_number": 1.0,
+        "freight_terms": 1.0,
+        "clean": 1.0,
+        "originals_count": 1.0,
+        "signature.signed": 1.0,
+        "signature.carrier_name": 1.0,
+        "signature.signer_capacity": 1.0
+      },
+      "unreadable_fields": []
+    }
+  },
+  "presentation_date": "2026-07-10"
+}

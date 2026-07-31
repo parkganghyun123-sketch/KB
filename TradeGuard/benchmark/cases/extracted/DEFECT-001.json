@@ -1,0 +1,223 @@
+{
+  "case_id": "DEFECT-001",
+  "documents": {
+    "letter_of_credit": {
+      "doc_type": "letter_of_credit",
+      "lc_number": "LC-2026-46486",
+      "issuing_bank": "EMIRATES COMMERCE BANK, DUBAI",
+      "advising_bank": "KB KOOKMIN BANK, SEOUL",
+      "available_with_by": "ANY BANK BY NEGOTIATION",
+      "issue_date": "2026-05-26",
+      "expiry": {
+        "date": "2026-08-16",
+        "place": "SEOUL, KOREA"
+      },
+      "applicant": {
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE",
+        "country": "UAE"
+      },
+      "beneficiary": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA",
+        "country": "KOREA"
+      },
+      "currency": "USD",
+      "amount": 180480.0,
+      "tolerance": null,
+      "partial_shipments": "NOT ALLOWED",
+      "transhipment": "NOT ALLOWED",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "latest_shipment_date": "2026-07-19",
+      "goods_description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, 28,200 PCS AS PER PROFORMA INVOICE NO. PI-2065, FOB INCHEON INCOMTERMS 2020",
+      "documents_required": [
+        {
+          "doc_name": "SIGNED COMMERCIAL INVOICE",
+          "copies": "IN 3 ORIGINALS",
+          "requirements": null
+        },
+        {
+          "doc_name": "FULL SET OF CLEAN ON BOARD OCEAN BILLS OF LADING",
+          "copies": "3/3 ORIGINALS",
+          "requirements": "MADE OUT TO ORDER OF EMIRATES COMMERCE BANK MARKED FREIGHT COLLECT AND NOTIFY APPLICANT"
+        },
+        {
+          "doc_name": "PACKING LIST",
+          "copies": "IN 3 COPIES",
+          "requirements": null
+        }
+      ],
+      "additional_conditions": [
+        "ALL DOCUMENTS MUST BE ISSUED IN ENGLISH"
+      ],
+      "presentation_period_days": 21,
+      "confirmation_instructions": "WITHOUT",
+      "field_confidence": {
+        "lc_number": 1.0,
+        "issuing_bank": 1.0,
+        "advising_bank": 1.0,
+        "available_with_by": 1.0,
+        "issue_date": 1.0,
+        "expiry.date": 1.0,
+        "expiry.place": 1.0,
+        "applicant.name": 1.0,
+        "applicant.address": 1.0,
+        "applicant.country": 1.0,
+        "beneficiary.name": 1.0,
+        "beneficiary.address": 1.0,
+        "beneficiary.country": 1.0,
+        "currency": 1.0,
+        "amount": 1.0,
+        "partial_shipments": 1.0,
+        "transhipment": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "latest_shipment_date": 1.0,
+        "goods_description": 1.0,
+        "documents_required[0].doc_name": 1.0,
+        "documents_required[0].copies": 1.0,
+        "documents_required[1].doc_name": 1.0,
+        "documents_required[1].copies": 1.0,
+        "documents_required[1].requirements": 1.0,
+        "documents_required[2].doc_name": 1.0,
+        "documents_required[2].copies": 1.0,
+        "additional_conditions[0]": 1.0,
+        "presentation_period_days": 1.0,
+        "confirmation_instructions": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "commercial_invoice": {
+      "doc_type": "commercial_invoice",
+      "invoice_number": "INV-2026-2164",
+      "invoice_date": "2026-07-11",
+      "lc_number_ref": "LC-2026-46486",
+      "seller": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+      },
+      "buyer": {
+        "name": "GULF STAR GENERAL TRADING LLC",
+        "address": "PO BOX 4471, DEIRA, DUBAI, UAE"
+      },
+      "currency": "USD",
+      "total_amount": 194580.0,
+      "goods": [
+        {
+          "description": "COTTON KNITTED T-SHIRTS, MODEL TS-745, AS PER PROFORMA INVOICE NO. PI-2065",
+          "quantity": 28200,
+          "unit": "PCS",
+          "unit_price": 6.9,
+          "amount": 194580.0,
+          "hs_code": "6109.10"
+        }
+      ],
+      "incoterms": {
+        "term": "FOB",
+        "place": "INCHEON"
+      },
+      "payment_terms": "L/C AT SIGHT",
+      "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-1128",
+      "country_of_origin": "REPUBLIC OF KOREA",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "packages": "1128 CARTONS",
+      "net_weight": "4512.0 KGS",
+      "gross_weight": "4873.0 KGS",
+      "signed": true,
+      "field_confidence": {
+        "doc_type": 1.0,
+        "invoice_number": 1.0,
+        "invoice_date": 1.0,
+        "lc_number_ref": 1.0,
+        "seller": 1.0,
+        "buyer": 1.0,
+        "currency": 1.0,
+        "total_amount": 1.0,
+        "goods": 1.0,
+        "incoterms": 1.0,
+        "payment_terms": 1.0,
+        "shipping_marks": 1.0,
+        "country_of_origin": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "packages": 1.0,
+        "net_weight": 1.0,
+        "gross_weight": 1.0,
+        "signed": 1.0
+      },
+      "unreadable_fields": []
+    },
+    "bill_of_lading": {
+      "doc_type": "bill_of_lading",
+      "bl_number": "KMT-4396775",
+      "issue_date": "2026-07-13",
+      "shipped_on_board": {
+        "indicated": true,
+        "date": "2026-07-13",
+        "method": "pre_printed"
+      },
+      "vessel_name": "OCEAN SENTINEL",
+      "voyage_number": "V.166E",
+      "place_of_receipt": "INCHEON CY",
+      "port_of_loading": "INCHEON, KOREA",
+      "port_of_discharge": "JEBEL ALI, UAE",
+      "place_of_delivery": "JEBEL ALI CY",
+      "shipper": {
+        "name": "SEJIN TEXTILE CORPORATION",
+        "address": "45 SANDAN 3-RO, DAEGU, KOREA"
+      },
+      "consignee": {
+        "raw_text": "TO ORDER OF EMIRATES COMMERCE BANK",
+        "is_to_order": true
+      },
+      "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
+      "goods_description": "1128 CARTONS OF COTTON KNITTED T-SHIRTS CLEAN ON BOARD",
+      "container_numbers": [
+        "KMUTU284261"
+      ],
+      "shipping_marks": "GULF / JEBEL ALI / CNO. 1-1128",
+      "package_count": "1128 CTNS",
+      "gross_weight": "4,873.0 KGS",
+      "measurement": "50.76 CBM",
+      "booking_number": "BKG929793",
+      "freight_terms": "COLLECT",
+      "clean": true,
+      "originals_count": 3,
+      "signature": {
+        "signed": true,
+        "carrier_name": "SEOHAE CONTAINER LINES",
+        "signer_capacity": "agent_for_carrier"
+      },
+      "field_confidence": {
+        "doc_type": 1.0,
+        "bl_number": 1.0,
+        "issue_date": 1.0,
+        "shipped_on_board": 1.0,
+        "vessel_name": 1.0,
+        "voyage_number": 1.0,
+        "place_of_receipt": 1.0,
+        "port_of_loading": 1.0,
+        "port_of_discharge": 1.0,
+        "place_of_delivery": 1.0,
+        "shipper": 1.0,
+        "consignee": 1.0,
+        "notify_party": 1.0,
+        "goods_description": 1.0,
+        "container_numbers": 1.0,
+        "shipping_marks": 1.0,
+        "package_count": 1.0,
+        "gross_weight": 1.0,
+        "measurement": 1.0,
+        "booking_number": 1.0,
+        "freight_terms": 1.0,
+        "clean": 1.0,
+        "originals_count": 1.0,
+        "signature": 1.0
+      },
+      "unreadable_fields": []
+    }
+  },
+  "presentation_date": "2026-07-25"
+}

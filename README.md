@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![LLM](https://img.shields.io/badge/LLM-OpenAI%20%7C%20Anthropic-412991)](https://platform.openai.com/)
-[![Tests](https://img.shields.io/badge/tests-25%2F25%20passing-brightgreen)](#7-테스트)
+[![Tests](https://img.shields.io/badge/tests-39%2F39%20passing-brightgreen)](#7-테스트)
 [![License](https://img.shields.io/badge/license-추가%20필요-lightgrey)](#11-라이선스license)
 
 > **수출 서류를 사진으로 올리면, 은행이 지급을 거절할 하자를 UCP600 조항과 함께 찾아냅니다.**
@@ -109,7 +109,7 @@
 | 문서 렌더링 | Jinja2 · Playwright | 합성 서류 HTML → PNG |
 | 외부 API | 한국은행 ECOS · 관세청(공공데이터포털) | 환율 |
 | 프론트엔드 | Vanilla HTML/CSS/JS | 빌드 도구 없이 즉시 실행 |
-| 테스트 | unittest · 자체 통합 스크립트 | 25개 항목 |
+| 테스트 | unittest · 자체 통합 스크립트 | 39개 항목 |
 
 > **프레임워크를 최소화한 이유:** 짧은 개발 기간 안에서 빌드 설정·의존성 문제로
 > 시간을 잃지 않기 위해 Vanilla JS를 선택했습니다.
@@ -210,7 +210,7 @@ KB/
 ├── README.md                    # 이 문서
 └── TradeGuard/
     ├── demo.sh                  # ★ 데모 준비 + 서버 기동 (원커맨드)
-    ├── test_all.sh              # ★ 통합 테스트 25항목 (비용 0원)
+    ├── test_all.sh              # ★ 통합 테스트 39항목 (비용 0원)
     ├── requirements.txt
     ├── .env.example             # 환경 변수 템플릿
     │
@@ -264,7 +264,7 @@ KB/
 bash test_all.sh
 ```
 
-**LLM을 호출하지 않으므로 몇 번을 실행해도 무료입니다.** 25개 항목을 검사합니다.
+**LLM을 호출하지 않으므로 몇 번을 실행해도 무료입니다.** 39개 항목을 검사합니다.
 
 | 그룹 | 검사 내용 |
 |---|---|
@@ -281,13 +281,44 @@ bash test_all.sh
 |---|---|---|
 | 하자 검출 F1 | 1.000 | 합성 40건 규칙 검증 |
 | 정상 케이스 오탐률 | 0% | 함정 정상 4건 포함 |
-| 필드 추출 정확도 | 96.6% | 종단 평가 (GPT-4o, 6건 표본) |
-| 문서 분류 정확도 | 100% | 종단 평가 (18장) |
+| 필드 추출 정확도 | 93.8% | 종단 평가 (GPT-4o, 40건 / 3,465 필드) |
+| 문서 분류 정확도 | 100% | 종단 평가 (120장) |
+| 종단 하자 검출 F1 | 0.889 | 이미지부터 시작 (정밀도 87.0% · 재현율 90.9%) |
+| 종단 등급 일치율 | 87.5% | 35 / 40 |
 
 > ⚠️ **F1 1.000은 상한 성능입니다.** 케이스 생성 규칙과 검출 규칙이 동일한 UCP600 해석을
 > 공유하므로, 이는 "성능"이 아니라 **규칙 구현에 모순이 없다는 검증**으로 읽어야 합니다.
-> 실제 성능은 서류 이미지부터 시작하는 종단 평가 수치를 참고하세요.
-> 종단 전량(40건) 측정 결과는 **추가 필요**입니다.
+> 실제 성능은 서류 이미지부터 시작하는 **종단 평가 수치(F1 0.889)** 를 보세요.
+> 두 숫자를 구분해 제시하는 것이 이 프로젝트의 원칙입니다.
+
+**이 종단 수치는 API 키 없이 재현할 수 있습니다.** LLM 추출 결과 40건을
+`TradeGuard/benchmark/cases/extracted/`에 커밋해 두었습니다.
+
+```bash
+cd TradeGuard && python3 - <<'PY'
+import sys, json, glob; sys.path.insert(0, 'pipeline')
+from detect import build_report, d as pd
+tp = fp = fn = g = 0
+for f in sorted(glob.glob('benchmark/cases/*.json')):
+    c = json.load(open(f))
+    ex = json.load(open(f"benchmark/cases/extracted/{c['case_id']}.json"))
+    r = build_report(c['case_id'], ex['documents'], pd(ex.get('presentation_date')))
+    got = {x['type'] for x in r['discrepancies']}
+    exp = {x['type'] for x in c['ground_truth']['discrepancies']}
+    tp += len(got & exp); fp += len(got - exp); fn += len(exp - got)
+    g += r['overall_risk']['grade'] == c['ground_truth']['overall_risk']['grade']
+print(f"TP={tp} FP={fp} FN={fn} · 등급일치 {g}/40")   # → TP=20 FP=3 FN=2 · 등급일치 35/40
+PY
+```
+
+### 한계 (숨기지 않습니다)
+
+- **벤치마크 40건은 전량 합성 데이터**입니다. 실서류는 기업 기밀이라 확보하지 못했고,
+  은행·무역협회 공개 서식을 기준으로 만들었습니다. 실서류 검증은 파일럿 단계 과제입니다.
+- 폐쇄 루프 지표(재심사 통과율 100% 등)는 **정답 JSON 위에서** 측정한 값입니다.
+  추출값(93.8%) 위에서의 검증은 입력 데이터를 확보한 상태이며 다음 단계입니다.
+- 판정 이력은 응답에 실리지만 **파일로 영속화되지는 않습니다**. 감사 이력 DB는 도입 단계 항목입니다.
+- 인증·권한 기능이 없습니다. 로컬 사전점검 프로토타입 범위입니다.
 
 ---
 
@@ -441,7 +472,7 @@ git push origin feature/작업명
 | 규칙 | 내용 |
 |---|---|
 | **스키마 동결** | `schemas/` 변경은 3인 합의 필요. **필드 추가는 허용**, 삭제·이름변경·타입변경은 금지 |
-| **테스트 통과** | 커밋 전 `bash test_all.sh` 25/25 |
+| **테스트 통과** | 커밋 전 `bash test_all.sh` 39/39 |
 | **시크릿 금지** | API 키는 `.env`에만. 코드·문서·오류 메시지에 노출 금지 |
 | **판정 로직** | 하자 판정에 LLM을 쓰지 않습니다 ([설계 원칙](#설계-원칙--llm은-읽기만-판정은-코드가) 참고) |
 
@@ -497,7 +528,7 @@ test: 백엔드 API 검증 항목 추가
 |---|---|---|---|
 | 1 | **데모 스크린샷 / GIF 추가** | 하자 리포트 화면 한 장이 설명 열 줄보다 강력합니다 | 높음 |
 | 2 | **라이선스 확정** | 현재 미정. 대회 규정 확인 후 `LICENSE` 추가 | 높음 |
-| 3 | **종단 성능 수치 갱신** | 현재 6건 표본. 40건 전량 측정 후 표 업데이트 | 높음 |
+| 3 | ~~종단 성능 수치 갱신~~ | ✅ 2026-07-31 완료 — 40건 전량 재측정 반영 | 완료 |
 | 4 | **영문 README 병기** | 무역금융 주제 특성상 영문 수요 가능 (`README.en.md`) | 중간 |
 | 5 | **CI 배지 연결** | GitHub Actions로 `test_all.sh` 자동 실행 → 배지가 실제로 동작 | 중간 |
 | 6 | **아키텍처 다이어그램** | 현재는 ASCII. Mermaid나 이미지로 교체하면 가독성 향상 | 중간 |

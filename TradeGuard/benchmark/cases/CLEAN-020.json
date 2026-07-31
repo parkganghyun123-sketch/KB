@@ -128,16 +128,15 @@
       "notify_party": "PACIFIC RIM IMPORTS INC., 1400 HARBOR BLVD, LONG BEACH, CA 90802, USA",
       "goods_description": "7000 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "DBSU8207693",
-        "DBSU8207694",
-        "DBSU8207695",
-        "DBSU8207696",
-        "DBSU8207697"
+        "DBSU2076932",
+        "DBSU2076948",
+        "DBSU2076953",
+        "DBSU2076969"
       ],
       "shipping_marks": "PACIFIC / LOS ANGELES / C/NO. 1-7000",
       "package_count": "7000 CTNS",
       "gross_weight": "56,700.0 KGS",
-      "measurement": "315.00 CBM",
+      "measurement": "245.00 CBM",
       "booking_number": "BKG671200",
       "freight_terms": "COLLECT",
       "clean": true,

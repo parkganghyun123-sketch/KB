@@ -128,15 +128,14 @@
       "notify_party": "SHANGHAI HONGDA TRADE CO., LTD, 2200 PUDONG AVENUE, SHANGHAI, CHINA",
       "goods_description": "5700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "KMTU8459322",
-        "KMTU8459323",
-        "KMTU8459324",
-        "KMTU8459325"
+        "KMTU4593221",
+        "KMTU4593237",
+        "KMTU4593242"
       ],
       "shipping_marks": "SHANGHAI / SHANGHAI / C/NO. 1-5700",
       "package_count": "5700 CTNS",
       "gross_weight": "46,170.0 KGS",
-      "measurement": "256.50 CBM",
+      "measurement": "199.50 CBM",
       "booking_number": "BKG368618",
       "freight_terms": "COLLECT",
       "clean": true,

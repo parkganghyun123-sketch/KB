@@ -74,6 +74,20 @@ WEIGHT_KG_PER_UNIT = {
     "LP": 1.9,      # PCS, LED 패널 라이트
 }
 
+# 업종코드 → 포장(카톤/백) 1개당 용적(CBM). 품목마다 밀도가 다르므로 고정값 하나를
+# 모든 품목에 적용하면(예: 니트 의류와 스테인리스 피팅이 같은 부피) 총중량 대비 총용적
+# 비율이 비현실적으로 찍혀 실무자 눈에 걸린다. 화물운송 통상치 추정값(감사되지 않은 근사치).
+CBM_PER_PACKAGE = {
+    "AH": 0.030,    # 정밀가공 금속부품 — 조밀
+    "PP": 0.045,    # 수지 25kg 백 — 벌크밀도 약 550kg/m³
+    "TS": 0.065,    # 니트 의류 카톤 — 가볍고 부피가 큼
+    "RN": 0.035,    # 라면 박스 — 표준 골판지 상자
+    "BC": 0.025,    # 배터리 셀 — 소형·조밀 포장
+    "RS": 0.035,    # 고무 씰 키트 — 중간
+    "SF": 0.020,    # 스테인리스 피팅 — 무겁고 조밀
+    "LP": 0.050,    # LED 패널 — 완충재 포함 부피 있음
+}
+
 
 def qty_for_price(price, rng):
     """거래금액(qty*price)이 스펙 범위(MIN_AMOUNT~MAX_AMOUNT)에 들도록 qty를 역산한다."""
@@ -121,13 +135,34 @@ def ev(doc, field, value):
     return {"doc": doc, "field": field, "value": str(value)}
 
 
+_ISO6346_LETTER_VALUES = {
+    "A": 10, "B": 12, "C": 13, "D": 14, "E": 15, "F": 16, "G": 17, "H": 18, "I": 19, "J": 20,
+    "K": 21, "L": 23, "M": 24, "N": 25, "O": 26, "P": 27, "Q": 28, "R": 29, "S": 30, "T": 31,
+    "U": 32, "V": 34, "W": 35, "X": 36, "Y": 37, "Z": 38,
+}
+
+
+def _iso6346_check_digit(owner_and_serial):
+    """ISO 6346 체크디짓. 소유자코드 4자 + 일련번호 6자리(총 10자)에 대해 계산한다."""
+    total = 0
+    for i, ch in enumerate(owner_and_serial):
+        v = _ISO6346_LETTER_VALUES[ch] if ch.isalpha() else int(ch)
+        total += v * (2 ** i)
+    r = total % 11
+    return 0 if r == 10 else r
+
+
 def containers(rng, n):
     """컨테이너 번호 n개. rng는 기존과 동일하게 정확히 2회만 소비한다
     (프리픽스 1회 + 첫 번호 1회) — 시드 스트림을 보존해 다른 케이스가 흔들리지 않게 한다.
-    2번째부터는 첫 번호에서 순번으로 파생한다."""
+    2번째부터는 첫 번호에서 순번으로 파생한다. 마지막 자리는 ISO 6346 체크디짓이다."""
     prefix = rng.choice(["KMTU", "DBSU", "SHCU"])
     first = rng.randint(1000000, 9999999)
-    return [f"{prefix}{(first + i) % 10000000:07d}" for i in range(max(1, n))]
+    out = []
+    for i in range(max(1, n)):
+        owner_and_serial = f"{prefix}{(first + i) % 1000000:06d}"
+        out.append(f"{owner_and_serial}{_iso6346_check_digit(owner_and_serial)}")
+    return out
 
 
 def set_invoice_amount(inv, target):
@@ -186,7 +221,7 @@ def base_case(rng, seq):
     else:
         pkg_count, pkg_word, pkg_abbr = max(1, qty // 25), "CARTONS", "CTNS"
     gross_weight_kg = round(net_weight_kg * 1.08, 1)
-    measurement_cbm = round(pkg_count * 0.045, 2)
+    measurement_cbm = round(pkg_count * CBM_PER_PACKAGE[code], 2)
     # 용적·중량 중 큰 쪽이 컨테이너 대수를 결정한다(수지처럼 무거운 화물은 중량이 먼저 찬다).
     n_containers = max(1, math.ceil(max(measurement_cbm / CONTAINER_CBM,
                                         gross_weight_kg / CONTAINER_PAYLOAD_KG)))

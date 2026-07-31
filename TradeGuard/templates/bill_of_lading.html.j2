@@ -79,7 +79,9 @@
             <td>{{ bl.get('shipping_marks') or 'N/M' }}{% if bl.container_numbers %}<br>{{ bl.container_numbers | join('<br>') }}{% endif %}</td>
             <td>{{ bl.get('package_count') or 'AS PER<br>ATTACHED LIST' }}</td>
             <td class="goods-area">{{ bl.goods_description }}
-              {% if bl.clean %}<br><br>CLEAN ON BOARD{% endif %}
+              {% if bl.clean and bl.shipped_on_board.indicated %}<br><br>CLEAN ON BOARD
+              {% elif bl.clean %}<br><br>CLEAN
+              {% endif %}
               {% if bl.shipped_on_board.indicated and bl.shipped_on_board.method == 'on_board_notation' %}
               <br><div class="onboard stamp-blue">SHIPPED ON BOARD<br>DATE: {{ bl.shipped_on_board.date | docdate if bl.shipped_on_board.date else '' }}</div>
               {% endif %}

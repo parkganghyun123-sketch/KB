@@ -1,14 +1,14 @@
 {
-  "rate": 1450.1,
-  "date": "2026-07-30",
+  "rate": 1441.1,
+  "date": "2026-07-31",
   "source": "ecos",
   "label": "한국은행 ECOS 매매기준율 (통계코드 731Y001)",
-  "fetched_at": "2026-07-30",
+  "fetched_at": "2026-07-31",
   "volatility": {
-    "sigma_annual": 0.089634,
-    "n_observations": 251,
+    "sigma_annual": 0.089683,
+    "n_observations": 252,
     "start": "20250721",
-    "end": "20260730",
+    "end": "20260731",
     "source": "ecos",
     "stat_code": "731Y001",
     "method_ko": "일간 로그수익률 표본표준편차 × √252 (연율화)"

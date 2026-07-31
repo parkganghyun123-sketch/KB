@@ -128,17 +128,16 @@
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
       "goods_description": "7700 CARTONS OF INSTANT RAMEN NOODLE (BOX OF 40)",
       "container_numbers": [
-        "SHCU8099247",
-        "SHCU8099248",
-        "SHCU8099249",
-        "SHCU8099250",
-        "SHCU8099251",
-        "SHCU8099252"
+        "SHCU0992478",
+        "SHCU0992483",
+        "SHCU0992499",
+        "SHCU0992502",
+        "SHCU0992518"
       ],
       "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-7700",
       "package_count": "7700 CTNS",
       "gross_weight": "62,370.0 KGS",
-      "measurement": "346.50 CBM",
+      "measurement": "269.50 CBM",
       "booking_number": "BKG947486",
       "freight_terms": "COLLECT",
       "clean": true,

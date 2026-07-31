@@ -128,12 +128,13 @@
       "notify_party": "BHARAT GLOBAL SOURCING PVT LTD, 17 MARINE DRIVE, MUMBAI 400020, INDIA",
       "goods_description": "1316 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "KMTU9763593"
+        "KMTU7635932",
+        "KMTU7635948"
       ],
       "shipping_marks": "BHARAT / NHAVA SHEVA / C/NO. 1-1316",
       "package_count": "1316 CTNS",
       "gross_weight": "5,685.1 KGS",
-      "measurement": "59.22 CBM",
+      "measurement": "85.54 CBM",
       "booking_number": "BKG492281",
       "freight_terms": "COLLECT",
       "clean": true,

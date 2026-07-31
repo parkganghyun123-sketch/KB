@@ -128,12 +128,13 @@
       "notify_party": "MEKONG INDUSTRIAL TRADING CO., LTD, 88 NGUYEN HUE BLVD, DISTRICT 1, HO CHI MINH CITY, VIETNAM",
       "goods_description": "GENERAL MERCHANDISE AS PER INVOICE",
       "container_numbers": [
-        "DBSU8623520"
+        "DBSU6235204",
+        "DBSU6235210"
       ],
       "shipping_marks": "MEKONG / HO CHI MINH CITY / C/NO. 1-1032",
       "package_count": "1032 CTNS",
       "gross_weight": "4,458.2 KGS",
-      "measurement": "46.44 CBM",
+      "measurement": "67.08 CBM",
       "booking_number": "BKG613115",
       "freight_terms": "COLLECT",
       "clean": true,

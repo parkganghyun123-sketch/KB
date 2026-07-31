@@ -130,12 +130,13 @@
       "notify_party": "GULF STAR GENERAL TRADING LLC, PO BOX 4471, DEIRA, DUBAI, UAE",
       "goods_description": "1128 CARTONS OF COTTON KNITTED T-SHIRTS",
       "container_numbers": [
-        "KMTU2824621"
+        "KMTU8246215",
+        "KMTU8246220"
       ],
       "shipping_marks": "GULF / JEBEL ALI / C/NO. 1-1128",
       "package_count": "1128 CTNS",
       "gross_weight": "4,873.0 KGS",
-      "measurement": "50.76 CBM",
+      "measurement": "73.32 CBM",
       "booking_number": "BKG292793",
       "freight_terms": "COLLECT",
       "clean": true,

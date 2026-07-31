@@ -82,6 +82,23 @@ for f in glob.glob('/tmp/tg_regen/*.json'):
 run "독립 교차검증 — 우발 하자 0건 (A-2)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '우발 하자 0건, 미검출 0건')"
 # 회귀 방지: 라벨에 없고 엔진도 안 잡지만 사람 눈에는 보이는 '우발 하자'를 서류 단계에서 차단한다.
 run "서류 물리 정합성 — 부가 이상치 0건 (포장·산술·적재)" "(cd benchmark && python3 crosscheck_independent.py | grep -q '이상치 없음')"
+# 회귀 방지(A-7): 컨테이너 번호가 규격상 체크디짓을 지키지 않으면 선사·포워더 경험이 있는
+# 심사위원 눈에 걸린다 — 판정 결과에는 영향 없지만 "서류를 아는 팀인가"의 문제.
+run "컨테이너 번호가 ISO 6346 체크디짓을 만족 (A-7)" "python3 -c \"
+import sys,json,glob; sys.path.insert(0,'benchmark')
+from generate_cases import _iso6346_check_digit
+n=0
+for f in glob.glob('benchmark/cases/*.json'):
+    c=json.load(open(f))
+    for cn in c['documents']['bill_of_lading']['container_numbers']:
+        owner, check = cn[:10], int(cn[10])
+        assert _iso6346_check_digit(owner)==check, f'{f}: {cn}'
+        n+=1
+assert n>0, '검사 대상 없음'\""
+# 회귀 방지(A-9): shipped_on_board.indicated=False인 B/L이 'CLEAN ON BOARD'를 인쇄하면
+# 서류 자체가 자기모순이다(정답 라벨은 본선적재 미표기인데 서류는 본선적재를 인쇄) —
+# DEFECT-017·018에서 실제로 재현됐던 결함.
+run "clean B/L도 본선적재 미표기 시 'CLEAN ON BOARD' 인쇄 안 함 (A-9)" "python3 render/render.py benchmark/cases/DEFECT-017.json benchmark/cases/DEFECT-018.json --out /tmp/tg_render_a9 >/dev/null && ! grep -l 'CLEAN ON BOARD' /tmp/tg_render_a9/DEFECT-017_bl.html /tmp/tg_render_a9/DEFECT-018_bl.html"
 run "폐쇄 루프 — 재심사 통과율 100% · 신규 하자 0건" "(cd benchmark && python3 evaluate_closedloop.py | grep -q '재심사 통과율      100.0%') && (cd benchmark && python3 evaluate_closedloop.py | grep -q '신규 하자          0건')"
 run "수정 제안이 신용장 기준값에서 도출 (LLM 미사용)" "python3 -c \"
 import sys,json; sys.path.insert(0,'pipeline')
@@ -93,6 +110,19 @@ ps=[p for p in propose_all(docs,r) if p['curable']]
 assert ps, '제안 없음'
 amt=[p for p in ps if p['type']=='AMOUNT_EXCEEDS_LC']
 assert amt and amt[0]['after']==docs['letter_of_credit']['amount'], '제안값이 L/C 금액과 불일치'\""
+# 회귀 방지(A-10): 품목이 2개 이상인 송장의 한도초과는 첫 품목 금액으로 총액을 덮어쓰면
+# 나머지 품목 금액이 사라진다 — 벤치마크 41건이 전부 단일 품목이라 현재는 드러나지 않는
+# 버그였다. 다품목은 자동 제안 대상에서 제외하고 사람 판단으로 넘겨야 한다.
+run "다품목 송장의 한도초과는 자동 제안 대상에서 제외 (A-10)" "python3 -c \"
+import sys,json,copy; sys.path.insert(0,'pipeline')
+from remedy import propose
+d=json.load(open('benchmark/cases/DEFECT-019.json'))
+docs=copy.deepcopy(d['documents'])
+g=docs['commercial_invoice']['goods'][0]
+docs['commercial_invoice']['goods'].append(copy.deepcopy(g))
+disc={'type':'AMOUNT_EXCEEDS_LC','id':'DISC-001','severity':'high'}
+p=propose(docs, disc)
+assert p['curable'] is False, f'다품목인데 curable=True: {p}'\""
 # 회귀 방지: 데모 대본이 주장하는 등급 전이가 실제로 재현되는지 못박는다.
 # 초안 대본은 'D→A'였으나 실측상 D→A는 0건이다(치유 불가 하자가 섞이기 때문).
 # DEFECT-019 = 완결 시나리오(제출 가능), DEMO-001 = 정직성 장면(A에 도달하지 않아야 정상).

@@ -26,7 +26,8 @@ REMEDY_MAP = {
         "actor_ko": "수출자(송장 재발행)", "basis_field": ":32B: 통화"},
     "AMOUNT_EXCEEDS_LC": {
         "curable": True, "doc": "commercial_invoice", "field": "total_amount",
-        "actor_ko": "수출자(송장 재발행)", "basis_field": ":32B: 금액 · :39A: 과부족허용"},
+        "actor_ko": "수출자(송장 재발행 — 초과분은 별도 T/T 정산 가능)",
+        "basis_field": ":32B: 금액 · :39A: 과부족허용"},
     "BENEFICIARY_NAME_MISMATCH": {
         "curable": True, "doc": "commercial_invoice", "field": "seller.name",
         "actor_ko": "수출자(송장 재발행)", "basis_field": ":59: 수익자"},
@@ -107,6 +108,15 @@ def propose(docs, disc):
     if dtype == "CURRENCY_MISMATCH":
         after = lc.get("currency")
     elif dtype == "AMOUNT_EXCEEDS_LC":
+        # 품목이 2개 이상이면 총액을 첫 품목 금액으로 덮어쓸 경우 나머지 품목이 사라진다.
+        # 다품목 초과분의 비례 축소·분할선적·T/T 분리는 수출자·개설의뢰인의 상거래 판단이지
+        # 서류 도구가 임의로 대신할 사안이 아니므로 사람 판단으로 넘긴다.
+        if len(inv.get("goods") or []) > 1:
+            return {**base, "curable": False,
+                    "reason_ko": "다품목 송장의 한도 초과는 자동 제안 대상이 아닙니다 — "
+                                 "품목별 비례 조정, 분할선적, 초과분 T/T 분리 중 무엇을 택할지는 "
+                                 "수출자와 개설의뢰인의 협의가 필요합니다.",
+                    "actor_ko": "수출자·개설의뢰인 협의"}
         after = _amount_target(lc)
     elif dtype == "BENEFICIARY_NAME_MISMATCH":
         after = (lc.get("beneficiary") or {}).get("name")

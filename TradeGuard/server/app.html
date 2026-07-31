@@ -73,7 +73,28 @@ border-radius:12px;padding:18px 22px;margin-bottom:22px}
 /* 업로드 */
 .drop{border:2px dashed #c9cdd3;border-radius:14px;padding:36px;text-align:center;background:#fff}
 .drop.over{border-color:var(--kb-yellow);background:#fffdf5}
-.filelist{margin-top:12px;font-size:13px;color:var(--sub)}
+/* 올린 서류를 눈으로 확인하는 자리 — 파일명만으로는 무엇을 올렸는지 알기 어렵다.
+   드롭존 밖에 둔다. 안에 두면 카드를 누를 때 파일 선택창이 다시 열린다. */
+.fhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0 8px;font-size:13px;color:var(--sub)}
+.fhead b{color:var(--ink);font-size:14px}
+.filelist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.fcard{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.fthumb{width:46px;height:58px;flex:none;border-radius:6px;border:1px solid var(--line);
+  background:var(--bg) center/cover no-repeat}
+.fmeta{min-width:0;flex:1}
+.fname{font-size:13px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fsize{font-size:12px;color:#98a2b3;margin-top:3px}
+.fdel{flex:none;border:0;background:none;color:#98a2b3;font-size:15px;line-height:1;cursor:pointer;
+  padding:5px 7px;border-radius:6px;font-family:inherit}
+.fdel:hover{background:var(--danger-bg);color:var(--danger)}
+.fdel:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.fkind{display:inline-block;margin-top:5px;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:20px;
+  background:var(--blue-bg);color:var(--blue)}
+.fkind.pending{background:var(--bg);color:#98a2b3;font-weight:500}
+.fkind.bad{background:var(--warn-bg);color:var(--warn)}
+.fneed{margin-top:10px;font-size:12.5px;line-height:1.6;padding:10px 12px;border-radius:8px}
+.fneed.ok{background:var(--ok-bg);color:var(--ok)}
+.fneed.warn{background:var(--warn-bg);color:var(--warn)}
 .presdate{margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
 .presdate label{font-size:13.5px;font-weight:700;margin-right:10px}
 .presdate input[type=date]{font:inherit;font-size:13.5px;padding:6px 10px;border:1px solid #c9cdd3;
@@ -267,6 +288,20 @@ background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14p
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .err{background:var(--danger-bg);border:1px solid #f5c6c2;color:var(--danger);border-radius:10px;padding:14px 18px;font-size:13.5px;line-height:1.6}
 .meta{font-size:12px;color:#98a2b3;margin-top:16px;line-height:1.7;border-top:1px solid var(--line);padding-top:12px}
+.meta-line{color:var(--sub)}
+.meta-warn{color:var(--danger);margin-top:4px}
+/* 기술 정보는 기본으로 접는다 — 필요한 사람만 펼친다 */
+.prov{margin-top:8px}
+.prov summary{cursor:pointer;color:var(--sub);font-size:12px;list-style:none;
+  display:inline-flex;align-items:center;gap:4px;user-select:none}
+.prov summary::-webkit-details-marker{display:none}
+.prov summary::after{content:"▾";font-size:9px;transition:transform .15s}
+.prov[open] summary::after{transform:rotate(180deg)}
+.prov summary:hover{color:var(--ink)}
+.prov dl{margin:10px 0 0;padding:12px 14px;background:var(--bg);border-radius:8px;
+  display:grid;grid-template-columns:72px 1fr;gap:6px 14px;font-size:12px;line-height:1.65}
+.prov dt{color:#98a2b3;font-weight:600}
+.prov dd{margin:0;color:var(--sub)}
 
 /* 면책 푸터 */
 .site-foot{background:#fff;border-top:1px solid var(--line);margin-top:40px}
@@ -356,8 +391,13 @@ font-size:12px;color:#98a2b3}
         <p style="margin:10px 0 4px;font-weight:700">여기로 파일을 끌어다 놓거나 클릭해서 선택</p>
         <p style="font-size:13px;color:var(--sub)">신용장 · 상업송장 · 선하증권 이미지 (PNG/JPG, 여러 장 가능)</p>
         <input type="file" id="fileInput" multiple accept=".png,.jpg,.jpeg,.webp" style="display:none">
-        <div class="filelist" id="fileList"></div>
       </div>
+      <div class="fhead hide" id="fileHead">
+        <b id="fileCount"></b>
+        <button type="button" class="linkbtn" onclick="clearFiles()">전체 지우기</button>
+      </div>
+      <div class="filelist" id="fileList"></div>
+      <div id="fileNeed"></div>
       <!-- 제시일은 UCP600 14(c) 제시기한 판정의 기준이다. 기본값을 '오늘'로 두면
            과거에 발행된 서류를 판독할 때 제시기한 경과가 일괄로 잡힌다.
            서류에 인쇄돼 있지 않은 값이므로 추출로는 알 수 없다 — 사용자가 정한다. -->
@@ -474,7 +514,7 @@ font-size:12px;color:#98a2b3}
         실시간 시장환율이 아니며, 조회 기준일을 화면에 함께 표시합니다.</li>
       <li><b>서류 처리</b> — 업로드한 이미지는 분석 후 즉시 삭제되며 서버에 보관하지 않습니다.</li>
     </ul>
-    <p class="foot-end">TradeGuard · 2026 KB AI Challenge 출품작 · 부산대학교 3인 팀</p>
+    <p class="foot-end">TradeGuard · 2026 KB AI Challenge 출품작 · 부산대학교 2인 팀</p>
   </div>
 </footer>
 
@@ -537,12 +577,98 @@ drop.onclick = () => fi.click();
 drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
 drop.ondragleave = () => drop.classList.remove("over");
 drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); };
-fi.onchange = () => addFiles(fi.files);
+fi.onchange = () => { addFiles(fi.files); fi.value = ""; };  // 같은 파일 재선택 허용
+
+// 끌어다 놓기를 두 번 하면 앞의 것이 사라지는 게 맞나? 사용자는 '추가'로 기대한다.
+// 이름+크기가 같으면 같은 파일로 보고 건너뛴다.
 function addFiles(list){
-  FILES = [...list];
-  $("fileList").innerHTML = FILES.length
-    ? "선택됨: " + FILES.map(f => esc(f.name)).join(", ") : "";
-  $("btnUpload").disabled = !FILES.length;
+  const added = [];
+  for(const f of list){
+    if(!FILES.some(x => x.name === f.name && x.size === f.size)){ FILES.push(f); added.push(f); }
+  }
+  renderFiles();
+  if(added.length) classifyFiles(added);
+}
+
+// 올린 이미지가 신용장인지 송장인지 선하증권인지 미리 알려준다.
+// 분석 시작 전에 알아야 잘못 올린 걸 되돌릴 수 있다.
+// 실패하면 뱃지만 사라진다 — 분석은 이것과 무관하게 진행된다.
+async function classifyFiles(targets){
+  targets.forEach(f => { f._kind = "pending"; });
+  renderFiles();
+  const fd = new FormData();
+  targets.forEach(f => fd.append("files", f));
+  try{
+    const r = await fetch("/api/classify", {method:"POST", body:fd});
+    if(!r.ok) throw new Error(r.status);
+    const { results } = await r.json();
+    results.forEach((res, i) => {
+      const f = targets[i];
+      if(!f) return;
+      f._kind = res.doc_type || "unknown";
+      f._kindKo = res.doc_type_ko;
+    });
+  }catch(_){
+    targets.forEach(f => { f._kind = null; });   // 뱃지 없이 조용히 넘어간다
+  }
+  renderFiles();
+}
+function removeFile(i){ URL.revokeObjectURL(FILES[i]._url); FILES.splice(i,1); renderFiles(); }
+function clearFiles(){
+  FILES.forEach(f => URL.revokeObjectURL(f._url)); FILES = [];
+  $("fileNeed").innerHTML = ""; renderFiles();
+}
+
+const fsize = n => n < 1024*1024 ? `${Math.round(n/1024)} KB`
+                                 : `${(n/1024/1024).toFixed(1)} MB`;
+
+function renderFiles(){
+  const n = FILES.length;
+  $("fileHead").classList.toggle("hide", !n);
+  $("fileCount").textContent = `올린 서류 ${n}장`;
+  $("fileList").innerHTML = FILES.map((f,i) => {
+    if(!f._url) f._url = URL.createObjectURL(f);   // 썸네일 — 무엇을 올렸는지 눈으로 확인
+    let badge = "";
+    if(f._kind === "pending")      badge = `<span class="fkind pending">서류 종류 확인 중…</span>`;
+    else if(f._kind === "unknown") badge = `<span class="fkind bad">종류를 알 수 없음</span>`;
+    else if(f._kind)               badge = `<span class="fkind">${esc(f._kindKo)}</span>`;
+    return `<div class="fcard">
+      <div class="fthumb" style="background-image:url('${f._url}')"></div>
+      <div class="fmeta">
+        <div class="fname" title="${esc(f.name)}">${esc(f.name)}</div>
+        <div class="fsize">${fsize(f.size)}</div>
+        ${badge}
+      </div>
+      <button type="button" class="fdel" onclick="removeFile(${i})"
+              aria-label="${esc(f.name)} 빼기" title="빼기">✕</button>
+    </div>`;
+  }).join("");
+  renderNeed();
+  $("btnUpload").disabled = !n;
+}
+
+// 3종이 다 모였는지, 같은 종류가 겹치지 않는지 분석 전에 알려준다.
+// 막지는 않는다 — 서류가 2종뿐이어도 할 수 있는 검사는 한다.
+const NEED = {letter_of_credit:"신용장", commercial_invoice:"상업송장", bill_of_lading:"선하증권"};
+function renderNeed(){
+  const box = $("fileNeed");
+  const kinds = FILES.map(f => f._kind).filter(k => k && k !== "pending" && k !== "unknown");
+  if(!FILES.length || FILES.some(f => f._kind === "pending") || !kinds.length){
+    box.innerHTML = ""; return;
+  }
+  const dup = Object.entries(kinds.reduce((a,k) => (a[k]=(a[k]||0)+1, a), {}))
+                    .filter(([,c]) => c > 1).map(([k]) => NEED[k]);
+  const miss = Object.keys(NEED).filter(k => !kinds.includes(k)).map(k => NEED[k]);
+  if(!dup.length && !miss.length){
+    box.innerHTML = `<p class="fneed ok">신용장 · 상업송장 · 선하증권 3종이 모두 준비됐습니다.</p>`;
+  }else{
+    const msg = [];
+    if(miss.length) msg.push(`<b>${miss.join(" · ")}</b>이(가) 없습니다. `
+      + `없는 서류와 대조하는 항목은 검사하지 못합니다.`);
+    if(dup.length) msg.push(`<b>${dup.join(" · ")}</b>이(가) 두 장 이상입니다. `
+      + `종류마다 한 장만 심사하므로 나머지는 제외됩니다.`);
+    box.innerHTML = `<p class="fneed warn">${msg.join("<br>")}</p>`;
+  }
 }
 
 function steps(n){
@@ -565,7 +691,7 @@ function fail(msg){
 function reset(){
   $("result").classList.add("hide"); $("errBox").classList.add("hide");
   $("loading").classList.add("hide"); $("step1").classList.remove("hide");
-  steps(1); FILES = []; $("fileList").innerHTML = ""; $("btnUpload").disabled = true;
+  steps(1); clearFiles();
   // 폐쇄 루프 상태도 함께 초기화한다 — 이전 케이스의 Before/After가 남으면 오해를 준다.
   REMEDIES = []; PICKED = new Set();
   $("cmpBox").innerHTML = ""; $("loopbar").hidden = true;
@@ -665,10 +791,35 @@ function render(d){
   renderImpact(d);
   renderKb(d.kb);
 
-  const m = d.meta;
-  $("meta").innerHTML = `${esc(m.source||"")} · 소요 ${m.elapsed_sec}초 ·
-    예상 비용 $${(m.cost_usd??0).toFixed(3)} · 판정 엔진 detect.py (결정적 규칙, LLM 미사용)
-    ${m.errors&&m.errors.length ? "<br>⚠️ "+m.errors.map(esc).join(" / ") : ""}`;
+  renderMeta(d.meta, keys.length);
+}
+
+// 화면에는 고객이 확인할 값(언제·무엇을·얼마나)만 둔다.
+// 판정 엔진·입력 출처 같은 기술 정보는 '판정 근거'로 접어 둔다 —
+// 버리지는 않는다. 결정 과정을 되짚을 수 있어야 신뢰가 생긴다.
+function renderMeta(m, docCount){
+  const now = new Date();
+  const p = n => String(n).padStart(2,"0");
+  const stamp = `${now.getFullYear()}.${p(now.getMonth()+1)}.${p(now.getDate())} `
+              + `${p(now.getHours())}:${p(now.getMinutes())}`;
+  const secs = Number(m.elapsed_sec) < 1 ? "1초 미만" : `${Math.round(m.elapsed_sec)}초`;
+
+  $("meta").innerHTML = `
+    <div class="meta-line">심사 완료 ${stamp} · 검토 서류 ${docCount}건 · 처리 ${secs}</div>
+    ${m.errors&&m.errors.length ? `<div class="meta-warn">⚠️ ${m.errors.map(esc).join(" / ")}</div>` : ""}
+    <details class="prov">
+      <summary>판정 근거 보기</summary>
+      <dl>
+        <dt>판정 방식</dt>
+        <dd>UCP600 조항에 대응하는 <b>규칙 기반 판정</b>입니다.
+            생성형 AI는 서류를 읽는 데만 사용하며, 하자 판정에는 관여하지 않습니다.
+            같은 서류는 언제 넣어도 같은 결과가 나옵니다.</dd>
+        <dt>입력</dt>
+        <dd>${esc(m.source||"—")}</dd>
+        <dt>규정 출처</dt>
+        <dd>UCP600 (ICC Publication No. 600) 조항 요지</dd>
+      </dl>
+    </details>`;
 }
 
 // ── ③-B 폐쇄 루프 — 수정 제안 → 승인 → 재심사 ─────────────────

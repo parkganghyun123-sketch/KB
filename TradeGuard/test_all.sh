@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # TradeGuard 통합 테스트 — API 비용 0원
 #
-# 3인 작업(A 벤치마크 · B 파이프라인 · C UI)이 서로 맞물려 도는지 확인한다.
+# 팀 작업(벤치마크 · 파이프라인 · UI)이 서로 맞물려 도는지 확인한다.
 # LLM을 호출하지 않으므로 몇 번을 돌려도 무료다.
 #
 #   bash test_all.sh
@@ -163,6 +163,32 @@ r=route('samples/DEMO-001.json','DEMO-001')['kb']
 assert r['route']['status']=='blocked', r['route']
 assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
 \""
+# 회귀 방지: 수정으로 하자를 없애도 **재발행에 쓴 시간은 돌아오지 않는다.**
+# 지연을 새로 계산하면 0이 되지만, 그 기간의 자금 공백과 환노출은 실제로 발생했다.
+# 이걸 놓치면 "서류 고치면 지연도 사라지나요?"라는 질문에 화면이 답을 못 한다.
+run "재심사 후에도 이미 발생한 지연이 유지됨 (자금·환위험 카드 소멸 방지)" "python3 -c \"
+import sys,json; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from app import analyze, delay_block, apply_edits
+from detect import build_report, d as pd
+c=json.load(open('benchmark/cases/DEFECT-019.json'))
+docs,cid,pres=c['documents'],'DEFECT-019',c.get('presentation_date')
+r1=analyze(docs,cid,pres)
+inc=delay_block(build_report(cid,docs,pd(pres)))['total_business_days']
+assert inc>0, '수정 전 지연이 0이면 이 테스트가 무의미하다'
+fixed,_=apply_edits(docs,[x for x in r1['remedies'] if x['curable']])
+r2=analyze(fixed,cid,pres,incurred_days=inc)
+assert r2['report']['overall_risk']['grade']=='A', '수정 후 A등급이 아니다'
+assert r2['delay']['total_business_days']==inc, f'지연이 이월되지 않음: {r2[\\\"delay\\\"]}'
+assert r2['delay'].get('incurred') is True, 'incurred 표시 누락'
+prods={i['product_ko'] for i in r2['kb']['items']}
+for p in ('무역금융','선(현)물환','외화예금'):
+    assert p in prods, f'재심사 후 {p} 카드가 사라짐 — 지연은 실제로 발생했다'
+txt=json.dumps(r2['kb'],ensure_ascii=False)
+assert '이미 소요' in txt, '이미 발생한 지연임을 문구로 밝히지 않음'
+r3=analyze(fixed,cid,pres)
+assert len(r3['kb']['items'])==1, '이월 없이 재심사하면 카드 1장이어야 한다(대조군)'
+\""
+
 # 회귀 방지: 화면에 은행 상품을 적을 때 **브랜드 서비스명·한시 프로그램명**을 쓰면 안 된다.
 # 그런 이름은 종료·개편되므로(실제로 한때 안내하던 무역 플랫폼이 지금은 제공되지 않는다),
 # 없는 서비스를 화면에 띄우게 되고 실무자 심사위원에게 즉시 걸린다.

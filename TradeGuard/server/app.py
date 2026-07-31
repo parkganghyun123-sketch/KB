@@ -216,6 +216,9 @@ def engine_version() -> str:
 #    같은 이유로 **한도·금리·대상 요건 수치는 적지 않는다.** (포괄금융 대상 수출실적 기준만
 #    해도 자료마다 다르게 나온다.) 조건은 영업점 상담으로 확정된다고만 안내한다.
 #    환변동보험은 한국무역보험공사(K-SURE) 상품이라 여기 넣지 않는다.
+DOC_KO = {"letter_of_credit": "신용장", "commercial_invoice": "상업송장",
+          "bill_of_lading": "선하증권"}
+
 CHANNEL_BRANCH = "영업점 외환 담당"
 CHANNEL_ONLINE = "기업인터넷뱅킹 · 영업점"
 
@@ -229,7 +232,17 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
     amount, currency = inv.get("total_amount"), inv.get("currency", "USD")
 
     items = []
-    if not discs:
+    if not discs and delay.get("incurred"):
+        # 고쳐서 하자는 없앴지만 그 과정에서 시간을 썼다. 둘 다 말해 준다.
+        route = {"status": "clean", "product_ko": "수출환어음 매입",
+                 "headline_ko": "제출 가능한 상태입니다",
+                 "detail_ko": f"수정으로 하자가 모두 해소돼 정상 매입 신청이 가능합니다. "
+                              f"다만 재발행에 약 {delay_days}영업일이 소요돼, "
+                              f"그 기간의 자금 공백과 환노출은 그대로 남아 있습니다."}
+        items.append({"category_ko": "결제·자금화", "product_ko": "수출환어음 매입",
+                      "channel_ko": CHANNEL_ONLINE,
+                      "fit_reason_ko": "하자가 해소돼 매입 신청이 가능합니다."})
+    elif not discs:
         route = {"status": "clean", "product_ko": "수출환어음 매입",
                  "headline_ko": "정상 매입(네고) 진행이 가능한 상태입니다",
                  "detail_ko": "신용장 조건과 서류가 일치하므로 개설은행의 하자 통보 없이 "
@@ -259,17 +272,23 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
                       "fit_reason_ko": "위 수정 제안을 반영해 재제시하면 하자 없이 매입 신청이 가능합니다."})
 
     # 대금 수취가 밀리는 만큼 운전자금 공백이 생긴다.
+    # 수정을 마친 뒤에도 이 카드는 남는다 — 재발행에 쓴 시간은 되돌아오지 않는다.
     if delay_days:
+        incurred = delay.get("incurred")
+        when = (f"하자를 고치는 데 약 {delay_days}영업일이 이미 소요됐습니다. "
+                if incurred else
+                f"하자 처리로 약 {delay_days}영업일 수취가 지연됩니다. ")
         items.append({"category_ko": "자금 공백", "product_ko": "무역금융",
                       "channel_ko": CHANNEL_BRANCH,
-                      "fit_reason_ko": f"하자 처리로 약 {delay_days}영업일 수취가 지연됩니다. "
-                                       "신용장기준·실적기준·포괄금융으로 그 기간의 운전자금을 "
-                                       "메울 수 있는지 상담해 보십시오."})
+                      "fit_reason_ko": when + "신용장기준·실적기준·포괄금융으로 그 기간의 "
+                                              "운전자금을 메울 수 있는지 상담해 보십시오."})
         # 지연이 있어야 노출 구간이 생긴다. 지연 0이면 환 상품을 권하지 않는다.
         items.append({"category_ko": "환위험", "product_ko": "선(현)물환",
                       "channel_ko": CHANNEL_ONLINE,
-                      "fit_reason_ko": "수취 예정일 만기로 환율을 확정해 지연 구간의 변동을 차단합니다. "
-                                       "기본 선물환 외에 통화옵션·합성선물환도 선택할 수 있습니다."})
+                      "fit_reason_ko": ("밀린 수취 예정일을 만기로 환율을 확정해 남은 구간의 변동을 차단합니다. "
+                                        if incurred else
+                                        "수취 예정일 만기로 환율을 확정해 지연 구간의 변동을 차단합니다. ")
+                                       + "기본 선물환 외에 통화옵션·합성선물환도 선택할 수 있습니다."})
         items.append({"category_ko": "환위험", "product_ko": "외화예금",
                       "channel_ko": CHANNEL_ONLINE,
                       "fit_reason_ko": "수취 즉시 환전하지 않고 예치한 뒤 나눠 환전합니다. "
@@ -283,9 +302,21 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
     }
 
 
-def analyze(docs: dict, case_id: str, presentation_date=None, meta=None) -> dict:
+def analyze(docs: dict, case_id: str, presentation_date=None, meta=None,
+            incurred_days: int = 0) -> dict:
+    """incurred_days: 재심사 전 하자 처리에 이미 소요된 영업일.
+
+    수정하면 하자가 사라지므로 새로 계산한 지연은 0이 된다. 그런데 서류를
+    재발행하는 데 걸린 시간은 되돌아오지 않는다. 그 기간의 자금 공백과 환노출은
+    수정 여부와 무관하게 실제로 발생한다 — 오히려 이제는 추정이 아니라 확정이다.
+    그래서 재심사에서는 앞서 계산한 지연을 이월해 창구 안내에 반영한다.
+    """
     report = build_report(case_id, docs, parse_date(presentation_date))
     delay = delay_block(report)
+    if incurred_days > delay["total_business_days"]:
+        delay = dict(delay, total_business_days=incurred_days, incurred=True,
+                     basis_ko="수정 전 하자 처리에 소요된 기간입니다. "
+                              "서류를 고쳐도 이미 지난 시간은 돌아오지 않습니다.")
     # 하자마다 '무엇을 어떤 값으로 고쳐야 하는가'를 함께 준다.
     # 제안값은 전부 신용장 기재값에서 결정적으로 도출된다(LLM 미사용).
     remedies = propose_all(docs, report)
@@ -346,7 +377,7 @@ def analyze_sample(body: dict):
     res = analyze(case["documents"], case_id, case.get("presentation_date"),
                   meta={"mode": "sample", "cost_usd": 0.0,
                         "elapsed_sec": round(time.time() - t0, 2),
-                        "source": "저장된 케이스 JSON (추출 단계 생략 · LLM 미사용)"})
+                        "source": "샘플 서류 — 판독을 마친 데이터로 심사만 수행"})
     res["ground_truth"] = case.get("ground_truth")
     return res
 
@@ -374,10 +405,12 @@ def redetect(body: dict):
 
     before = body.get("before") or build_report(case_id, docs, parse_date(pres))
     fixed_docs, applied = apply_edits(docs, body.get("edits") or [])
-    res = analyze(fixed_docs, case_id, pres,
+    # 수정 전 하자로 발생한 지연을 이월한다 — 고쳤다고 쓴 시간이 돌아오지 않는다.
+    incurred = delay_block(before)["total_business_days"]
+    res = analyze(fixed_docs, case_id, pres, incurred_days=incurred,
                   meta={"mode": "redetect", "cost_usd": 0.0,
                         "elapsed_sec": round(time.time() - t0, 3),
-                        "source": "결정적 재심사 (LLM 미호출)"})
+                        "source": "직전 심사 서류에 승인한 수정을 반영해 재심사"})
 
     before_types = {x["type"] for x in before.get("discrepancies", [])}
     after_types = {x["type"] for x in res["report"]["discrepancies"]}
@@ -409,6 +442,45 @@ def redetect(body: dict):
     return res
 
 
+# 서류 종류만 알려주는 가벼운 단계. 필드 추출은 하지 않는다.
+#
+# 왜 따로 두나 — 사용자는 파일명만 보고 무엇을 올렸는지 확신하지 못한다.
+# 잘못 올린 걸 추출까지 끝난 뒤에 알면 시간과 비용을 이미 쓴 뒤다.
+# 분류는 저비용 모델(classify_model)을 쓰므로 추출 대비 값이 훨씬 싸다.
+# 실패해도 분석 자체는 그대로 진행된다 — 이 단계는 편의 기능이다.
+@app.post("/api/classify")
+async def classify_upload(files: list[UploadFile] = File(...)):
+    client = get_client()
+    if client is None:
+        raise HTTPException(503, "LLM 키가 없습니다")
+    if not files:
+        raise HTTPException(400, "파일이 없습니다")
+
+    from extract import classify
+    tmp = Path(tempfile.mkdtemp(prefix="tgc_"))
+    out = []
+    try:
+        for f in files:
+            name = f.filename or "upload.png"
+            dest = tmp / name
+            with dest.open("wb") as w:
+                shutil.copyfileobj(f.file, w)
+            if dest.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
+                out.append({"filename": name, "doc_type": None,
+                            "doc_type_ko": "지원하지 않는 형식"})
+                continue
+            try:
+                dt = classify(client, [image_block(dest)])
+            except Exception:
+                dt = "unknown"          # 조용히 넘어간다. 분석은 이것과 무관하게 돌아간다.
+            out.append({"filename": name,
+                        "doc_type": dt if dt != "unknown" else None,
+                        "doc_type_ko": DOC_KO.get(dt, "판별 못 함")})
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    return {"results": out}
+
+
 @app.post("/api/analyze/upload")
 async def analyze_upload(files: list[UploadFile] = File(...),
                          presentation_date: str = Form(None)):
@@ -433,7 +505,7 @@ async def analyze_upload(files: list[UploadFile] = File(...),
     from extract import classify, extract as extract_doc
     t0 = time.time()
     tmp = Path(tempfile.mkdtemp(prefix="tg_"))
-    docs, errors = {}, []
+    docs, errors, classified = {}, [], []
     try:
         for f in files:
             dest = tmp / (f.filename or "upload.png")
@@ -448,8 +520,16 @@ async def analyze_upload(files: list[UploadFile] = File(...),
                 if doc_type == "unknown":
                     errors.append(f"{dest.name}: 서류 종류를 판별하지 못했습니다")
                     continue
+                # 같은 종류가 두 장 오면 조용히 덮어쓰지 않는다.
+                # 사용자는 두 장을 올렸는데 한 장만 심사되면 판정 결과를 신뢰할 수 없다.
+                if doc_type in docs:
+                    errors.append(f"{dest.name}: {DOC_KO.get(doc_type, doc_type)}이(가) 이미 있어 "
+                                  f"이 파일은 심사에서 제외했습니다")
+                    continue
                 data, retries = extract_doc(client, blocks, doc_type)
                 docs[doc_type] = data
+                classified.append({"filename": dest.name, "doc_type": doc_type,
+                                   "doc_type_ko": DOC_KO.get(doc_type, doc_type)})
             except Exception as ex:
                 errors.append(f"{dest.name}: {str(ex)[:150]}")
     finally:
@@ -463,9 +543,9 @@ async def analyze_upload(files: list[UploadFile] = File(...),
                   meta={"mode": "upload", "provider": client.name, "docs": n,
                         "cost_usd": round(n * 0.02, 3),  # 대략치
                         "elapsed_sec": round(time.time() - t0, 1),
-                        "errors": errors,
+                        "errors": errors, "classified": classified,
                         "presentation_date_source": "user" if presentation_date else "today",
-                        "source": f"업로드 이미지 {n}장 · {client.name} 실시간 판독"})
+                        "source": f"업로드하신 서류 이미지 {n}장을 판독"})
     return res
 
 

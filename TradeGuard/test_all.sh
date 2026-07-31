@@ -163,12 +163,15 @@ r=route('samples/DEMO-001.json','DEMO-001')['kb']
 assert r['route']['status']=='blocked', r['route']
 assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
 \""
-# 회귀 방지: 화면에 KB 상품을 적을 때 실재하지 않는 이름을 쓰면 실무자 심사위원에게 바로 걸린다.
+# 회귀 방지: 화면에 은행 상품을 적을 때 **브랜드 서비스명·한시 프로그램명**을 쓰면 안 된다.
+# 그런 이름은 종료·개편되므로(실제로 한때 안내하던 무역 플랫폼이 지금은 제공되지 않는다),
+# 없는 서비스를 화면에 띄우게 되고 실무자 심사위원에게 즉시 걸린다.
+# 외국환은행의 고유 업무명만 쓴다 — 이 이름들은 바뀌지 않는다.
 # 환변동보험은 한국무역보험공사(K-SURE) 상품이므로 KB 상품으로 표기하면 안 된다.
-run "KB 상품명이 공개 분류명 화이트리스트 안에 있음" "python3 -c \"
+run "은행 고유 업무명만 사용 (종료 위험 있는 브랜드 서비스명 차단)" "python3 -c \"
 import sys,json,glob; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
 from app import analyze
-OK={'수출환어음 매입','하자 네고 / 추심 전환','KB ONE TRADE','무역금융','선(현)물환','외화예금','수출입금융 지원제도'}
+OK={'수출환어음 매입','하자 네고 / 추심 전환','무역금융','선(현)물환','외화예금'}
 seen=set()
 for f in sorted(glob.glob('benchmark/cases/*.json'))+['samples/DEMO-001.json']:
     c=json.load(open(f))
@@ -184,6 +187,12 @@ res=analyze(c['documents'],c['case_id'],c.get('presentation_date'))
 out=json.dumps({'kb':res['kb'],'hedge':res['fx']['hedge_recommendation']},ensure_ascii=False)
 assert '환변동보험' not in out, 'K-SURE 상품을 KB 상품으로 표기'
 assert 'KB 선물환' not in out, '실재하지 않는 상품명(KB 선물환) 사용'
+# 종료·개편 이력이 있거나 한시 운영되는 브랜드명은 화면에 띄우지 않는다
+for banned in ('ONE TRADE','ONETRADE','글로벌셀러','특별출연','PAYMENT USANCE'):
+    assert banned not in out, f'브랜드·한시 프로그램명 사용: {banned}'
+# 한도·요건 수치는 자료마다 다르고 바뀐다. 조건은 상담으로 확정된다고만 안내한다.
+for n in ('억달러','만 달러','천만 달러'):
+    assert n not in out, f'변동 가능한 요건 수치 기재: {n}'
 \""
 run "치유 불가 하자를 치유 가능으로 표시하지 않음" "python3 -c \"
 import sys,json; sys.path.insert(0,'pipeline')

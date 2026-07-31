@@ -206,10 +206,18 @@ def engine_version() -> str:
 #   치유 가능 → 수정 후 매입
 #   치유 불가 → 하자 네고(개설은행 조회·지급확약 후 매입) 또는 추심 전환
 #
-# ⚠️ 아래는 KB국민은행이 공개한 **상품·서비스 분류명**이다. 개별 약관상 상품명이
-#    아니며 한도·조건은 영업점 상담으로 확정된다. 화면에도 그렇게 표기한다.
+# ⚠️ 여기에는 **은행의 고유 업무명만** 쓴다. 브랜드 서비스명·한시 프로그램명은 쓰지 않는다.
+#
+#    이유: 브랜드 플랫폼과 우대 프로그램은 종료·개편된다(예: 한때 안내하던 무역 플랫폼이
+#    현재는 제공되지 않는다). 반면 수출환어음 매입·무역금융·선물환·외화예금은 외국환은행의
+#    고유 업무라 이름이 바뀌지 않는다. 화면에 없는 서비스를 띄우면 실무자 심사위원에게
+#    바로 걸리고, 신뢰가 한 번에 무너진다.
+#
+#    같은 이유로 **한도·금리·대상 요건 수치는 적지 않는다.** (포괄금융 대상 수출실적 기준만
+#    해도 자료마다 다르게 나온다.) 조건은 영업점 상담으로 확정된다고만 안내한다.
 #    환변동보험은 한국무역보험공사(K-SURE) 상품이라 여기 넣지 않는다.
-KB_ONETRADE = "KB ONE TRADE"
+CHANNEL_BRANCH = "영업점 외환 담당"
+CHANNEL_ONLINE = "기업인터넷뱅킹 · 영업점"
 
 
 def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
@@ -227,8 +235,9 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
                  "detail_ko": "신용장 조건과 서류가 일치하므로 개설은행의 하자 통보 없이 "
                               "매입이 진행됩니다. 선적 후 곧바로 대금을 자금화할 수 있습니다."}
         items.append({"category_ko": "결제·자금화", "product_ko": "수출환어음 매입",
-                      "channel_ko": f"{KB_ONETRADE} · 영업점",
-                      "fit_reason_ko": "하자 0건 — 서류를 그대로 제시해 매입 신청하면 됩니다."})
+                      "channel_ko": CHANNEL_ONLINE,
+                      "fit_reason_ko": "하자 0건 — 서류를 그대로 제시해 매입 신청하면 됩니다. "
+                                       "개설은행의 하자 통보 없이 선적 대금을 앞당겨 받을 수 있습니다."})
     elif incurable:
         blocked = ", ".join(sorted({r["type"] for r in incurable}))
         route = {"status": "blocked", "product_ko": "하자 네고 / 추심 전환",
@@ -237,7 +246,7 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
                               "않습니다. 개설의뢰인의 하자 수락(waiver) 또는 신용장 조건변경을 "
                               "먼저 협의하고, 그 결과에 따라 매입 방식을 정하게 됩니다."}
         items.append({"category_ko": "결제·자금화", "product_ko": "하자 네고 / 추심 전환",
-                      "channel_ko": "영업점 외환 담당",
+                      "channel_ko": CHANNEL_BRANCH,
                       "fit_reason_ko": "개설은행에 하자를 통보·조회해 지급확약을 받은 뒤 매입하거나, "
                                        "매입 없이 서류를 보내 추심 후 대금을 받는 방식을 검토합니다."})
     else:
@@ -246,43 +255,31 @@ def kb_products(report: dict, remedies: list, delay: dict, docs: dict) -> dict:
                  "detail_ko": "발견된 하자는 모두 서류 재발행·정정으로 해소됩니다. "
                               "수정 후 제시하면 정상 매입 절차를 그대로 밟을 수 있습니다."}
         items.append({"category_ko": "결제·자금화", "product_ko": "수출환어음 매입",
-                      "channel_ko": f"{KB_ONETRADE} · 영업점",
+                      "channel_ko": CHANNEL_ONLINE,
                       "fit_reason_ko": "위 수정 제안을 반영해 재제시하면 하자 없이 매입 신청이 가능합니다."})
-
-    # 서류 작성·신청 채널 — 하자는 대개 서류를 만드는 단계에서 생긴다.
-    items.append({"category_ko": "신청 채널", "product_ko": KB_ONETRADE,
-                  "channel_ko": "기업뱅킹 · 비대면",
-                  "fit_reason_ko": "계약 정보 한 번 입력으로 인보이스·패킹리스트·환어음을 만들고, "
-                                   "신용장·수출환어음 매입을 비대면으로 신청할 수 있습니다."})
 
     # 대금 수취가 밀리는 만큼 운전자금 공백이 생긴다.
     if delay_days:
         items.append({"category_ko": "자금 공백", "product_ko": "무역금융",
-                      "channel_ko": "영업점",
+                      "channel_ko": CHANNEL_BRANCH,
                       "fit_reason_ko": f"하자 처리로 약 {delay_days}영업일 수취가 지연됩니다. "
                                        "신용장기준·실적기준·포괄금융으로 그 기간의 운전자금을 "
-                                       "메울 수 있습니다(포괄금융은 연간 수출실적 미화 2억달러 미만 대상)."})
+                                       "메울 수 있는지 상담해 보십시오."})
         # 지연이 있어야 노출 구간이 생긴다. 지연 0이면 환 상품을 권하지 않는다.
         items.append({"category_ko": "환위험", "product_ko": "선(현)물환",
-                      "channel_ko": "기업뱅킹 FX/파생상품 · 영업점",
+                      "channel_ko": CHANNEL_ONLINE,
                       "fit_reason_ko": "수취 예정일 만기로 환율을 확정해 지연 구간의 변동을 차단합니다. "
                                        "기본 선물환 외에 통화옵션·합성선물환도 선택할 수 있습니다."})
         items.append({"category_ko": "환위험", "product_ko": "외화예금",
-                      "channel_ko": "기업뱅킹",
+                      "channel_ko": CHANNEL_ONLINE,
                       "fit_reason_ko": "수취 즉시 환전하지 않고 예치한 뒤 나눠 환전합니다. "
                                        "환율 확정보다 유연성이 필요할 때 씁니다(외화보통예금·외화정기예금)."})
-
-    # 중소 수출기업 우대 — 이 제품이 겨냥한 고객이 정확히 이 대상이다.
-    items.append({"category_ko": "중소기업 우대", "product_ko": "수출입금융 지원제도",
-                  "channel_ko": "기업뱅킹 수출입지원제도",
-                  "fit_reason_ko": "KB글로벌셀러 우대서비스, 특별출연 수출입금융 지원 등 "
-                                   "중소 수출기업 대상 우대 프로그램을 함께 확인해 보십시오."})
 
     return {
         "route": route, "items": items,
         "exposure": {"amount": amount, "currency": currency, "delay_business_days": delay_days},
-        "note_ko": "상품·서비스 안내는 참고용입니다. 실제 이용 가능 여부와 한도·금리·수수료는 "
-                   "영업점 상담으로 확정되며, 본 화면은 은행의 심사 결과가 아닙니다.",
+        "note_ko": "외국환은행의 고유 업무 기준으로 안내합니다. 실제 이용 가능 여부와 "
+                   "한도·금리·수수료는 영업점 상담으로 확정되며, 본 화면은 은행의 심사 결과가 아닙니다.",
     }
 
 

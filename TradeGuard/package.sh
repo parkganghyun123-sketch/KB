@@ -83,27 +83,62 @@ ok "생성: ${OUT#$ROOT/} ($(du -h "$OUT" | cut -f1) · $(unzip -Z1 "$OUT" | wc 
 echo "══ 3/5 시크릿·불필요 파일 검사 ══"
 LIST="$(unzip -Z1 "$OUT")"
 
-# 내부 문서가 실제로 빠졌는지 확인한다. 목록만 적어두고 안 지워지면 의미가 없다.
-LEAK="$(echo "$LIST" | grep -E '경쟁작_분석|우승전략|종합분석보고서|심사관점|제출_체크리스트|PPT_프롬프트|_요청_|_회신_|HANDOFF|작업요약|주제전략_분석|벤치마킹_차별화|참가신청서|서약서|개인정보' || true)"
-[ -z "$LEAK" ] || { echo "$LEAK" | sed 's/^/       /'; fail "내부 문서가 제출물에 남아 있음"; }
-ok "내부 전략문서·개인 서류 미포함 확인"
+# 내부 문서가 실제로 빠졌는지, 남은 문서에 경쟁팀 실명이 없는지 확인한다.
+# 목록만 적어두고 안 지워지면 의미가 없고, 파일명만 걸러도 본문은 놓친다.
+# 여기서도 셸 grep 대신 Python을 쓴다 — 한글 경로 정규화 차이로 '못 찾음'이
+# '없음'으로 오독되면 검사가 통과한 것처럼 보이면서 실제로는 새어 나간다.
+python3 - "$OUT" <<'PYEOF' || exit 1
+import sys, zipfile, unicodedata
+BANNED_NAME = ["경쟁작_분석", "우승전략", "종합분석보고서", "심사관점", "제출_체크리스트",
+               "PPT_프롬프트", "_요청_", "_회신_", "HANDOFF", "작업요약", "주제전략_분석",
+               "벤치마킹_차별화", "참가신청서", "서약서", "개인정보", "BACKLOG"]
+BANNED_BODY = ["환부장", "TradePilot", "경쟁팀"]      # 다른 팀 언급
+z = zipfile.ZipFile(sys.argv[1])
+names = [(n, unicodedata.normalize("NFC", n)) for n in z.namelist()]
 
-# 남은 문서에 경쟁팀 실명이 들어 있으면 안 된다. 파일명만 거르면 놓친다.
-RIVALS="$(cd "$ROOT" && for f in $(echo "$LIST" | grep '\.md$' | sed 's|^TradeGuard-submission/||'); do
-  [ -f "$f" ] && grep -lE '환부장|TradePilot|경쟁팀' "$f" 2>/dev/null; done || true)"
-[ -z "$RIVALS" ] || { echo "$RIVALS" | sed 's/^/       /'; fail "경쟁팀을 언급한 문서가 제출물에 포함됨"; }
-ok "경쟁팀 실명 언급 없음"
+leak = [n for n, k in names if any(b in k for b in BANNED_NAME)]
+if leak:
+    for n in leak: print(f"       {n}")
+    print("  ❌ 내부 문서가 제출물에 남아 있음"); sys.exit(1)
+print("  ✅ 내부 전략문서·개인 서류 미포함 확인")
+
+rivals = []
+for n, k in names:
+    if not k.lower().endswith((".md", ".txt", ".html", ".json")): continue
+    try: t = z.read(n).decode("utf-8", "ignore")
+    except Exception: continue
+    hit = [b for b in BANNED_BODY if b in t]
+    if hit: rivals.append((n, ", ".join(hit)))
+if rivals:
+    for n, h in rivals: print(f"       {n} — {h}")
+    print("  ❌ 경쟁팀을 언급한 문서가 제출물에 포함됨"); sys.exit(1)
+print(f"  ✅ 경쟁팀 실명 언급 없음 (본문 {sum(1 for _, k in names if k.lower().endswith(('.md','.txt','.html','.json')))}개 파일 검사)")
+PYEOF
 
 # 심사위원이 실제로 읽어야 할 것은 반드시 들어 있어야 한다.
-for must in "README.md:README" "TradeGuard/server/app.py:백엔드" \
-            "TradeGuard/server/app.html:웹 앱" \
-            "TradeGuard/pipeline/detect.py:판정 엔진" "TradeGuard/pipeline/ucp600_kb.json:UCP600 지식베이스" \
-            "TradeGuard/test_all.sh:테스트" "TradeGuard/demo.sh:원커맨드 실행" \
-            "TradeGuard/DEMO_시나리오.md:실행 안내" "TradeGuard/.env.example:환경설정 템플릿"; do
-  f="${must%%:*}"; label="${must##*:}"
-  echo "$LIST" | grep -qx "TradeGuard-submission/$f" || fail "필수 파일 누락: $f ($label)"
-done
-ok "필수 파일 9종 포함 확인 (README · 앱 · 판정 엔진 · 지식베이스 · 테스트 · 실행 안내)"
+# 한글 파일명은 셸 grep으로 맞추면 안 된다. macOS는 파일명을 NFD로,
+# git·리눅스는 NFC로 다루기 때문에 같은 이름이 바이트 단위로 달라진다.
+# 실제로 ZIP에 들어 있는 파일을 "없다"고 오판한다. 정규화까지 하는 Python으로 검사한다.
+python3 - "$OUT" <<'PYEOF' || exit 1
+import sys, zipfile, unicodedata
+must = [("README.md", "README"),
+        ("TradeGuard/server/app.py", "백엔드"),
+        ("TradeGuard/server/app.html", "웹 앱"),
+        ("TradeGuard/pipeline/detect.py", "판정 엔진"),
+        ("TradeGuard/pipeline/ucp600_kb.json", "UCP600 지식베이스"),
+        ("TradeGuard/test_all.sh", "테스트"),
+        ("TradeGuard/demo.sh", "원커맨드 실행"),
+        ("TradeGuard/DEMO_시나리오.md", "실행 안내"),
+        ("TradeGuard/.env.example", "환경설정 템플릿")]
+nfc = {unicodedata.normalize("NFC", n) for n in zipfile.ZipFile(sys.argv[1]).namelist()}
+missing = [(f, l) for f, l in must
+           if unicodedata.normalize("NFC", "TradeGuard-submission/" + f) not in nfc]
+if missing:
+    for f, l in missing:
+        print(f"  ❌ 필수 파일 누락: {f} ({l})")
+    sys.exit(1)
+print(f"  ✅ 필수 파일 {len(must)}종 포함 확인 (README · 앱 · 판정 엔진 · 지식베이스 · 테스트 · 실행 안내)")
+PYEOF
 # .env.example은 값이 비어 있는 템플릿이므로 허용한다. 실제 .env만 차단.
 BAD="$(echo "$LIST" | grep -E '(^|/)\.env$|(^|/)\.venv/|__pycache__/|(^|/)\.DS_Store$|\.key$|(^|/)secrets\.json$' || true)"
 [ -z "$BAD" ] || { echo "$BAD" | sed 's/^/       /'; fail "제외돼야 할 파일이 포함됨"; }

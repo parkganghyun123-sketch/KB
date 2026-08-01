@@ -11,6 +11,28 @@
 
 ---
 
+## ⚡ 바로 실행 (API 키 불필요 · 비용 0원)
+
+```bash
+cd TradeGuard
+python3 -m venv .venv && source .venv/bin/activate    # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python3 -m uvicorn server.app:app --port 8000
+```
+
+**http://localhost:8000** → 「샘플 서류로 먼저 둘러보기」
+
+키가 없어도 **하자 판정 · 수정 제안 · 재심사가 모두 동작합니다.** 판독 단계만 건너뜁니다.
+
+```bash
+bash test_all.sh      # 자동 테스트 48개 항목 (무료)
+```
+
+> 📖 **단계별 안내와 정확도 재현 방법은 [`TradeGuard/실행_가이드.md`](TradeGuard/실행_가이드.md)에 있습니다.**
+> 아래 4·5절은 GitHub에서 클론하는 경우의 안내입니다.
+
+---
+
 ## 📑 목차
 
 1. [프로젝트 개요](#1-프로젝트-개요description)

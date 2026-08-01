@@ -73,15 +73,32 @@ EXCLUDE=(
   "TradeGuard-submission/*서약서*"
   "TradeGuard-submission/*개인정보*"
 )
-cp "$OUT.tmp" "$OUT"
-zip -dq "$OUT" "${EXCLUDE[@]}" 2>/dev/null
-REMOVED=$(( $(unzip -Z1 "$OUT.tmp" | wc -l) - $(unzip -Z1 "$OUT" | wc -l) ))
+# zip -d 로 지우지 않고 **새로 쓴다.**
+# macOS의 zip은 항목을 지운 뒤 아카이브에 잔여 바이트를 남기고, 그러면 unzip이
+# 경고와 함께 종료코드 1을 돌려준다. 압축은 정상인데 스크립트는 실패로 읽는다.
+# 파이썬 zipfile로 다시 쓰면 그 문제가 없고 유니코드 경로도 안전하다.
+python3 - "$OUT.tmp" "$OUT" "${EXCLUDE[@]}" <<'PYEOF' || exit 1
+import sys, zipfile, fnmatch, unicodedata
+src, dst, pats = sys.argv[1], sys.argv[2], sys.argv[3:]
+pats = [unicodedata.normalize("NFC", p) for p in pats]
+zin = zipfile.ZipFile(src)
+kept = dropped = 0
+with zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
+    for info in zin.infolist():
+        name = unicodedata.normalize("NFC", info.filename)
+        if any(fnmatch.fnmatch(name, p) for p in pats):
+            dropped += 1
+            continue
+        zout.writestr(info, zin.read(info.filename))
+        kept += 1
+print(f"  ✅ 내부 전략·협업 문서 {dropped}건 제외 (심사위원에게 필요 없는 자료)")
+print(f"  ✅ 남은 파일 {kept}개")
+PYEOF
 rm -f "$OUT.tmp"
-ok "내부 전략·협업 문서 ${REMOVED}건 제외 (심사위원에게 필요 없는 자료)"
-ok "생성: ${OUT#$ROOT/} ($(du -h "$OUT" | cut -f1) · $(unzip -Z1 "$OUT" | wc -l | tr -d ' ')개 파일)"
+ok "생성: ${OUT#$ROOT/} ($(du -h "$OUT" | cut -f1))"
 
 echo "══ 3/5 시크릿·불필요 파일 검사 ══"
-LIST="$(unzip -Z1 "$OUT")"
+LIST="$(python3 -c "import sys,zipfile;print('\n'.join(zipfile.ZipFile(sys.argv[1]).namelist()))" "$OUT")"
 
 # 내부 문서가 실제로 빠졌는지, 남은 문서에 경쟁팀 실명이 없는지 확인한다.
 # 목록만 적어두고 안 지워지면 의미가 없고, 파일명만 걸러도 본문은 놓친다.
@@ -151,8 +168,12 @@ echo "$LIST" | grep -q '\.env\.example$' \
 echo "══ 4/5 압축 해제 후 시크릿 패턴 스캔 ══"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
-unzip -q "$OUT" -d "$TMP" || fail "압축 해제 실패"
+# unzip 대신 파이썬으로 푼다. macOS의 unzip은 한글 경로나 아카이브 잔여 바이트에
+# 대해 경고와 함께 종료코드 1을 내는데, 압축은 멀쩡한데도 실패로 읽히기 때문이다.
+python3 -c "import sys,zipfile;zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" \
+  "$OUT" "$TMP" || fail "압축 해제 실패"
 SRC="$TMP/TradeGuard-submission"
+[ -d "$SRC" ] || fail "압축 해제본에 TradeGuard-submission 폴더가 없습니다"
 
 # 파일 '내용'에 키가 박혀 있는지 검사한다. 파일명 검사만으로는 부족하다.
 python3 - "$SRC" <<'PYEOF' || exit 1

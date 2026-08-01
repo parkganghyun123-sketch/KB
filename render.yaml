@@ -1,0 +1,38 @@
+# Render 배포 설정 — Docker 불필요, Python을 그대로 실행한다.
+#
+# 이 파일을 저장소에 두면 Render가 읽어 자동으로 설정한다(Blueprint).
+# 웹에서 New → Blueprint → 이 저장소 선택 → Apply.
+#
+# 왜 Docker를 쓰지 않는가:
+#   Render는 Python 런타임을 기본 제공한다. 컨테이너를 만들 이유가 없고,
+#   빌드도 더 빠르다. (Dockerfile은 다른 곳에 올릴 때를 위해 남겨 둔다)
+#
+# 왜 서버리스(Vercel 등)가 아닌가:
+#   사용량 카운터가 프로세스 메모리에 있다. 호출마다 프로세스가 새로 뜨면
+#   IP별 상한이 매번 초기화돼 API 비용 방어가 무너진다. 상주 서버가 맞다.
+services:
+  - type: web
+    name: tradeguard
+    runtime: python
+    plan: free
+    region: singapore              # 한국에서 가장 가까운 무료 리전
+    rootDir: TradeGuard
+    # playwright는 서류 이미지를 '생성'할 때만 쓴다. 배포본은 이미 만들어진
+    # 이미지를 쓰므로 제외한다 — 설치에 수백 MB와 몇 분이 더 든다.
+    buildCommand: grep -v '^playwright' requirements.txt > req.deploy.txt && pip install -r req.deploy.txt
+    startCommand: python3 -m uvicorn server.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      # 값은 Render 대시보드에서 직접 넣는다. 여기에 적으면 저장소에 남는다.
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TG_UPLOAD_CODE
+        sync: false
+      # 공개 URL이므로 판독 호출에 상한을 건다.
+      # 서류 1장 = AI 호출 2회. 60이면 하루 최대 약 $0.6.
+      - key: TG_LIMIT_PER_IP
+        value: "6"
+      - key: TG_LIMIT_TOTAL
+        value: "60"
+      - key: PYTHON_VERSION
+        value: "3.11.9"

@@ -163,6 +163,47 @@ r=route('samples/DEMO-001.json','DEMO-001')['kb']
 assert r['route']['status']=='blocked', r['route']
 assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
 \""
+# 회귀 방지: 공개 URL에 키를 얹으면 판독 1회가 곧 비용이다. 세 겹으로 막았는지 확인한다.
+# 어느 한 겹이라도 풀리면 크레딧이 하루 만에 빈다. 반대로 **샘플 모드는 절대 막히면 안 된다** —
+# 판정·수정 제안·재심사는 LLM을 쓰지 않으므로 한도와 무관하게 동작해야 심사가 끊기지 않는다.
+run "공개 배포 남용 방지 — 접근 코드 · IP별 · 전체 일일 상한" "TG_UPLOAD_CODE=T123 TG_LIMIT_PER_IP=2 TG_LIMIT_TOTAL=3 python3 -c \"
+import sys,importlib; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+import app; importlib.reload(app)
+from fastapi import HTTPException
+assert app.UPLOAD_CODE=='T123' and app.LIMIT_PER_IP==2 and app.LIMIT_TOTAL==3
+class R:
+    headers={'x-forwarded-for':'1.1.1.1'}
+    class client: host='1.1.1.1'
+def code(c,n=1):
+    try:
+        ip=app.check_upload_quota(R(),c,n); app.record_upload_usage(ip,n); return 200
+    except HTTPException as e: return e.status_code
+assert code(None)==403, '코드 없이 통과됨'
+assert code('WRONG')==403, '틀린 코드로 통과됨'
+assert code('T123')==200 and code('T123')==200, '정상 코드가 막힘'
+assert code('T123')==429, 'IP별 상한 미작동'
+R.headers={'x-forwarded-for':'2.2.2.2'}; R.client.host='2.2.2.2'
+assert code('T123')==200, '다른 IP가 IP상한에 걸림'
+assert code('T123')==429, '전체 일일 상한 미작동'
+h=app.health(); g=h['upload_gate']
+assert g['code_required'] is True and g['remaining_today']==0, g
+assert h['modes']['sample'] is True, '한도 초과 시 샘플 모드까지 막히면 안 된다'
+import json
+r=app.analyze_sample({'case_id':'CLEAN-017'})
+assert r['report']['overall_risk']['grade']=='A', '한도와 무관하게 샘플 판정은 동작해야 한다'
+\""
+# 회귀 방지: 로컬 실행에는 코드가 설정돼 있지 않으므로 아무 제약이 없어야 한다.
+run "로컬 실행에서는 접근 코드·한도가 걸리지 않음" "python3 -c \"
+import sys,importlib,os; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+os.environ.pop('TG_UPLOAD_CODE',None)
+import app; importlib.reload(app)
+assert app.UPLOAD_CODE=='', f'로컬인데 코드가 설정됨: {app.UPLOAD_CODE}'
+class R:
+    headers={}
+    class client: host='127.0.0.1'
+ip=app.check_upload_quota(R(), None, 1)
+assert app.health()['upload_gate']['code_required'] is False
+\""
 # 회귀 방지: 재심사 감사 이력은 파일로 남아야 나중에 되짚을 수 있다.
 # 단, **서류 내용은 저장하지 않는다** — 사후 검증에 필요한 최소한만 남긴다.
 run "재심사 감사 이력이 파일로 영속화됨 (서류 내용은 저장 안 함)" "python3 -c \"

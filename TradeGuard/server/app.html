@@ -393,6 +393,8 @@ font-size:12px;color:#98a2b3}
         <p style="font-size:13px;color:var(--sub)">신용장 · 상업송장 · 선하증권 이미지 (PNG/JPG, 여러 장 가능)</p>
         <input type="file" id="fileInput" multiple accept=".png,.jpg,.jpeg,.webp" style="display:none">
       </div>
+      <!-- 공개 URL로 들어온 사람은 올릴 서류 파일 자체가 없다. 받아서 바로 써볼 수 있게 한다. -->
+      <p class="alt-entry hide" id="demoDocs"></p>
       <div class="fhead hide" id="fileHead">
         <b id="fileCount"></b>
         <button type="button" class="linkbtn" onclick="clearFiles()">전체 지우기</button>
@@ -409,6 +411,15 @@ font-size:12px;color:#98a2b3}
         <p class="hint">은행에 서류를 내는 날짜입니다. <b>UCP600 14(c) 제시기한</b>(선적일+21일과 신용장
           유효기일 중 이른 날) 판정 기준이 되며, 서류에 인쇄돼 있지 않아 직접 지정해야 합니다.
           비워두면 오늘 날짜로 계산합니다.</p>
+      </div>
+      <!-- 공개 배포에서만 보인다. 판독 1회가 곧 비용이라 무제한으로 열어둘 수 없다.
+           로컬 실행에는 코드가 설정돼 있지 않으므로 이 칸이 나타나지 않는다. -->
+      <div class="presdate hide" id="codeBox">
+        <label for="accessCode">판독 접근 코드</label>
+        <input type="text" id="accessCode" autocomplete="off" placeholder="코드 입력" style="width:180px">
+        <p class="hint">공개 데모에서는 AI 판독 호출에 <b>접근 코드</b>가 필요합니다.
+          제출 자료에 코드를 함께 적어 두었습니다. <b>샘플 서류 둘러보기는 코드 없이</b> 이용하실 수 있고,
+          하자 판정·수정 제안·재심사는 그쪽에서도 실제 엔진이 그대로 수행합니다.</p>
       </div>
       <div class="cta">
         <button class="btn primary" id="btnUpload" onclick="runUpload()" disabled>분석 시작 →</button>
@@ -560,6 +571,19 @@ fetch("/api/health").then(r => r.json()).then(h => {
     $("btnUpload").disabled = true;
     setMode("sample");
   }
+  // 공개 배포에서는 판독 호출에 접근 코드를 요구한다. 로컬에는 코드가 없으므로 칸도 뜨지 않는다.
+  const gate = h.upload_gate || {};
+  if(gate.code_required && h.llm.available){
+    $("codeBox").classList.remove("hide");
+    loadDemoDocs();
+    if(gate.remaining_today === 0){
+      const n = $("offlineNotice");
+      n.innerHTML = "<b>오늘의 공개 판독 한도를 모두 사용했습니다.</b> " +
+        "<b>샘플 서류로 하자 판정·수정 제안·재심사를 그대로 확인</b>하실 수 있으며, " +
+        "코드를 내려받아 로컬에서 실행하시면 제한 없이 판독까지 보실 수 있습니다.";
+      n.classList.remove("hide");
+    }
+  }
 }).catch(() => $("prov").textContent = "● 서버 응답 없음");
 
 fetch("/api/samples").then(r => r.json()).then(d => {
@@ -585,6 +609,26 @@ drop.ondragleave = () => drop.classList.remove("over");
 drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); };
 fi.onchange = () => { addFiles(fi.files); fi.value = ""; };  // 같은 파일 재선택 허용
 
+// 공개 URL에는 올릴 서류가 없다. 시연용 이미지를 내려받을 수 있게 안내한다.
+// 제시일까지 같이 적어 준다 — 이 값을 비우면 오늘 기준으로 계산돼 등급이 달라진다.
+async function loadDemoDocs(){
+  try{
+    const { cases } = await (await fetch("/api/demo-docs")).json();
+    if(!cases || !cases.length) return;
+    $("demoDocs").innerHTML = "올릴 서류가 없으신가요? 시연용 서류를 내려받아 그대로 올려보실 수 있습니다. "
+      + cases.map(c => `<span style="white-space:nowrap">`
+          + c.files.map((f,i) => `<a class="linkbtn" href="${f}" download>${["신용장","송장","선하증권"][i]}</a>`).join(" ")
+          + ` <b>${esc(c.case_id)}</b> · 제시일 <code>${esc(c.presentation_date)}</code></span>`).join("<br>");
+    $("demoDocs").classList.remove("hide");
+  }catch(_){ /* 없으면 안내하지 않는다 */ }
+}
+
+// 공개 배포에서만 쓰이는 값. 칸이 없으면 아무것도 붙이지 않는다.
+function addAccessCode(fd){
+  const el = $("accessCode");
+  if(el && el.value.trim()) fd.append("access_code", el.value.trim());
+}
+
 // 끌어다 놓기를 두 번 하면 앞의 것이 사라지는 게 맞나? 사용자는 '추가'로 기대한다.
 // 이름+크기가 같으면 같은 파일로 보고 건너뛴다.
 function addFiles(list){
@@ -604,6 +648,7 @@ async function classifyFiles(targets){
   renderFiles();
   const fd = new FormData();
   targets.forEach(f => fd.append("files", f));
+  addAccessCode(fd);
   try{
     const r = await fetch("/api/classify", {method:"POST", body:fd});
     if(!r.ok) throw new Error(r.status);
@@ -725,6 +770,7 @@ async function runUpload(){
   // 제시일은 서류에 없는 값이라 사용자가 지정한다. 비우면 서버가 오늘로 계산한다.
   const pres = $("presDate").value;
   if(pres) fd.append("presentation_date", pres);
+  addAccessCode(fd);
   try{
     const r = await fetch("/api/analyze/upload", {method:"POST", body: fd});
     const j = await r.json();

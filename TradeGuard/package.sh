@@ -63,6 +63,8 @@ EXCLUDE=(
   "TradeGuard-submission/TradeGuard/D1-D2_*"
   "TradeGuard-submission/TradeGuard/HANDOFF_*"
   "TradeGuard-submission/TradeGuard/작업요약_*"
+  # 배포 절차 메모. 접근 코드 설정법이 들어 있어 제출물에 넣지 않는다.
+  "TradeGuard-submission/TradeGuard/배포_가이드*"
   "TradeGuard-submission/TradeGuard/BACKLOG.md"
   # 개발 중 참고한 시장 조사 메모. 결과물이 아니다.
   "TradeGuard-submission/TradeGuard/UX_벤치마킹_차별화설계.md"

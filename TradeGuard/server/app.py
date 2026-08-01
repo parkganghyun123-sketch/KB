@@ -20,6 +20,7 @@ API:
   GET  /api/fx                  현재 환율 (ECOS)
 """
 import json
+import os
 import re
 import shutil
 import sys
@@ -32,7 +33,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "pipeline"))
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile  # noqa: E402
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile  # noqa: E402
 from fastapi.responses import FileResponse, JSONResponse  # noqa: E402
 from fastapi.staticfiles import StaticFiles  # noqa: E402
 
@@ -331,13 +332,69 @@ def analyze(docs: dict, case_id: str, presentation_date=None, meta=None,
             "meta": meta or {}}
 
 
+# ---------- 공개 배포 보호 ----------
+#
+# 공개 URL에 키를 넣어 두면 판독 1회가 곧 비용이다. 누구든 호출할 수 있으므로
+# 아무 장치가 없으면 하루 만에 크레딧이 빈다. 세 겹으로 막는다.
+#
+#   1) 접근 코드 — TG_UPLOAD_CODE가 설정돼 있으면 업로드 계열에 코드를 요구한다.
+#                  로컬 실행에서는 값이 없으므로 아무 제약이 없다.
+#   2) IP별 상한 — 한 사람이 반복 호출하는 것을 막는다.
+#   3) 전체 상한 — 코드가 유출돼도 하루 총량이 넘지 않는다.
+#
+# 상한에 걸려도 **샘플 모드는 그대로 동작한다.** 판정·수정 제안·재심사는
+# LLM을 쓰지 않으므로 막을 이유가 없고, 그래야 심사가 끊기지 않는다.
+UPLOAD_CODE = os.environ.get("TG_UPLOAD_CODE", "").strip()
+LIMIT_PER_IP = int(os.environ.get("TG_LIMIT_PER_IP", "5"))
+LIMIT_TOTAL = int(os.environ.get("TG_LIMIT_TOTAL", "60"))
+
+_usage = {"day": None, "total": 0, "by_ip": {}}
+
+
+def _today() -> str:
+    return date.today().isoformat()
+
+
+def _usage_reset_if_needed():
+    if _usage["day"] != _today():
+        _usage.update(day=_today(), total=0, by_ip={})
+
+
+def check_upload_quota(request, code: str | None, n_docs: int = 1):
+    """업로드 계열 호출 전에 코드와 사용량을 확인한다. 초과하면 HTTPException."""
+    _usage_reset_if_needed()
+    if UPLOAD_CODE:
+        if not code or code.strip() != UPLOAD_CODE:
+            raise HTTPException(403, "접근 코드가 필요합니다. 샘플 모드는 코드 없이 이용하실 수 있습니다.")
+    ip = (request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+          or (request.client.host if request.client else "unknown"))
+    if _usage["total"] + n_docs > LIMIT_TOTAL:
+        raise HTTPException(429, "오늘 판독 한도를 모두 사용했습니다. "
+                                 "샘플 모드는 계속 이용하실 수 있으며, 코드를 내려받아 "
+                                 "로컬에서 직접 실행하시면 제한 없이 확인하실 수 있습니다.")
+    if _usage["by_ip"].get(ip, 0) + n_docs > LIMIT_PER_IP:
+        raise HTTPException(429, f"판독은 하루 {LIMIT_PER_IP}장까지 이용하실 수 있습니다. "
+                                 "샘플 모드는 계속 이용하실 수 있습니다.")
+    return ip
+
+
+def record_upload_usage(ip: str, n: int):
+    _usage_reset_if_needed()
+    _usage["total"] += n
+    _usage["by_ip"][ip] = _usage["by_ip"].get(ip, 0) + n
+
+
 # ---------- API ----------
 @app.get("/api/health")
 def health():
     c = get_client()
+    _usage_reset_if_needed()
     return {"ok": True,
             "llm": {"available": bool(c), "provider": c.name if c else None},
             "modes": {"sample": True, "upload": bool(c)},
+            "upload_gate": {"code_required": bool(UPLOAD_CODE),
+                            "per_ip": LIMIT_PER_IP,
+                            "remaining_today": max(0, LIMIT_TOTAL - _usage["total"])},
             "note": "샘플 분석은 LLM 없이 동작합니다 (비용 0원)."}
 
 
@@ -529,7 +586,9 @@ def receive_uploads(files, tmp: Path):
 # 분류는 저비용 모델(classify_model)을 쓰므로 추출 대비 값이 훨씬 싸다.
 # 실패해도 분석 자체는 그대로 진행된다 — 이 단계는 편의 기능이다.
 @app.post("/api/classify")
-async def classify_upload(files: list[UploadFile] = File(...)):
+async def classify_upload(request: Request,
+                          files: list[UploadFile] = File(...),
+                          access_code: str = Form(None)):
     # 입력 검증(400)을 서비스 가용성 검사(503)보다 먼저 한다.
     # 순서가 반대면 날짜를 잘못 넣은 사용자가 "LLM 키가 없습니다"를 보게 된다.
     if not files:
@@ -537,6 +596,7 @@ async def classify_upload(files: list[UploadFile] = File(...)):
     client = get_client()
     if client is None:
         raise HTTPException(503, "LLM 키가 없습니다")
+    ip = check_upload_quota(request, access_code, len(files))
 
     from extract import classify
     tmp = Path(tempfile.mkdtemp(prefix="tgc_"))
@@ -550,7 +610,7 @@ async def classify_upload(files: list[UploadFile] = File(...)):
                             "doc_type_ko": "확인 불가"})
                 continue
             try:
-                dt = classify(client, [image_block(dest)])
+                dt = classify(client, [image_block(dest)]); record_upload_usage(ip, 1)
             except Exception:
                 dt = "unknown"          # 조용히 넘어간다. 분석은 이것과 무관하게 돌아간다.
             out.append({"filename": shown,
@@ -562,8 +622,10 @@ async def classify_upload(files: list[UploadFile] = File(...)):
 
 
 @app.post("/api/analyze/upload")
-async def analyze_upload(files: list[UploadFile] = File(...),
-                         presentation_date: str = Form(None)):
+async def analyze_upload(request: Request,
+                         files: list[UploadFile] = File(...),
+                         presentation_date: str = Form(None),
+                         access_code: str = Form(None)):
     """presentation_date: 서류를 은행에 제시하는(할) 날짜, YYYY-MM-DD.
 
     이 값이 UCP600 14(c) 제시기한 판정의 기준이 된다. 서류 어디에도 인쇄돼 있지
@@ -583,6 +645,7 @@ async def analyze_upload(files: list[UploadFile] = File(...),
     client = get_client()
     if client is None:
         raise HTTPException(503, "LLM 키가 없습니다. .env를 확인하세요 (샘플 모드는 사용 가능).")
+    ip = check_upload_quota(request, access_code, len(files))
 
     from extract import classify, extract as extract_doc
     t0 = time.time()
@@ -596,7 +659,8 @@ async def analyze_upload(files: list[UploadFile] = File(...),
                 continue
             try:
                 blocks = [image_block(dest)]
-                doc_type = classify(client, blocks); llm_calls += 1
+                doc_type = classify(client, blocks)
+                llm_calls += 1; record_upload_usage(ip, 1)
                 if doc_type == "unknown":
                     errors.append(f"{shown}: 서류 종류를 판별하지 못했습니다")
                     continue
@@ -606,7 +670,8 @@ async def analyze_upload(files: list[UploadFile] = File(...),
                     errors.append(f"{shown}: {DOC_KO.get(doc_type, doc_type)}이(가) 이미 있어 "
                                   f"이 파일은 심사에서 제외했습니다")
                     continue
-                data, retries = extract_doc(client, blocks, doc_type); llm_calls += 1
+                data, retries = extract_doc(client, blocks, doc_type)
+                llm_calls += 1; record_upload_usage(ip, 1)
                 docs[doc_type] = data
                 classified.append({"filename": shown, "doc_type": doc_type,
                                    "doc_type_ko": DOC_KO.get(doc_type, doc_type)})
@@ -657,6 +722,25 @@ def index():
 # html=True → 디렉터리 접근 시 index.html을 자동으로 서빙 (없으면 404가 난다)
 app.mount("/mockups", StaticFiles(directory=str(ROOT / "mockups"), html=True), name="mockups")
 app.mount("/render", StaticFiles(directory=str(ROOT / "render"), html=True), name="render")
+
+# 시연용 서류 이미지. 공개 URL로 접속한 사람에게는 **올릴 파일 자체가 없다.**
+# 저장소를 받지 않고도 업로드 판독을 확인할 수 있도록 내려받을 경로를 연다.
+_DEMO_IMG = ROOT / "benchmark" / "cases" / "rendered"
+if _DEMO_IMG.is_dir():
+    app.mount("/demo-docs", StaticFiles(directory=str(_DEMO_IMG)), name="demo-docs")
+
+
+@app.get("/api/demo-docs")
+def demo_docs():
+    """시연에 쓸 수 있는 서류 이미지 목록 (저장소에 포함된 것만)."""
+    out = []
+    for case, pres, note in (("CLEAN-017", "2026-06-30", "정상 — 금액이 한도를 넘지만 39A 과부족 허용으로 수리 가능"),
+                             ("DEFECT-019", "2026-07-21", "하자 2건 — 금액 초과 · B/L 서명자 자격 미표시")):
+        files = [f"{case}_{k}.png" for k in ("lc", "invoice", "bl")]
+        if all((_DEMO_IMG / f).exists() for f in files):
+            out.append({"case_id": case, "presentation_date": pres, "note_ko": note,
+                        "files": [f"/demo-docs/{f}" for f in files]})
+    return {"cases": out}
 
 
 def main():

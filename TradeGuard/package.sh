@@ -39,13 +39,71 @@ else
 fi
 
 echo "══ 2/5 ZIP 생성 (git archive — 추적 파일만) ══"
-rm -f "$OUT"
-git archive --format=zip --prefix="TradeGuard-submission/" HEAD -o "$OUT" \
+rm -f "$OUT" "$OUT.tmp"
+git archive --format=zip --prefix="TradeGuard-submission/" HEAD -o "$OUT.tmp" \
   || fail "git archive 실패"
-ok "생성: ${OUT#$ROOT/} ($(du -h "$OUT" | cut -f1) · $(unzip -l "$OUT" | tail -1 | awk '{print $2}')개 파일)"
+
+# 내부 전략·협업 문서는 제출물에서 뺀다.
+#
+# 심사위원에게 필요한 것은 README·코드·스키마·벤치마크다. 경쟁작 분석이나 우승 전략,
+# 팀원 간 요청서는 우리가 일하려고 쓴 것이고, 심사위원이 읽을 이유가 없다.
+# 특히 경쟁작 분석은 다른 팀을 언급하므로 제출물에 들어가면 곤란하다.
+# 개인 서류는 .gitignore가 이미 막지만, 여기서 한 번 더 막는다.
+EXCLUDE=(
+  "TradeGuard-submission/TradeGuard/경쟁작_분석_*"
+  "TradeGuard-submission/TradeGuard/우승전략_*"
+  "TradeGuard-submission/TradeGuard/종합분석보고서_*"
+  "TradeGuard-submission/TradeGuard/심사관점_최종검토_*"
+  "TradeGuard-submission/TradeGuard/제출_체크리스트_*"
+  "TradeGuard-submission/TradeGuard/PPT_프롬프트_*"
+  "TradeGuard-submission/TradeGuard/A_요청_*"
+  "TradeGuard-submission/TradeGuard/A_회신_*"
+  "TradeGuard-submission/TradeGuard/AB_요청_*"
+  "TradeGuard-submission/TradeGuard/D1_*"
+  "TradeGuard-submission/TradeGuard/D2_*"
+  "TradeGuard-submission/TradeGuard/D1-D2_*"
+  "TradeGuard-submission/TradeGuard/HANDOFF_*"
+  "TradeGuard-submission/TradeGuard/작업요약_*"
+  "TradeGuard-submission/TradeGuard/BACKLOG.md"
+  # 경쟁팀 실명을 표로 비교한다. 제출물에 들어가면 곤란하다.
+  "TradeGuard-submission/TradeGuard/UX_벤치마킹_차별화설계.md"
+  "TradeGuard-submission/2026_KB_AI_Challenge_주제전략_분석.md"
+  "TradeGuard-submission/*AICHALLENGE*"
+  "TradeGuard-submission/*참가신청서*"
+  "TradeGuard-submission/*서약서*"
+  "TradeGuard-submission/*개인정보*"
+)
+cp "$OUT.tmp" "$OUT"
+zip -dq "$OUT" "${EXCLUDE[@]}" 2>/dev/null
+REMOVED=$(( $(unzip -Z1 "$OUT.tmp" | wc -l) - $(unzip -Z1 "$OUT" | wc -l) ))
+rm -f "$OUT.tmp"
+ok "내부 전략·협업 문서 ${REMOVED}건 제외 (심사위원에게 필요 없는 자료)"
+ok "생성: ${OUT#$ROOT/} ($(du -h "$OUT" | cut -f1) · $(unzip -Z1 "$OUT" | wc -l | tr -d ' ')개 파일)"
 
 echo "══ 3/5 시크릿·불필요 파일 검사 ══"
 LIST="$(unzip -Z1 "$OUT")"
+
+# 내부 문서가 실제로 빠졌는지 확인한다. 목록만 적어두고 안 지워지면 의미가 없다.
+LEAK="$(echo "$LIST" | grep -E '경쟁작_분석|우승전략|종합분석보고서|심사관점|제출_체크리스트|PPT_프롬프트|_요청_|_회신_|HANDOFF|작업요약|주제전략_분석|벤치마킹_차별화|참가신청서|서약서|개인정보' || true)"
+[ -z "$LEAK" ] || { echo "$LEAK" | sed 's/^/       /'; fail "내부 문서가 제출물에 남아 있음"; }
+ok "내부 전략문서·개인 서류 미포함 확인"
+
+# 남은 문서에 경쟁팀 실명이 들어 있으면 안 된다. 파일명만 거르면 놓친다.
+RIVALS="$(cd "$ROOT" && for f in $(echo "$LIST" | grep '\.md$' | sed 's|^TradeGuard-submission/||'); do
+  [ -f "$f" ] && grep -lE '환부장|TradePilot|경쟁팀' "$f" 2>/dev/null; done || true)"
+[ -z "$RIVALS" ] || { echo "$RIVALS" | sed 's/^/       /'; fail "경쟁팀을 언급한 문서가 제출물에 포함됨"; }
+ok "경쟁팀 실명 언급 없음"
+
+# 심사위원이 실제로 읽어야 할 것은 반드시 들어 있어야 한다.
+for must in "README.md:README" "TradeGuard/server/app.py:백엔드" \
+            "TradeGuard/server/app.html:웹 앱" \
+            "TradeGuard/pipeline/detect.py:판정 엔진" "TradeGuard/pipeline/ucp600_kb.json:UCP600 지식베이스" \
+            "TradeGuard/test_all.sh:테스트" "TradeGuard/demo.sh:원커맨드 실행" \
+            "TradeGuard/DEMO_시나리오.md:실행 안내" "TradeGuard/.env.example:환경설정 템플릿"; do
+  f="${must%%:*}"; label="${must##*:}"
+  echo "$LIST" | grep -qx "TradeGuard-submission/$f" || fail "필수 파일 누락: $f ($label)"
+done
+ok "필수 파일 9종 포함 확인 (README · 앱 · 판정 엔진 · 지식베이스 · 테스트 · 실행 안내)"
 # .env.example은 값이 비어 있는 템플릿이므로 허용한다. 실제 .env만 차단.
 BAD="$(echo "$LIST" | grep -E '(^|/)\.env$|(^|/)\.venv/|__pycache__/|(^|/)\.DS_Store$|\.key$|(^|/)secrets\.json$' || true)"
 [ -z "$BAD" ] || { echo "$BAD" | sed 's/^/       /'; fail "제외돼야 할 파일이 포함됨"; }

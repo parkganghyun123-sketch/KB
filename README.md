@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![LLM](https://img.shields.io/badge/LLM-OpenAI%20%7C%20Anthropic-412991)](https://platform.openai.com/)
-[![Tests](https://img.shields.io/badge/tests-45%2F45%20passing-brightgreen)](#7-테스트)
+[![Tests](https://img.shields.io/badge/tests-48%2F48%20passing-brightgreen)](#7-테스트)
 [![License](https://img.shields.io/badge/license-추가%20필요-lightgrey)](#11-라이선스license)
 
 > **수출 서류를 사진으로 올리면, 은행이 지급을 거절할 하자를 UCP600 조항과 함께 찾아냅니다.**
@@ -111,7 +111,7 @@
 | 문서 렌더링 | Jinja2 · Playwright | 합성 서류 HTML → PNG |
 | 외부 API | 한국은행 ECOS · 관세청(공공데이터포털) | 환율 |
 | 프론트엔드 | Vanilla HTML/CSS/JS | 빌드 도구 없이 즉시 실행 |
-| 테스트 | unittest · 자체 통합 스크립트 | 45개 항목 |
+| 테스트 | unittest · 자체 통합 스크립트 | 48개 항목 |
 
 > **프레임워크를 최소화한 이유:** 짧은 개발 기간 안에서 빌드 설정·의존성 문제로
 > 시간을 잃지 않기 위해 Vanilla JS를 선택했습니다.
@@ -180,7 +180,7 @@ bash demo.sh
 | 모드 | LLM 호출 | 비용 | 소요 | 언제 쓰나 |
 |---|---|---|---|---|
 | **샘플 케이스** | ✗ | **0원** | ~1초 | 발표 시연, 기능 확인 |
-| **서류 업로드** | ✓ | 3장 ≈ $0.06 | 10~30초 | 실제 판독 확인 |
+| **서류 업로드** | ✓ (서류 1장당 2회) | 3장 ≈ $0.06 | 10~30초 | 실제 판독 확인 |
 
 > 샘플 모드도 **하자 판정과 환노출 계산은 실제 엔진이 수행**합니다.
 > 미리 만든 화면을 보여주는 것이 아니라, 추출 단계만 건너뛰는 방식입니다.
@@ -212,7 +212,7 @@ KB/
 ├── README.md                    # 이 문서
 └── TradeGuard/
     ├── demo.sh                  # ★ 데모 준비 + 서버 기동 (원커맨드)
-    ├── test_all.sh              # ★ 통합 테스트 45항목 (비용 0원)
+    ├── test_all.sh              # ★ 통합 테스트 48항목 (비용 0원)
     ├── requirements.txt
     ├── .env.example             # 환경 변수 템플릿
     │
@@ -266,7 +266,7 @@ KB/
 bash test_all.sh
 ```
 
-**LLM을 호출하지 않으므로 몇 번을 실행해도 무료입니다.** 45개 항목을 검사합니다.
+**LLM을 호출하지 않으므로 몇 번을 실행해도 무료입니다.** 48개 항목을 검사합니다.
 
 | 그룹 | 검사 내용 |
 |---|---|
@@ -323,7 +323,7 @@ PY
   은행·무역협회 공개 서식을 기준으로 만들었습니다. 실서류 검증은 파일럿 단계 과제입니다.
 - 폐쇄 루프 지표(재심사 통과율 100% 등)는 **정답 JSON 위에서** 측정한 값입니다.
   추출값(93.8%) 위에서의 검증은 입력 데이터를 확보한 상태이며 다음 단계입니다.
-- 판정 이력은 응답에 실리지만 **파일로 영속화되지는 않습니다**. 감사 이력 DB는 도입 단계 항목입니다.
+- 재심사 이력은 `TradeGuard/audit/redetect.jsonl`에 추가 전용으로 저장되지만, **조회 UI와 보존 정책이 없습니다.** 감사 이력 DB는 도입 단계 항목입니다.
 - 인증·권한 기능이 없습니다. 로컬 사전점검 프로토타입 범위입니다.
 
 ---
@@ -478,7 +478,7 @@ git push origin feature/작업명
 | 규칙 | 내용 |
 |---|---|
 | **스키마 동결** | `schemas/` 변경은 팀 합의 필요. **필드 추가는 허용**, 삭제·이름변경·타입변경은 금지 |
-| **테스트 통과** | 커밋 전 `bash test_all.sh` 45/45 |
+| **테스트 통과** | 커밋 전 `bash test_all.sh` 48/48 |
 | **시크릿 금지** | API 키는 `.env`에만. 코드·문서·오류 메시지에 노출 금지 |
 | **판정 로직** | 하자 판정에 LLM을 쓰지 않습니다 ([설계 원칙](#설계-원칙--llm은-읽기만-판정은-코드가) 참고) |
 

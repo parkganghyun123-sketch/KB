@@ -230,6 +230,7 @@ font-variant-numeric:tabular-nums}
 .audit-row .from{color:var(--sub);text-decoration:line-through;text-decoration-color:#c9cdd3}
 .audit-row .to{color:var(--ok);font-weight:700}
 .audit-row .basis{font-size:11.5px;color:var(--sub);margin-top:4px}
+.warn-inline{color:var(--warn)}
 .audit-note{font-size:12px;color:var(--sub);line-height:1.65;margin-top:12px;
 padding-top:10px;border-top:1px solid var(--line)}
 .audit-note .eng{font-family:ui-monospace,monospace;font-size:11px;opacity:.75}
@@ -512,7 +513,12 @@ font-size:12px;color:#98a2b3}
         정확한 해석은 국제상업회의소(ICC) 공식 간행물을 따릅니다.</li>
       <li><b>환율 출처</b> — 한국은행 ECOS 매매기준율(통계코드 731Y001).
         실시간 시장환율이 아니며, 조회 기준일을 화면에 함께 표시합니다.</li>
-      <li><b>서류 처리</b> — 업로드한 이미지는 분석 후 즉시 삭제되며 서버에 보관하지 않습니다.</li>
+      <li><b>서류 처리</b> — 업로드한 이미지는 분석 후 즉시 삭제되며 서버에 보관하지 않습니다.
+        서류 1장당 <b>종류 판별 1회 · 필드 추출 1회</b>만 판독에 사용하며, 그 뒤의 하자 판정 ·
+        수정 제안 · 재심사는 <b>전부 코드가 수행</b>합니다(AI 호출 0회).</li>
+      <li><b>외부 AI 전송</b> — 서류 판독 단계에서 이미지가 <b>외부 생성형 AI 서비스(OpenAI 또는
+        Anthropic)로 전송</b>됩니다. 민감한 실거래 서류는 올리지 마시고, 샘플 서류로 기능을
+        확인하십시오. 실제 도입 시에는 <b>온프레미스 판독 모델로 교체</b>하는 것을 전제로 설계했습니다.</li>
     </ul>
     <p class="foot-end">TradeGuard · 2026 KB AI Challenge 출품작 · 부산대학교 2인 팀</p>
   </div>
@@ -816,6 +822,11 @@ function renderMeta(m, docCount){
             같은 서류는 언제 넣어도 같은 결과가 나옵니다.</dd>
         <dt>입력</dt>
         <dd>${esc(m.source||"—")}</dd>
+        <dt>AI 호출</dt>
+        <dd>${m.llm_calls
+              ? `판독에 <b>${m.llm_calls}회</b> (서류 1장당 종류 판별 1회 · 필드 추출 1회). `
+                + `판정 · 수정 제안 · 재심사는 <b>0회</b>입니다.`
+              : `이 심사에서는 <b>0회</b>입니다. 판정 · 수정 제안 · 재심사는 전부 코드가 수행합니다.`}</dd>
         <dt>규정 출처</dt>
         <dd>UCP600 (ICC Publication No. 600) 조항 요지</dd>
       </dl>
@@ -979,6 +990,9 @@ function renderCompare(c, audit){
       <p class="audit-note">이 내역은 사전 점검 리포트에 함께 기록되어, 은행 제출 시 무엇을 어떻게
         정정했는지 그대로 확인할 수 있습니다. 하자 판정과 수정 제안은 모두 규칙 엔진이 수행했으며
         AI 모델을 호출하지 않았습니다.<br>
+        ${audit.persisted
+          ? `변경 내역은 <b>감사 기록 파일에 추가 전용으로 저장</b>됩니다(서류 내용은 저장하지 않습니다).`
+          : `<span class="warn-inline">이번 내역은 파일로 저장되지 않았습니다 — 화면에서만 확인할 수 있습니다.</span>`}<br>
         <span class="eng">검사 엔진 ${esc(audit.engine_version)}</span></p>
     </div>`;
 }

@@ -27,7 +27,7 @@ import tempfile
 import time
 import traceback
 from datetime import date, timedelta
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "pipeline"))
@@ -439,7 +439,87 @@ def redetect(body: dict):
                    "type": a["type"], "basis_ko": a.get("basis_ko")} for a in applied],
         "note_ko": "판정·제안 모두 결정적 규칙 기반이며 LLM을 호출하지 않았습니다.",
     }
+    res["audit"]["persisted"] = append_audit(case_id, res)
     return res
+
+
+AUDIT_LOG = ROOT / "audit" / "redetect.jsonl"
+
+
+def append_audit(case_id: str, res: dict) -> bool:
+    """재심사 감사 이력을 파일에 덧붙인다 (JSON Lines, 추가 전용).
+
+    은행 업무에서는 "왜 이 값으로 바뀌었는가"를 나중에 되짚을 수 있어야 한다.
+    화면에만 남기면 새로고침과 함께 사라진다.
+
+    **서류 내용은 저장하지 않는다.** 무엇을 어떤 값으로 바꿨는지, 어느 엔진이
+    판정했는지, 등급이 어떻게 변했는지만 남긴다. 서류 원본이나 이미지는 기록 대상이
+    아니다 — 사후 검증에 필요한 최소한만 남기는 것이 개인정보 관점에서도 맞다.
+
+    쓰기에 실패해도 심사 결과는 그대로 돌려준다. 이력은 부가 기능이지 심사의
+    전제가 아니다. 성공 여부만 응답에 실어 화면이 사실대로 표시하게 한다.
+    """
+    try:
+        AUDIT_LOG.parent.mkdir(parents=True, exist_ok=True)
+        rec = {"ts": res["audit"]["timestamp"], "case_id": case_id,
+               "engine_version": res["engine_version"],
+               "grade_before": res["comparison"]["before"]["grade"],
+               "grade_after": res["comparison"]["after"]["grade"],
+               "resolved": res["comparison"]["resolved"],
+               "new_defects": res["comparison"]["new_defects"],
+               "submittable": res["comparison"]["submittable"],
+               "edits": res["audit"]["edits"],
+               "llm_calls": 0}
+        with AUDIT_LOG.open("a", encoding="utf-8") as fp:
+            fp.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        return True
+    except Exception:
+        return False
+
+
+MAX_FILES = 10                    # 신용장·송장·선하증권 3종 + 여유분
+MAX_BYTES = 12 * 1024 * 1024      # 서류 스캔본 1장 기준 넉넉한 상한
+ALLOWED_EXT = (".png", ".jpg", ".jpeg", ".webp")
+
+
+def receive_uploads(files, tmp: Path):
+    """업로드 파일을 임시 디렉터리에 안전하게 저장한다.
+
+    파일명은 **클라이언트가 정하는 값이므로 신뢰하지 않는다.**
+    `tmp / f.filename` 처럼 그대로 결합하면 "../../etc/x.png"이나 "/tmp/x.png"이
+    임시 디렉터리를 벗어난다. 케이스 ID는 화이트리스트로 막아 두었는데(CASE_ID_RE)
+    업로드 경로만 열려 있으면 같은 종류의 구멍이 남는다.
+
+    확장자만 원본에서 취하고 **경로는 서버가 짓는다.** 원래 이름은 화면 표시용으로만
+    돌려준다. 크기·개수 상한도 여기서 함께 건다 — 상한이 없으면 이미지 전량이
+    메모리에 base64로 올라가고 LLM 비용도 그만큼 나간다.
+
+    반환: [(표시용 원본 파일명, 저장 경로 or None, 오류 메시지 or None)]
+    """
+    out = []
+    for i, f in enumerate(files[:MAX_FILES]):
+        shown = PurePosixPath(f.filename or "upload.png").name or "upload.png"
+        ext = Path(shown).suffix.lower()
+        if ext not in ALLOWED_EXT:
+            out.append((shown, None, f"{shown}: 지원하지 않는 형식 (PNG/JPG만)"))
+            continue
+        dest = tmp / f"{i:02d}{ext}"          # 경로는 서버가 정한다
+        size = 0
+        with dest.open("wb") as w:
+            while chunk := f.file.read(1 << 20):
+                size += len(chunk)
+                if size > MAX_BYTES:
+                    w.close(); dest.unlink(missing_ok=True)
+                    out.append((shown, None,
+                                f"{shown}: 파일이 너무 큽니다 ({MAX_BYTES // (1024*1024)}MB 이하)"))
+                    break
+                w.write(chunk)
+            else:
+                out.append((shown, dest, None))
+    if len(files) > MAX_FILES:
+        out.append((None, None, f"한 번에 {MAX_FILES}장까지 처리합니다. "
+                                f"나머지 {len(files) - MAX_FILES}장은 제외했습니다"))
+    return out
 
 
 # 서류 종류만 알려주는 가벼운 단계. 필드 추출은 하지 않는다.
@@ -450,30 +530,30 @@ def redetect(body: dict):
 # 실패해도 분석 자체는 그대로 진행된다 — 이 단계는 편의 기능이다.
 @app.post("/api/classify")
 async def classify_upload(files: list[UploadFile] = File(...)):
+    # 입력 검증(400)을 서비스 가용성 검사(503)보다 먼저 한다.
+    # 순서가 반대면 날짜를 잘못 넣은 사용자가 "LLM 키가 없습니다"를 보게 된다.
+    if not files:
+        raise HTTPException(400, "파일이 없습니다")
     client = get_client()
     if client is None:
         raise HTTPException(503, "LLM 키가 없습니다")
-    if not files:
-        raise HTTPException(400, "파일이 없습니다")
 
     from extract import classify
     tmp = Path(tempfile.mkdtemp(prefix="tgc_"))
     out = []
     try:
-        for f in files:
-            name = f.filename or "upload.png"
-            dest = tmp / name
-            with dest.open("wb") as w:
-                shutil.copyfileobj(f.file, w)
-            if dest.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
-                out.append({"filename": name, "doc_type": None,
-                            "doc_type_ko": "지원하지 않는 형식"})
+        for shown, dest, err in receive_uploads(files, tmp):
+            if shown is None:               # 개수 초과 안내
+                continue
+            if err:
+                out.append({"filename": shown, "doc_type": None,
+                            "doc_type_ko": "확인 불가"})
                 continue
             try:
                 dt = classify(client, [image_block(dest)])
             except Exception:
                 dt = "unknown"          # 조용히 넘어간다. 분석은 이것과 무관하게 돌아간다.
-            out.append({"filename": name,
+            out.append({"filename": shown,
                         "doc_type": dt if dt != "unknown" else None,
                         "doc_type_ko": DOC_KO.get(dt, "판별 못 함")})
     finally:
@@ -491,9 +571,8 @@ async def analyze_upload(files: list[UploadFile] = File(...),
     과거에 발행된 서류(예: 시연용 벤치마크 이미지)를 판독하면 제시기한 경과가
     일괄로 잡혀 정상 서류까지 하자로 보인다.
     """
-    client = get_client()
-    if client is None:
-        raise HTTPException(503, "LLM 키가 없습니다. .env를 확인하세요 (샘플 모드는 사용 가능).")
+    # 입력 검증(400)이 먼저다. 키가 없다고 503을 던지면
+    # 날짜를 잘못 넣은 사용자가 엉뚱한 메시지를 받는다.
     if not files:
         raise HTTPException(400, "파일이 없습니다")
     if presentation_date:
@@ -501,37 +580,38 @@ async def analyze_upload(files: list[UploadFile] = File(...),
             date.fromisoformat(presentation_date)
         except ValueError:
             raise HTTPException(400, f"제시일 형식이 올바르지 않습니다 (YYYY-MM-DD): {presentation_date[:20]}")
+    client = get_client()
+    if client is None:
+        raise HTTPException(503, "LLM 키가 없습니다. .env를 확인하세요 (샘플 모드는 사용 가능).")
 
     from extract import classify, extract as extract_doc
     t0 = time.time()
     tmp = Path(tempfile.mkdtemp(prefix="tg_"))
     docs, errors, classified = {}, [], []
+    llm_calls = 0
     try:
-        for f in files:
-            dest = tmp / (f.filename or "upload.png")
-            with dest.open("wb") as w:
-                shutil.copyfileobj(f.file, w)
-            if dest.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
-                errors.append(f"{dest.name}: 지원하지 않는 형식 (PNG/JPG만)")
+        for shown, dest, err in receive_uploads(files, tmp):
+            if err:
+                errors.append(err)
                 continue
             try:
                 blocks = [image_block(dest)]
-                doc_type = classify(client, blocks)
+                doc_type = classify(client, blocks); llm_calls += 1
                 if doc_type == "unknown":
-                    errors.append(f"{dest.name}: 서류 종류를 판별하지 못했습니다")
+                    errors.append(f"{shown}: 서류 종류를 판별하지 못했습니다")
                     continue
                 # 같은 종류가 두 장 오면 조용히 덮어쓰지 않는다.
                 # 사용자는 두 장을 올렸는데 한 장만 심사되면 판정 결과를 신뢰할 수 없다.
                 if doc_type in docs:
-                    errors.append(f"{dest.name}: {DOC_KO.get(doc_type, doc_type)}이(가) 이미 있어 "
+                    errors.append(f"{shown}: {DOC_KO.get(doc_type, doc_type)}이(가) 이미 있어 "
                                   f"이 파일은 심사에서 제외했습니다")
                     continue
-                data, retries = extract_doc(client, blocks, doc_type)
+                data, retries = extract_doc(client, blocks, doc_type); llm_calls += 1
                 docs[doc_type] = data
-                classified.append({"filename": dest.name, "doc_type": doc_type,
+                classified.append({"filename": shown, "doc_type": doc_type,
                                    "doc_type_ko": DOC_KO.get(doc_type, doc_type)})
             except Exception as ex:
-                errors.append(f"{dest.name}: {str(ex)[:150]}")
+                errors.append(f"{shown}: {str(ex)[:150]}")
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
@@ -541,7 +621,10 @@ async def analyze_upload(files: list[UploadFile] = File(...),
     n = len(docs)
     res = analyze(docs, "UPLOAD", presentation_date,
                   meta={"mode": "upload", "provider": client.name, "docs": n,
-                        "cost_usd": round(n * 0.02, 3),  # 대략치
+                        # 서류 1장당 종류 판별 1회 + 필드 추출 1회. 실제 호출 수를 센다.
+                        # 판정·수정 제안·재심사는 이 뒤로 전부 코드이므로 0회다.
+                        "llm_calls": llm_calls,
+                        "cost_usd": round(llm_calls * 0.01, 3),  # 대략치
                         "elapsed_sec": round(time.time() - t0, 1),
                         "errors": errors, "classified": classified,
                         "presentation_date_source": "user" if presentation_date else "today",

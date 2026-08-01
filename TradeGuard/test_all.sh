@@ -163,6 +163,77 @@ r=route('samples/DEMO-001.json','DEMO-001')['kb']
 assert r['route']['status']=='blocked', r['route']
 assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
 \""
+# 회귀 방지: 재심사 감사 이력은 파일로 남아야 나중에 되짚을 수 있다.
+# 단, **서류 내용은 저장하지 않는다** — 사후 검증에 필요한 최소한만 남긴다.
+run "재심사 감사 이력이 파일로 영속화됨 (서류 내용은 저장 안 함)" "python3 -c \"
+import sys,json,os,tempfile,shutil,importlib; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from pathlib import Path
+import app
+tmp=Path(tempfile.mkdtemp(prefix='tgaud_')); app.AUDIT_LOG=tmp/'redetect.jsonl'
+c=json.load(open('benchmark/cases/DEFECT-019.json'))
+docs=c['documents']; pres=c.get('presentation_date')
+r0=app.analyze(docs,'DEFECT-019',pres)
+edits=[x for x in r0['remedies'] if x['curable']]
+res=app.redetect({'documents':docs,'case_id':'DEFECT-019','presentation_date':pres,'edits':edits})
+assert res['audit']['persisted'] is True, '감사 이력 저장 실패'
+assert app.AUDIT_LOG.exists(), '감사 파일 미생성'
+lines=app.AUDIT_LOG.read_text(encoding='utf-8').strip().split('\n')
+assert len(lines)==1, f'기록 수 이상: {len(lines)}'
+rec=json.loads(lines[0])
+for k in ('ts','case_id','engine_version','grade_before','grade_after','edits','submittable'):
+    assert k in rec, f'필드 누락: {k}'
+assert rec['grade_before']=='C' and rec['grade_after']=='A', rec
+raw=lines[0]
+for leak in ('KOREA MARINE','documents','beneficiary','SEOUL'):
+    assert leak not in raw, f'서류 내용이 감사 기록에 유출: {leak}'
+app.redetect({'documents':docs,'case_id':'DEFECT-019','presentation_date':pres,'edits':edits})
+assert len(app.AUDIT_LOG.read_text(encoding='utf-8').strip().split('\n'))==2, '추가 전용 아님'
+shutil.rmtree(tmp, ignore_errors=True)
+\""
+# 회귀 방지: 업로드 파일명은 **클라이언트가 정하는 값**이다. 그대로 경로에 결합하면
+# "../../x.png"이나 "/tmp/x.png"이 임시 디렉터리를 벗어나 임의 위치에 파일을 쓴다.
+# 케이스 ID는 화이트리스트로 막아 두었으므로 업로드 경로만 열려 있으면 안 된다.
+run "업로드 파일명 경로 조작 차단 · 크기/개수 상한 (임시 디렉터리 이탈 불가)" "python3 -c \"
+import sys,io,os,tempfile,shutil; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+from pathlib import Path
+from app import receive_uploads, MAX_FILES, MAX_BYTES
+class F:
+    def __init__(s,n,d=b'x'*64): s.filename=n; s.file=io.BytesIO(d)
+tmp=Path(tempfile.mkdtemp(prefix='tgsec_')); root=tmp.resolve()
+# 매 실행마다 고유 이름을 쓴다. 고정 이름이면 이전 실행이 남긴 파일 때문에
+# 통과/실패가 환경에 좌우된다(테스트가 자기 과거에 오염되면 안 된다).
+tag=os.path.basename(tempfile.mktemp(prefix='ESC'))
+abs_target=f'/tmp/{tag}.png'; up_target=str(tmp.parent/f'{tag}_UP.png')
+files=[F(f'../../{tag}_UP.png'), F(abs_target), F('..%2f..%2fx.png'),
+       F('normal.png'), F('bad.exe'), F('big.png', b'y'*(MAX_BYTES+1))]
+res=receive_uploads(files,tmp)
+for shown,dest,err in res:
+    if dest is not None:
+        assert str(dest.resolve()).startswith(str(root)), f'임시 디렉터리 이탈: {dest}'
+        assert dest.suffix.lower() in ('.png','.jpg','.jpeg','.webp'), dest
+assert not os.path.exists(abs_target), '절대경로 파일명으로 탈출'
+assert not os.path.exists(up_target), '상위경로 파일명으로 탈출'
+errs=' | '.join(e for _,_,e in res if e)
+assert '지원하지 않는 형식' in errs, '확장자 검증 누락'
+assert '너무 큽니다' in errs, f'크기 상한 미작동: {errs}'
+over=receive_uploads([F(f'{i}.png') for i in range(MAX_FILES+3)], tmp)
+saved=[d for _,d,_ in over if d is not None]
+assert len(saved)<=MAX_FILES, f'개수 상한 미작동: {len(saved)}'
+shutil.rmtree(tmp, ignore_errors=True)
+\""
+# 회귀 방지: 입력 형식 오류(400)는 서비스 가용성(503)보다 **먼저** 판정돼야 한다.
+# 순서가 반대면 날짜를 잘못 넣은 사용자가 'LLM 키가 없습니다'를 받는다.
+run "입력 검증(400)이 LLM 키 검사(503)보다 먼저 수행됨" "python3 -c \"
+import sys,inspect; sys.path.insert(0,'pipeline'); sys.path.insert(0,'server')
+import app
+for fn in (app.analyze_upload, app.classify_upload):
+    src=inspect.getsource(fn)
+    i400=src.find('400'); i503=src.find('503')
+    assert i400!=-1 and i503!=-1, fn.__name__
+    assert i400 < i503, f'{fn.__name__}: 503 검사가 400 검증보다 앞선다'
+src=inspect.getsource(app.analyze_upload)
+assert src.find('제시일 형식') < src.find('get_client'), '제시일 검증이 키 검사보다 뒤에 있다'
+\""
 # 회귀 방지: 수정으로 하자를 없애도 **재발행에 쓴 시간은 돌아오지 않는다.**
 # 지연을 새로 계산하면 0이 되지만, 그 기간의 자금 공백과 환노출은 실제로 발생했다.
 # 이걸 놓치면 "서류 고치면 지연도 사라지나요?"라는 질문에 화면이 답을 못 한다.

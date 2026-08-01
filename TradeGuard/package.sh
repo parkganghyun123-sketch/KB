@@ -224,18 +224,31 @@ print("  ✅ 시크릿 패턴 없음 (OpenAI · Anthropic · AWS · 공공데이
 PYEOF
 
 echo "══ 5/5 압축 해제본 자체 검증 ══"
+# 의존 패키지가 없으면 **건너뛴다.** 여기서 실패로 처리하면
+# "패키징이 잘못됐다"와 "이 셸에 패키지가 없다"를 구분할 수 없다.
+# 실제로 가상환경 밖에서 돌리면 fastapi가 없어 9건이 무더기로 실패한다 —
+# 제출물에는 아무 문제가 없는데도.
+MISSING="$(python3 - <<'PYEOF'
+import importlib.util
+need = [("jsonschema", "jsonschema"), ("jinja2", "jinja2"), ("fastapi", "fastapi"),
+        ("uvicorn", "uvicorn"), ("multipart", "python-multipart")]
+print(" ".join(pkg for mod, pkg in need if importlib.util.find_spec(mod) is None))
+PYEOF
+)"
 if [ "$RUN_TEST" -eq 0 ]; then
   echo "  ⏭  --no-test 지정 — 건너뜀"
-elif python3 -c "import jsonschema, jinja2" 2>/dev/null; then
+elif [ -n "$MISSING" ]; then
+  echo "  ⏭  건너뜀 — 현재 파이썬에 없는 패키지: $MISSING"
+  echo "       가상환경을 켜고 다시 실행하면 이 단계까지 확인됩니다:"
+  echo "       source TradeGuard/.venv/bin/activate && bash TradeGuard/package.sh"
+else
   # ZIP을 풀어서 돌리는 경로가 실제로 동작하는지 확인한다.
   if (cd "$SRC/TradeGuard" && bash test_all.sh >"$TMP/test.log" 2>&1); then
     ok "압축 해제본에서 test_all.sh 통과 ($(grep -c '✅' "$TMP/test.log")개 항목)"
   else
-    tail -20 "$TMP/test.log" | sed 's/^/       /'
+    tail -25 "$TMP/test.log" | sed 's/^/       /'
     fail "압축 해제본이 테스트를 통과하지 못함 — 누락된 파일이 있을 수 있습니다"
   fi
-else
-  echo "  ⏭  건너뜀 (pip install -r TradeGuard/requirements.txt 후 재실행)"
 fi
 
 echo

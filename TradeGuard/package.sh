@@ -78,6 +78,12 @@ EXCLUDE=(
   # 이 스크립트 자체. 제출물을 **만드는** 도구지 제출물의 일부가 아니다.
   # git 저장소 밖에서는 동작하지도 않는다(git archive에 의존한다).
   "TradeGuard-submission/TradeGuard/package.sh"
+  # 최종 제출 폴더가 실수로 커밋되면 ZIP이 **자기 자신을 담는다**.
+  # 완성된 ZIP·PDF와 개인정보 서류가 통째로 들어가므로 반드시 막는다.
+  "TradeGuard-submission/TradeGuard — 수출*"
+  "TradeGuard-submission/TradeGuard — 수출*/*"
+  "TradeGuard-submission/*.zip"
+  "TradeGuard-submission/*/*.zip"
   "TradeGuard-submission/*AICHALLENGE*"
   "TradeGuard-submission/*참가신청서*"
   "TradeGuard-submission/*서약서*"
@@ -134,6 +140,14 @@ if leak:
     for n in leak: print(f"       {n}")
     print("  ❌ 내부 협업 문서가 제출물에 남아 있음"); sys.exit(1)
 print("  ✅ 내부 협업 문서·개인 서류 미포함 확인")
+
+# 자기 자신(ZIP)이나 완성된 PDF가 안에 들어가면 안 된다.
+# 제출 폴더를 커밋하면 그대로 벌어진다 — 용량이 10배가 되고 심사위원이 혼란스럽다.
+nested = [n for n, k in names if k.lower().endswith((".zip", ".pdf", ".pptx"))]
+if nested:
+    for n in nested: print(f"       {n}")
+    print("  ❌ 제출물 안에 완성 산출물(ZIP·PDF·PPTX)이 들어 있음"); sys.exit(1)
+print("  ✅ 자기 중첩 없음 (ZIP·PDF·PPTX 미포함)")
 
 rivals = []
 for n, k in names:

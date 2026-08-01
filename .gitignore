@@ -8,6 +8,17 @@ node_modules/
 *.key
 secrets.json
 
+# 가상환경 — 어느 깊이에 만들든 잡는다.
+# 실행 가이드가 `cd TradeGuard && python3 -m venv .venv`를 안내하므로
+# 저장소 루트가 아니라 하위 폴더에 생긴다. 규칙이 없으면 `git add -A` 한 번에
+# 수천 개 파일이 딸려 들어가고, 제출 ZIP에도 그대로 담긴다.
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.python-version
+
 # 산출물
 __pycache__/
 *.py[cod]

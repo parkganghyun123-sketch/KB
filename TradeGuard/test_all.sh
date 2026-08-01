@@ -163,6 +163,23 @@ r=route('samples/DEMO-001.json','DEMO-001')['kb']
 assert r['route']['status']=='blocked', r['route']
 assert '하자 네고' in r['route']['product_ko'], r['route']['product_ko']
 \""
+# 회귀 방지: 가상환경·캐시가 저장소에 들어가면 안 된다.
+# 실행 가이드가 TradeGuard/.venv 를 만들게 안내하므로, .gitignore에 규칙이 없으면
+# `git add -A` 한 번에 수천 개가 딸려 들어가고 제출 ZIP까지 오염된다(실제로 겪었다).
+run "가상환경·캐시가 git에 추적되지 않음 (.venv · __pycache__ · .env)" "python3 -c \"
+import subprocess, sys, re
+out = subprocess.run(['git','ls-files'], capture_output=True, text=True, cwd='..')
+if out.returncode != 0:
+    print('git 저장소가 아니어서 건너뜀'); sys.exit(0)
+files = out.stdout.splitlines()
+bad = {}
+for pat, label in ((r'(^|/)\.venv/', '.venv'), (r'(^|/)venv/', 'venv'),
+                   (r'__pycache__/', '__pycache__'), (r'(^|/)\.env$', '.env'),
+                   (r'\.py[co]$', '.pyc'), (r'(^|/)\.DS_Store$', '.DS_Store')):
+    hit = [f for f in files if re.search(pat, f)]
+    if hit: bad[label] = (len(hit), hit[0])
+assert not bad, '저장소에 들어가면 안 되는 파일: ' + str(bad)
+\""
 # 회귀 방지: 공개 URL에 키를 얹으면 판독 1회가 곧 비용이다. 세 겹으로 막았는지 확인한다.
 # 어느 한 겹이라도 풀리면 크레딧이 하루 만에 빈다. 반대로 **샘플 모드는 절대 막히면 안 된다** —
 # 판정·수정 제안·재심사는 LLM을 쓰지 않으므로 한도와 무관하게 동작해야 심사가 끊기지 않는다.
@@ -538,7 +555,12 @@ import sys; sys.path.insert(0,'pipeline')
 import llm, detect, extract, fx_rates\""
 run ".env가 git에 커밋되지 않음" "test -z \"\$(git ls-files | grep -x 'TradeGuard/.env')\" -a -z \"\$(git ls-files | grep -x '.env')\""
 # 자기 자신이 패턴을 포함하지 않도록 조각으로 조립한다
-run "소스에 API 키 하드코딩 없음" "! grep -rIl --exclude-dir=.git --exclude='test_all.sh' --exclude='.env*' \
+# 검사 대상은 **우리가 쓴 소스**다. 가상환경·의존 패키지는 제외한다.
+# certifi의 인증서나 pip 내부 코드가 키 패턴에 걸려 오탐이 나면,
+# 실패가 일상이 되고 진짜 유출을 놓치게 된다.
+run "소스에 API 키 하드코딩 없음" "! grep -rIl --exclude-dir=.git \
+  --exclude-dir=.venv --exclude-dir=venv --exclude-dir=node_modules --exclude-dir=__pycache__ \
+  --exclude='test_all.sh' --exclude='.env*' \
   --include='*.py' --include='*.js' --include='*.html' --include='*.json' --include='*.j2' \
   -E \"(sk\\-[A-Za-z0-9_-]{20,}|[A-Z0-9]{20}\$|\$(echo c669d21f)[0-9a-f]{20,})\" ."
 
